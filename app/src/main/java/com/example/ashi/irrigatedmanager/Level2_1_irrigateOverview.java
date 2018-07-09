@@ -17,6 +17,9 @@ public class Level2_1_irrigateOverview extends AppCompatActivity {
         TextView title = (TextView) findViewById(R.id.level_2_1_title);
         title.setText(Const.LEVEL_2_TITILE_1);
 
+        TextView content = (TextView) findViewById(R.id.level_2_1_content);
+        content.setText(Const.LEVEL_2_CONTENT);
+
         ImageView leve1_2_1_back = (ImageView) findViewById(R.id.leve1_2_1_back);
         leve1_2_1_back.setOnClickListener(new View.OnClickListener() {
             @Override

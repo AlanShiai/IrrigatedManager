@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file:///workspace/ashi/dev/android/myproject/IrrigatedManager/IrrigatedManager.iml" filepath="/workspace/ashi/dev/android/myproject/IrrigatedManager/IrrigatedManager.iml" />
-      <module fileurl="file:///workspace/ashi/dev/android/myproject/IrrigatedManager/app/app.iml" filepath="/workspace/ashi/dev/android/myproject/IrrigatedManager/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/IrrigatedManager.iml" filepath="$PROJECT_DIR$/IrrigatedManager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
 </project>
