@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.ashi.irrigatedmanager.util.Const;
+
 public class Level2_1_irrigateOverview extends AppCompatActivity {
 
     @Override

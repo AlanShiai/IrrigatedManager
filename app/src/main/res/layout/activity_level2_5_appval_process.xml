@@ -54,18 +54,21 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" />
         <Button
+            android:id="@+id/should_do_task_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20dp"
             android:text="待办任务"
             />
         <Button
+            android:id="@+id/have_done_task_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20dp"
             android:text="已办任务"
             />
         <Button
+            android:id="@+id/start_by_me_task_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20dp"

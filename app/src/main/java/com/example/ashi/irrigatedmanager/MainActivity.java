@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.example.ashi.irrigatedmanager.util.Const;
 
 public class MainActivity extends AppCompatActivity {
 
