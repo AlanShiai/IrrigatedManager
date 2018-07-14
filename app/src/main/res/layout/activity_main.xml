@@ -16,10 +16,11 @@
             android:background="#FFCC00"
             >
 
-            <RelativeLayout
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
-                android:layout_marginTop="22dp"
+                android:layout_marginTop="20dp"
                 >
 
                 <TextView
@@ -40,7 +41,7 @@
                     android:layout_marginRight="2dp"
                     android:layout_marginTop="5dp"
                     />
-            </RelativeLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:orientation="vertical"
