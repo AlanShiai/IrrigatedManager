@@ -6,6 +6,7 @@ import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -38,7 +39,7 @@ public class Level2_6_irrigationSchedule extends AppCompatActivity {
         IrrigationScheduleInfoAdpter adapter = new IrrigationScheduleInfoAdpter(Level2_6_irrigationSchedule.this, R.layout.irrigation_schedule, projectInfoList);
         listView.setAdapter(adapter);
 
-        ImageView backButton = (ImageView) findViewById(R.id.leve1_2_6_back);
+        Button backButton = (Button) findViewById(R.id.leve1_2_6_back);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

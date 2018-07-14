@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -29,7 +30,7 @@ public class Level2_4_1_sluice extends AppCompatActivity {
         SluiceInfoAdapter adapter = new SluiceInfoAdapter(Level2_4_1_sluice.this, R.layout.sluice_item1, projectInfoList);
         listView.setAdapter(adapter);
 
-        ImageView backButton = (ImageView) findViewById(R.id.leve1_2_4_1_back);
+        Button backButton = (Button) findViewById(R.id.leve1_2_4_1_back);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

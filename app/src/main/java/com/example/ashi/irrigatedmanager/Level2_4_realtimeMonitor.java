@@ -6,6 +6,7 @@ import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,7 +37,7 @@ public class Level2_4_realtimeMonitor extends AppCompatActivity {
             }
         });
 
-        ImageView backButton = (ImageView) findViewById(R.id.leve1_2_4_back);
+        Button backButton = (Button) findViewById(R.id.leve1_2_4_back);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -6,6 +6,7 @@ import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,7 +31,7 @@ public class Level2_1_irrigateOverview extends AppCompatActivity {
         TextView content = (TextView) findViewById(R.id.level_2_1_content);
         content.setText(Const.LEVEL_2_CONTENT);
 
-        ImageView leve1_2_1_back = (ImageView) findViewById(R.id.leve1_2_1_back);
+        Button leve1_2_1_back = (Button) findViewById(R.id.leve1_2_1_back);
         leve1_2_1_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

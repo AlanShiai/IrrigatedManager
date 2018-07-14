@@ -71,7 +71,7 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
             }
         });
 
-        ImageView backButton = (ImageView) findViewById(R.id.leve1_2_5_back);
+        Button backButton = (Button) findViewById(R.id.leve1_2_5_back);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

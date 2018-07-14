@@ -27,8 +27,8 @@ public class Level2_2_projectInspection extends AppCompatActivity {
         }
         setContentView(R.layout.activity_level2_2_project_inspection);
 
-        TextView title = (TextView) findViewById(R.id.level_2_2_title);
-        title.setText(Const.LEVEL_2_TITILE_2);
+//        TextView title = (TextView) findViewById(R.id.level_2_2_title);
+//        title.setText(Const.LEVEL_2_TITILE_2);
 
         LinearLayout ll_body = (LinearLayout) findViewById(R.id.draw_year_month_data);
         DrawYearMonthData view = new DrawYearMonthData(getApplicationContext());

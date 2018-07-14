@@ -6,6 +6,7 @@ import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -38,7 +39,7 @@ public class Level2_3_projectInfo extends AppCompatActivity {
         ProjectInfoAdpter adapter = new ProjectInfoAdpter(Level2_3_projectInfo.this, R.layout.project_item1, projectInfoList);
         listView.setAdapter(adapter);
 
-        ImageView backButton = (ImageView) findViewById(R.id.leve1_2_3_back);
+        Button backButton = (Button) findViewById(R.id.leve1_2_3_back);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
