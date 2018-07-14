@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="2dp"
+    android:background="#FFCC00"
     >
 
     <RelativeLayout
         android:id="@+id/level_2_5_title_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"
+        android:layout_marginTop="22dp"
         >
 
         <TextView
@@ -19,7 +19,6 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="level_2_5_title"
-            android:background="#DC143C"
             android:textSize="30dp"
             android:textColor="#ffffff"
             />
@@ -44,42 +43,49 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/level_2_5_title_layout">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/level_2_5_title_layout"
+        android:background="#F5F5F5"
+        >
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-        <Button
-            android:id="@+id/should_do_task_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:text="待办任务"
-            />
-        <Button
-            android:id="@+id/have_done_task_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:text="已办任务"
-            />
-        <Button
-            android:id="@+id/start_by_me_task_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:text="我发起的"
-            />
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            <Button
+                android:id="@+id/should_do_task_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:layout_weight="1"
+                android:background="#FFFFFF"
+                android:text="待办任务"
+                />
+            <Button
+                android:id="@+id/have_done_task_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="20dp"
+                android:background="#C0C0C0"
+                android:text="已办任务"
+                android:layout_marginLeft="1dp"
+                />
+            <Button
+                android:id="@+id/start_by_me_task_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="20dp"
+                android:background="#C0C0C0"
+                android:text="我发起的"
+                android:layout_marginLeft="1dp"
+                />
+        </LinearLayout>
     </LinearLayout>
-
 
 
 </RelativeLayout>

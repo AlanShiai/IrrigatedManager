@@ -14,4 +14,11 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <!-- level 1 -->
+    <string name="level_1_title">漳滏河掌上灌区</string>
+
+    <!-- Strings related to sluice -->
+    <string name="sluice_check">闸门监测</string>
+
 </resources>

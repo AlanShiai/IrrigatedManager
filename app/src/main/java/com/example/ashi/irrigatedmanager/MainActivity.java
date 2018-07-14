@@ -1,6 +1,8 @@
 package com.example.ashi.irrigatedmanager;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,11 +25,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= 21) {
+            View decorView = getWindow().getDecorView();
+            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
         setContentView(R.layout.activity_main);
 
         id2View();
         addViewListening();
-        leve11Title.setText(Const.LEVEL_1_TITILE);
     }
 
     private void addViewListening() {
@@ -77,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void id2View() {
-        leve11Title = (TextView) findViewById(R.id.level_1_title);
         level2_1_irrigatedOverview_image = (ImageView) findViewById(R.id.level2_1_irrigatedOverview_image);
         level2_2_projectInspection_image = (ImageView) findViewById(R.id.level2_2_projectInspection_image);
         level2_3_projectInfo_image = (ImageView) findViewById(R.id.level2_3_projectInfo_image);

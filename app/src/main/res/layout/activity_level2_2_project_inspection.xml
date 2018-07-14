@@ -4,14 +4,14 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="2dp"
+    android:background="#FFCC00"
     >
 
     <RelativeLayout
         android:id="@+id/level_2_2_title_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"
+        android:layout_marginTop="22dp"
         >
 
         <TextView
@@ -20,19 +20,25 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="level_2_2_title"
-            android:background="#DC143C"
             android:textSize="30dp"
-            android:textColor="#ffffff"
+            android:textColor="#FFFFFF"
             />
-        <ImageView
+        <Button
             android:id="@+id/leve1_2_2_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_back"
+            android:background="#FFCC00"
+            android:paddingRight="20dp"
+            android:drawablePadding="5dp"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="2dp"
-            android:layout_marginTop="7dp"
+            android:drawableLeft="@drawable/ic_ab_back_holo_dark_am"
+            android:text="返回"
+            android:textSize="20dp"
+            android:gravity="left|center_vertical"
+            android:textColor="#FFFFFF"
+            style="?android:attr/borderlessButtonStyle"
             />
+
         <ImageView
             android:id="@+id/leve1_2_2_refresh"
             android:layout_width="wrap_content"
@@ -57,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="#ffff"
+            android:background="#FFFFFF"
             >
         </LinearLayout>
 
@@ -66,34 +72,37 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:background="#F5F5F5"
             >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:layout_marginTop="3dp"
                 >
 
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/level2_2_1"
-                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/level2_2_1"
+                    android:scaleType="centerCrop"
                     />
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/level2_2_2"
-                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/level2_2_2"
+                    android:scaleType="centerCrop"
                     />
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/level2_2_3"
-                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/level2_2_3"
+                    android:scaleType="centerCrop"
+                    android:layout_marginLeft="3dp"
                     />
 
             </LinearLayout>
@@ -102,26 +111,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:layout_marginTop="3dp"
                 >
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/level2_2_4"
-                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/level2_2_4"
+                    android:scaleType="centerCrop"
                     />
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/level2_2_5"
-                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/level2_2_5"
+                    android:scaleType="centerCrop"
+                    android:layout_marginLeft="3dp"
                     />
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/level2_2_6"
+                    android:src="@drawable/level2_2_6"
+                    android:scaleType="centerCrop"
                     android:layout_gravity="center_horizontal"
                     />
             </LinearLayout>

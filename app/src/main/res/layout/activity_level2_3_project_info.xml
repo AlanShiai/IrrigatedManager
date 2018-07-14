@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="2dp"
+    android:background="#FFCC00"
     >
 
     <RelativeLayout
         android:id="@+id/level_2_3_title_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"
+        android:layout_marginTop="22dp"
         >
 
         <TextView
@@ -19,7 +19,6 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="level_2_3_title"
-            android:background="#DC143C"
             android:textSize="30dp"
             android:textColor="#ffffff"
             />
@@ -48,6 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/level_2_3_title_layout"
+        android:background="#F5F5F5"
         >
 
     </ListView>
