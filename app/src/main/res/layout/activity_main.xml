@@ -29,8 +29,9 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="@string/level_1_title"
-                    android:textSize="18dp"
+                    android:textSize="20sp"
                     android:textColor="#FFFFFF"
+                    android:textStyle="normal|bold"
                     />
                 <ImageView
                     android:id="@+id/leve1_1_setting"

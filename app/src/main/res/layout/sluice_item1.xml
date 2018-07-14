@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    >
 
     <ImageView
         android:layout_width="wrap_content"
@@ -11,31 +12,32 @@
         android:background="@drawable/level2_4_1_1"
         />
 
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         >
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            >
+
             <TextView
                 android:id="@+id/sluice_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:text="赵寨主干西闸位"
+                android:textSize="18sp"
                 />
             <TextView
                 android:id="@+id/sluice_update_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="2018-06-11 10:44:46"
+                android:text="2018-06-11 10:44:46 "
                 />
         </LinearLayout>
 
@@ -45,8 +47,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_gravity="left"
-            android:layout_marginLeft="10dp"
-            android:text="点击查看闸门详情"
+            android:layout_marginLeft="5dp"
+            android:text="点击查看详情"
+            android:textColor="#ADADAD"
             />
 
     </LinearLayout>

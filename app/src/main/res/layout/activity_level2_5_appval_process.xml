@@ -36,8 +36,9 @@
             android:layout_weight="3"
             android:gravity="center"
             android:text="我的申请"
-            android:textSize="18dp"
+            android:textSize="20sp"
             android:textColor="#FFFFFF"
+            android:textStyle="normal|bold"
             />
 
         <Space

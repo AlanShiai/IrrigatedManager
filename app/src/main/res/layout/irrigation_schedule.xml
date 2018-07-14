@@ -10,9 +10,10 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_gravity="center_vertical"
-        android:textSize="28dp"
+        android:textSize="20dp"
         android:layout_marginLeft="10dp"
-        android:textStyle="normal|bold" />
+        android:textStyle="normal"
+        />
 
     <TextView
         android:id="@+id/irrigation_schedule"
@@ -20,14 +21,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_margin="20dp"
-        android:textSize="24dp"
+        android:textSize="18sp"
         android:layout_marginLeft="10dp" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:background="@drawable/forward"
+        android:background="@drawable/right_arrow"
         />
 
 </LinearLayout>
