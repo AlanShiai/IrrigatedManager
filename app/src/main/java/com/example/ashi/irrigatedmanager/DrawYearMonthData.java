@@ -48,10 +48,12 @@ public class DrawYearMonthData extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         //给整个画布设置颜色 或者canvas.drawColor(int RGB);
-        canvas.drawRGB(0, 0, 255);     //设置画布的背景 参数为RGB对应的0~255的色值, 还有同名函数,接收为ARGB
+        canvas.drawRGB(0x00, 0x3D, 0x79);
+//        canvas.drawRGB(0x00, 0x00, 0xFF);
 
         //画空圆
         mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setStrokeWidth(18);
         canvas.drawCircle(mDensity * 100, mDensity * 100, mDensity * 80, mPaint);
         canvas.drawCircle(mDensity * 240, mDensity * 140, mDensity * 40, mPaint);
 
@@ -61,7 +63,8 @@ public class DrawYearMonthData extends View {
         canvas.drawText("0", mDensity * (240-10) , mDensity * (140+10), mPaint);
 
         mPaint.setTextSize(20 * mDensity);
-        mPaint.setColor(Color.BLUE);
+//        mPaint.setColor(Color.BLUE);
+        mPaint.setColor(0xFF003D79);
         canvas.drawRect(mDensity * (240-23) , mDensity * (140+20),  mDensity * (240+23),  mDensity * (140+80), mPaint);
         canvas.drawRect(mDensity * (100-43) , mDensity * (140+20),  mDensity * (100+43),  mDensity * (140+80), mPaint);
         mPaint.setColor(Color.WHITE);
