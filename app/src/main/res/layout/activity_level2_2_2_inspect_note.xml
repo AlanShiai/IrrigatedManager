@@ -8,7 +8,7 @@
     >
 
     <LinearLayout
-        android:id="@+id/level_2_4_1_title_layout"
+        android:id="@+id/level_2_2_2_title_layout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="42dp"
@@ -16,7 +16,7 @@
         >
 
         <Button
-            android:id="@+id/leve1_2_4_1_back"
+            android:id="@+id/leve1_2_2_2_back"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
@@ -31,12 +31,12 @@
             />
 
         <TextView
-            android:id="@+id/level_2_4_1_title"
+            android:id="@+id/level_2_2_title"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:gravity="center"
-            android:text="闸门监测"
+            android:text="巡检记录"
             android:textSize="20sp"
             android:textColor="#FFFFFF"
             android:textStyle="normal|bold"
@@ -47,15 +47,56 @@
             android:layout_height="match_parent"
             android:layout_weight="2"
             />
+
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/level_2_4_1_sluice_list"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/level_2_4_1_title_layout"
+        android:layout_below="@id/level_2_2_2_title_layout"
         android:background="#F5F5F5"
         >
-    </ListView>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#F5F5F5"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            >
+
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                />
+
+            <Spinner
+                android:id="@+id/level_2_2_2_spinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="确定"
+                />
+
+            <Button
+                android:id="@+id/btnDatePickerDialog"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Show DatePickerDialog"
+                />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>
