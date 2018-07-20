@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFCC00"
+    >
+
+    <LinearLayout
+        android:id="@+id/level_2_2_3_title_layout"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_marginTop="20dp"
+        android:background="#FFCC00"
+        >
+
+        <Button
+            android:id="@+id/leve1_2_2_3_back"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:paddingLeft="5dp"
+            android:drawablePadding="1dp"
+            android:drawableLeft="@drawable/ic_ab_back_holo_dark_am"
+            android:text="返回"
+            android:gravity="left|center_vertical"
+            android:textColor="#FFFFFF"
+            style="?android:attr/borderlessButtonStyle"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="详情统计"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"
+            android:textStyle="normal|bold"
+            />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/level_2_2_3_inspect_details"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/level_2_2_3_title_layout"
+        android:background="#F5F5F5"
+        >
+    </ListView>
+
+</RelativeLayout>

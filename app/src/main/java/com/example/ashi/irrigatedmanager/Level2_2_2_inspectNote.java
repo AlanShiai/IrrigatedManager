@@ -30,8 +30,9 @@ public class Level2_2_2_inspectNote extends AppCompatActivity {
         setContentView(R.layout.activity_level2_2_2_inspect_note);
 
         Spinner spinner = (Spinner) findViewById(R.id.level_2_2_2_spinner);
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.spinner_array,
-                R.layout.support_simple_spinner_dropdown_item);
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_multiple_choice,items);
+//        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.spinner_array,
+//                R.layout.support_simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
 

@@ -36,7 +36,8 @@ public class Level2_6_irrigationSchedule extends AppCompatActivity {
 
         ListView listView = (ListView) findViewById(R.id.level_2_6_irrigation_schedule);
         initProjectInfoList();
-        IrrigationScheduleInfoAdpter adapter = new IrrigationScheduleInfoAdpter(Level2_6_irrigationSchedule.this, R.layout.irrigation_schedule, projectInfoList);
+        IrrigationScheduleInfoAdpter adapter = new IrrigationScheduleInfoAdpter(
+                Level2_6_irrigationSchedule.this, R.layout.irrigation_schedule, projectInfoList);
         listView.setAdapter(adapter);
 
         Button backButton = (Button) findViewById(R.id.leve1_2_6_back);

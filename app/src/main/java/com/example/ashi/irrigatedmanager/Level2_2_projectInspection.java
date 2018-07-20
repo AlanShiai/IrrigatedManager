@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.example.ashi.irrigatedmanager.util.Const;
 
+import static com.example.ashi.irrigatedmanager.R.id.leve1_2_2_back;
+
 public class Level2_2_projectInspection extends AppCompatActivity {
 
     @Override
@@ -39,6 +41,14 @@ public class Level2_2_projectInspection extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Level2_2_projectInspection.this, Level2_2_2_inspectNote.class);
+                startActivity(intent);
+            }
+        });
+
+        findViewById(R.id.level_2_2_inspect_details).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Level2_2_projectInspection.this, Level2_2_3_inspectDetails.class);
                 startActivity(intent);
             }
         });

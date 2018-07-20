@@ -98,6 +98,7 @@
                     android:scaleType="centerCrop"
                     />
                 <ImageView
+                    android:id="@+id/level_2_2_inspect_details"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

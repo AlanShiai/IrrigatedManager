@@ -15,7 +15,13 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".Level2_1_irrigateOverview" />
         <activity android:name=".Level2_2_projectInspection" />
         <activity android:name=".Level2_3_projectInfo" />
@@ -24,15 +30,10 @@
         <activity android:name=".Level2_6_irrigationSchedule" />
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:label="@string/title_activity_login"></activity>
         <activity android:name=".Level2_4_1_sluice" />
-        <activity android:name=".Level2_2_2_inspectNote"></activity>
+        <activity android:name=".Level2_2_2_inspectNote" />
+        <activity android:name=".Level2_2_3_inspectDetails"></activity>
     </application>
 
 </manifest>
