@@ -53,6 +53,14 @@ public class Level2_2_projectInspection extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.level_2_5_manual_inspect).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Level2_2_projectInspection.this, Level2_2_5_1_manualInspect.class);
+                startActivity(intent);
+            }
+        });
+
         Button leve1_2_2_back = (Button) findViewById(R.id.leve1_2_2_back);
         leve1_2_2_back.setOnClickListener(new View.OnClickListener() {
             @Override

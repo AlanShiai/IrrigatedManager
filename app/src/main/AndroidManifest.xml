@@ -30,10 +30,12 @@
         <activity android:name=".Level2_6_irrigationSchedule" />
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+            android:label="@string/title_activity_login" />
         <activity android:name=".Level2_4_1_sluice" />
         <activity android:name=".Level2_2_2_inspectNote" />
-        <activity android:name=".Level2_2_3_inspectDetails"></activity>
+        <activity android:name=".Level2_2_3_inspectDetails" />
+        <activity android:name=".Level2_2_5_1_manualInspect" />
+        <activity android:name=".level2_5.ManualInspectItem"></activity>
     </application>
 
 </manifest>

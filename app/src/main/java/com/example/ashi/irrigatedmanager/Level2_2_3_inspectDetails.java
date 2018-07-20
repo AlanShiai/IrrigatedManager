@@ -28,8 +28,6 @@ public class Level2_2_3_inspectDetails extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.level_2_2_3_inspect_details);
         listView.setAdapter(adapter);
 
-
-
         findViewById(R.id.leve1_2_2_3_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

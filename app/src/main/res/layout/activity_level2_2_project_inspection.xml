@@ -123,6 +123,7 @@
                     android:scaleType="centerCrop"
                     />
                 <ImageView
+                    android:id="@+id/level_2_5_manual_inspect"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
