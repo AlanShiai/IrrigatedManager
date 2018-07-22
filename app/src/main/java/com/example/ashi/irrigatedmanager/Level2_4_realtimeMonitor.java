@@ -28,8 +28,7 @@ public class Level2_4_realtimeMonitor extends AppCompatActivity {
         TextView title = (TextView) findViewById(R.id.level_2_4_title);
         title.setText(Const.LEVEL_2_TITILE_4);
 
-        ImageView sluice = (ImageView) findViewById(R.id.level2_4_1_sluice);
-        sluice.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.level2_4_1_sluice).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Level2_4_realtimeMonitor.this, Level2_4_1_sluice.class);
@@ -37,8 +36,15 @@ public class Level2_4_realtimeMonitor extends AppCompatActivity {
             }
         });
 
-        Button backButton = (Button) findViewById(R.id.leve1_2_4_back);
-        backButton.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.level2_4_3_rain).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Level2_4_realtimeMonitor.this, Level2_4_3_rain.class);
+                startActivity(intent);
+            }
+        });
+
+        findViewById(R.id.leve1_2_4_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Level2_4_realtimeMonitor.this, MainActivity.class);

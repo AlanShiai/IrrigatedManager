@@ -35,7 +35,8 @@
         <activity android:name=".Level2_2_2_inspectNote" />
         <activity android:name=".Level2_2_3_inspectDetails" />
         <activity android:name=".Level2_2_5_1_manualInspect" />
-        <activity android:name=".level2_5.ManualInspectItem"></activity>
+        <activity android:name=".level2_5.ManualInspectItem" />
+        <activity android:name=".Level2_4_3_rain"></activity>
     </application>
 
 </manifest>
