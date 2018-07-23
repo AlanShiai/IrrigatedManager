@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.ListViewAutoScrollHelper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,9 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.ashi.irrigatedmanager.level2_5.ManualInspectBasicInfo;
+import com.example.ashi.irrigatedmanager.level2_5.ManualInspectBasicInfoAdapter;
 import com.example.ashi.irrigatedmanager.level2_5.ManualInspectItem2;
+import com.example.ashi.irrigatedmanager.level2_5.ManualInspectItemAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -147,7 +152,13 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_base_info, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_listview, container, false);
+
+            ManualInspectBasicInfoAdapter adapter = new ManualInspectBasicInfoAdapter(
+                    getContext(), R.layout.fragment_listview_item, new ArrayList<String>(ManualInspectBasicInfo.getInfo().keySet()));
+            ListView listView = (ListView) rootView.findViewById(R.id.fragment_listview_list);
+            listView.setAdapter(adapter);
+
 //            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
 //            textView.setText("Hello world 2");
             return rootView;
