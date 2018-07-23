@@ -1,6 +1,7 @@
 package com.example.ashi.irrigatedmanager.level2_5;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * Created by AShi on 7/23/2018.
@@ -8,7 +9,7 @@ import java.util.HashMap;
 
 public class ManualInspectBasicInfo {
 
-    HashMap<String,String> basicInfo = new HashMap<String, String>();
+    HashMap<String,String> basicInfo = new LinkedHashMap<String, String>();
 
     public static HashMap<String,String> getInfo() {
         ManualInspectBasicInfo info = new ManualInspectBasicInfo();
