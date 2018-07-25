@@ -39,6 +39,7 @@
         <activity android:name=".Level2_4_3_rain" />
         <activity android:name=".Level2_5_1_appvalDetails" />
         <activity android:name=".Level2_2_5_2_manualInspect" />
+        <activity android:name=".Level2_2_projectInspection2"></activity>
     </application>
 
 </manifest>
