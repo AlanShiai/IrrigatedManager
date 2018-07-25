@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/activity_main"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#42a0ff"
     >
 
     <LinearLayout
@@ -12,7 +11,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="42dp"
-        android:layout_marginTop="20dp"
+        android:background="#42a0ff"
         >
 
         <Button
@@ -26,6 +25,7 @@
             android:text="返回"
             android:gravity="left|center_vertical"
             android:textColor="#FFFFFF"
+            android:visibility="invisible"
             style="?android:attr/borderlessButtonStyle"
             />
 
@@ -49,9 +49,11 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/level_2_1_body_layout"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_below="@id/level_2_1_title_layout"
         android:background="#F5F5F5"
         >
@@ -76,4 +78,63 @@
 
     </LinearLayout>
 
-</RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"
+        />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_marginTop="4dp"
+        >
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:drawablePadding="1dp"
+            android:drawableLeft="@drawable/home"
+            style="?android:attr/borderlessButtonStyle"
+            />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:drawablePadding="1dp"
+            android:drawableLeft="@drawable/inspect"
+            style="?android:attr/borderlessButtonStyle"
+            />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:drawablePadding="1dp"
+            android:drawableLeft="@drawable/monitor"
+            style="?android:attr/borderlessButtonStyle"
+            />
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:drawablePadding="1dp"
+            android:drawableLeft="@drawable/appval"
+            style="?android:attr/borderlessButtonStyle"
+            />
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:drawablePadding="1dp"
+            android:drawableLeft="@drawable/me"
+            style="?android:attr/borderlessButtonStyle"
+            />
+
+    </LinearLayout>
+
+
+</LinearLayout>
