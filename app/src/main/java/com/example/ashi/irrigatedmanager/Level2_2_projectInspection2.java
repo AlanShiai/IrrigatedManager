@@ -14,6 +14,5 @@ public class Level2_2_projectInspection2 extends AppCompatActivity {
         LinearLayout ll_body = (LinearLayout) findViewById(R.id.draw_year_month_data);
         DrawYearMonthData view = new DrawYearMonthData(getApplicationContext());
         ll_body.addView(view);
-
     }
 }

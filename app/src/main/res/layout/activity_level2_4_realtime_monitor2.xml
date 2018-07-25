@@ -6,7 +6,6 @@
     >
 
     <LinearLayout
-        android:id="@+id/level_2_1_title_layout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="42dp"
@@ -34,7 +33,7 @@
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:gravity="center"
-            android:text="我的申请"
+            android:text="实时监测"
             android:textSize="20sp"
             android:textColor="#FFFFFF"
             android:textStyle="normal|bold"
@@ -52,28 +51,29 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="#F5F5F5"
         >
 
-        <ImageView
+        <LinearLayout
+            android:id="@+id/draw_year_month_data"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@drawable/level2_1" />
-
-        <TextView
-            android:id="@+id/level_2_1_content"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="level_2_1_content"
-            android:textSize="18sp"
             android:background="#FFFFFF"
-            android:textStyle="normal"
-            android:layout_marginTop="3dp"
-            />
+            >
 
+            <ListView
+                android:id="@+id/level_2_4_1_sluice_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/level_2_4_1_title_layout"
+                android:background="#F5F5F5"
+                >
+            </ListView>
+
+        </LinearLayout>
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -89,53 +89,47 @@
         android:layout_marginTop="4dp"
         >
 
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            />
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:drawablePadding="1dp"
-            android:drawableLeft="@drawable/home"
+            android:layout_weight="3"
+            android:drawablePadding="20dp"
+            android:drawableLeft="@drawable/start_inspect"
             style="?android:attr/borderlessButtonStyle"
             />
 
         <Button
-            android:id="@+id/overview_inspect"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="3"
             android:drawablePadding="1dp"
-            android:drawableLeft="@drawable/inspect"
+            android:drawableLeft="@drawable/note"
             style="?android:attr/borderlessButtonStyle"
             />
 
         <Button
-            android:id="@+id/monitor"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:drawablePadding="1dp"
-            android:drawableLeft="@drawable/monitor"
-            style="?android:attr/borderlessButtonStyle"
-            />
-        <Button
-            android:id="@+id/overview_appval"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="3"
             android:drawablePadding="1dp"
             android:drawableLeft="@drawable/appval"
             style="?android:attr/borderlessButtonStyle"
             />
+
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="3"
             android:drawablePadding="1dp"
             android:drawableLeft="@drawable/me"
             style="?android:attr/borderlessButtonStyle"
             />
 
     </LinearLayout>
-
 
 </LinearLayout>
