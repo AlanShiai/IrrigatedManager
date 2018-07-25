@@ -4,7 +4,7 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFCC00"
+    android:background="#42a0ff"
     >
 
     <LinearLayout
@@ -27,7 +27,6 @@
             android:gravity="left|center_vertical"
             android:textColor="#FFFFFF"
             style="?android:attr/borderlessButtonStyle"
-            android:background="#FFCC00"
             />
 
         <TextView
