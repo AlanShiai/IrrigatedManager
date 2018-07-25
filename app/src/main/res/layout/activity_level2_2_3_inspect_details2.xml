@@ -6,7 +6,6 @@
     >
 
     <LinearLayout
-        android:id="@+id/level_2_1_title_layout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="42dp"
@@ -34,7 +33,7 @@
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:gravity="center"
-            android:text="工程巡检"
+            android:text="详情统计"
             android:textSize="20sp"
             android:textColor="#FFFFFF"
             android:textStyle="normal|bold"
@@ -54,65 +53,14 @@
         android:layout_weight="1"
         >
 
-        <LinearLayout
-            android:id="@+id/draw_year_month_data"
-            android:orientation="vertical"
+        <ListView
+            android:id="@+id/level_2_2_3_inspect_details"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="#FFFFFF"
+            android:layout_height="match_parent"
+            android:layout_below="@id/level_2_2_3_inspect_details"
+            android:background="#F5F5F5"
             >
-        </LinearLayout>
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#000000"
-        >
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:layout_marginTop="4dp"
-        >
-
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            />
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:drawablePadding="20dp"
-            android:drawableLeft="@drawable/start_inspect"
-            style="?android:attr/borderlessButtonStyle"
-            />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:drawablePadding="1dp"
-            android:drawableLeft="@drawable/note"
-            style="?android:attr/borderlessButtonStyle"
-            />
-
-        <Button
-            android:id="@+id/details"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:drawablePadding="1dp"
-            android:drawableLeft="@drawable/me"
-            style="?android:attr/borderlessButtonStyle"
-            />
-
+        </ListView>
     </LinearLayout>
 
 </LinearLayout>
