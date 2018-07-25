@@ -56,6 +56,13 @@ public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        findViewById(R.id.irrigation_schedule).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Level2_4_realtimeMonitor2.this, Level2_6_irrigationSchedule2.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
