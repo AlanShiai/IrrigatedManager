@@ -31,11 +31,22 @@ public class Level2_1_irrigateOverview extends AppCompatActivity {
         TextView content = (TextView) findViewById(R.id.level_2_1_content);
         content.setText(Const.LEVEL_2_CONTENT);
 
-        Button leve1_2_1_back = (Button) findViewById(R.id.leve1_2_1_back);
-        leve1_2_1_back.setOnClickListener(new View.OnClickListener() {
+        addListernerForBottomToolbar();
+
+        findViewById(R.id.leve1_2_1_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Level2_1_irrigateOverview.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void addListernerForBottomToolbar() {
+        findViewById(R.id.overview_appval).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Level2_1_irrigateOverview.this, Level2_5_appvalProcess.class);
                 startActivity(intent);
             }
         });
