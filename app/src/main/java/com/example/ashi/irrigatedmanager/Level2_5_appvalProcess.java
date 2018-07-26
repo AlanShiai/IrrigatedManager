@@ -38,16 +38,7 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= 21) {
-            View decorView = getWindow().getDecorView();
-            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
-        }
         setContentView(R.layout.activity_level2_5_appval_process);
-
-        TextView title = (TextView) findViewById(R.id.level_2_5_title);
-        title.setText(Const.LEVEL_2_TITILE_5);
 
         Button button = (Button) findViewById(R.id.should_do_task_button);
         button.setOnClickListener(new View.OnClickListener() {
@@ -96,7 +87,7 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
         findViewById(R.id.leve1_2_5_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Level2_5_appvalProcess.this, MainActivity.class);
+                Intent intent = new Intent(Level2_5_appvalProcess.this, Level2_1_irrigateOverview.class);
                 startActivity(intent);
             }
         });
