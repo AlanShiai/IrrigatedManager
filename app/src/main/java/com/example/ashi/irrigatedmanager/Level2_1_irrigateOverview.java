@@ -40,6 +40,7 @@ public class Level2_1_irrigateOverview extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Level2_1_irrigateOverview.this, Level2_2_projectInspection2.class);
                 startActivity(intent);
+                finish();
             }
         });
         findViewById(R.id.monitor).setOnClickListener(new View.OnClickListener() {
@@ -47,6 +48,7 @@ public class Level2_1_irrigateOverview extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Level2_1_irrigateOverview.this, Level2_4_realtimeMonitor2.class);
                 startActivity(intent);
+                finish();
             }
         });
         findViewById(R.id.overview_appval).setOnClickListener(new View.OnClickListener() {
@@ -54,6 +56,7 @@ public class Level2_1_irrigateOverview extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Level2_1_irrigateOverview.this, Level2_5_appvalProcess.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
