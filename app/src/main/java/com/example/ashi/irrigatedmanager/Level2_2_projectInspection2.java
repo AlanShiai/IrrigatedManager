@@ -18,6 +18,7 @@ public class Level2_2_projectInspection2 extends AppCompatActivity {
         ll_body.addView(view);
 
         addListernerForBottomToolbar();
+        addListernerForBackButton();
     }
 
     private void addListernerForBottomToolbar() {
@@ -40,6 +41,17 @@ public class Level2_2_projectInspection2 extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Level2_2_projectInspection2.this, Level2_2_3_inspectDetails2.class);
                 startActivity(intent);
+            }
+        });
+    }
+
+    private void addListernerForBackButton() {
+        findViewById(R.id.back_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Level2_2_projectInspection2.this, Level2_1_irrigateOverview.class);
+                startActivity(intent);
+                finish();
             }
         });
     }

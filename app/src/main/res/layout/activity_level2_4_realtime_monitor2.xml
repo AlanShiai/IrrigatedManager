@@ -120,7 +120,7 @@
             android:src="@drawable/appval"
             android:background="#FFFFFF"
             />
-        
+
         <ImageButton
             android:id="@+id/irrigation_schedule"
             android:layout_width="0dp"
