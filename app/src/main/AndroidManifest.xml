@@ -23,7 +23,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Level2_2_projectInspection" />
         <activity android:name=".Level2_3_projectInfo" />
         <activity android:name=".Level2_4_realtimeMonitor" />
         <activity android:name=".Level2_5_appvalProcess" />
