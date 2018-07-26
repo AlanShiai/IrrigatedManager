@@ -47,8 +47,6 @@ public class Level2_4_realtimeMonitor extends AppCompatActivity {
         findViewById(R.id.leve1_2_4_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Level2_4_realtimeMonitor.this, MainActivity.class);
-                startActivity(intent);
             }
         });
     }

@@ -30,8 +30,6 @@ public class Level2_1_irrigateOverview extends AppCompatActivity {
         findViewById(R.id.leve1_2_1_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Level2_1_irrigateOverview.this, MainActivity.class);
-                startActivity(intent);
             }
         });
     }

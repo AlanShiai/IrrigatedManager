@@ -44,8 +44,6 @@ public class Level2_6_irrigationSchedule extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Level2_6_irrigationSchedule.this, MainActivity.class);
-                startActivity(intent);
             }
         });
     }

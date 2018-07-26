@@ -65,8 +65,6 @@ public class Level2_2_projectInspection extends AppCompatActivity {
         leve1_2_2_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Level2_2_projectInspection.this, MainActivity.class);
-                startActivity(intent);
             }
         });
     }

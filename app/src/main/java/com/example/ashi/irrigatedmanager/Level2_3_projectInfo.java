@@ -43,8 +43,6 @@ public class Level2_3_projectInfo extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Level2_3_projectInfo.this, MainActivity.class);
-                startActivity(intent);
             }
         });
     }
