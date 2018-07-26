@@ -78,42 +78,40 @@
         android:layout_width="match_parent"
         android:layout_height="42dp"
         android:layout_marginTop="4dp"
+        android:background="#FFFFFF"
         >
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            />
-
-        <Button
+        <ImageButton
             android:id="@+id/start_inspect"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:drawablePadding="20dp"
-            android:drawableLeft="@drawable/start_inspect"
-            style="?android:attr/borderlessButtonStyle"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="1dp"
+            android:scaleType="center"
+            android:src="@drawable/start_inspect"
+            android:background="#FFFFFF"
             />
 
-        <Button
+        <ImageButton
             android:id="@+id/inspect_note"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:drawablePadding="1dp"
-            android:drawableLeft="@drawable/note"
-            style="?android:attr/borderlessButtonStyle"
+            android:scaleType="center"
+            android:src="@drawable/note"
+            android:background="#FFFFFF"
             />
 
-        <Button
+        <ImageButton
             android:id="@+id/details"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:drawablePadding="1dp"
-            android:drawableLeft="@drawable/me"
-            style="?android:attr/borderlessButtonStyle"
+            android:scaleType="center"
+            android:src="@drawable/me"
+            android:background="#FFFFFF"
             />
 
     </LinearLayout>
