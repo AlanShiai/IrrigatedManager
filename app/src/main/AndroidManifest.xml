@@ -33,7 +33,6 @@
         <activity android:name=".Level2_2_3_inspectDetails" />
         <activity android:name=".Level2_2_5_1_manualInspect" />
         <activity android:name=".level2_5.ManualInspectItem" />
-        <activity android:name=".Level2_4_3_rain" />
         <activity android:name=".Level2_5_1_appvalDetails" />
         <activity android:name=".Level2_2_5_2_manualInspect" />
         <activity android:name=".Level2_2_projectInspection2" />
