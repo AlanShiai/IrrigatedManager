@@ -1,7 +1,9 @@
 package com.example.ashi.irrigatedmanager;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -21,6 +23,8 @@ public class Level2_6_irrigationSchedule2 extends AppCompatActivity {
         IrrigationScheduleInfoAdpter adapter = new IrrigationScheduleInfoAdpter(
                 Level2_6_irrigationSchedule2.this, R.layout.irrigation_schedule, projectInfoList);
         listView.setAdapter(adapter);
+
+        addListernerForBackButton();
     }
 
     private void initProjectInfoList() {
@@ -30,4 +34,14 @@ public class Level2_6_irrigationSchedule2 extends AppCompatActivity {
         projectInfoList.add(new IrrigationScheduleInfo("磁县", "11.00%"));
     }
 
+    private void addListernerForBackButton() {
+        findViewById(R.id.back_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Level2_6_irrigationSchedule2.this, Level2_4_realtimeMonitor2.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
 }
