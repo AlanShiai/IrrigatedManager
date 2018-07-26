@@ -42,8 +42,6 @@ public class Level2_4_1_sluice extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Level2_4_1_sluice.this, Level2_4_realtimeMonitor.class);
-                startActivity(intent);
             }
         });
     }

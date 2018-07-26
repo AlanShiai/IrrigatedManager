@@ -24,7 +24,6 @@
         </activity>
 
         <activity android:name=".Level2_3_projectInfo" />
-        <activity android:name=".Level2_4_realtimeMonitor" />
         <activity android:name=".Level2_5_appvalProcess" />
         <activity android:name=".Level2_6_irrigationSchedule" />
         <activity
