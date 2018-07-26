@@ -57,7 +57,6 @@
             android:id="@+id/level_2_2_3_inspect_details"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/level_2_2_3_inspect_details"
             android:background="#F5F5F5"
             >
         </ListView>

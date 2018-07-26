@@ -21,6 +21,13 @@ public class Level2_2_projectInspection2 extends AppCompatActivity {
     }
 
     private void addListernerForBottomToolbar() {
+        findViewById(R.id.start_inspect).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Level2_2_projectInspection2.this, Level2_2_5_1_manualInspect.class);
+                startActivity(intent);
+            }
+        });
         findViewById(R.id.details).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

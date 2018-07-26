@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFCC00"
     >
 
     <LinearLayout
-        android:id="@+id/level_2_2_5_1_title_layout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="42dp"
-        android:layout_marginTop="20dp"
-        android:background="#FFCC00"
+        android:background="#42a0ff"
         >
 
         <Button
@@ -30,6 +27,7 @@
             />
 
         <TextView
+            android:id="@+id/level_2_1_title"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
@@ -45,16 +43,22 @@
             android:layout_height="match_parent"
             android:layout_weight="2"
             />
-
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/level_2_2_5_1_inspect_details"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/level_2_2_5_1_title_layout"
-        android:background="#F5F5F5"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         >
-    </ListView>
 
-</RelativeLayout>
+        <ListView
+            android:id="@+id/level_2_2_5_1_inspect_details"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F5F5F5"
+            >
+        </ListView>
+    </LinearLayout>
+
+</LinearLayout>
