@@ -23,7 +23,6 @@
             android:text="返回"
             android:gravity="left|center_vertical"
             android:textColor="#FFFFFF"
-            android:visibility="invisible"
             style="?android:attr/borderlessButtonStyle"
             />
 

@@ -1,7 +1,9 @@
 package com.example.ashi.irrigatedmanager;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 
 import com.example.ashi.irrigatedmanager.level2_2_3.InspectDetailInfo;
@@ -26,6 +28,14 @@ public class Level2_2_3_inspectDetails2 extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.level_2_2_3_inspect_details);
         listView.setAdapter(adapter);
 
+        findViewById(R.id.leve1_2_1_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Level2_2_3_inspectDetails2.this, Level2_2_projectInspection2.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void initData() {
