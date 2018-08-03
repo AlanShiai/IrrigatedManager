@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FFCC00"
-    >
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
 
     <LinearLayout
-        android:id="@+id/level_2_3_title_layout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="42dp"
-        android:layout_marginTop="20dp"
-        android:background="#FFCC00"
+        android:background="#42a0ff"
         >
 
         <Button
-            android:id="@+id/leve1_2_3_back"
+            android:id="@+id/back_button"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
@@ -27,16 +24,14 @@
             android:gravity="left|center_vertical"
             android:textColor="#FFFFFF"
             style="?android:attr/borderlessButtonStyle"
-            android:background="#FFCC00"
             />
 
         <TextView
-            android:id="@+id/level_2_3_title"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:gravity="center"
-            android:text="我的申请"
+            android:text="工程信息"
             android:textSize="20sp"
             android:textColor="#FFFFFF"
             android:textStyle="normal|bold"
@@ -53,10 +48,9 @@
         android:id="@+id/level_2_3_projectInfo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/level_2_3_title_layout"
         android:background="#F5F5F5"
         >
 
     </ListView>
 
-</RelativeLayout>
+</LinearLayout>

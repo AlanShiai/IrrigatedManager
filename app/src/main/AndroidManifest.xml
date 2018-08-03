@@ -31,14 +31,13 @@
         <activity android:name=".Level2_4_1_sluice" />
         <activity android:name=".Level2_2_2_inspectNote" />
         <activity android:name=".Level2_2_5_1_manualInspect" />
-        <activity android:name=".level2_5.ManualInspectItem" />
         <activity android:name=".Level2_5_1_appvalDetails" />
         <activity android:name=".Level2_2_5_2_manualInspect" />
         <activity android:name=".Level2_2_projectInspection2" />
         <activity android:name=".Level2_4_realtimeMonitor2" />
         <activity android:name=".Level2_4_3_rain2" />
         <activity android:name=".Level2_6_irrigationSchedule2" />
-        <activity android:name=".Level2_2_3_inspectDetails2"></activity>
+        <activity android:name=".Level2_2_3_inspectDetails2"/>
     </application>
 
 </manifest>

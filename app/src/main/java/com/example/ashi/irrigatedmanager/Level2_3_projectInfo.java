@@ -23,26 +23,20 @@ public class Level2_3_projectInfo extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= 21) {
-            View decorView = getWindow().getDecorView();
-            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
-        }
         setContentView(R.layout.activity_level2_3_project_info);
-
-        TextView title = (TextView) findViewById(R.id.level_2_3_title);
-        title.setText(Const.LEVEL_2_TITILE_3);
 
         ListView listView = (ListView) findViewById(R.id.level_2_3_projectInfo);
         initProjectInfoList();
         ProjectInfoAdpter adapter = new ProjectInfoAdpter(Level2_3_projectInfo.this, R.layout.project_item1, projectInfoList);
         listView.setAdapter(adapter);
 
-        Button backButton = (Button) findViewById(R.id.leve1_2_3_back);
+        Button backButton = (Button) findViewById(R.id.back_button);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(Level2_3_projectInfo.this, Level2_2_projectInspection2.class);
+                startActivity(intent);
+                finish();
             }
         });
     }

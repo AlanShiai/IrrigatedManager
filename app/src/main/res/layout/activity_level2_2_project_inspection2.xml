@@ -112,6 +112,16 @@
             android:background="#FFFFFF"
             />
 
+        <ImageButton
+            android:id="@+id/project_info"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="1dp"
+            android:scaleType="center"
+            android:src="@drawable/appval"
+            android:background="#FFFFFF"
+            />
     </LinearLayout>
 
 </LinearLayout>
