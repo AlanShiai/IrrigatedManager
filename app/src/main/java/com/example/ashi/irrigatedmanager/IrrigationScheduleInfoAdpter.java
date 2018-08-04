@@ -1,6 +1,10 @@
 package com.example.ashi.irrigatedmanager;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +19,31 @@ import java.util.List;
 
 public class IrrigationScheduleInfoAdpter extends ArrayAdapter<IrrigationScheduleInfo> {
 
+    static int[] colors25 = new int[] {
+            Color.parseColor("#00A600"),
+            Color.parseColor("#FF0000"),
+            Color.parseColor("#FF0000"),
+            Color.parseColor("#FF0000"),
+    };
+    static int[] colors50 = new int[] {
+            Color.parseColor("#00A600"),
+            Color.parseColor("#00A600"),
+            Color.parseColor("#FF0000"),
+            Color.parseColor("#FF0000"),
+    };
+    static int[] colors75 = new int[] {
+            Color.parseColor("#00A600"),
+            Color.parseColor("#00A600"),
+            Color.parseColor("#00A600"),
+            Color.parseColor("#FF0000"),
+    };
+    static int[] colors100 = new int[] {
+            Color.parseColor("#00A600"),
+            Color.parseColor("#00A600"),
+            Color.parseColor("#00A600"),
+            Color.parseColor("#00A600"),
+    };
+
     private int resourceId;
 
     public IrrigationScheduleInfoAdpter(Context context, int textViewResourceId,
@@ -25,11 +54,30 @@ public class IrrigationScheduleInfoAdpter extends ArrayAdapter<IrrigationSchedul
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        IrrigationScheduleInfo projectInfo = getItem(position); // 获取当前项的Fruit实例
+        IrrigationScheduleInfo projectInfo = getItem(position);
         View view;
         IrrigationScheduleInfoAdpter.ViewHolder viewHolder;
         if (convertView == null) {
             view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
+            if (Build.VERSION.SDK_INT >= 16) {
+                GradientDrawable linearDrawable = new GradientDrawable();
+                linearDrawable.setOrientation(GradientDrawable.Orientation.LEFT_RIGHT);
+                linearDrawable.setColors(colors100);
+                if (projectInfo.getSchedule().equals("15.75%")) {
+                    linearDrawable.setColors(colors25);
+                } else if (projectInfo.getSchedule().equals("40.00%")) {
+                    linearDrawable.setColors(colors50);
+                } else if (projectInfo.getSchedule().equals("75.00%")) {
+                    linearDrawable.setColors(colors75);
+                } else if (projectInfo.getSchedule().equals("98.00%")) {
+                    linearDrawable.setColors(colors100);
+                }
+                linearDrawable.setGradientType(GradientDrawable.LINEAR_GRADIENT);
+                view.setBackground(linearDrawable);
+
+//                Drawable statusQuestionDrawable = getContext().getResources().getDrawable(R.drawable.shape_gradient);
+//                view.setBackground(statusQuestionDrawable);
+            }
             viewHolder = new IrrigationScheduleInfoAdpter.ViewHolder();
             viewHolder.projectName = (TextView) view.findViewById (R.id.irrigation_schedule_name);
             viewHolder.schedule = (TextView) view.findViewById(R.id.irrigation_schedule);
