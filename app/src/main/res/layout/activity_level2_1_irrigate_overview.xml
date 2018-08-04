@@ -90,15 +90,6 @@
         >
 
         <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:drawablePadding="1dp"
-            android:drawableLeft="@drawable/home"
-            style="?android:attr/borderlessButtonStyle"
-            />
-
-        <Button
             android:id="@+id/overview_inspect"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -124,14 +115,6 @@
             android:layout_weight="2"
             android:drawablePadding="1dp"
             android:drawableLeft="@drawable/appval"
-            style="?android:attr/borderlessButtonStyle"
-            />
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:drawablePadding="1dp"
-            android:drawableLeft="@drawable/me"
             style="?android:attr/borderlessButtonStyle"
             />
 

@@ -88,16 +88,6 @@
         >
 
         <ImageButton
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawablePadding="1dp"
-            android:scaleType="center"
-            android:src="@drawable/start_inspect"
-            android:background="#FFFFFF"
-            />
-
-        <ImageButton
             android:id="@+id/rain"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -108,16 +98,6 @@
             android:background="#FFFFFF"
             />
 
-        <ImageButton
-
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawablePadding="1dp"
-            android:scaleType="center"
-            android:src="@drawable/appval"
-            android:background="#FFFFFF"
-            />
 
         <ImageButton
             android:id="@+id/irrigation_schedule"
