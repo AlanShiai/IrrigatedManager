@@ -85,8 +85,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:layout_marginTop="4dp"
+        android:layout_height="wrap_content"
         >
 
         <Button
@@ -94,8 +93,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:drawablePadding="1dp"
-            android:drawableLeft="@drawable/inspect"
+            android:text="巡检"
+            android:gravity="center|center_horizontal"
+            android:drawableTop="@drawable/inspect"
             style="?android:attr/borderlessButtonStyle"
             />
 
@@ -104,8 +104,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:drawablePadding="1dp"
-            android:drawableLeft="@drawable/monitor"
+            android:text="监测"
+            android:gravity="center|center_horizontal"
+            android:drawableTop="@drawable/monitor"
             style="?android:attr/borderlessButtonStyle"
             />
         <Button
@@ -113,8 +114,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:drawablePadding="1dp"
-            android:drawableLeft="@drawable/appval"
+            android:text="审批"
+            android:gravity="center|center_horizontal"
+            android:drawableTop="@drawable/appval"
             style="?android:attr/borderlessButtonStyle"
             />
 
