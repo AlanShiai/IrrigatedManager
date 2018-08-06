@@ -96,7 +96,6 @@
             style="?android:attr/borderlessButtonStyle"
             />
 
-
         <Button
             android:id="@+id/irrigation_schedule"
             android:layout_width="0dp"
