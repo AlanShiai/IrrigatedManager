@@ -65,7 +65,6 @@
                 android:id="@+id/level_2_6_irrigation_schedule"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/level_2_4_1_title_layout"
                 android:background="#F5F5F5"
                 >
             </ListView>
