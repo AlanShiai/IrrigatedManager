@@ -54,11 +54,31 @@
         android:background="@drawable/shape_gradient"
         >
 
-        <ImageView
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@drawable/level2_1" />
+            android:layout_weight="1">
+            <ImageSwitcher
+                android:id="@+id/image_switcher"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+            </ImageSwitcher>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+                <LinearLayout
+                    android:id="@+id/viewGroup"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="30dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal" >
+                </LinearLayout>
+            </RelativeLayout>
+        </FrameLayout>
 
         <TextView
             android:id="@+id/level_2_1_content"
