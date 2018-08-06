@@ -19,9 +19,6 @@ public class Level2_1_irrigateOverview extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level2_1_irrigate_overview);
 
-        TextView title = (TextView) findViewById(R.id.level_2_1_title);
-        title.setText(Const.LEVEL_2_TITILE_1);
-
         TextView content = (TextView) findViewById(R.id.level_2_1_content);
         content.setText(Const.LEVEL_2_CONTENT);
 

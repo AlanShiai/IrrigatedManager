@@ -92,7 +92,7 @@
             android:layout_weight="2"
             android:text="巡检"
             android:gravity="center|center_horizontal"
-            android:drawableTop="@drawable/inspect"
+            android:drawableTop="@drawable/note"
             style="?android:attr/borderlessButtonStyle"
             />
 
@@ -104,7 +104,7 @@
             android:layout_weight="2"
             android:text="巡检"
             android:gravity="center|center_horizontal"
-            android:drawableTop="@drawable/inspect"
+            android:drawableTop="@drawable/me"
             style="?android:attr/borderlessButtonStyle"
             />
 
