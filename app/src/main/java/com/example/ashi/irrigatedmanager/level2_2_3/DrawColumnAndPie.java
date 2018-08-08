@@ -51,20 +51,27 @@ public class DrawColumnAndPie extends View {
         canvas.drawRGB(0x00, 0x3D, 0x79);
 //        canvas.drawRGB(0x00, 0x00, 0xFF);
 
+        String text = "0";
+        Rect rect = new Rect();
+        mPaint.getTextBounds(text, 0, text.length(), rect);
+        int width_0 = rect.width();//文字宽
+        int fontSize = rect.height();
+        text = "100";
+        mPaint.getTextBounds(text, 0, text.length(), rect);
+        int width_100 = rect.width();//文字宽
+
         int bottom = getBottom(), right = getRight();
 
         // draw sparator line.
         canvas.drawLine(0, bottom/2, right, bottom/2, mPaint);
 
         // draw x-y coordinate
-        int x_space = 200;
+        int x_space = width_100 + 40;
         int y_space = 100;
         canvas.drawLine(0 + x_space, bottom/2 - y_space, right, bottom/2 - y_space, mPaint); // x - axls
         canvas.drawLine(0 + x_space, bottom/2 - y_space, 0 + x_space, 0, mPaint); // y - axls
 
         // draw x string
-
-        float fontSize = mDensity * 20;
         String[] items = new String[] {
                 "渠首",
                 "闸门",
@@ -73,20 +80,13 @@ public class DrawColumnAndPie extends View {
                 "涵洞",
         };
         float x_grid = (right - x_space) / (items.length * 4);
-        canvas.drawText("渠首", 0 + x_space + x_grid + x_grid*0, bottom/2 - y_space + fontSize, mPaint);
-        canvas.drawText("闸门", 0 + x_space + x_grid + x_grid*4, bottom/2 - y_space + fontSize, mPaint);
-        canvas.drawText("桥梁", 0 + x_space + x_grid + x_grid*8, bottom/2 - y_space + fontSize, mPaint);
-        canvas.drawText("渡槽", 0 + x_space + x_grid + x_grid*12, bottom/2 - y_space + fontSize, mPaint);
-        canvas.drawText("涵洞", 0 + x_space + x_grid + x_grid*16, bottom/2 - y_space + fontSize, mPaint);
+        canvas.drawText("渠首", 0 + x_space + x_grid + x_grid*0, bottom/2 - y_space + fontSize + 20, mPaint);
+        canvas.drawText("闸门", 0 + x_space + x_grid + x_grid*4, bottom/2 - y_space + fontSize + 20, mPaint);
+        canvas.drawText("桥梁", 0 + x_space + x_grid + x_grid*8, bottom/2 - y_space + fontSize + 20, mPaint);
+        canvas.drawText("渡槽", 0 + x_space + x_grid + x_grid*12, bottom/2 - y_space + fontSize + 20, mPaint);
+        canvas.drawText("涵洞", 0 + x_space + x_grid + x_grid*16, bottom/2 - y_space + fontSize + 20, mPaint);
 
         // y axis string
-        String text = "0";
-        Rect rect = new Rect();
-        mPaint.getTextBounds(text, 0, text.length(), rect);
-        int width_0 = rect.width();//文字宽
-        text = "100";
-        mPaint.getTextBounds(text, 0, text.length(), rect);
-        int width_100 = rect.width();//文字宽
         float y_grid = (bottom/2 - y_space) / 6;
         canvas.drawText("0",   0 + x_space - width_0 - 20 , bottom/2 - y_space - y_grid * 0, mPaint);
         canvas.drawText("100", 0 + x_space - width_100 - 20, bottom/2 - y_space - y_grid * 1, mPaint);
@@ -95,8 +95,49 @@ public class DrawColumnAndPie extends View {
         canvas.drawText("400", 0 + x_space - width_100 - 20, bottom/2 - y_space - y_grid * 4, mPaint);
         canvas.drawText("500", 0 + x_space - width_100 - 20, bottom/2 - y_space - y_grid * 5, mPaint);
 
-        
+        // draw column
+        int [] times = new int[] {
+                532,
+                166,
+                433,
+                344,
+                124,
+        };
+        float rectWidth = x_grid*3;
+        float rectHigh = (600-532)/(float)600 * (bottom/2 - y_space);
+        float rectX = 0 + x_space + x_grid + x_grid*0;
+        mPaint.setColor(Color.RED);
+        canvas.drawRect(rectX, bottom/2 - y_space - 2, rectX+rectWidth, rectHigh, mPaint);
+        mPaint.setColor(Color.WHITE);
+        canvas.drawText("532", rectX + 20, rectHigh + fontSize + 20, mPaint);
 
+        rectX = 0 + x_space + x_grid + x_grid*4;
+        rectHigh = (600-166)/(float)600 * (bottom/2 - y_space);
+        mPaint.setColor(Color.MAGENTA);
+        canvas.drawRect(rectX, bottom/2 - y_space - 2, rectX+rectWidth, rectHigh, mPaint);
+        mPaint.setColor(Color.WHITE);
+        canvas.drawText("166", rectX + 20, rectHigh + fontSize + 20, mPaint);
+
+        rectX = 0 + x_space + x_grid + x_grid*8;
+        rectHigh = (600-433)/(float)600 * (bottom/2 - y_space);
+        mPaint.setColor(Color.BLUE);
+        canvas.drawRect(rectX, bottom/2 - y_space - 2, rectX+rectWidth, rectHigh, mPaint);
+        mPaint.setColor(Color.WHITE);
+        canvas.drawText("433", rectX + 20, rectHigh + fontSize + 20, mPaint);
+
+        rectX = 0 + x_space + x_grid + x_grid*12;
+        rectHigh = (600-344)/(float)600 * (bottom/2 - y_space);
+        mPaint.setColor(Color.GREEN);
+        canvas.drawRect(rectX, bottom/2 - y_space - 2, rectX+rectWidth, rectHigh, mPaint);
+        mPaint.setColor(Color.WHITE);
+        canvas.drawText("344", rectX + 20, rectHigh + fontSize + 20, mPaint);
+
+        rectX = 0 + x_space + x_grid + x_grid*16;
+        rectHigh = (600-124)/(float)600 * (bottom/2 - y_space);
+        mPaint.setColor(Color.BLACK);
+        canvas.drawRect(rectX, bottom/2 - y_space - 2, rectX+rectWidth, rectHigh, mPaint);
+        mPaint.setColor(Color.WHITE);
+        canvas.drawText("124", rectX + 20, rectHigh + fontSize + 20, mPaint);
 
         //画空圆
         /*
