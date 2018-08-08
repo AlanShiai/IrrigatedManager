@@ -28,11 +28,16 @@ public class Level2_6_irrigationSchedule2 extends AppCompatActivity {
     }
 
     private void initProjectInfoList() {
-        projectInfoList.add(new IrrigationScheduleInfo("魏县", "75.00%"));
+        projectInfoList.add(new IrrigationScheduleInfo("井陉县", "15.75%"));
+        projectInfoList.add(new IrrigationScheduleInfo("正定县", "75.00%"));
         projectInfoList.add(new IrrigationScheduleInfo("成磁县", "98.00%"));
-        projectInfoList.add(new IrrigationScheduleInfo("成县", "40.00%"));
-        projectInfoList.add(new IrrigationScheduleInfo("成安县", "15.75%"));
-        projectInfoList.add(new IrrigationScheduleInfo("临漳县", "40.00%"));
+        projectInfoList.add(new IrrigationScheduleInfo("行唐县", "40.00%"));
+        projectInfoList.add(new IrrigationScheduleInfo("灵寿县", "15.75%"));
+        projectInfoList.add(new IrrigationScheduleInfo("深泽县", "40.00%"));
+        projectInfoList.add(new IrrigationScheduleInfo("赞皇县", "98.00%"));
+        projectInfoList.add(new IrrigationScheduleInfo("无极县", "40.00%"));
+        projectInfoList.add(new IrrigationScheduleInfo("平山县", "15.75%"));
+        projectInfoList.add(new IrrigationScheduleInfo("元氏县", "40.00%"));
         projectInfoList.add(new IrrigationScheduleInfo("磁县", "98.00%"));
         projectInfoList.add(new IrrigationScheduleInfo("漳县", "40.00%"));
     }

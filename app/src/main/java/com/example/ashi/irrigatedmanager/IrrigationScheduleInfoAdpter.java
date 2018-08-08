@@ -20,28 +20,28 @@ import java.util.List;
 public class IrrigationScheduleInfoAdpter extends ArrayAdapter<IrrigationScheduleInfo> {
 
     static int[] colors25 = new int[] {
-            Color.parseColor("#0080ff"),
+            Color.parseColor("#42a0ff"),
             Color.parseColor("#FFFFFF"),
             Color.parseColor("#FFFFFF"),
             Color.parseColor("#FFFFFF"),
     };
     static int[] colors50 = new int[] {
-            Color.parseColor("#0080ff"),
-            Color.parseColor("#0080ff"),
+            Color.parseColor("#42a0ff"),
+            Color.parseColor("#42a0ff"),
             Color.parseColor("#FFFFFF"),
             Color.parseColor("#FFFFFF"),
     };
     static int[] colors75 = new int[] {
-            Color.parseColor("#0080ff"),
-            Color.parseColor("#0080ff"),
-            Color.parseColor("#0080ff"),
+            Color.parseColor("#42a0ff"),
+            Color.parseColor("#42a0ff"),
+            Color.parseColor("#42a0ff"),
             Color.parseColor("#FFFFFF"),
     };
     static int[] colors100 = new int[] {
-            Color.parseColor("#0080ff"),
-            Color.parseColor("#0080ff"),
-            Color.parseColor("#0080ff"),
-            Color.parseColor("#0080ff"),
+            Color.parseColor("#42a0ff"),
+            Color.parseColor("#42a0ff"),
+            Color.parseColor("#42a0ff"),
+            Color.parseColor("#42a0ff"),
     };
 
     private int resourceId;
