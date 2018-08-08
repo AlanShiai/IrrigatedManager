@@ -84,10 +84,9 @@
                 android:id="@+id/btnDatePickerDialog"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Show DatePickerDialog"
+                android:text="选择日期"
                 />
-
-
+            
         </LinearLayout>
 
     </LinearLayout>
