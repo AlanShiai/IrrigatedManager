@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -44,6 +45,13 @@ public class DrawColumnAndPie extends View {
 //        mPaint.setShadowLayer(mDensity*3, mDensity*10, mDensity*10, Color.RED );      //设置文字的阴影, 参数分别为:每一点像素模糊的半径, x轴偏移的距离, y轴偏移的距离, 阴影的颜色
     }
 
+    private int getStringWidth(String str) {
+        Rect rect = new Rect();
+        mPaint.getTextBounds(str, 0, str.length(), rect);
+        int width = rect.width();//文字宽
+        return width;
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -54,11 +62,9 @@ public class DrawColumnAndPie extends View {
         String text = "0";
         Rect rect = new Rect();
         mPaint.getTextBounds(text, 0, text.length(), rect);
-        int width_0 = rect.width();//文字宽
         int fontSize = rect.height();
-        text = "100";
-        mPaint.getTextBounds(text, 0, text.length(), rect);
-        int width_100 = rect.width();//文字宽
+        int width_0 = getStringWidth("0");
+        int width_100 = getStringWidth("100");
 
         int bottom = getBottom(), right = getRight();
 
@@ -138,6 +144,72 @@ public class DrawColumnAndPie extends View {
         canvas.drawRect(rectX, bottom/2 - y_space - 2, rectX+rectWidth, rectHigh, mPaint);
         mPaint.setColor(Color.WHITE);
         canvas.drawText("124", rectX + 20, rectHigh + fontSize + 20, mPaint);
+
+        // draw pie
+        int min = Math.min(bottom/2, right);
+        int width;
+        RectF pieRectF;
+        if (min == bottom/2) {
+            width = bottom/2 - 80;
+            pieRectF = new RectF((right-width)/2, bottom/2 + 40, right - (right-width)/2, bottom - 40);
+        } else {
+            width = right - 80;
+            pieRectF = new RectF(40, bottom/2 + (bottom/2 - width)/2, right - 40, bottom - (bottom/2 - width)/2);
+        }
+        float mRadius = width/2 - 60;
+        float circle_x = right/2, circle_y = bottom/2 + 40 + (bottom/2-80) / 2;
+        float sum = 21 + 20 + 9 + 2 + 8;
+        float startAngle = 0;
+        float sweepAngle = 21/sum * 350;
+        mPaint.setColor(Color.RED);
+        canvas.drawArc(pieRectF, startAngle, sweepAngle, true, mPaint);
+        float pxs = (float) (mRadius*Math.cos(Math.toRadians(startAngle+sweepAngle/2)));
+        float pys = (float) (mRadius*Math.sin(Math.toRadians(startAngle+sweepAngle/2)));
+        mPaint.setColor(Color.WHITE);
+        canvas.drawText("21", circle_x + pxs, circle_y + pys, mPaint);
+
+        startAngle = startAngle + sweepAngle + 2;
+        sweepAngle = 20/sum * 350;
+        mPaint.setColor(Color.MAGENTA);
+        canvas.drawArc(pieRectF, startAngle, sweepAngle, true, mPaint);
+        pxs = (float) (mRadius*Math.cos(Math.toRadians(startAngle+sweepAngle/2)));
+        pys = (float) (mRadius*Math.sin(Math.toRadians(startAngle+sweepAngle/2)));
+        mPaint.setColor(Color.WHITE);
+        canvas.drawText("20", circle_x + pxs, circle_y + pys, mPaint);
+
+        startAngle = startAngle + sweepAngle + 2;
+        sweepAngle = 9/sum * 350;
+        mPaint.setColor(Color.BLUE);
+        canvas.drawArc(pieRectF, startAngle, sweepAngle, true, mPaint);
+        pxs = (float) (mRadius*Math.cos(Math.toRadians(startAngle+sweepAngle/2)));
+        pys = (float) (mRadius*Math.sin(Math.toRadians(startAngle+sweepAngle/2)));
+        mPaint.setColor(Color.WHITE);
+        canvas.drawText("9", circle_x + pxs, circle_y + pys, mPaint);
+
+        startAngle = startAngle + sweepAngle + 2;
+        sweepAngle = 2/sum * 350;
+        mPaint.setColor(Color.GREEN);
+        canvas.drawArc(pieRectF, startAngle, sweepAngle, true, mPaint);
+        pxs = (float) (mRadius*Math.cos(Math.toRadians(startAngle+sweepAngle/2)));
+        pys = (float) (mRadius*Math.sin(Math.toRadians(startAngle+sweepAngle/2)));
+        mPaint.setColor(Color.WHITE);
+        canvas.drawText("2", circle_x + pxs, circle_y + pys, mPaint);
+
+        startAngle = startAngle + sweepAngle + 2;
+        sweepAngle = 8/sum * 350;
+        mPaint.setColor(Color.BLACK);
+        canvas.drawArc(pieRectF, startAngle, sweepAngle, true, mPaint);
+        pxs = (float) (mRadius*Math.cos(Math.toRadians(startAngle+sweepAngle/2)));
+        pys = (float) (mRadius*Math.sin(Math.toRadians(startAngle+sweepAngle/2)));
+        mPaint.setColor(Color.WHITE);
+        canvas.drawText("8", circle_x + pxs, circle_y + pys, mPaint);
+
+        mPaint.setColor(0xFF003D79);
+        canvas.drawCircle(right/2, bottom/2 + 40 + (bottom/2-80) / 2, width/2 - 160, mPaint);
+        mPaint.setColor(Color.WHITE);
+        String str = "异常次数";
+        int str_width = getStringWidth(str);
+        canvas.drawText("异常次数", right/2 - str_width/2, bottom/2 + 40 + (bottom/2-80) / 2, mPaint);
 
         //画空圆
         /*
