@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:background="#42a0ff"
+        >
+
+        <Button
+            android:id="@+id/leve1_2_1_back"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:paddingLeft="5dp"
+            android:drawablePadding="1dp"
+            android:drawableLeft="@drawable/ic_ab_back_holo_dark_am"
+            android:text="返回"
+            android:gravity="left|center_vertical"
+            android:textColor="#FFFFFF"
+            style="?android:attr/borderlessButtonStyle"
+            />
+
+        <TextView
+            android:id="@+id/level_2_1_title"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="巡检和异常次数"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"
+            android:textStyle="normal"
+            />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+
+        <ListView
+            android:id="@+id/level_2_2_3_inspect_details"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F5F5F5"
+            >
+        </ListView>
+    </LinearLayout>
+
+</LinearLayout>

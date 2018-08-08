@@ -22,7 +22,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".Level2_3_projectInfo" />
         <activity android:name=".Level2_5_appvalProcess" />
         <activity
@@ -36,7 +35,8 @@
         <activity android:name=".Level2_4_realtimeMonitor2" />
         <activity android:name=".Level2_4_3_rain2" />
         <activity android:name=".Level2_6_irrigationSchedule2" />
-        <activity android:name=".Level2_2_3_inspectDetails2"/>
+        <activity android:name=".Level2_2_3_inspectDetails2" />
+        <activity android:name=".Level2_2_3_inspectDetailsPie"></activity>
     </application>
 
 </manifest>
