@@ -110,16 +110,6 @@
             style="?android:attr/borderlessButtonStyle"
             />
 
-        <Button
-            android:id="@+id/project_info"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:text="信息"
-            android:gravity="center|center_horizontal"
-            android:drawableTop="@drawable/appval"
-            style="?android:attr/borderlessButtonStyle"
-            />
     </LinearLayout>
 
 </LinearLayout>
