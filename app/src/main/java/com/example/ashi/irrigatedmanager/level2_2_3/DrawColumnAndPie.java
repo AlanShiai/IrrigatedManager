@@ -39,7 +39,7 @@ public class DrawColumnAndPie extends View {
         mPaint.setStyle(Paint.Style.FILL);                      //设置画出的图形填充的类型,fill为内部填充,stroke为只有边框,内容不填充
         mPaint.setStrokeWidth(mDensity * 2);                    //设置边框的宽度. 如矩形的边宽, 文字的宽度. 接收实参为像素单位
         mPaint.setTextSize(mDensity * 20);                      //设置当绘制文字的时候的字体大小
-        mPaint.setTypeface(Typeface.DEFAULT_BOLD);              //设置当绘制文字时候的字体粗细
+        //mPaint.setTypeface(Typeface.DEFAULT_BOLD);              //设置当绘制文字时候的字体粗细
 //        mPaint.setShadowLayer(mDensity*3, mDensity*10, mDensity*10, Color.RED );      //设置文字的阴影, 参数分别为:每一点像素模糊的半径, x轴偏移的距离, y轴偏移的距离, 阴影的颜色
     }
 
@@ -50,18 +50,37 @@ public class DrawColumnAndPie extends View {
         canvas.drawRGB(0x00, 0x3D, 0x79);
 //        canvas.drawRGB(0x00, 0x00, 0xFF);
 
-        // draw sparator line.
-        canvas.drawLine(0, mCurHeight/2, mCurWidth, mCurHeight/2, mPaint);
+        int bottom = getBottom(), right = getRight();
 
-        // draw x-y corrodate
+        // draw sparator line.
+        canvas.drawLine(0, bottom/2, right, bottom/2, mPaint);
+
+        // draw x-y coordinate
         int x_space = 200;
         int y_space = 100;
-        canvas.drawLine(0 + x_space, mCurHeight/2 - y_space, mCurWidth, mCurHeight/2 - y_space, mPaint); // x - axls
-        canvas.drawLine(0 + x_space, mCurHeight/2 - y_space, 0 + x_space, 0, mPaint);
-//        canvas.drawLine(0, mCurHeight/2, mCurWidth, mCurHeight/2, mPaint);
+        canvas.drawLine(0 + x_space, bottom/2 - y_space, right, bottom/2 - y_space, mPaint); // x - axls
+        canvas.drawLine(0 + x_space, bottom/2 - y_space, 0 + x_space, 0, mPaint); // y - axls
+
+        // draw x string
+        float fontSize = mDensity * 20;
+        String[] items = new String[] {
+                "渠首",
+                "闸门",
+                "桥梁",
+                "渡槽",
+                "涵洞",
+        };
+        float x_grid = (right - x_space) / (items.length * 4);
+        canvas.drawText("渠首", 0 + x_space + x_grid + x_grid*0, bottom/2 - y_space + fontSize, mPaint);
+        canvas.drawText("闸门", 0 + x_space + x_grid + x_grid*4, bottom/2 - y_space + fontSize, mPaint);
+        canvas.drawText("桥梁", 0 + x_space + x_grid + x_grid*8, bottom/2 - y_space + fontSize, mPaint);
+        canvas.drawText("渡槽", 0 + x_space + x_grid + x_grid*12, bottom/2 - y_space + fontSize, mPaint);
+        canvas.drawText("涵洞", 0 + x_space + x_grid + x_grid*16, bottom/2 - y_space + fontSize, mPaint);
+
 
 
         //画空圆
+        /*
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeWidth(18);
         canvas.drawCircle(mDensity * 100, mDensity * 100, mDensity * 80, mPaint);
@@ -73,13 +92,13 @@ public class DrawColumnAndPie extends View {
         canvas.drawText("0", mDensity * (240-10) , mDensity * (140+10), mPaint);
 
         mPaint.setTextSize(20 * mDensity);
-//        mPaint.setColor(Color.BLUE);
         mPaint.setColor(0xFF003D79);
         canvas.drawRect(mDensity * (240-23) , mDensity * (140+20),  mDensity * (240+23),  mDensity * (140+80), mPaint);
         canvas.drawRect(mDensity * (100-43) , mDensity * (140+20),  mDensity * (100+43),  mDensity * (140+80), mPaint);
         mPaint.setColor(Color.WHITE);
         canvas.drawText("年度累计", mDensity * (100-40) , mDensity * (100+80), mPaint);
         canvas.drawText("本月xx", mDensity * (240-20) , mDensity * (140+40), mPaint);
+        */
 
     }
 
