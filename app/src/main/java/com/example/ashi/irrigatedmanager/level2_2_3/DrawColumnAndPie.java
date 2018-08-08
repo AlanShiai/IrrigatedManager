@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -62,6 +63,7 @@ public class DrawColumnAndPie extends View {
         canvas.drawLine(0 + x_space, bottom/2 - y_space, 0 + x_space, 0, mPaint); // y - axls
 
         // draw x string
+
         float fontSize = mDensity * 20;
         String[] items = new String[] {
                 "渠首",
@@ -77,6 +79,23 @@ public class DrawColumnAndPie extends View {
         canvas.drawText("渡槽", 0 + x_space + x_grid + x_grid*12, bottom/2 - y_space + fontSize, mPaint);
         canvas.drawText("涵洞", 0 + x_space + x_grid + x_grid*16, bottom/2 - y_space + fontSize, mPaint);
 
+        // y axis string
+        String text = "0";
+        Rect rect = new Rect();
+        mPaint.getTextBounds(text, 0, text.length(), rect);
+        int width_0 = rect.width();//文字宽
+        text = "100";
+        mPaint.getTextBounds(text, 0, text.length(), rect);
+        int width_100 = rect.width();//文字宽
+        float y_grid = (bottom/2 - y_space) / 6;
+        canvas.drawText("0",   0 + x_space - width_0 - 20 , bottom/2 - y_space - y_grid * 0, mPaint);
+        canvas.drawText("100", 0 + x_space - width_100 - 20, bottom/2 - y_space - y_grid * 1, mPaint);
+        canvas.drawText("200", 0 + x_space - width_100 - 20, bottom/2 - y_space - y_grid * 2, mPaint);
+        canvas.drawText("300", 0 + x_space - width_100 - 20, bottom/2 - y_space - y_grid * 3, mPaint);
+        canvas.drawText("400", 0 + x_space - width_100 - 20, bottom/2 - y_space - y_grid * 4, mPaint);
+        canvas.drawText("500", 0 + x_space - width_100 - 20, bottom/2 - y_space - y_grid * 5, mPaint);
+
+        
 
 
         //画空圆
