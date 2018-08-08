@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.example.ashi.irrigatedmanager.level2_2_3.DrawYearMonthData;
+
 public class Level2_2_projectInspection2 extends AppCompatActivity {
 
     @Override

@@ -1,4 +1,4 @@
-package com.example.ashi.irrigatedmanager;
+package com.example.ashi.irrigatedmanager.level2_2_3;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -9,17 +9,16 @@ import android.util.DisplayMetrics;
 import android.view.View;
 
 /**
- * Created by ashi on 7/9/2018.
+ * Created by AShi on 8/8/2018.
  */
-
-public class DrawYearMonthData extends View {
+public class DrawColumnAndPie extends View {
 
     private Paint mPaint;
     private int mCurWidth;            //当前屏幕的宽 pixel
     private int mCurHeight;           //当前屏幕的高 pixel
     private float mDensity;           //当前屏幕的dpi密度的比值. 720*1080(比值为2), 1080*1920(比值为3), 1440*2550(比值为4)
 
-    public DrawYearMonthData(Context context) {
+    public DrawColumnAndPie(Context context) {
         super(context);
         init();
     }
@@ -51,6 +50,17 @@ public class DrawYearMonthData extends View {
         canvas.drawRGB(0x00, 0x3D, 0x79);
 //        canvas.drawRGB(0x00, 0x00, 0xFF);
 
+        // draw sparator line.
+        canvas.drawLine(0, mCurHeight/2, mCurWidth, mCurHeight/2, mPaint);
+
+        // draw x-y corrodate
+        int x_space = 200;
+        int y_space = 100;
+        canvas.drawLine(0 + x_space, mCurHeight/2 - y_space, mCurWidth, mCurHeight/2 - y_space, mPaint); // x - axls
+        canvas.drawLine(0 + x_space, mCurHeight/2 - y_space, 0 + x_space, 0, mPaint);
+//        canvas.drawLine(0, mCurHeight/2, mCurWidth, mCurHeight/2, mPaint);
+
+
         //画空圆
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeWidth(18);
@@ -69,7 +79,7 @@ public class DrawYearMonthData extends View {
         canvas.drawRect(mDensity * (100-43) , mDensity * (140+20),  mDensity * (100+43),  mDensity * (140+80), mPaint);
         mPaint.setColor(Color.WHITE);
         canvas.drawText("年度累计", mDensity * (100-40) , mDensity * (100+80), mPaint);
-        canvas.drawText("本月", mDensity * (240-20) , mDensity * (140+40), mPaint);
+        canvas.drawText("本月xx", mDensity * (240-20) , mDensity * (140+40), mPaint);
 
     }
 
