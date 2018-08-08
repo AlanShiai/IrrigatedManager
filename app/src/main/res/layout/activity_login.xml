@@ -43,7 +43,7 @@
                 android:text="@string/level_1_title"
                 android:textSize="20sp"
                 android:textColor="#1087be"
-                android:textStyle="normal|bold"
+                android:textStyle="normal"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="30dp"
                 />
@@ -88,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/action_sign_in"
-                android:textStyle="bold" />
+                />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

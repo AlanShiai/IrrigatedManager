@@ -12,7 +12,7 @@
         android:layout_gravity="center_vertical"
         android:layout_margin="20dp"
         android:textSize="18sp"
-        android:textStyle="normal|bold"
+        android:textStyle="normal"
         />
 
     <ImageView
