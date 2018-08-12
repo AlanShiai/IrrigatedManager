@@ -112,7 +112,7 @@
             android:textSize="12sp"
             android:text="记录"
             android:gravity="center|center_horizontal"
-            android:drawableTop="@drawable/line_monitor"
+            android:drawableTop="@drawable/line_note"
             style="?android:attr/borderlessButtonStyle"
             />
 
