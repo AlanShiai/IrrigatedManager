@@ -56,8 +56,9 @@ public class DrawColumnAndPie extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         //给整个画布设置颜色 或者canvas.drawColor(int RGB);
-        canvas.drawRGB(0x00, 0x3D, 0x79);
-//        canvas.drawRGB(0x00, 0x00, 0xFF);
+//        canvas.drawRGB(0x00, 0x3D, 0x79);
+        canvas.drawRGB(0xFF, 0xFF, 0xFF);
+        mPaint.setColor(0xFF003D79);
 
         String text = "0";
         Rect rect = new Rect();
