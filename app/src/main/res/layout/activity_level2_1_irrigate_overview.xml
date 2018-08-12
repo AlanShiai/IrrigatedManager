@@ -5,12 +5,13 @@
     android:layout_height="match_parent"
     >
 
+    <!--
     <LinearLayout
         android:id="@+id/level_2_1_title_layout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="42dp"
-        android:background="#42a0ff"
+        android:background="#8842a0ff"
         >
 
         <Button
@@ -35,7 +36,7 @@
             android:gravity="center"
             android:text="灌区总览"
             android:textSize="20sp"
-            android:textColor="#FFFFFF"
+            android:textColor="#FFFFFFFF"
             android:textStyle="normal"
             />
 
@@ -45,6 +46,7 @@
             android:layout_weight="2"
             />
     </LinearLayout>
+    -->
 
     <LinearLayout
         android:orientation="vertical"
@@ -56,12 +58,24 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3">
+            android:layout_weight="2">
+
             <ImageSwitcher
                 android:id="@+id/image_switcher"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
             </ImageSwitcher>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:text="灌区总览"
+                android:textSize="20sp"
+                android:textColor="#FFFFFFFF"
+                android:textStyle="normal"
+                />
 
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -112,7 +126,7 @@
             android:layout_weight="2"
             android:text="巡检"
             android:gravity="center|center_horizontal"
-            android:drawableTop="@drawable/inspect"
+            android:drawableTop="@drawable/rxy1"
             style="?android:attr/borderlessButtonStyle"
             />
 
@@ -123,7 +137,7 @@
             android:layout_weight="2"
             android:text="监测"
             android:gravity="center|center_horizontal"
-            android:drawableTop="@drawable/monitor"
+            android:drawableTop="@drawable/rxy2"
             style="?android:attr/borderlessButtonStyle"
             />
 
@@ -134,7 +148,7 @@
             android:layout_weight="2"
             android:text="审批"
             android:gravity="center|center_horizontal"
-            android:drawableTop="@drawable/appval"
+            android:drawableTop="@drawable/rxy3"
             style="?android:attr/borderlessButtonStyle"
             />
 

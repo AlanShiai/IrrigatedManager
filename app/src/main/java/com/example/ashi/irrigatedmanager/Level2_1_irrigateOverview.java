@@ -75,11 +75,6 @@ public class Level2_1_irrigateOverview extends AppCompatActivity implements View
 
         addListernerForBottomToolbar();
 
-        findViewById(R.id.leve1_2_1_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
     }
 
     private void setImageBackground(int selectItems) {
