@@ -31,7 +31,7 @@ public class Level2_5_1_appvalDetails extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.level_2_5_1_appval_list);
         listView.setAdapter(adapter);
 
-        findViewById(R.id.leve1_2_5_1_back).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.leve1_2_5_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Level2_5_1_appvalDetails.this, Level2_5_appvalProcess.class);

@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#42a0ff"
     >
 
     <LinearLayout
-        android:id="@+id/level_2_5_1_title_layout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="42dp"
-        android:layout_marginTop="20dp"
         android:background="#42a0ff"
         >
 
         <Button
-            android:id="@+id/leve1_2_5_1_back"
+            android:id="@+id/leve1_2_5_back"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
@@ -27,7 +24,6 @@
             android:gravity="left|center_vertical"
             android:textColor="#FFFFFF"
             style="?android:attr/borderlessButtonStyle"
-            android:background="#42a0ff"
             />
 
         <TextView
@@ -75,5 +71,4 @@
 
     </LinearLayout>
 
-
-</RelativeLayout>
+</LinearLayout>
