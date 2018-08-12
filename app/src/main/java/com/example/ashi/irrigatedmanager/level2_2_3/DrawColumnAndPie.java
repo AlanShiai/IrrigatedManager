@@ -66,6 +66,7 @@ public class DrawColumnAndPie extends View {
         int fontSize = rect.height();
         int width_0 = getStringWidth("0");
         int width_100 = getStringWidth("100");
+        int width_text = getStringWidth("渠首");
 
         int bottom = getBottom(), right = getRight();
 
@@ -110,41 +111,42 @@ public class DrawColumnAndPie extends View {
                 344,
                 124,
         };
-        float rectWidth = x_grid*3;
+//        float rectWidth = x_grid*3;
+        float rectWidth = width_text;
         float rectHigh = (600-532)/(float)600 * (bottom/2 - y_space);
         float rectX = 0 + x_space + x_grid + x_grid*0;
         mPaint.setColor(Color.RED);
         canvas.drawRect(rectX, bottom/2 - y_space - 2, rectX+rectWidth, rectHigh, mPaint);
         mPaint.setColor(Color.WHITE);
-        canvas.drawText("532", rectX + 20, rectHigh + fontSize + 20, mPaint);
+        canvas.drawText("532", rectX + 10, rectHigh + fontSize + 20, mPaint);
 
         rectX = 0 + x_space + x_grid + x_grid*4;
         rectHigh = (600-166)/(float)600 * (bottom/2 - y_space);
         mPaint.setColor(Color.MAGENTA);
         canvas.drawRect(rectX, bottom/2 - y_space - 2, rectX+rectWidth, rectHigh, mPaint);
         mPaint.setColor(Color.WHITE);
-        canvas.drawText("166", rectX + 20, rectHigh + fontSize + 20, mPaint);
+        canvas.drawText("166", rectX + 10, rectHigh + fontSize + 20, mPaint);
 
         rectX = 0 + x_space + x_grid + x_grid*8;
         rectHigh = (600-433)/(float)600 * (bottom/2 - y_space);
         mPaint.setColor(Color.BLUE);
         canvas.drawRect(rectX, bottom/2 - y_space - 2, rectX+rectWidth, rectHigh, mPaint);
         mPaint.setColor(Color.WHITE);
-        canvas.drawText("433", rectX + 20, rectHigh + fontSize + 20, mPaint);
+        canvas.drawText("433", rectX + 10, rectHigh + fontSize + 20, mPaint);
 
         rectX = 0 + x_space + x_grid + x_grid*12;
         rectHigh = (600-344)/(float)600 * (bottom/2 - y_space);
         mPaint.setColor(Color.GREEN);
         canvas.drawRect(rectX, bottom/2 - y_space - 2, rectX+rectWidth, rectHigh, mPaint);
         mPaint.setColor(Color.WHITE);
-        canvas.drawText("344", rectX + 20, rectHigh + fontSize + 20, mPaint);
+        canvas.drawText("344", rectX + 10, rectHigh + fontSize + 20, mPaint);
 
         rectX = 0 + x_space + x_grid + x_grid*16;
         rectHigh = (600-124)/(float)600 * (bottom/2 - y_space);
         mPaint.setColor(Color.BLACK);
         canvas.drawRect(rectX, bottom/2 - y_space - 2, rectX+rectWidth, rectHigh, mPaint);
         mPaint.setColor(Color.WHITE);
-        canvas.drawText("124", rectX + 20, rectHigh + fontSize + 20, mPaint);
+        canvas.drawText("124", rectX + 10, rectHigh + fontSize + 20, mPaint);
 
         // draw pie
         int min = Math.min(bottom/2, right);
@@ -205,11 +207,13 @@ public class DrawColumnAndPie extends View {
         mPaint.setColor(Color.WHITE);
         canvas.drawText("8", circle_x + pxs, circle_y + pys, mPaint);
 
-        mPaint.setColor(0xFF003D79);
+//        mPaint.setColor(0xFF003D79);
         canvas.drawCircle(right/2, bottom/2 + 40 + (bottom/2-80) / 2, width/2 - 160, mPaint);
-        mPaint.setColor(Color.WHITE);
+//        mPaint.setColor(Color.WHITE);
+        mPaint.setColor(0xFF003D79);
         String str = "异常次数";
         int str_width = getStringWidth(str);
+        mPaint.setColor(0xFF003D79);
         canvas.drawText("异常次数", right/2 - str_width/2, bottom/2 + 40 + (bottom/2-80) / 2, mPaint);
 
         //画空圆
