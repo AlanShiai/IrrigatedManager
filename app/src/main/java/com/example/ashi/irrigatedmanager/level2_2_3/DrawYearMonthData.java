@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -60,8 +61,9 @@ public class DrawYearMonthData extends View {
 
         mPaint.setTextSize(30 * mDensity);
         mPaint.setStyle(Paint.Style.FILL);
-        canvas.drawText("0", mDensity * (100-10) , mDensity * (100+10), mPaint);
-        canvas.drawText("0", mDensity * (240-10) , mDensity * (140+10), mPaint);
+        int width_20 = getStringWidth("20");
+        canvas.drawText("20", mDensity * 100 - width_20/2 , mDensity * (100+10), mPaint);
+        canvas.drawText("3", mDensity * (240-10) , mDensity * (140+10), mPaint);
 
         mPaint.setTextSize(20 * mDensity);
 //        mPaint.setColor(Color.BLUE);
@@ -73,5 +75,13 @@ public class DrawYearMonthData extends View {
         canvas.drawText("本月", mDensity * (240-20) , mDensity * (140+40), mPaint);
 
     }
+
+    private int getStringWidth(String str) {
+        Rect rect = new Rect();
+        mPaint.getTextBounds(str, 0, str.length(), rect);
+        int width = rect.width();//文字宽
+        return width;
+    }
+
 
 }
