@@ -128,7 +128,7 @@
             android:textSize="12sp"
             android:text="巡检"
             android:gravity="center|center_horizontal"
-            android:drawableTop="@drawable/rxy1"
+            android:drawableTop="@drawable/line_inspect"
             style="?android:attr/borderlessButtonStyle"
             />
 
@@ -140,7 +140,7 @@
             android:textSize="12sp"
             android:text="监测"
             android:gravity="center|center_horizontal"
-            android:drawableTop="@drawable/rxy2"
+            android:drawableTop="@drawable/line_monitor"
             style="?android:attr/borderlessButtonStyle"
             />
 
@@ -152,7 +152,7 @@
             android:textSize="12sp"
             android:text="审批"
             android:gravity="center|center_horizontal"
-            android:drawableTop="@drawable/rxy3"
+            android:drawableTop="@drawable/line_approval"
             style="?android:attr/borderlessButtonStyle"
             />
 
@@ -164,7 +164,7 @@
             android:textSize="12sp"
             android:text="信息"
             android:gravity="center|center_horizontal"
-            android:drawableTop="@drawable/appval"
+            android:drawableTop="@drawable/line_info"
             style="?android:attr/borderlessButtonStyle"
             />
 
