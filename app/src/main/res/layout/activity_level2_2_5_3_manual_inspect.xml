@@ -47,25 +47,58 @@
             />
     </LinearLayout>
 
-    <LinearLayout
+    <ScrollView
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar_layout"
         android:background="#F5F5F5"
         >
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabs"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            >
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            />
-    </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="异常基本信息："
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="200sp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="异常补充信息："
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="200sp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="图片："
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="200sp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="定位："
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="200sp"
+                />
+        </LinearLayout>
+
+    </ScrollView>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -74,13 +107,11 @@
         android:layout_margin="5dp"
         >
         <Button
-            android:id="@+id/manual_inspect_report"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
             android:textSize="18sp"
-            android:text="上报异常"
+            android:text="确认上报"
             android:background="#42a0ff"
             />
     </RelativeLayout>

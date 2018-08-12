@@ -36,7 +36,8 @@
         <activity android:name=".Level2_4_3_rain2" />
         <activity android:name=".Level2_6_irrigationSchedule2" />
         <activity android:name=".Level2_2_3_inspectDetails2" />
-        <activity android:name=".Level2_2_3_inspectDetailsPie"></activity>
+        <activity android:name=".Level2_2_3_inspectDetailsPie" />
+        <activity android:name=".Level2_2_5_3_manualInspect"></activity>
     </application>
 
 </manifest>

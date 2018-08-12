@@ -72,6 +72,15 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
                 finish();
             }
         });
+
+        findViewById(R.id.manual_inspect_report).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Level2_2_5_2_manualInspect.this, Level2_2_5_3_manualInspect.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void initData() {
