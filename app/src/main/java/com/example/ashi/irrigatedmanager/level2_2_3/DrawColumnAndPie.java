@@ -8,6 +8,8 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 /**
@@ -19,6 +21,9 @@ public class DrawColumnAndPie extends View {
     private int mCurWidth;            //当前屏幕的宽 pixel
     private int mCurHeight;           //当前屏幕的高 pixel
     private float mDensity;           //当前屏幕的dpi密度的比值. 720*1080(比值为2), 1080*1920(比值为3), 1440*2550(比值为4)
+
+    private int touched_x = 0, touched_y = 0;
+    private Rect canalHeadRect, sluiceGateRect, bridgeRect, launderRect, culvertRect;
 
     public DrawColumnAndPie(Context context) {
         super(context);
@@ -47,6 +52,7 @@ public class DrawColumnAndPie extends View {
 
     private int getStringWidth(String str) {
         Rect rect = new Rect();
+//        rect.contains(x, y);
         mPaint.getTextBounds(str, 0, str.length(), rect);
         int width = rect.width();//文字宽
         return width;
@@ -61,9 +67,9 @@ public class DrawColumnAndPie extends View {
         mPaint.setColor(0xFF003D79);
 
         String text = "0";
-        Rect rect = new Rect();
-        mPaint.getTextBounds(text, 0, text.length(), rect);
-        int fontSize = rect.height();
+        Rect fontRect = new Rect();
+        mPaint.getTextBounds(text, 0, text.length(), fontRect);
+        int fontSize = fontRect.height();
         int width_0 = getStringWidth("0");
         int width_100 = getStringWidth("100");
         int width_text = getStringWidth("渠首");
@@ -87,21 +93,21 @@ public class DrawColumnAndPie extends View {
                 "渡槽",
                 "涵洞",
         };
-        float x_grid = (right - x_space) / (items.length * 4);
-        canvas.drawText("渠首", 0 + x_space + x_grid + x_grid*0, bottom/2 - y_space + fontSize + 20, mPaint);
-        canvas.drawText("闸门", 0 + x_space + x_grid + x_grid*4, bottom/2 - y_space + fontSize + 20, mPaint);
-        canvas.drawText("桥梁", 0 + x_space + x_grid + x_grid*8, bottom/2 - y_space + fontSize + 20, mPaint);
-        canvas.drawText("渡槽", 0 + x_space + x_grid + x_grid*12, bottom/2 - y_space + fontSize + 20, mPaint);
-        canvas.drawText("涵洞", 0 + x_space + x_grid + x_grid*16, bottom/2 - y_space + fontSize + 20, mPaint);
+        int x_grid = (right - x_space) / (items.length * 4);
+        canvas.drawText("渠首", x_space + x_grid + x_grid*0, bottom/2 - y_space + fontSize + 20, mPaint);
+        canvas.drawText("闸门", x_space + x_grid + x_grid*4, bottom/2 - y_space + fontSize + 20, mPaint);
+        canvas.drawText("桥梁", x_space + x_grid + x_grid*8, bottom/2 - y_space + fontSize + 20, mPaint);
+        canvas.drawText("渡槽", x_space + x_grid + x_grid*12, bottom/2 - y_space + fontSize + 20, mPaint);
+        canvas.drawText("涵洞", x_space + x_grid + x_grid*16, bottom/2 - y_space + fontSize + 20, mPaint);
 
         // y axis string
         float y_grid = (bottom/2 - y_space) / 6;
-        canvas.drawText("0",   0 + x_space - width_0 - 20 , bottom/2 - y_space - y_grid * 0, mPaint);
-        canvas.drawText("100", 0 + x_space - width_100 - 20, bottom/2 - y_space - y_grid * 1, mPaint);
-        canvas.drawText("200", 0 + x_space - width_100 - 20, bottom/2 - y_space - y_grid * 2, mPaint);
-        canvas.drawText("300", 0 + x_space - width_100 - 20, bottom/2 - y_space - y_grid * 3, mPaint);
-        canvas.drawText("400", 0 + x_space - width_100 - 20, bottom/2 - y_space - y_grid * 4, mPaint);
-        canvas.drawText("500", 0 + x_space - width_100 - 20, bottom/2 - y_space - y_grid * 5, mPaint);
+        canvas.drawText("0",   x_space - width_0 - 20 , bottom/2 - y_space - y_grid * 0, mPaint);
+        canvas.drawText("100", x_space - width_100 - 20, bottom/2 - y_space - y_grid * 1, mPaint);
+        canvas.drawText("200", x_space - width_100 - 20, bottom/2 - y_space - y_grid * 2, mPaint);
+        canvas.drawText("300", x_space - width_100 - 20, bottom/2 - y_space - y_grid * 3, mPaint);
+        canvas.drawText("400", x_space - width_100 - 20, bottom/2 - y_space - y_grid * 4, mPaint);
+        canvas.drawText("500", x_space - width_100 - 20, bottom/2 - y_space - y_grid * 5, mPaint);
 
         // draw column
         int [] times = new int[] {
@@ -111,40 +117,49 @@ public class DrawColumnAndPie extends View {
                 344,
                 124,
         };
-//        float rectWidth = x_grid*3;
-        float rectWidth = width_text;
-        float rectHigh = (600-532)/(float)600 * (bottom/2 - y_space);
-        float rectX = 0 + x_space + x_grid + x_grid*0;
-        mPaint.setColor(Color.RED);
-        canvas.drawRect(rectX, bottom/2 - y_space - 2, rectX+rectWidth, rectHigh, mPaint);
-        mPaint.setColor(Color.WHITE);
-        canvas.drawText("532", rectX + 10, rectHigh + fontSize + 20, mPaint);
 
-        rectX = 0 + x_space + x_grid + x_grid*4;
-        rectHigh = (600-166)/(float)600 * (bottom/2 - y_space);
+        int rectWidth = width_text;
+        int rectHigh = (int) ((600-532)/600.0 * (bottom/2 - y_space));
+        int rectX = x_space + x_grid + x_grid*0;
+        mPaint.setColor(Color.RED);
+        canalHeadRect = new Rect(rectX, rectHigh, (rectX+rectWidth), bottom/2 - y_space - 2);
+        canvas.drawRect(canalHeadRect, mPaint);
+        mPaint.setColor(Color.WHITE);
+        if (canalHeadRect.contains(touched_x, touched_y)) {
+            canvas.drawText("22", rectX + 10, rectHigh + fontSize + 20, mPaint);
+        } else {
+            canvas.drawText("532", rectX + 10, rectHigh + fontSize + 20, mPaint);
+        }
+
+        rectX = x_space + x_grid + x_grid*4;
+        rectHigh = (int) ((600-166)/600.0 * (bottom/2 - y_space));
+        sluiceGateRect = new Rect(rectX, rectHigh, rectX+rectWidth, bottom/2 - y_space - 2);
         mPaint.setColor(Color.MAGENTA);
-        canvas.drawRect(rectX, bottom/2 - y_space - 2, rectX+rectWidth, rectHigh, mPaint);
+        canvas.drawRect(sluiceGateRect, mPaint);
         mPaint.setColor(Color.WHITE);
         canvas.drawText("166", rectX + 10, rectHigh + fontSize + 20, mPaint);
 
-        rectX = 0 + x_space + x_grid + x_grid*8;
-        rectHigh = (600-433)/(float)600 * (bottom/2 - y_space);
+        rectX = x_space + x_grid + x_grid*8;
+        rectHigh = (int) ((600-433)/600.0 * (bottom/2 - y_space));
+        bridgeRect = new Rect(rectX, rectHigh, rectX+rectWidth, bottom/2 - y_space - 2);
         mPaint.setColor(Color.BLUE);
-        canvas.drawRect(rectX, bottom/2 - y_space - 2, rectX+rectWidth, rectHigh, mPaint);
+        canvas.drawRect(bridgeRect, mPaint);
         mPaint.setColor(Color.WHITE);
         canvas.drawText("433", rectX + 10, rectHigh + fontSize + 20, mPaint);
 
-        rectX = 0 + x_space + x_grid + x_grid*12;
-        rectHigh = (600-344)/(float)600 * (bottom/2 - y_space);
+        rectX = x_space + x_grid + x_grid*12;
+        rectHigh = (int) ((600-344)/600.0 * (bottom/2 - y_space));
+        launderRect = new Rect(rectX, rectHigh, rectX+rectWidth, bottom/2 - y_space - 2);
         mPaint.setColor(Color.GREEN);
-        canvas.drawRect(rectX, bottom/2 - y_space - 2, rectX+rectWidth, rectHigh, mPaint);
+        canvas.drawRect(launderRect, mPaint);
         mPaint.setColor(Color.WHITE);
         canvas.drawText("344", rectX + 10, rectHigh + fontSize + 20, mPaint);
 
-        rectX = 0 + x_space + x_grid + x_grid*16;
-        rectHigh = (600-124)/(float)600 * (bottom/2 - y_space);
+        rectX = x_space + x_grid + x_grid*16;
+        rectHigh = (int) ((600-124)/600.0 * (bottom/2 - y_space));
+        culvertRect = new Rect(rectX, rectHigh, rectX+rectWidth, bottom/2 - y_space - 2);
         mPaint.setColor(Color.BLACK);
-        canvas.drawRect(rectX, bottom/2 - y_space - 2, rectX+rectWidth, rectHigh, mPaint);
+        canvas.drawRect(culvertRect, mPaint);
         mPaint.setColor(Color.WHITE);
         canvas.drawText("124", rectX + 10, rectHigh + fontSize + 20, mPaint);
 
@@ -160,83 +175,135 @@ public class DrawColumnAndPie extends View {
             pieRectF = new RectF(40, bottom/2 + (bottom/2 - width)/2, right - 40, bottom - (bottom/2 - width)/2);
         }
         float mRadius = width/2 - 60;
-        float circle_x = right/2, circle_y = bottom/2 + 40 + (bottom/2-80) / 2;
+        int circle_x = right/2, circle_y = bottom/2 + 40 + (bottom/2-80) / 2;
         float sum = 21 + 20 + 9 + 2 + 8;
+
+        if (canalHeadRect.contains(touched_x, touched_y)
+                || sluiceGateRect.contains(touched_x, touched_y)
+                || bridgeRect.contains(touched_x, touched_y)
+                || launderRect.contains(touched_x, touched_y)
+                || culvertRect.contains(touched_x, touched_y)) {
+
+            if (canalHeadRect.contains(touched_x, touched_y)) {
+                drawException(canvas, pieRectF, mRadius, circle_x, circle_y,
+                        right, width, bottom, 21, 532, "渠首");
+            }
+            if (sluiceGateRect.contains(touched_x, touched_y)) {
+                drawException(canvas, pieRectF, mRadius, circle_x, circle_y,
+                        right, width, bottom, 20, 166, "闸门");
+            }
+            if (bridgeRect.contains(touched_x, touched_y)) {
+                drawException(canvas, pieRectF, mRadius, circle_x, circle_y,
+                        right, width, bottom, 9, 433, "桥梁");
+            }
+            if (launderRect.contains(touched_x, touched_y)) {
+                drawException(canvas, pieRectF, mRadius, circle_x, circle_y,
+                        right, width, bottom, 2, 344, "渡槽");
+            }
+            if (culvertRect.contains(touched_x, touched_y)) {
+                drawException(canvas, pieRectF, mRadius, circle_x, circle_y,
+                        right, width, bottom, 8, 124, "涵洞");
+            }
+
+        } else {
+            float startAngle = 0;
+            float sweepAngle = 21/sum * 350;
+            mPaint.setColor(Color.RED);
+            canvas.drawArc(pieRectF, startAngle, sweepAngle, true, mPaint);
+            float pxs = (float) (mRadius * Math.cos(Math.toRadians(startAngle + sweepAngle / 2)));
+            float pys = (float) (mRadius * Math.sin(Math.toRadians(startAngle + sweepAngle / 2)));
+            mPaint.setColor(Color.WHITE);
+            canvas.drawText("21", circle_x + pxs, circle_y + pys, mPaint);
+
+            startAngle = startAngle + sweepAngle + 2;
+            sweepAngle = 20 / sum * 350;
+            mPaint.setColor(Color.MAGENTA);
+            canvas.drawArc(pieRectF, startAngle, sweepAngle, true, mPaint);
+            pxs = (float) (mRadius * Math.cos(Math.toRadians(startAngle + sweepAngle / 2)));
+            pys = (float) (mRadius * Math.sin(Math.toRadians(startAngle + sweepAngle / 2)));
+            mPaint.setColor(Color.WHITE);
+            canvas.drawText("20", circle_x + pxs, circle_y + pys, mPaint);
+
+            startAngle = startAngle + sweepAngle + 2;
+            sweepAngle = 9 / sum * 350;
+            mPaint.setColor(Color.BLUE);
+            canvas.drawArc(pieRectF, startAngle, sweepAngle, true, mPaint);
+            pxs = (float) (mRadius * Math.cos(Math.toRadians(startAngle + sweepAngle / 2)));
+            pys = (float) (mRadius * Math.sin(Math.toRadians(startAngle + sweepAngle / 2)));
+            mPaint.setColor(Color.WHITE);
+            canvas.drawText("9", circle_x + pxs, circle_y + pys, mPaint);
+
+            startAngle = startAngle + sweepAngle + 2;
+            sweepAngle = 2 / sum * 350;
+            mPaint.setColor(Color.GREEN);
+            canvas.drawArc(pieRectF, startAngle, sweepAngle, true, mPaint);
+            pxs = (float) (mRadius * Math.cos(Math.toRadians(startAngle + sweepAngle / 2)));
+            pys = (float) (mRadius * Math.sin(Math.toRadians(startAngle + sweepAngle / 2)));
+            mPaint.setColor(Color.WHITE);
+            canvas.drawText("2", circle_x + pxs, circle_y + pys, mPaint);
+
+            startAngle = startAngle + sweepAngle + 2;
+            sweepAngle = 8 / sum * 350;
+            mPaint.setColor(Color.BLACK);
+            canvas.drawArc(pieRectF, startAngle, sweepAngle, true, mPaint);
+            pxs = (float) (mRadius * Math.cos(Math.toRadians(startAngle + sweepAngle / 2)));
+            pys = (float) (mRadius * Math.sin(Math.toRadians(startAngle + sweepAngle / 2)));
+            mPaint.setColor(Color.WHITE);
+            canvas.drawText("8", circle_x + pxs, circle_y + pys, mPaint);
+
+            mPaint.setColor(Color.WHITE);
+            canvas.drawCircle(right / 2, bottom / 2 + 40 + (bottom / 2 - 80) / 2, width / 2 - 160, mPaint);
+
+            String str = "异常次数";
+            int str_width = getStringWidth(str);
+            mPaint.setColor(0xFF003D79);
+            canvas.drawText(str, right / 2 - str_width / 2, bottom / 2 + 40 + (bottom / 2 - 80) / 2, mPaint);
+        }
+
+    }
+
+    private void drawException(Canvas canvas, RectF pieRectF, float mRadius, int circle_x, int circle_y,
+                               int right, int width, int bottom,
+                               int exceptionNum, int normalNum, String text) {
         float startAngle = 0;
-        float sweepAngle = 21/sum * 350;
+        float sweepAngle = (float) exceptionNum/(exceptionNum + normalNum) * 356;
         mPaint.setColor(Color.RED);
         canvas.drawArc(pieRectF, startAngle, sweepAngle, true, mPaint);
-        float pxs = (float) (mRadius*Math.cos(Math.toRadians(startAngle+sweepAngle/2)));
-        float pys = (float) (mRadius*Math.sin(Math.toRadians(startAngle+sweepAngle/2)));
-        mPaint.setColor(Color.WHITE);
-        canvas.drawText("21", circle_x + pxs, circle_y + pys, mPaint);
-
-        startAngle = startAngle + sweepAngle + 2;
-        sweepAngle = 20/sum * 350;
-        mPaint.setColor(Color.MAGENTA);
-        canvas.drawArc(pieRectF, startAngle, sweepAngle, true, mPaint);
-        pxs = (float) (mRadius*Math.cos(Math.toRadians(startAngle+sweepAngle/2)));
-        pys = (float) (mRadius*Math.sin(Math.toRadians(startAngle+sweepAngle/2)));
-        mPaint.setColor(Color.WHITE);
-        canvas.drawText("20", circle_x + pxs, circle_y + pys, mPaint);
-
-        startAngle = startAngle + sweepAngle + 2;
-        sweepAngle = 9/sum * 350;
-        mPaint.setColor(Color.BLUE);
-        canvas.drawArc(pieRectF, startAngle, sweepAngle, true, mPaint);
-        pxs = (float) (mRadius*Math.cos(Math.toRadians(startAngle+sweepAngle/2)));
-        pys = (float) (mRadius*Math.sin(Math.toRadians(startAngle+sweepAngle/2)));
-        mPaint.setColor(Color.WHITE);
-        canvas.drawText("9", circle_x + pxs, circle_y + pys, mPaint);
-
-        startAngle = startAngle + sweepAngle + 2;
-        sweepAngle = 2/sum * 350;
-        mPaint.setColor(Color.GREEN);
-        canvas.drawArc(pieRectF, startAngle, sweepAngle, true, mPaint);
-        pxs = (float) (mRadius*Math.cos(Math.toRadians(startAngle+sweepAngle/2)));
-        pys = (float) (mRadius*Math.sin(Math.toRadians(startAngle+sweepAngle/2)));
-        mPaint.setColor(Color.WHITE);
-        canvas.drawText("2", circle_x + pxs, circle_y + pys, mPaint);
-
-        startAngle = startAngle + sweepAngle + 2;
-        sweepAngle = 8/sum * 350;
-        mPaint.setColor(Color.BLACK);
-        canvas.drawArc(pieRectF, startAngle, sweepAngle, true, mPaint);
-        pxs = (float) (mRadius*Math.cos(Math.toRadians(startAngle+sweepAngle/2)));
-        pys = (float) (mRadius*Math.sin(Math.toRadians(startAngle+sweepAngle/2)));
-        mPaint.setColor(Color.WHITE);
-        canvas.drawText("8", circle_x + pxs, circle_y + pys, mPaint);
-
-//        mPaint.setColor(0xFF003D79);
-        canvas.drawCircle(right/2, bottom/2 + 40 + (bottom/2-80) / 2, width/2 - 160, mPaint);
-//        mPaint.setColor(Color.WHITE);
+        float pxs = (float) (mRadius * Math.cos(Math.toRadians(startAngle + sweepAngle / 2)));
+        float pys = (float) (mRadius * Math.sin(Math.toRadians(startAngle + sweepAngle / 2)));
         mPaint.setColor(0xFF003D79);
-        String str = "异常次数";
+        canvas.drawText(exceptionNum+"", circle_x + pxs, circle_y + pys, mPaint);
+
+        startAngle = startAngle + sweepAngle + 2;
+        sweepAngle = (float) normalNum/(exceptionNum + normalNum) * 356;
+        mPaint.setColor(Color.GRAY);
+        canvas.drawArc(pieRectF, startAngle, sweepAngle, true, mPaint);
+        pxs = (float) (mRadius * Math.cos(Math.toRadians(startAngle + sweepAngle / 2)));
+        pys = (float) (mRadius * Math.sin(Math.toRadians(startAngle + sweepAngle / 2)));
+        mPaint.setColor(0xFF003D79);
+        canvas.drawText(normalNum+"", circle_x + pxs, circle_y + pys, mPaint);
+
+        mPaint.setColor(Color.WHITE);
+        canvas.drawCircle(right / 2, bottom / 2 + 40 + (bottom / 2 - 80) / 2, width / 2 - 160, mPaint);
+
+        String str = text + "异常";
         int str_width = getStringWidth(str);
         mPaint.setColor(0xFF003D79);
-        canvas.drawText("异常次数", right/2 - str_width/2, bottom/2 + 40 + (bottom/2-80) / 2, mPaint);
+        canvas.drawText(str, right / 2 - str_width / 2, bottom / 2 + 40 + (bottom / 2 - 80) / 2, mPaint);
+    }
 
-        //画空圆
-        /*
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeWidth(18);
-        canvas.drawCircle(mDensity * 100, mDensity * 100, mDensity * 80, mPaint);
-        canvas.drawCircle(mDensity * 240, mDensity * 140, mDensity * 40, mPaint);
-
-        mPaint.setTextSize(30 * mDensity);
-        mPaint.setStyle(Paint.Style.FILL);
-        canvas.drawText("0", mDensity * (100-10) , mDensity * (100+10), mPaint);
-        canvas.drawText("0", mDensity * (240-10) , mDensity * (140+10), mPaint);
-
-        mPaint.setTextSize(20 * mDensity);
-        mPaint.setColor(0xFF003D79);
-        canvas.drawRect(mDensity * (240-23) , mDensity * (140+20),  mDensity * (240+23),  mDensity * (140+80), mPaint);
-        canvas.drawRect(mDensity * (100-43) , mDensity * (140+20),  mDensity * (100+43),  mDensity * (140+80), mPaint);
-        mPaint.setColor(Color.WHITE);
-        canvas.drawText("年度累计", mDensity * (100-40) , mDensity * (100+80), mPaint);
-        canvas.drawText("本月xx", mDensity * (240-20) , mDensity * (140+40), mPaint);
-        */
-
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                touched_x = (int) event.getX();
+                touched_y = (int) event.getY();
+                invalidate();
+                break;
+            default:
+                break;
+        }
+        return super.onTouchEvent(event);
     }
 
 }
