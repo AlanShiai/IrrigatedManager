@@ -40,7 +40,7 @@ public class DrawYearMonthData extends View {
         mPaint.setColor(Color.WHITE);                           //设置画笔的颜色
         mPaint.setStyle(Paint.Style.FILL);                      //设置画出的图形填充的类型,fill为内部填充,stroke为只有边框,内容不填充
         mPaint.setStrokeWidth(mDensity * 2);                    //设置边框的宽度. 如矩形的边宽, 文字的宽度. 接收实参为像素单位
-        mPaint.setTextSize(mDensity * 20);                      //设置当绘制文字的时候的字体大小
+        mPaint.setTextSize(mDensity * 60);                      //设置当绘制文字的时候的字体大小
 //        mPaint.setTypeface(Typeface.DEFAULT_BOLD);              //设置当绘制文字时候的字体粗细
 //        mPaint.setShadowLayer(mDensity*3, mDensity*10, mDensity*10, Color.RED );      //设置文字的阴影, 参数分别为:每一点像素模糊的半径, x轴偏移的距离, y轴偏移的距离, 阴影的颜色
     }
@@ -52,35 +52,16 @@ public class DrawYearMonthData extends View {
 //        canvas.drawRGB(0x00, 0x3D, 0x79);
         canvas.drawRGB(0xFF, 0xFF, 0xFF);
 
-        //画空圆
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeWidth(18);
-        mPaint.setColor(0xFF003D79);
-        canvas.drawCircle(mDensity * 100, mDensity * 100, mDensity * 80, mPaint);
-        canvas.drawCircle(mDensity * 240, mDensity * 140, mDensity * 40, mPaint);
+        int bottom = getBottom(), right = getRight();
 
-        mPaint.setTextSize(30 * mDensity);
-        mPaint.setStyle(Paint.Style.FILL);
-        int width_20 = getStringWidth("20");
-        canvas.drawText("20", mDensity * 100 - width_20/2 , mDensity * (100+10), mPaint);
-        canvas.drawText("3", mDensity * (240-10) , mDensity * (140+10), mPaint);
-
-        mPaint.setTextSize(20 * mDensity);
-//        mPaint.setColor(Color.BLUE);
-        mPaint.setColor(Color.WHITE);
-        canvas.drawRect(mDensity * (240-23) , mDensity * (140+20),  mDensity * (240+23),  mDensity * (140+80), mPaint);
-        canvas.drawRect(mDensity * (100-43) , mDensity * (140+20),  mDensity * (100+43),  mDensity * (140+80), mPaint);
-        mPaint.setColor(0xFF003D79);
-        canvas.drawText("年度累计", mDensity * (100-40) , mDensity * (100+80), mPaint);
-        canvas.drawText("本月", mDensity * (240-20) , mDensity * (140+40), mPaint);
-
-    }
-
-    private int getStringWidth(String str) {
+        String text = "1195次";
         Rect rect = new Rect();
-        mPaint.getTextBounds(str, 0, str.length(), rect);
-        int width = rect.width();//文字宽
-        return width;
+        mPaint.getTextBounds(text, 0, text.length(), rect);
+        int fontWidth = rect.width();//文字宽
+        int fontHeight = rect.height();
+
+        mPaint.setColor(0xFF003D79);
+        canvas.drawText(text, right/2 - fontWidth/2, bottom/2 + fontHeight/2, mPaint);
     }
 
 
