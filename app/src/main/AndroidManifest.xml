@@ -3,6 +3,7 @@
     package="com.example.ashi.irrigatedmanager">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -38,6 +39,15 @@
         <activity android:name=".Level2_2_3_inspectDetails2" />
         <activity android:name=".Level2_2_3_inspectDetailsPie" />
         <activity android:name=".Level2_2_5_3_manualInspect"></activity>
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.ashi.irrigatedmanager.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>
