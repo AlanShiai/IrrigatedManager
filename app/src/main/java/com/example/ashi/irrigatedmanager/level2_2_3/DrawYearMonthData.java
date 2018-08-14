@@ -63,6 +63,4 @@ public class DrawYearMonthData extends View {
         mPaint.setColor(0xFF003D79);
         canvas.drawText(text, right/2 - fontWidth/2, bottom/2 + fontHeight/2, mPaint);
     }
-
-
 }
