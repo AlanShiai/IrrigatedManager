@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.List;
@@ -18,31 +19,6 @@ import java.util.List;
  */
 
 public class IrrigationScheduleInfoAdpter extends ArrayAdapter<IrrigationScheduleInfo> {
-
-    static int[] colors25 = new int[] {
-            Color.parseColor("#42a0ff"),
-            Color.parseColor("#FFFFFF"),
-            Color.parseColor("#FFFFFF"),
-            Color.parseColor("#FFFFFF"),
-    };
-    static int[] colors50 = new int[] {
-            Color.parseColor("#42a0ff"),
-            Color.parseColor("#42a0ff"),
-            Color.parseColor("#FFFFFF"),
-            Color.parseColor("#FFFFFF"),
-    };
-    static int[] colors75 = new int[] {
-            Color.parseColor("#42a0ff"),
-            Color.parseColor("#42a0ff"),
-            Color.parseColor("#42a0ff"),
-            Color.parseColor("#FFFFFF"),
-    };
-    static int[] colors100 = new int[] {
-            Color.parseColor("#42a0ff"),
-            Color.parseColor("#42a0ff"),
-            Color.parseColor("#42a0ff"),
-            Color.parseColor("#42a0ff"),
-    };
 
     private int resourceId;
 
@@ -59,28 +35,11 @@ public class IrrigationScheduleInfoAdpter extends ArrayAdapter<IrrigationSchedul
         IrrigationScheduleInfoAdpter.ViewHolder viewHolder;
         if (convertView == null) {
             view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
-            if (Build.VERSION.SDK_INT >= 16) {
-                GradientDrawable linearDrawable = new GradientDrawable();
-                linearDrawable.setOrientation(GradientDrawable.Orientation.LEFT_RIGHT);
-                linearDrawable.setColors(colors100);
-                if (projectInfo.getSchedule().equals("15.75%")) {
-                    linearDrawable.setColors(colors25);
-                } else if (projectInfo.getSchedule().equals("40.00%")) {
-                    linearDrawable.setColors(colors50);
-                } else if (projectInfo.getSchedule().equals("75.00%")) {
-                    linearDrawable.setColors(colors75);
-                } else if (projectInfo.getSchedule().equals("98.00%")) {
-                    linearDrawable.setColors(colors100);
-                }
-                linearDrawable.setGradientType(GradientDrawable.LINEAR_GRADIENT);
-                view.setBackground(linearDrawable);
 
-//                Drawable statusQuestionDrawable = getContext().getResources().getDrawable(R.drawable.shape_gradient);
-//                view.setBackground(statusQuestionDrawable);
-            }
             viewHolder = new IrrigationScheduleInfoAdpter.ViewHolder();
             viewHolder.projectName = (TextView) view.findViewById (R.id.irrigation_schedule_name);
             viewHolder.schedule = (TextView) view.findViewById(R.id.irrigation_schedule);
+            viewHolder.progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
             view.setTag(viewHolder); // 将ViewHolder存储在View中
         } else {
             view = convertView;
@@ -88,11 +47,21 @@ public class IrrigationScheduleInfoAdpter extends ArrayAdapter<IrrigationSchedul
         }
         viewHolder.projectName.setText(projectInfo.getName());
         viewHolder.schedule.setText(projectInfo.getSchedule());
+        if (projectInfo.getSchedule().equals("15.75%")) {
+            viewHolder.progressBar.setProgress(15);
+        } else if (projectInfo.getSchedule().equals("40.00%")) {
+            viewHolder.progressBar.setProgress(40);
+        } else if (projectInfo.getSchedule().equals("75.00%")) {
+            viewHolder.progressBar.setProgress(75);
+        } else if (projectInfo.getSchedule().equals("98.00%")) {
+            viewHolder.progressBar.setProgress(98);
+        }
         return view;
     }
 
     class ViewHolder {
         TextView projectName;
         TextView schedule;
+        ProgressBar progressBar;
     }
 }
