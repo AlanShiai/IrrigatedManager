@@ -37,7 +37,7 @@
                 android:id="@+id/sluice_update_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2018-06-11 10:44:46 "
+                android:text="点击查看详情  "
                 />
         </LinearLayout>
 
@@ -48,7 +48,7 @@
             android:layout_weight="1"
             android:layout_gravity="left"
             android:layout_marginLeft="5dp"
-            android:text="点击查看详情"
+            android:text="2018-06-11 10:44:46 "
             android:textColor="#ADADAD"
             />
 
