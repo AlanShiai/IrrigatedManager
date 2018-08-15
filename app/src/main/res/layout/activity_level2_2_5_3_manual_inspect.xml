@@ -65,6 +65,12 @@
                 android:layout_height="wrap_content"
                 android:text="异常基本信息："
                 />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="200sp"
+                android:id="@+id/textView" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="200sp"
@@ -74,10 +80,7 @@
                 android:layout_height="wrap_content"
                 android:text="异常补充信息："
                 />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="200sp"
-                />
+
             <Button
                 android:id="@+id/take_photo"
                 android:layout_width="match_parent"
@@ -94,13 +97,16 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal" />
             <TextView
+                android:id="@+id/position_text_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="照相"
+                android:layout_height="400sp"
                 />
-            <TextView
+
+            <com.baidu.mapapi.map.MapView
+                android:id="@+id/bmapView"
                 android:layout_width="match_parent"
-                android:layout_height="200sp"
+                android:layout_height="400sp"
+                android:clickable="true"
                 />
             <TextView
                 android:layout_width="match_parent"

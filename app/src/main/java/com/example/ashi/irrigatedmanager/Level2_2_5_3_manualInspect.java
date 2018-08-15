@@ -21,10 +21,25 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.SDKInitializer;
+import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.MapStatusUpdate;
+import com.baidu.mapapi.map.MapStatusUpdateFactory;
+import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.model.LatLng;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Level2_2_5_3_manualInspect extends AppCompatActivity {
     public static final int TAKE_PHOTO = 1;
@@ -35,9 +50,23 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
 
     private Uri imageUri;
 
+    public LocationClient mLocationClient;
+
+    private TextView positionText;
+
+    private MapView mapView;
+
+    private BaiduMap baiduMap;
+
+    private boolean isFirstLocate = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mLocationClient = new LocationClient(getApplicationContext());
+        mLocationClient.registerLocationListener(new MyLocationListener());
+        SDKInitializer.initialize(getApplicationContext());
+
         setContentView(R.layout.activity_level2_2_5_3_manual_inspect);
 
         Button takePhoto = (Button) findViewById(R.id.take_photo);
@@ -74,6 +103,7 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
                     ActivityCompat.requestPermissions(Level2_2_5_3_manualInspect.this, new String[]{ Manifest.permission. WRITE_EXTERNAL_STORAGE }, 1);
                 } else {
                     openAlbum();
+                    requestLocation();
                 }
             }
         });
@@ -86,7 +116,80 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
                 finish();
             }
         });
+
+        mapView = (MapView) findViewById(R.id.bmapView);
+        baiduMap = mapView.getMap();
+        baiduMap.setMyLocationEnabled(true);
+
+        positionText = (TextView) findViewById(R.id.position_text_view);
+        List<String> permissionList = new ArrayList<>();
+        if (ContextCompat.checkSelfPermission(Level2_2_5_3_manualInspect.this, Manifest.permission
+                .ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        }
+        if (ContextCompat.checkSelfPermission(Level2_2_5_3_manualInspect.this, Manifest.permission
+                .READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.READ_PHONE_STATE);
+        }
+        if (ContextCompat.checkSelfPermission(Level2_2_5_3_manualInspect.this, Manifest.permission
+                .WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+        if ( ! permissionList.isEmpty() ) {
+            String[] permissions = permissionList.toArray(new String[0]);
+            ActivityCompat.requestPermissions(Level2_2_5_3_manualInspect.this, permissions, 1);
+        } else {
+            requestLocation();
+        }
     }
+
+    private void navigateTo(BDLocation location) {
+        if (isFirstLocate) {
+            LatLng ll = new LatLng(location.getLatitude(), location.getLongitude());
+            MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(ll);
+            baiduMap.animateMapStatus(update);
+            update = MapStatusUpdateFactory.zoomTo(16f);
+            baiduMap.animateMapStatus(update);
+            isFirstLocate = false;
+        }
+        MyLocationData.Builder locationBuilder = new MyLocationData.Builder();
+        locationBuilder.latitude(location.getLatitude());
+        locationBuilder.longitude(location.getLongitude());
+        MyLocationData locationData = locationBuilder.build();
+        baiduMap.setMyLocationData(locationData);
+    }
+
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mapView.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mapView.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mapView.onDestroy();
+        baiduMap.setMyLocationEnabled(false);
+    }
+
+    private void requestLocation() {
+        initLocation();
+        mLocationClient.start();
+    }
+    private void initLocation() {
+        LocationClientOption option = new LocationClientOption();
+        option.setIsNeedAddress(true);
+        mLocationClient.setLocOption(option);
+    }
+
 
     private void openAlbum() {
         Intent intent = new Intent("android.intent.action.GET_CONTENT");
@@ -100,6 +203,7 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
             case 1:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     openAlbum();
+                    requestLocation();
                 } else {
                     Toast.makeText(this, "You denied the permission", Toast.LENGTH_SHORT).show();
                 }
@@ -191,6 +295,37 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
             picture.setImageBitmap(bitmap);
         } else {
             Toast.makeText(this, "failed to get image", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public class MyLocationListener implements BDLocationListener {
+
+        @Override
+        public void onReceiveLocation(final BDLocation bdLocation) {
+            if (bdLocation.getLocType() == BDLocation.TypeGpsLocation
+                    || bdLocation.getLocType() == BDLocation.TypeNetWorkLocation) {
+                navigateTo(bdLocation);
+            }
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    StringBuilder currentPosition = new StringBuilder();
+                    currentPosition.append("weidu:").append(bdLocation.getLatitude()).append("\n");
+                    currentPosition.append("jindu:").append(bdLocation.getLongitude()).append("\n");
+                    currentPosition.append("Country:").append(bdLocation.getCountry()).append("\n");
+                    currentPosition.append("Province:").append(bdLocation.getProvince()).append("\n");
+                    currentPosition.append("City:").append(bdLocation.getCity()).append("\n");
+                    currentPosition.append("District:").append(bdLocation.getDistrict()).append("\n");
+                    currentPosition.append("Street:").append(bdLocation.getStreet()).append("\n");
+                    currentPosition.append("location method:");
+                    if (bdLocation.getLocType() == BDLocation.TypeGpsLocation) {
+                        currentPosition.append("GPS");
+                    } else if (bdLocation.getLocType() == BDLocation.TypeNetWorkLocation) {
+                        currentPosition.append("NetWork");
+                    }
+                    positionText.setText(currentPosition);
+                }
+            });
         }
     }
 
