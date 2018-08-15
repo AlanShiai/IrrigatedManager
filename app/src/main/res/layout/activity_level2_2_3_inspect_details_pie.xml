@@ -38,10 +38,18 @@
             android:textStyle="normal"
             />
 
-        <Space
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/select"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
+            android:paddingLeft="5dp"
+            android:drawablePadding="1dp"
+            android:drawableRight="@drawable/select"
+            android:text=""
+            android:gravity="right"
+            android:textColor="#FFFFFF"
+            style="?android:attr/borderlessButtonStyle"
             />
     </LinearLayout>
 
