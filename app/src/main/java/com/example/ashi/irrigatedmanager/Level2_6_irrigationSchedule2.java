@@ -1,10 +1,13 @@
 package com.example.ashi.irrigatedmanager;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +28,44 @@ public class Level2_6_irrigationSchedule2 extends AppCompatActivity {
         listView.setAdapter(adapter);
 
         addListernerForBackButton();
+        findViewById(R.id.select).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSingleChoiceDialog();
+            }
+        });
+    }
+
+    private void showSingleChoiceDialog() {
+        final String[] items = new String[]{"第一轮", "第二轮", "第三轮", "第四轮", "第五轮", "第六轮", "第七轮", "第八轮", "第九轮", "第十轮",};
+        AlertDialog.Builder builder = new AlertDialog.Builder(Level2_6_irrigationSchedule2.this);
+        builder.setTitle("选择对话框");
+        //千万不要加这句，不然列表显示不出来
+//        builder.setMessage("这是一个简单的列表对话框");
+        builder.setIcon(R.mipmap.launcher);
+        builder.setSingleChoiceItems(items, 1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                showText(items[which]);
+            }
+        });
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                showText("确定");
+            }
+        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                showText("取消");
+            }
+        });
+
+        builder.create().show();
+    }
+
+    private void showText(String text) {
+        Toast.makeText(Level2_6_irrigationSchedule2.this, text, Toast.LENGTH_SHORT).show();
     }
 
     private void initProjectInfoList() {
