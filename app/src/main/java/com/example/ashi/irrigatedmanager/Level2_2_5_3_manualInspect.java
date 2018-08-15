@@ -69,6 +69,15 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
 
         setContentView(R.layout.activity_level2_2_5_3_manual_inspect);
 
+        TextView normal_exception_info = (TextView) findViewById(R.id.normal_exception_info);
+        normal_exception_info.setText("\n在 民有一干渠成安段 发现异常\n"
+                + "堤坝：\n"
+                + "\t检查渠道是否被损坏，堤坝是否决堤。\n"
+                + "渠底：\n"
+                + "\t有明显影响输水的水藻、杂草等杂物。\n"
+                + "\t有向渠道内排放污水、废液，倾倒工业废渣、垃圾等废弃物现象。"
+        );
+
         Button takePhoto = (Button) findViewById(R.id.take_photo);
         Button chooseFromAlbum = (Button) findViewById(R.id.choose_from_album);
         picture = (ImageView) findViewById(R.id.picture);
@@ -141,6 +150,7 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
         } else {
             requestLocation();
         }
+
     }
 
     private void navigateTo(BDLocation location) {
