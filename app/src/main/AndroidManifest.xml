@@ -2,16 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.ashi.irrigatedmanager">
 
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -26,7 +26,8 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="9wRT0oCbumXTUksxcWjwZOpW6RVshFBd"/>
+            android:value="9wRT0oCbumXTUksxcWjwZOpW6RVshFBd" />
+
         <activity android:name=".Level2_1_irrigateOverview">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -49,7 +50,8 @@
         <activity android:name=".Level2_6_irrigationSchedule2" />
         <activity android:name=".Level2_2_3_inspectDetails2" />
         <activity android:name=".Level2_2_3_inspectDetailsPie" />
-        <activity android:name=".Level2_2_5_3_manualInspect"></activity>
+        <activity android:name=".Level2_2_5_3_manualInspect" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.example.ashi.irrigatedmanager.fileprovider"
@@ -59,11 +61,15 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote">
-        </service>
+            android:process=":remote" />
+
+        <activity android:name=".Level2_3_projectInfo2" />
+        <activity android:name=".Level2_3_projectInfo3" />
+        <activity android:name=".Level2_3_projectInfo4"></activity>
     </application>
 
 </manifest>

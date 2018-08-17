@@ -65,14 +65,8 @@
                 android:layout_height="wrap_content"
                 android:text="异常基本信息："
                 />
-
             <TextView
                 android:id="@+id/normal_exception_info"
-                android:layout_width="match_parent"
-                android:layout_height="200sp"
-                />
-
-            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="200sp"
                 />
@@ -101,22 +95,13 @@
                 android:id="@+id/position_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="400sp"
+                android:visibility="gone"
                 />
-
             <com.baidu.mapapi.map.MapView
                 android:id="@+id/bmapView"
                 android:layout_width="match_parent"
-                android:layout_height="400sp"
+                android:layout_height="300sp"
                 android:clickable="true"
-                />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="定位："
-                />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="200sp"
                 />
         </LinearLayout>
 
