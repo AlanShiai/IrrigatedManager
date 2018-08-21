@@ -99,22 +99,22 @@ public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
     }
 
     private void addListernerForBottomToolbar() {
-//        findViewById(R.id.rain).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(Level2_4_realtimeMonitor2.this, Level2_4_3_rain2.class);
-//                startActivity(intent);
-//                finish();
-//            }
-//        });
-//        findViewById(R.id.irrigation_schedule).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(Level2_4_realtimeMonitor2.this, Level2_6_irrigationSchedule2.class);
-//                startActivity(intent);
-//                finish();
-//            }
-//        });
+        findViewById(R.id.rain).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Level2_4_realtimeMonitor2.this, Level2_4_3_rain2.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        findViewById(R.id.irrigation_schedule).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Level2_4_realtimeMonitor2.this, Level2_6_irrigationSchedule2.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void addListernerForBackButton() {
