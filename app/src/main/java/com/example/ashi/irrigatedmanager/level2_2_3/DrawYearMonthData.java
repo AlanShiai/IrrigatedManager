@@ -6,8 +6,21 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.os.Handler;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
+
+import com.example.ashi.irrigatedmanager.gson.TotalCount;
+import com.example.ashi.irrigatedmanager.gson.User;
+import com.example.ashi.irrigatedmanager.util.HttpUtil;
+import com.example.ashi.irrigatedmanager.util.Utility;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * Created by ashi on 7/9/2018.
@@ -20,12 +33,18 @@ public class DrawYearMonthData extends View {
     private int mCurHeight;           //当前屏幕的高 pixel
     private float mDensity;           //当前屏幕的dpi密度的比值. 720*1080(比值为2), 1080*1920(比值为3), 1440*2550(比值为4)
 
+    private String urlText;
+
+    private Handler handler;
+
     public DrawYearMonthData(Context context) {
         super(context);
         init();
     }
 
     private void init() {
+        handler=new Handler();
+
         mPaint = new Paint();
         mPaint.setColor(Color.GREEN);
 
@@ -54,7 +73,12 @@ public class DrawYearMonthData extends View {
 
         int bottom = getBottom(), right = getRight();
 
-        String text = "1195次";
+        String text;
+        if (urlText != null) {
+            text = urlText + "次";
+        } else {
+            text = "1195次";
+        }
         Rect rect = new Rect();
         mPaint.getTextBounds(text, 0, text.length(), rect);
         int fontWidth = rect.width();//文字宽
@@ -62,5 +86,32 @@ public class DrawYearMonthData extends View {
 
         mPaint.setColor(0xFF003D79);
         canvas.drawText(text, right/2 - fontWidth/2, bottom/2 + fontHeight/2, mPaint);
+
+        getTotalCountFromUrl();
+    }
+
+    private void getTotalCountFromUrl() {
+        String url = "http://www.boze-tech.com/zfh_manager/a/app/patrol/queryTotalCount?userId=1";
+        HttpUtil.sendOkHttpRequest(url, new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responseText = response.body().string();
+                Log.d("aijun login", responseText);
+                final TotalCount totalCount = Utility.handleTotalCountResponse(responseText);
+//                final Weather weather = Utility.handleWeatherResponse(responseText);
+                urlText = totalCount.yearTotal;
+                handler.post(new Runnable() {
+                    public void run() {
+                        invalidate();
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+//                urlText = false;
+            }
+        });
     }
 }

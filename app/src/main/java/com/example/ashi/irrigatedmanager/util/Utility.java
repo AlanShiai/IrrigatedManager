@@ -1,5 +1,6 @@
 package com.example.ashi.irrigatedmanager.util;
 
+import com.example.ashi.irrigatedmanager.gson.TotalCount;
 import com.example.ashi.irrigatedmanager.gson.User;
 import com.google.gson.Gson;
 
@@ -20,4 +21,14 @@ public class Utility {
         }
         return null;
     }
+
+    public static TotalCount handleTotalCountResponse(String response) {
+        try {
+            return new Gson().fromJson(response, TotalCount.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

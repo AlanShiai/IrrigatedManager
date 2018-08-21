@@ -5,4 +5,10 @@ package com.example.ashi.irrigatedmanager.gson;
  */
 
 public class TotalCount {
+
+    public String month;
+    public String year;
+    public String monthTotal;
+    public String yearTotal;
+
 }
