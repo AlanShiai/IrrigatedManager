@@ -132,22 +132,13 @@
             >
 
             <LinearLayout
-                android:id="@+id/draw_year_month_data"
+                android:id="@+id/sluice_list_layout"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:background="#FFFFFF"
                 >
-
-                <ListView
-                    android:id="@+id/level_2_4_1_sluice_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#F5F5F5"
-                    >
-                </ListView>
-
             </LinearLayout>
         </LinearLayout>
 

@@ -7,8 +7,11 @@ import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ashi.irrigatedmanager.level2_4.SluiceInfo;
@@ -34,9 +37,29 @@ public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
 
         initProjectInfoList();
 
+        boolean displayDetails = true;
+        LinearLayout layout = (LinearLayout) findViewById(R.id.sluice_list_layout);
+        layout.removeAllViews();
+        for (SluiceInfo sluiceInfo: projectInfoList) {
+            View view = LayoutInflater.from(Level2_4_realtimeMonitor2.this).inflate(R.layout.sluice_item1,
+                    layout, false);
+            TextView text = (TextView) view.findViewById(R.id.sluice_name);
+            text.setText(sluiceInfo.getName());
+            layout.addView(view);
+
+            if (displayDetails) {
+                View view2 = LayoutInflater.from(Level2_4_realtimeMonitor2.this).inflate(R.layout.sluice_item2,
+                        layout, false);
+                layout.addView(view2);
+                displayDetails = false;
+            }
+        }
+
+        /*
         ListView listView = (ListView) findViewById(R.id.level_2_4_1_sluice_list);
         SluiceInfoAdapter adapter = new SluiceInfoAdapter(Level2_4_realtimeMonitor2.this, R.layout.sluice_item1, projectInfoList);
         listView.setAdapter(adapter);
+        */
 
         addListernerForBottomToolbar();
         addListernerForBackButton();
@@ -87,12 +110,6 @@ public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
                 "王林主干闸位" ,
                 "豆公主干闸位" ,
         };
-        for (String name : strings) {
-            projectInfoList.add(new SluiceInfo(name));
-        }
-        for (String name : strings) {
-            projectInfoList.add(new SluiceInfo(name));
-        }
         for (String name : strings) {
             projectInfoList.add(new SluiceInfo(name));
         }
