@@ -28,7 +28,7 @@
                 android:layout_height="42dp"
                 android:layout_weight="3"
                 android:gravity="center"
-                android:text="灌区总览"
+                android:text="漳釜河"
                 android:textSize="20sp"
                 android:textColor="#FFFFFFFF"
                 android:textStyle="normal"
