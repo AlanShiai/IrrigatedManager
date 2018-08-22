@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/level2_4_1_1"
+            android:background="@drawable/c5"
             />
 
         <LinearLayout
