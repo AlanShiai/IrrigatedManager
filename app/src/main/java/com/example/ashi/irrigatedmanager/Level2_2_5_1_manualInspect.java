@@ -60,7 +60,10 @@ public class Level2_2_5_1_manualInspect extends AppCompatActivity {
 
     private void initData() {
         dataList.add(new ManualInspectItem("滏阳河张庄桥"));
-        dataList.add(new ManualInspectItem("呵呵干渠"));
+        dataList.add(new ManualInspectItem("钟楼市二干渠节制闸"));
+        dataList.add(new ManualInspectItem("滏阳二干渠"));
         dataList.add(new ManualInspectItem("滏阳河张庄桥"));
+        dataList.add(new ManualInspectItem("钟楼市二干渠节制闸"));
+        dataList.add(new ManualInspectItem("滏阳二干渠"));
     }
 }

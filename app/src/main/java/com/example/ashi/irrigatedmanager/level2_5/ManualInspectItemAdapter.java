@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ashi.irrigatedmanager.R;
@@ -34,17 +35,24 @@ public class ManualInspectItemAdapter extends ArrayAdapter<ManualInspectItem> {
             view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
             viewHolder = new ManualInspectItemAdapter.ViewHolder();
             viewHolder.sluiceName = (TextView) view.findViewById (R.id.manual_inspect_name);
+            viewHolder.imageView = (ImageView)  view.findViewById(R.id.image_view);
             view.setTag(viewHolder); // 将ViewHolder存储在View中
         } else {
             view = convertView;
             viewHolder = (ManualInspectItemAdapter.ViewHolder) view.getTag(); // 重新获取ViewHolder
         }
         viewHolder.sluiceName.setText(projectInfo.getName());
+        if (projectInfo.getName().contains("桥")) {
+            viewHolder.imageView.setBackgroundResource(R.drawable.c3);
+        } else if (projectInfo.getName().contains("闸")) {
+            viewHolder.imageView.setBackgroundResource(R.drawable.c1);
+        }
         return view;
     }
 
     class ViewHolder {
         TextView sluiceName;
+        ImageView imageView;
     }
 
 }
