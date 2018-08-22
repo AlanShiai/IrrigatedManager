@@ -32,9 +32,9 @@ public class Level2_2_projectInspection2 extends AppCompatActivity {
         }
         setContentView(R.layout.activity_level2_2_project_inspection2);
 
-        LinearLayout ll_body = (LinearLayout) findViewById(R.id.draw_year_month_data);
-        DrawYearMonthData view = new DrawYearMonthData(getApplicationContext());
-        ll_body.addView(view);
+//        LinearLayout ll_body = (LinearLayout) findViewById(R.id.draw_year_month_data);
+//        DrawYearMonthData view = new DrawYearMonthData(getApplicationContext());
+//        ll_body.addView(view);
 
         addListernerForBottomToolbar();
         addListernerForBackButton();
@@ -45,28 +45,28 @@ public class Level2_2_projectInspection2 extends AppCompatActivity {
     }
 
     private void addListernerForBottomToolbar() {
-//        findViewById(R.id.scan_inspect).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // Open Scan Activity
-//                if (ContextCompat.checkSelfPermission(Level2_2_projectInspection2.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-//                    // Do not have the permission of camera, request it.
-//                    ActivityCompat.requestPermissions(Level2_2_projectInspection2.this, new String[]{Manifest.permission.CAMERA}, REQ_CODE_PERMISSION);
-//                } else {
-//                    // Have gotten the permission
-//                    startCaptureActivityForResult();
-//                }
-//
-//            }
-//        });
-//        findViewById(R.id.start_inspect).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(Level2_2_projectInspection2.this, Level2_2_5_1_manualInspect.class);
-//                startActivity(intent);
-//                finish();
-//            }
-//        });
+        findViewById(R.id.scan_inspect).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Open Scan Activity
+                if (ContextCompat.checkSelfPermission(Level2_2_projectInspection2.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    // Do not have the permission of camera, request it.
+                    ActivityCompat.requestPermissions(Level2_2_projectInspection2.this, new String[]{Manifest.permission.CAMERA}, REQ_CODE_PERMISSION);
+                } else {
+                    // Have gotten the permission
+                    startCaptureActivityForResult();
+                }
+
+            }
+        });
+        findViewById(R.id.start_inspect).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Level2_2_projectInspection2.this, Level2_2_5_1_manualInspect.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 //        findViewById(R.id.inspect_note).setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -75,22 +75,22 @@ public class Level2_2_projectInspection2 extends AppCompatActivity {
 //                finish();
 //            }
 //        });
-//        findViewById(R.id.details).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(Level2_2_projectInspection2.this, Level2_2_3_inspectDetails2.class);
-//                startActivity(intent);
-//                finish();
-//            }
-//        });
-//        findViewById(R.id.details_pie).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(Level2_2_projectInspection2.this, Level2_2_3_inspectDetailsPie.class);
-//                startActivity(intent);
-//                finish();
-//            }
-//        });
+        findViewById(R.id.details).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Level2_2_projectInspection2.this, Level2_2_3_inspectDetails2.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        findViewById(R.id.details_pie).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Level2_2_projectInspection2.this, Level2_2_3_inspectDetailsPie.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void startCaptureActivityForResult() {
