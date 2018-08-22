@@ -6,10 +6,13 @@
 
     <CheckBox
         android:id="@+id/checkBox"
-        android:text="CheckBox"
-        android:textSize="16sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="CheckBox"
+        android:textSize="16sp"
+        android:background="#FFFFFF"
+        android:textColor="#A9A9A9"
+        android:layout_marginTop="1dp"
         />
 
 </LinearLayout>
