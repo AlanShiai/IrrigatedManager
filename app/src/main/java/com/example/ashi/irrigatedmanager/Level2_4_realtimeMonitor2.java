@@ -7,8 +7,10 @@ import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -23,6 +25,7 @@ import java.util.List;
 public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
 
     private List<SluiceInfo> projectInfoList = new ArrayList<SluiceInfo>();
+    private List<Boolean> enableList = new ArrayList<Boolean>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,24 +39,13 @@ public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
         setContentView(R.layout.activity_level2_4_realtime_monitor2);
 
         initProjectInfoList();
-
-        boolean displayDetails = true;
-        LinearLayout layout = (LinearLayout) findViewById(R.id.sluice_list_layout);
-        layout.removeAllViews();
-        for (SluiceInfo sluiceInfo: projectInfoList) {
-            View view = LayoutInflater.from(Level2_4_realtimeMonitor2.this).inflate(R.layout.sluice_item1,
-                    layout, false);
-            TextView text = (TextView) view.findViewById(R.id.sluice_name);
-            text.setText(sluiceInfo.getName());
-            layout.addView(view);
-
-            if (displayDetails) {
-                View view2 = LayoutInflater.from(Level2_4_realtimeMonitor2.this).inflate(R.layout.sluice_item2,
-                        layout, false);
-                layout.addView(view2);
-                displayDetails = false;
-            }
+        for (int i = 0 ; i < projectInfoList.size(); i++) {
+            enableList.add(false);
         }
+
+        createAreaForSluiceListLayout();
+
+
 
         /*
         ListView listView = (ListView) findViewById(R.id.level_2_4_1_sluice_list);
@@ -70,6 +62,47 @@ public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
             }
         });
     }
+
+    private void createAreaForSluiceListLayout() {
+        boolean displayDetails = true;
+        LinearLayout layout = (LinearLayout) findViewById(R.id.sluice_list_layout);
+        layout.removeAllViews();
+        int index = 0;
+        for (SluiceInfo sluiceInfo: projectInfoList) {
+            View view = LayoutInflater.from(Level2_4_realtimeMonitor2.this).inflate(R.layout.sluice_item1,
+                    layout, false);
+            TextView text = (TextView) view.findViewById(R.id.sluice_name);
+            text.setText(sluiceInfo.getName());
+            Button button = (Button) view.findViewById(R.id.show_details);
+            view.findViewById(R.id.show_details).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    LinearLayout layout = (LinearLayout) v.getParent();
+                    TextView text = (TextView) layout.findViewById(R.id.sluice_name);
+                    for (int i = 0; i < projectInfoList.size(); i++ ) {
+                        if (text.getText().equals(projectInfoList.get(i).getName())) {
+                            if (enableList.get(i) == true) {
+                                enableList.set(i, false);
+                            } else {
+                                enableList.set(i, true);
+                            }
+                        }
+                    }
+                    createAreaForSluiceListLayout();
+                }
+            });
+            layout.addView(view);
+
+            if (enableList.get(index)) {
+                View view2 = LayoutInflater.from(Level2_4_realtimeMonitor2.this).inflate(R.layout.sluice_item2,
+                        layout, false);
+                layout.addView(view2);
+            }
+            index ++;
+        }
+    }
+
+
 
     private void showSingleChoiceDialog() {
         final String[] items = new String[]{"一月", "二月", "三月", "四月","五月", "六月", "七月", "八月","九月", "十月", "十一月", "十二月",};
