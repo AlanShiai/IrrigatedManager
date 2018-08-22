@@ -39,8 +39,7 @@
         <activity android:name=".Level2_5_appvalProcess" />
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login" >
-        </activity>
+            android:label="@string/title_activity_login"></activity>
         <activity android:name=".Level2_2_2_inspectNote" />
         <activity android:name=".Level2_2_5_1_manualInspect" />
         <activity android:name=".Level2_5_1_appvalDetails" />
@@ -70,7 +69,8 @@
 
         <activity android:name=".Level2_3_projectInfo2" />
         <activity android:name=".Level2_3_projectInfo3" />
-        <activity android:name=".Level2_3_projectInfo4"></activity>
+        <activity android:name=".Level2_3_projectInfo4" />
+        <activity android:name=".Level2_4_3_rain3"></activity>
     </application>
 
 </manifest>
