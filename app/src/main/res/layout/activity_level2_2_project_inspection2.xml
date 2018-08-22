@@ -93,7 +93,7 @@
                 android:textSize="12sp"
                 android:text="扫码"
                 android:gravity="center|center_horizontal"
-                android:drawableTop="@drawable/b1"
+                android:drawableTop="@drawable/b4"
                 style="?android:attr/borderlessButtonStyle"
                 />
 
@@ -105,7 +105,7 @@
                 android:textSize="12sp"
                 android:text="巡检"
                 android:gravity="center|center_horizontal"
-                android:drawableTop="@drawable/b2"
+                android:drawableTop="@drawable/b5"
                 style="?android:attr/borderlessButtonStyle"
                 />
 
@@ -117,7 +117,7 @@
                 android:textSize="12sp"
                 android:text="填报"
                 android:gravity="center|center_horizontal"
-                android:drawableTop="@drawable/b3"
+                android:drawableTop="@drawable/b6"
                 style="?android:attr/borderlessButtonStyle"
                 />
 
@@ -129,7 +129,7 @@
                 android:textSize="12sp"
                 android:text="统计"
                 android:gravity="center|center_horizontal"
-                android:drawableTop="@drawable/b3"
+                android:drawableTop="@drawable/b7"
                 style="?android:attr/borderlessButtonStyle"
                 />
 
