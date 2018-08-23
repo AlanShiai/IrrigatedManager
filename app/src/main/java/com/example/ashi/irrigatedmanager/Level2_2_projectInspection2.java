@@ -36,15 +36,16 @@ public class Level2_2_projectInspection2 extends AppCompatActivity {
 //        DrawYearMonthData view = new DrawYearMonthData(getApplicationContext());
 //        ll_body.addView(view);
 
-        addListernerForBottomToolbar();
+        addListernerForTopToolbar();
         addListernerForBackButton();
+        addListernerForBottomToolbar();
     }
 
     private void showText(String text) {
         Toast.makeText(Level2_2_projectInspection2.this, text, Toast.LENGTH_SHORT).show();
     }
 
-    private void addListernerForBottomToolbar() {
+    private void addListernerForTopToolbar() {
         findViewById(R.id.scan_inspect).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,6 +93,50 @@ public class Level2_2_projectInspection2 extends AppCompatActivity {
             }
         });
     }
+
+    private void addListernerForBottomToolbar() {
+        findViewById(R.id.overview).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Level2_2_projectInspection2.this, Level2_1_irrigateOverview.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+//        findViewById(R.id.overview_inspect).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(Level2_1_irrigateOverview.this, Level2_2_projectInspection2.class);
+//                startActivity(intent);
+//                finish();
+//            }
+//        });
+        findViewById(R.id.monitor).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Level2_2_projectInspection2.this, Level2_4_realtimeMonitor2.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        findViewById(R.id.overview_appval).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Level2_2_projectInspection2.this, Level2_5_appvalProcess.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        findViewById(R.id.project_info).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Level2_2_projectInspection2.this, Level2_3_projectInfo.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
+
 
     private void startCaptureActivityForResult() {
         Intent intent = new Intent(Level2_2_projectInspection2.this, CaptureActivity.class);

@@ -77,6 +77,51 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        addListernerForBottomToolbar();
+    }
+
+    private void addListernerForBottomToolbar() {
+        findViewById(R.id.overview).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Level2_5_appvalProcess.this, Level2_1_irrigateOverview.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        findViewById(R.id.overview_inspect).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Level2_5_appvalProcess.this, Level2_2_projectInspection2.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        findViewById(R.id.monitor).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Level2_5_appvalProcess.this, Level2_4_realtimeMonitor2.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+//        findViewById(R.id.overview_appval).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(Level2_4_realtimeMonitor2.this, Level2_5_appvalProcess.class);
+//                startActivity(intent);
+//                finish();
+//            }
+//        });
+        findViewById(R.id.project_info).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Level2_5_appvalProcess.this, Level2_3_projectInfo.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void initData() {

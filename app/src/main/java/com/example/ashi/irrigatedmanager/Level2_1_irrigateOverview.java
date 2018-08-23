@@ -96,6 +96,14 @@ public class Level2_1_irrigateOverview extends AppCompatActivity implements View
     }
 
     private void addListernerForBottomToolbar() {
+//        findViewById(R.id.overview).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(Level2_1_irrigateOverview.this, Level2_2_projectInspection2.class);
+//                startActivity(intent);
+//                finish();
+//            }
+//        });
         findViewById(R.id.overview_inspect).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

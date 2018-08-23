@@ -53,8 +53,10 @@ public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
         listView.setAdapter(adapter);
         */
 
-        addListernerForBottomToolbar();
+        addListernerForTopToolbar();
         addListernerForBackButton();
+        addListernerForBottomToolbar();
+
         findViewById(R.id.select).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,7 +150,7 @@ public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
         }
     }
 
-    private void addListernerForBottomToolbar() {
+    private void addListernerForTopToolbar() {
         findViewById(R.id.rain).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,6 +163,49 @@ public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Level2_4_realtimeMonitor2.this, Level2_6_irrigationSchedule2.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
+
+    private void addListernerForBottomToolbar() {
+        findViewById(R.id.overview).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Level2_4_realtimeMonitor2.this, Level2_1_irrigateOverview.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        findViewById(R.id.overview_inspect).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Level2_4_realtimeMonitor2.this, Level2_2_projectInspection2.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+//        findViewById(R.id.monitor).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(Level2_1_irrigateOverview.this, Level2_4_realtimeMonitor2.class);
+//                startActivity(intent);
+//                finish();
+//            }
+//        });
+        findViewById(R.id.overview_appval).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Level2_4_realtimeMonitor2.this, Level2_5_appvalProcess.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        findViewById(R.id.project_info).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Level2_4_realtimeMonitor2.this, Level2_3_projectInfo.class);
                 startActivity(intent);
                 finish();
             }
