@@ -96,14 +96,14 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/b1"
+                android:background="@drawable/b9"
                 />
 
             <ImageView
                 android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/b2"
+                android:background="@drawable/b8"
                 />
 
         </LinearLayout>
