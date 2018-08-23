@@ -2,46 +2,108 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    >
+
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        >
 
         <TextView
             android:id="@+id/irrigation_schedule_name"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:textSize="20dp"
-            android:layout_marginLeft="10dp"
-            android:textStyle="normal"
+            android:layout_marginLeft="5dp"
+            android:text="井陉县"
+            android:textSize="16sp"
             />
 
         <TextView
-            android:id="@+id/irrigation_schedule"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_margin="20dp"
-            android:textSize="18sp"
-            android:layout_marginLeft="10dp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/right_arrow"
+            android:layout_marginLeft="10dp"
+            android:text="应灌400亩"
+            android:textSize="14sp"
             />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="已灌"
+                android:textSize="14sp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="240"
+                android:textColor="#06a633"
+                android:textSize="14sp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="亩/完成"
+                android:textSize="14sp"
+                />
+
+            <TextView
+                android:id="@+id/irrigation_schedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:layout_marginRight="5dp"
+                android:text="60%"
+                android:textColor="#d90754"
+                android:textSize="14sp"
+                />
+        </LinearLayout>
+
     </LinearLayout>
 
     <ProgressBar
-        style="?android:attr/progressBarStyleHorizontal"
+        android:id="@+id/progressBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/progressBar" />
+        android:layout_height="8dp"
+        android:max="100"
+        android:progress="80"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:progressDrawable="@drawable/my_progressbar"
+        android:visibility="visible"
+        style="?android:attr/progressBarStyleHorizontal"
+        />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        >
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="#F5F5F5"
+        >
+    </LinearLayout>
 
 </LinearLayout>
