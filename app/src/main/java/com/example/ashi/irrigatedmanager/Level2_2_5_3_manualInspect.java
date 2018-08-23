@@ -3,6 +3,7 @@ package com.example.ashi.irrigatedmanager;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.ContentUris;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -16,6 +17,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -159,6 +161,40 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
             requestLocation();
         }
 
+        findViewById(R.id.manual_inspect_report).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSingleChoiceDialog();
+            }
+        });
+    }
+
+    private void showSingleChoiceDialog() {
+        final String[] items = new String[]{"张元一", "王文",};
+        AlertDialog.Builder builder = new AlertDialog.Builder(Level2_2_5_3_manualInspect.this);
+        builder.setTitle("下一步处理人：");
+        //千万不要加这句，不然列表显示不出来
+//        builder.setMessage("这是一个简单的列表对话框");
+        builder.setIcon(R.mipmap.launcher);
+        builder.setSingleChoiceItems(items, 1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        builder.create().show();
     }
 
     private void navigateTo(BDLocation location) {
