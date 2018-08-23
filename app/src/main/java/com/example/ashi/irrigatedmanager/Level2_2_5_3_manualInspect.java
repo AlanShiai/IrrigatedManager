@@ -55,9 +55,9 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
 
     private TextView positionText;
 
-    private MapView mapView;
+//    private MapView mapView;
 
-    private BaiduMap baiduMap;
+//    private BaiduMap baiduMap;
 
     private boolean isFirstLocate = true;
 
@@ -134,9 +134,9 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
             }
         });
 
-        mapView = (MapView) findViewById(R.id.bmapView);
-        baiduMap = mapView.getMap();
-        baiduMap.setMyLocationEnabled(true);
+//        mapView = (MapView) findViewById(R.id.bmapView);
+//        baiduMap = mapView.getMap();
+//        baiduMap.setMyLocationEnabled(true);
 
         positionText = (TextView) findViewById(R.id.position_text_view);
         List<String> permissionList = new ArrayList<>();
@@ -165,16 +165,16 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
         if (isFirstLocate) {
             LatLng ll = new LatLng(location.getLatitude(), location.getLongitude());
             MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(ll);
-            baiduMap.animateMapStatus(update);
+//            baiduMap.animateMapStatus(update);
             update = MapStatusUpdateFactory.zoomTo(16f);
-            baiduMap.animateMapStatus(update);
+//            baiduMap.animateMapStatus(update);
             isFirstLocate = false;
         }
         MyLocationData.Builder locationBuilder = new MyLocationData.Builder();
         locationBuilder.latitude(location.getLatitude());
         locationBuilder.longitude(location.getLongitude());
         MyLocationData locationData = locationBuilder.build();
-        baiduMap.setMyLocationData(locationData);
+//        baiduMap.setMyLocationData(locationData);
     }
 
 
@@ -182,20 +182,20 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mapView.onResume();
+//        mapView.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mapView.onPause();
+//        mapView.onPause();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mapView.onDestroy();
-        baiduMap.setMyLocationEnabled(false);
+//        mapView.onDestroy();
+//        baiduMap.setMyLocationEnabled(false);
     }
 
     private void requestLocation() {
