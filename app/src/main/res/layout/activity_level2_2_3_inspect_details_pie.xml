@@ -133,6 +133,16 @@
                 android:layout_marginLeft="10dp"
                 />
 
+            <LinearLayout
+                android:id="@+id/draw_column"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5"
+                >
+
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout

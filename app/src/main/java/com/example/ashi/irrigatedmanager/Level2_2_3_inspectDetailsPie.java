@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.ashi.irrigatedmanager.level2_2_3.DrawColumn;
 import com.example.ashi.irrigatedmanager.level2_2_3.DrawColumnAndPie;
 import com.example.ashi.irrigatedmanager.level2_2_3.DrawYearMonthData;
 
@@ -30,6 +31,10 @@ public class Level2_2_3_inspectDetailsPie extends AppCompatActivity {
 //        LinearLayout ll_body = (LinearLayout) findViewById(R.id.inspect_detail_pie);
 //        DrawColumnAndPie view = new DrawColumnAndPie(getApplicationContext());
 //        ll_body.addView(view);
+
+        LinearLayout column_body = (LinearLayout) findViewById(R.id.draw_column);
+        DrawColumn columnView = new DrawColumn(getApplicationContext());
+        column_body.addView(columnView);
 
         findViewById(R.id.leve1_2_1_back).setOnClickListener(new View.OnClickListener() {
             @Override
