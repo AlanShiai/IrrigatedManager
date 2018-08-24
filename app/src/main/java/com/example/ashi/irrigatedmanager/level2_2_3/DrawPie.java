@@ -86,8 +86,11 @@ public class DrawPie extends View {
         canvas.drawArc(pieRectF, startAngle, sweepAngle, true, mPaint);
         float pxs = (float) (mRadius * Math.cos(Math.toRadians(startAngle + sweepAngle / 2)));
         float pys = (float) (mRadius * Math.sin(Math.toRadians(startAngle + sweepAngle / 2)));
-        mPaint.setColor(Color.BLACK);
-        canvas.drawText("21", circle_x + pxs, circle_y + pys, mPaint);
+        mPaint.setColor(0xFFC0C0C0);
+        canvas.drawLine(circle_x + pxs, circle_y + pys, circle_x + pxs + 20, circle_y + pys + 20, mPaint);
+        canvas.drawLine(circle_x + pxs + 20, circle_y + pys + 20, circle_x + pxs + 240, circle_y + pys + 20, mPaint);
+        mPaint.setColor(0xFFFF69B4);
+        canvas.drawText("渠首 21个", circle_x + pxs + 60, circle_y + pys + 10, mPaint);
 
         startAngle = startAngle + sweepAngle;
         sweepAngle = 20 / sum * 360;
@@ -95,8 +98,11 @@ public class DrawPie extends View {
         canvas.drawArc(pieRectF, startAngle, sweepAngle, true, mPaint);
         pxs = (float) (mRadius * Math.cos(Math.toRadians(startAngle + sweepAngle / 2)));
         pys = (float) (mRadius * Math.sin(Math.toRadians(startAngle + sweepAngle / 2)));
-        mPaint.setColor(Color.BLACK);
-        canvas.drawText("20", circle_x + pxs, circle_y + pys, mPaint);
+        mPaint.setColor(0xFFC0C0C0);
+        canvas.drawLine(circle_x + pxs, circle_y + pys, circle_x + pxs - 20, circle_y + pys + 20, mPaint);
+        canvas.drawLine(circle_x + pxs - 20, circle_y + pys + 20, circle_x + pxs - 240, circle_y + pys + 20, mPaint);
+        mPaint.setColor(0xFF90EE90);
+        canvas.drawText("闸门 20个", circle_x + pxs - 240 + 60, circle_y + pys + 10, mPaint);
 
         startAngle = startAngle + sweepAngle;
         sweepAngle = 9 / sum * 360;
@@ -104,8 +110,11 @@ public class DrawPie extends View {
         canvas.drawArc(pieRectF, startAngle, sweepAngle, true, mPaint);
         pxs = (float) (mRadius * Math.cos(Math.toRadians(startAngle + sweepAngle / 2)));
         pys = (float) (mRadius * Math.sin(Math.toRadians(startAngle + sweepAngle / 2)));
-        mPaint.setColor(Color.BLACK);
-        canvas.drawText("9", circle_x + pxs, circle_y + pys, mPaint);
+        mPaint.setColor(0xFFC0C0C0);
+        canvas.drawLine(circle_x + pxs, circle_y + pys, circle_x + pxs - 20, circle_y + pys - 20, mPaint);
+        canvas.drawLine(circle_x + pxs - 20, circle_y + pys - 20, circle_x + pxs - 240, circle_y + pys - 20, mPaint);
+        mPaint.setColor(0xFF6495ED);
+        canvas.drawText("桥梁 9个", circle_x + pxs - 240 + 60, circle_y + pys - 20 - 10, mPaint);
 
         startAngle = startAngle + sweepAngle;
         sweepAngle = 2 / sum * 360;
@@ -113,8 +122,11 @@ public class DrawPie extends View {
         canvas.drawArc(pieRectF, startAngle, sweepAngle, true, mPaint);
         pxs = (float) (mRadius * Math.cos(Math.toRadians(startAngle + sweepAngle / 2)));
         pys = (float) (mRadius * Math.sin(Math.toRadians(startAngle + sweepAngle / 2)));
-        mPaint.setColor(Color.BLACK);
-        canvas.drawText("2", circle_x + pxs, circle_y + pys, mPaint);
+        mPaint.setColor(0xFFC0C0C0);
+        canvas.drawLine(circle_x + pxs, circle_y + pys, circle_x + pxs + 20, circle_y + pys - 20, mPaint);
+        canvas.drawLine(circle_x + pxs + 20, circle_y + pys - 20, circle_x + pxs + 240, circle_y + pys - 20, mPaint);
+        mPaint.setColor(0xFF87CEFA);
+        canvas.drawText("渡槽 2个", circle_x + pxs  + 60, circle_y + pys - 20 - 10, mPaint);
 
         startAngle = startAngle + sweepAngle;
         sweepAngle = 8 / sum * 360;
@@ -122,8 +134,11 @@ public class DrawPie extends View {
         canvas.drawArc(pieRectF, startAngle, sweepAngle, true, mPaint);
         pxs = (float) (mRadius * Math.cos(Math.toRadians(startAngle + sweepAngle / 2)));
         pys = (float) (mRadius * Math.sin(Math.toRadians(startAngle + sweepAngle / 2)));
-        mPaint.setColor(Color.BLACK);
-        canvas.drawText("8", circle_x + pxs, circle_y + pys, mPaint);
+        mPaint.setColor(0xFFC0C0C0);
+        canvas.drawLine(circle_x + pxs, circle_y + pys, circle_x + pxs + 20, circle_y + pys - 20, mPaint);
+        canvas.drawLine(circle_x + pxs + 20, circle_y + pys - 20, circle_x + pxs + 240, circle_y + pys - 20, mPaint);
+        mPaint.setColor(0xFFD19275);
+        canvas.drawText("涵洞 8个", circle_x + pxs  + 60, circle_y + pys - 20 - 10, mPaint);
 
         mPaint.setColor(Color.WHITE);
 //        canvas.drawArc(pieRectF., 0, 360, true, mPaint);
