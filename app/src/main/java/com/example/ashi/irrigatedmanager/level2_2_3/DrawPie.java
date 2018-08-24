@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -128,10 +129,16 @@ public class DrawPie extends View {
 //        canvas.drawArc(pieRectF., 0, 360, true, mPaint);
         canvas.drawCircle(pieRectF.centerX(), pieRectF.centerY(), width/4, mPaint);
 
+        mPaint.setColor(Color.BLACK);
         String str = "异常次数";
         int str_width = getStringWidth(str);
-        mPaint.setColor(0xFF003D79);
-        canvas.drawText(str, pieRectF.centerX() - str_width / 2, pieRectF.centerY(), mPaint);
+        canvas.drawText(str, pieRectF.centerX() - str_width / 2, pieRectF.centerY() + 30, mPaint);
+
+        str = "全年";
+        mPaint.setTextSize(mDensity * 16);
+        mPaint.setTypeface(Typeface.DEFAULT_BOLD);
+        str_width = getStringWidth(str);
+        canvas.drawText(str, pieRectF.centerX() - str_width / 2, pieRectF.centerY() - 30, mPaint);
     }
 
     private int getStringWidth(String str) {
