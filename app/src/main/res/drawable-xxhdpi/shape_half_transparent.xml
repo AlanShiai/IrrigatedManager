@@ -5,8 +5,7 @@
     <!-- 圆角-->
     <corners android:radius="10dip"/>
     <!-- 边框颜色 -->
-    <stroke android:width="2dip" android:color="#F5F5F5" />
 
-    <solid android:color="#ffffff" />
+    <solid android:color="#66ffffff" />
 
 </shape>
