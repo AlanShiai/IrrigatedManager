@@ -27,15 +27,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:text="闸位1"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 />
             <TextView
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:textColor="#42a0ff"
                 android:gravity="right"
                 android:layout_gravity="center"
                 android:text="0.78"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="米"
+                android:textSize="16sp"
                 />
         </LinearLayout>
 
@@ -54,15 +61,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:text="闸位2"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 />
             <TextView
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:textColor="#42a0ff"
                 android:gravity="right"
                 android:layout_gravity="center"
                 android:text="1.58"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="米"
+                android:textSize="16sp"
                 />
         </LinearLayout>
 
@@ -81,15 +95,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:text="闸位3"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 />
             <TextView
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:textColor="#42a0ff"
                 android:gravity="right"
                 android:layout_gravity="center"
                 android:text="0.98"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="米"
+                android:textSize="16sp"
                 />
         </LinearLayout>
 
@@ -117,15 +138,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:text="闸位4"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 />
             <TextView
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:textColor="#42a0ff"
                 android:gravity="right"
                 android:layout_gravity="center"
                 android:text="0.28"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="米"
+                android:textSize="16sp"
                 />
         </LinearLayout>
 
@@ -144,16 +172,24 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:text="闸位5"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:visibility="gone"
                 />
             <TextView
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:textColor="#42a0ff"
                 android:gravity="right"
                 android:layout_gravity="center"
                 android:text="1.58"
+                android:visibility="gone"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="米"
+                android:textSize="16sp"
                 android:visibility="gone"
                 />
         </LinearLayout>
@@ -173,16 +209,24 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:text="闸位6"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:visibility="gone"
                 />
             <TextView
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:textColor="#42a0ff"
                 android:gravity="right"
                 android:layout_gravity="center"
                 android:text="0.98"
+                android:visibility="gone"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="米"
+                android:textSize="16sp"
                 android:visibility="gone"
                 />
         </LinearLayout>
@@ -211,7 +255,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:text="闸前水位："
-            android:textSize="18sp"
+            android:textSize="16sp"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -224,9 +268,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:text="毫米"
+            android:textSize="16sp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:text="闸后水位："
-            android:textSize="18sp"
+            android:textSize="16sp"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -235,6 +285,12 @@
             android:gravity="right"
             android:layout_gravity="center"
             android:text="58.00"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="毫米"
+            android:textSize="16sp"
             />
     </LinearLayout>
 
