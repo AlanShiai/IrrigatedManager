@@ -127,7 +127,7 @@ public class DrawColumn extends View {
         int rectWidth = width_text;
         int rectHigh = (int) ((600-532)/600.0 * (bottom - y_space));
         int rectX = x_space + x_grid + x_grid*0;
-        mPaint.setColor(Color.RED);
+        mPaint.setColor(0xFFFF69B4);
         canalHeadRect = new Rect(rectX, rectHigh, (rectX+rectWidth), bottom - y_space - 2);
         canvas.drawRect(canalHeadRect, mPaint);
         mPaint.setColor(Color.WHITE);
@@ -140,7 +140,7 @@ public class DrawColumn extends View {
         rectX = x_space + x_grid + x_grid*4;
         rectHigh = (int) ((600-166)/600.0 * (bottom - y_space));
         sluiceGateRect = new Rect(rectX, rectHigh, rectX+rectWidth, bottom - y_space - 2);
-        mPaint.setColor(Color.MAGENTA);
+        mPaint.setColor(0xFF90EE90);
         canvas.drawRect(sluiceGateRect, mPaint);
         mPaint.setColor(Color.WHITE);
         canvas.drawText("166", rectX + 5, rectHigh + fontSize + 20, mPaint);
@@ -148,7 +148,7 @@ public class DrawColumn extends View {
         rectX = x_space + x_grid + x_grid*8;
         rectHigh = (int) ((600-433)/600.0 * (bottom - y_space));
         bridgeRect = new Rect(rectX, rectHigh, rectX+rectWidth, bottom - y_space - 2);
-        mPaint.setColor(Color.BLUE);
+        mPaint.setColor(0xFF6495ED);
         canvas.drawRect(bridgeRect, mPaint);
         mPaint.setColor(Color.WHITE);
         canvas.drawText("433", rectX + 5, rectHigh + fontSize + 20, mPaint);
@@ -156,7 +156,7 @@ public class DrawColumn extends View {
         rectX = x_space + x_grid + x_grid*12;
         rectHigh = (int) ((600-344)/600.0 * (bottom - y_space));
         launderRect = new Rect(rectX, rectHigh, rectX+rectWidth, bottom - y_space - 2);
-        mPaint.setColor(Color.GREEN);
+        mPaint.setColor(0xFF87CEFA);
         canvas.drawRect(launderRect, mPaint);
         mPaint.setColor(Color.WHITE);
         canvas.drawText("344", rectX + 5, rectHigh + fontSize + 20, mPaint);
@@ -164,7 +164,7 @@ public class DrawColumn extends View {
         rectX = x_space + x_grid + x_grid*16;
         rectHigh = (int) ((600-124)/600.0 * (bottom - y_space));
         culvertRect = new Rect(rectX, rectHigh, rectX+rectWidth, bottom - y_space - 2);
-        mPaint.setColor(Color.BLACK);
+        mPaint.setColor(0xFFD19275);
         canvas.drawRect(culvertRect, mPaint);
         mPaint.setColor(Color.WHITE);
         canvas.drawText("124", rectX + 5, rectHigh + fontSize + 20, mPaint);
