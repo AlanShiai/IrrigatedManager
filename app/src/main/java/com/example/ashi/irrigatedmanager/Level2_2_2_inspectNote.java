@@ -11,11 +11,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 
 public class Level2_2_2_inspectNote extends AppCompatActivity {
+
+    private LinearLayout query_layout;
 
     private String[] items = new String[] {
             "全部",
@@ -36,6 +39,8 @@ public class Level2_2_2_inspectNote extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
         setContentView(R.layout.activity_level2_2_2_inspect_note);
+
+        query_layout = (LinearLayout) findViewById(R.id.query_layout);
 
         Spinner spinner = (Spinner) findViewById(R.id.level_2_2_2_spinner);
         ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_multiple_choice,items);
@@ -78,6 +83,15 @@ public class Level2_2_2_inspectNote extends AppCompatActivity {
                     }
                 }, 2018, 7, 15);
                 datePicker.show();
+            }
+        });
+
+        findViewById(R.id.query_image).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null != query_layout) {
+                    query_layout.setVisibility(View.GONE);
+                }
             }
         });
     }
