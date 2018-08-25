@@ -57,6 +57,7 @@
             android:gravity="right"
             android:textColor="#FFFFFF"
             style="?android:attr/borderlessButtonStyle"
+            android:visibility="invisible"
             />
     </LinearLayout>
 
