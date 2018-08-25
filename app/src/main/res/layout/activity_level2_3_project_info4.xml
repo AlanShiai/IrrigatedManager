@@ -51,13 +51,32 @@
             />
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/project_info_list"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="#F5F5F5"
         >
 
-    </ListView>
+        <LinearLayout
+            android:layout_margin="10dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_shape"
+            >
+
+            <ListView
+                android:layout_margin="10dp"
+                android:id="@+id/project_info_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@null"
+                android:background="#FFFFFF"
+                >
+            </ListView>
+
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

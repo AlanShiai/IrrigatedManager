@@ -7,6 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
+
+import com.example.ashi.irrigatedmanager.level2_5.ManualInspectBasicInfo;
+import com.example.ashi.irrigatedmanager.level2_5.ManualInspectBasicInfoAdapter;
+
+import java.util.ArrayList;
 
 public class Level2_3_projectInfo4 extends AppCompatActivity {
 
@@ -20,6 +26,11 @@ public class Level2_3_projectInfo4 extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
         setContentView(R.layout.activity_level2_3_project_info4);
+
+        ManualInspectBasicInfoAdapter adapter = new ManualInspectBasicInfoAdapter(
+                Level2_3_projectInfo4.this, R.layout.fragment_listview_item, new ArrayList<String>(ManualInspectBasicInfo.getInfo().keySet()));
+        ListView listView = (ListView) findViewById(R.id.project_info_list);
+        listView.setAdapter(adapter);
 
         Button backButton = (Button) findViewById(R.id.back_button);
         backButton.setOnClickListener(new View.OnClickListener() {
