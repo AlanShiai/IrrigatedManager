@@ -68,14 +68,14 @@ public class Level2_2_projectInspection2 extends AppCompatActivity {
                 finish();
             }
         });
-//        findViewById(R.id.inspect_note).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(Level2_2_projectInspection2.this, Level2_2_2_inspectNote.class);
-//                startActivity(intent);
-//                finish();
-//            }
-//        });
+        findViewById(R.id.inspect_note).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Level2_2_projectInspection2.this, Level2_2_2_inspectNote.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         findViewById(R.id.details).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
