@@ -36,19 +36,19 @@ public class InspectDetailInfoAdpter extends ArrayAdapter<InspectDetailInfo>  {
             view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
             viewHolder = new InspectDetailInfoAdpter.ViewHolder();
             viewHolder.projectName = (TextView) view.findViewById (R.id.inspect_detail_name);
-            viewHolder.schedule = (TextView) view.findViewById(R.id.inspect_detail_num);
+//            viewHolder.schedule = (TextView) view.findViewById(R.id.inspect_detail_num);
             view.setTag(viewHolder); // 将ViewHolder存储在View中
         } else {
             view = convertView;
             viewHolder = (InspectDetailInfoAdpter.ViewHolder) view.getTag(); // 重新获取ViewHolder
         }
         viewHolder.projectName.setText(projectInfo.getName());
-        viewHolder.schedule.setText(projectInfo.getNum());
+//        viewHolder.schedule.setText(projectInfo.getNum());
         return view;
     }
 
     class ViewHolder {
         TextView projectName;
-        TextView schedule;
+//        TextView schedule;
     }
 }
