@@ -154,6 +154,45 @@ public class DrawPie extends View {
         mPaint.setTypeface(Typeface.DEFAULT_BOLD);
         str_width = getStringWidth(str);
         canvas.drawText(str, pieRectF.centerX() - str_width / 2, pieRectF.centerY() - 30, mPaint);
+
+
+        mPaint.setTextSize(mDensity * 12);
+        mPaint.setTypeface(Typeface.DEFAULT);
+
+        Rect rect = new Rect();
+        mPaint.getTextBounds(str, 0, str.length(), rect);
+        int textWidth = rect.width();//文字宽
+        int textHeight = rect.height();
+
+        str = "渠首";
+        int start = (int) ((right - ((40 + textWidth)*5 + 4*textWidth))/2.0);
+        mPaint.setColor(0xFFFF69B4);
+        canvas.drawCircle(start, pieRectF.bottom + textHeight*(float)1.6, 10, mPaint);
+        canvas.drawText(str, start+20, pieRectF.bottom + textHeight*2, mPaint);
+
+        str = "闸门";
+        start = start + 2*textWidth + 30;
+        mPaint.setColor(0xFF90EE90);
+        canvas.drawCircle(start, pieRectF.bottom + textHeight*(float)1.6, 10, mPaint);
+        canvas.drawText(str, start+20, pieRectF.bottom + textHeight*2, mPaint);
+
+        str = "桥梁";
+        start = start + 2*textWidth + 30;
+        mPaint.setColor(0xFF6495ED);
+        canvas.drawCircle(start, pieRectF.bottom + textHeight*(float)1.6, 10, mPaint);
+        canvas.drawText(str, start+20, pieRectF.bottom + textHeight*2, mPaint);
+
+        str = "渡槽";
+        start = start + 2*textWidth + 30;
+        mPaint.setColor(0xFF87CEFA);
+        canvas.drawCircle(start, pieRectF.bottom + textHeight*(float)1.6, 10, mPaint);
+        canvas.drawText(str, start+20, pieRectF.bottom + textHeight*2, mPaint);
+
+        str = "涵洞";
+        start = start + 2*textWidth + 30;
+        mPaint.setColor(0xFFD19275);
+        canvas.drawCircle(start, pieRectF.bottom + textHeight*(float)1.6, 10, mPaint);
+        canvas.drawText(str, start+20, pieRectF.bottom + textHeight*2, mPaint);
     }
 
     private int getStringWidth(String str) {
