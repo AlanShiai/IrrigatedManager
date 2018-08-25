@@ -7,7 +7,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:background="#42a0ff"
+        android:background="#24AAFF"
         >
     </LinearLayout>
 
@@ -17,7 +17,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="42dp"
-        android:background="#42a0ff"
+        android:background="#24AAFF"
         >
 
         <Button
@@ -64,7 +64,7 @@
         android:layout_marginTop="62dp"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:background="#42a0ff"
+        android:background="#24AAFF"
         >
     </LinearLayout>
 
@@ -273,7 +273,7 @@
                                     android:gravity="right"
                                     android:layout_marginRight="5dp"
                                     android:text="30%"
-                                    android:textColor="#42a0ff"
+                                    android:textColor="#24AAFF"
                                     android:textSize="14sp"
                                     />
 
@@ -291,7 +291,7 @@
                                     android:gravity="right"
                                     android:layout_marginRight="5dp"
                                     android:text="16%"
-                                    android:textColor="#42a0ff"
+                                    android:textColor="#24AAFF"
                                     android:textSize="14sp"
                                     />
                             </LinearLayout>
@@ -434,7 +434,7 @@
                                     android:gravity="right"
                                     android:layout_marginRight="5dp"
                                     android:text="30%"
-                                    android:textColor="#42a0ff"
+                                    android:textColor="#24AAFF"
                                     android:textSize="14sp"
                                     />
 
@@ -452,7 +452,7 @@
                                     android:gravity="right"
                                     android:layout_marginRight="5dp"
                                     android:text="16%"
-                                    android:textColor="#42a0ff"
+                                    android:textColor="#24AAFF"
                                     android:textSize="14sp"
                                     />
                             </LinearLayout>
@@ -595,7 +595,7 @@
                                     android:gravity="right"
                                     android:layout_marginRight="5dp"
                                     android:text="30%"
-                                    android:textColor="#42a0ff"
+                                    android:textColor="#24AAFF"
                                     android:textSize="14sp"
                                     />
 
@@ -613,7 +613,7 @@
                                     android:gravity="right"
                                     android:layout_marginRight="5dp"
                                     android:text="16%"
-                                    android:textColor="#42a0ff"
+                                    android:textColor="#24AAFF"
                                     android:textSize="14sp"
                                     />
                             </LinearLayout>

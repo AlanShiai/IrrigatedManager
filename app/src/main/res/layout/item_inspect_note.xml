@@ -3,21 +3,16 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#FFFFFF"
     >
 
     <LinearLayout
+        android:layout_margin="10dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
         >
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/c5"
-            />
 
         <LinearLayout
             android:orientation="vertical"
@@ -38,7 +33,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginLeft="5dp"
-                    android:text="柳林总雨量"
+                    android:text="滏阳河张庄桥"
                     android:textSize="18sp"
                     />
 
@@ -49,7 +44,7 @@
                     android:gravity="right"
                     android:layout_marginRight="5dp"
                     android:text="2018-08-15  05:20:14"
-                    android:textColor="#ADADAD"
+                    android:textColor="#AFAFAF"
                     />
 
             </LinearLayout>
@@ -63,8 +58,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="当月雨量："
+                    android:text="结果："
                     android:textSize="14sp"
+                    android:textColor="#AFAFAF"
                     />
 
                 <TextView
@@ -72,27 +68,19 @@
                     android:layout_height="wrap_content"
                     android:gravity="right"
                     android:layout_marginRight="5dp"
-                    android:text="102"
-                    android:textColor="#24AAFF"
+                    android:text="正常"
+                    android:textColor="#3BBA85"
                     android:textSize="14sp"
                     />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:text="当日雨量："
-                    android:textSize="14sp"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:gravity="right"
                     android:layout_marginRight="5dp"
-                    android:text="20"
-                    android:textColor="#24AAFF"
-                    android:textSize="14sp"
+                    android:text="巡检人：张丽"
+                    android:textColor="#AFAFAF"
                     />
             </LinearLayout>
         </LinearLayout>
