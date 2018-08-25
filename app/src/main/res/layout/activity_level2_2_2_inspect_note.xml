@@ -116,19 +116,187 @@
             >
 
             <LinearLayout
-                android:id="@+id/draw_column"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="5"
+                android:layout_height="match_parent"
                 >
+
+                <LinearLayout
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/item_input_shape"
+                    >
+
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="开始时间："
+                        android:textSize="14sp"
+                        android:textColor="#24AAFF"
+                        />
+
+                    <TextView
+                        android:layout_margin="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="2018-06-10"
+                        android:textSize="14sp"
+                        />
+
+                    <ImageView
+                        android:layout_margin="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/c2"
+                        android:scaleType="centerCrop"
+                        />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/item_input_shape"
+                    >
+
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="结束时间："
+                        android:textSize="14sp"
+                        android:textColor="#24AAFF"
+                        />
+
+                    <TextView
+                        android:layout_margin="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="2018-06-10"
+                        android:textSize="14sp"
+                        />
+
+                    <ImageView
+                        android:layout_margin="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/c2"
+                        android:scaleType="centerCrop"
+                        />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/item_input_shape"
+                    >
+
+                    <TextView
+                        android:layout_margin="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="类型"
+                        android:textSize="14sp"
+                        />
+
+                    <ImageView
+                        android:layout_margin="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/c6"
+                        android:scaleType="centerCrop"
+                        />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/item_input_shape"
+                    >
+
+                    <EditText
+                        android:layout_margin="5dp"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:hint="请输入名称"
+                        android:background="@null"
+                        android:textSize="14sp"
+                        />
+
+                    <ImageView
+                        android:layout_margin="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/c7"
+                        android:scaleType="centerCrop"
+                        />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <Button
+                        android:layout_margin="5dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:gravity="center"
+                        android:text="确定"
+                        android:textSize="16sp"
+                        android:textColor="#FFFFFF"
+                        android:background="@drawable/item_bt_shape"
+                        />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/draw_pie"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -161,7 +329,8 @@
                             android:layout_weight="1"
                             android:layout_marginLeft="5dp"
                             android:text="滏阳河张庄桥"
-                            android:textSize="18sp"
+                            android:textSize="16sp"
+                            android:textColor="#333333"
                             />
 
                         <TextView
@@ -245,7 +414,8 @@
                             android:layout_weight="1"
                             android:layout_marginLeft="5dp"
                             android:text="滏阳河张庄桥"
-                            android:textSize="18sp"
+                            android:textSize="16sp"
+                            android:textColor="#333333"
                             />
 
                         <TextView
@@ -324,13 +494,13 @@
                         android:layout_height="wrap_content"
                         >
                         <TextView
-                            android:id="@+id/rain_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginLeft="5dp"
                             android:text="滏阳河张庄桥"
-                            android:textSize="18sp"
+                            android:textSize="16sp"
+                            android:textColor="#333333"
                             />
 
                         <TextView
@@ -451,7 +621,8 @@
                         android:layout_weight="1"
                         android:layout_marginLeft="5dp"
                         android:text="滏阳河张庄桥"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
+                        android:textColor="#333333"
                         />
 
                     <TextView
@@ -535,7 +706,8 @@
                         android:layout_weight="1"
                         android:layout_marginLeft="5dp"
                         android:text="滏阳河张庄桥"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
+                        android:textColor="#333333"
                         />
 
                     <TextView
@@ -614,13 +786,13 @@
                     android:layout_height="wrap_content"
                     >
                     <TextView
-                        android:id="@+id/rain_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginLeft="5dp"
                         android:text="滏阳河张庄桥"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
+                        android:textColor="#333333"
                         />
 
                     <TextView
