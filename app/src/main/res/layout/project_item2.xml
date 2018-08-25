@@ -3,21 +3,12 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FFFFFF"
+    android:background="#F5F5F5"
     >
-
-    <ImageView
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="5dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:src="@drawable/e4"
-        android:scaleType="fitCenter"
-        />
 
     <TextView
         android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginRight="5dp"
         android:layout_marginBottom="20dp"
         android:id="@+id/projectName"
@@ -30,5 +21,6 @@
         android:textStyle="normal"
         android:textColor="#333333"
         />
+
 
 </LinearLayout>

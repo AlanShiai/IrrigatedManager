@@ -563,6 +563,55 @@
     </LinearLayout>
 
     <!-- query_layout -->
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F5F5F5"
+        android:visibility="gone"
+        >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#F5F5F5"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            >
+
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                />
+
+            <Spinner
+                android:id="@+id/level_2_2_2_spinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="确定"
+                />
+
+            <Button
+                android:id="@+id/btnDatePickerDialog"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="选择日期"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/query_layout"
         android:layout_marginTop="62dp"
@@ -857,54 +906,6 @@
             android:visibility="gone"
             >
         </ListView>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#F5F5F5"
-        android:visibility="gone"
-        >
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="#F5F5F5"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
-            >
-
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                />
-
-            <Spinner
-                android:id="@+id/level_2_2_2_spinner"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="确定"
-                />
-
-            <Button
-                android:id="@+id/btnDatePickerDialog"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="选择日期"
-                />
-
-        </LinearLayout>
 
     </LinearLayout>
 

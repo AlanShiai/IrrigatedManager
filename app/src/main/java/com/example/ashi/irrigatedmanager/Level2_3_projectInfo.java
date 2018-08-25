@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -21,6 +22,8 @@ public class Level2_3_projectInfo extends AppCompatActivity {
 
     private List<ProjectInfo> projectInfoList = new ArrayList<ProjectInfo>();
 
+    private List<ProjectInfo> projectInfoList2 = new ArrayList<ProjectInfo>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,15 +35,38 @@ public class Level2_3_projectInfo extends AppCompatActivity {
         }
         setContentView(R.layout.activity_level2_3_project_info);
 
+
         ListView listView = (ListView) findViewById(R.id.level_2_3_projectInfo);
         initProjectInfoList();
+        initProjectInfoList2();
         ProjectInfoAdpter adapter = new ProjectInfoAdpter(Level2_3_projectInfo.this, R.layout.project_item1, projectInfoList);
         listView.setAdapter(adapter);
+
+        ListView listView2 = (ListView) findViewById(R.id.level2_menu_list);
+        ProjectInfoAdpter adapter2 = new ProjectInfoAdpter(Level2_3_projectInfo.this, R.layout.project_item2, projectInfoList2);
+        listView2.setAdapter(adapter2);
+        listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(Level2_3_projectInfo.this, Level2_3_projectInfo3.class);
+                startActivity(intent);
+            }
+        });
+        listView2.setVisibility(View.GONE);
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(Level2_3_projectInfo.this, Level2_3_projectInfo2.class);
-                startActivity(intent);
+                view.setBackgroundColor(0x515151);
+                Log.d("aijun", position + "");
+                ListView listView = (ListView) findViewById(R.id.level2_menu_list);
+                if ( 0 == position) {
+                    listView.setVisibility(View.VISIBLE);
+                } else {
+                    listView.setVisibility(View.GONE);
+                    Intent intent = new Intent(Level2_3_projectInfo.this, Level2_3_projectInfo3.class);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -116,6 +142,19 @@ public class Level2_3_projectInfo extends AppCompatActivity {
                 "水库"};
         for (String name : strings) {
             projectInfoList.add(new ProjectInfo(name));
+        }
+    }
+    private void initProjectInfoList2() {
+        String[] strings = {
+                "总干渠" ,
+                "干渠" ,
+                "干渠段" ,
+                "支渠" ,
+                "排水干渠" ,
+                "排水支渠" ,
+        };
+        for (String name : strings) {
+            projectInfoList2.add(new ProjectInfo(name));
         }
     }
 }
