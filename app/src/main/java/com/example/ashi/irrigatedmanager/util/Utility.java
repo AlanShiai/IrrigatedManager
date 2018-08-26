@@ -3,8 +3,10 @@ package com.example.ashi.irrigatedmanager.util;
 import com.example.ashi.irrigatedmanager.gson.TotalCount;
 import com.example.ashi.irrigatedmanager.gson.User;
 import com.example.ashi.irrigatedmanager.level2_4.Rain;
+import com.example.ashi.irrigatedmanager.level2_6.ProjectInfo3;
 import com.example.ashi.irrigatedmanager.level5.Appval;
 import com.example.ashi.irrigatedmanager.level5.AppvalHistory;
+import com.example.ashi.irrigatedmanager.level5.BusinessForm;
 import com.example.ashi.irrigatedmanager.level5.MyProcess;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -59,6 +61,24 @@ public class Utility {
     public static MyProcess handleApi14getMyProcessResponse(String response) {
         try {
             return new Gson().fromJson(response, MyProcess.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static BusinessForm handleApi16businessFormResponse(String response) {
+        try {
+            return new Gson().fromJson(response, BusinessForm.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static List<ProjectInfo3> handleApi17ProjectListResponse(String response) {
+        try {
+            return new Gson().fromJson(response, new TypeToken<List<ProjectInfo3>>(){}.getType());
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.example.ashi.irrigatedmanager.R;
+import com.example.ashi.irrigatedmanager.level5.AppvalAdapter;
+
 import java.util.List;
 
 /**
@@ -31,16 +34,31 @@ public class ProjectInfo3Adpter extends ArrayAdapter<ProjectInfo3> {
         if (convertView == null) {
             view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
             viewHolder = new ProjectInfo3Adpter.ViewHolder();
+            viewHolder.name = (TextView) view.findViewById (R.id.name);
+            viewHolder.officeName = (TextView) view.findViewById (R.id.officeName);
+            viewHolder.subType = (TextView) view.findViewById (R.id.subType);
             view.setTag(viewHolder); // 将ViewHolder存储在View中
         } else {
             view = convertView;
+            viewHolder = (ProjectInfo3Adpter.ViewHolder) view.getTag(); // 重新获取ViewHolder
+        }
+        if ( null != projectInfo.name) {
+            viewHolder.name.setText(projectInfo.name);
+        }
+        if ( null != projectInfo.officeName) {
+            viewHolder.officeName.setText(projectInfo.officeName);
+        }
+        if ( null != projectInfo.subType) {
+            viewHolder.subType.setText(projectInfo.subType);
         }
 
         return view;
     }
 
     class ViewHolder {
-        TextView projectName;
+        TextView name;
+        TextView officeName;
+        TextView subType;
     }
 
 }

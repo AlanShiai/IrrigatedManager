@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -12,13 +13,24 @@ import android.widget.ListView;
 
 import com.example.ashi.irrigatedmanager.level2_6.ProjectInfo3;
 import com.example.ashi.irrigatedmanager.level2_6.ProjectInfo3Adpter;
+import com.example.ashi.irrigatedmanager.level5.BusinessForm;
+import com.example.ashi.irrigatedmanager.util.Api;
+import com.example.ashi.irrigatedmanager.util.HttpUtil;
+import com.example.ashi.irrigatedmanager.util.Utility;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class Level2_3_projectInfo3 extends AppCompatActivity {
 
     private List<ProjectInfo3> projectInfoList = new ArrayList<ProjectInfo3>();
+
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +43,7 @@ public class Level2_3_projectInfo3 extends AppCompatActivity {
         }
         setContentView(R.layout.activity_level2_3_project_info3);
 
-        ListView listView = (ListView) findViewById(R.id.project_info_list);
+        listView = (ListView) findViewById(R.id.project_info_list);
         initProjectInfoList();
         ProjectInfo3Adpter adapter = new ProjectInfo3Adpter(Level2_3_projectInfo3.this, R.layout.project_item_3, projectInfoList);
         listView.setAdapter(adapter);
@@ -53,6 +65,36 @@ public class Level2_3_projectInfo3 extends AppCompatActivity {
             }
         });
 
+        getDataFromServerAndUpdateListView();
+    }
+
+    private void getDataFromServerAndUpdateListView() {
+        String url = Api.API_17_projectList;
+        HttpUtil.sendOkHttpRequest(url, new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responseText = response.body().string();
+                final List<ProjectInfo3> list = Utility.handleApi17ProjectListResponse(responseText);
+                Log.d("aijun, projectList", list+"");
+                Log.d("aijun, projectList", list.size()+"");
+                if ( ! list.isEmpty() ) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if ( null != listView ) {
+                                ProjectInfo3Adpter adapter = new ProjectInfo3Adpter(Level2_3_projectInfo3.this, R.layout.project_item_3, list);
+                                listView.setAdapter(adapter);
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
 

@@ -283,8 +283,6 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
                 public void onResponse(Call call, Response response) throws IOException {
                     final String responseText = response.body().string();
                     final MyProcess myProcess = Utility.handleApi14getMyProcessResponse(responseText);
-                    Log.d("aijun, getMyProcess", myProcess+"");
-                    Log.d("aijun, getMyProcess", myProcess.count+"");
                     if ( null != myProcess.data &&  ! myProcess.data.isEmpty() ) {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
