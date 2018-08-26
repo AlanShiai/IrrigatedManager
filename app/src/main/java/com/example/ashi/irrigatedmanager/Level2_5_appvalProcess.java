@@ -30,6 +30,7 @@ import com.example.ashi.irrigatedmanager.level2_5.ManualInspectBasicInfo;
 import com.example.ashi.irrigatedmanager.level2_5.ManualInspectBasicInfoAdapter;
 import com.example.ashi.irrigatedmanager.level5.Appval;
 import com.example.ashi.irrigatedmanager.level5.AppvalAdapter;
+import com.example.ashi.irrigatedmanager.level5.AppvalHistory;
 import com.example.ashi.irrigatedmanager.util.Api;
 import com.example.ashi.irrigatedmanager.util.Const;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
@@ -190,6 +191,61 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
                 }
             });
         }
+
+    }
+
+    public static class PlaceholderFragment2 extends Fragment {
+
+        ListView toDoListView;
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_listview, container, false);
+
+            AppvalAdapter adapter = new AppvalAdapter(getContext(), R.layout.appval_item, dataList);
+
+            toDoListView = (ListView) rootView.findViewById(R.id.fragment_listview_list);
+            toDoListView.setAdapter(adapter);
+            toDoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(getContext(), Level2_5_1_appvalDetails.class);
+                    startActivity(intent);
+                }
+            });
+
+            getDataFromServerAndUpdateToDoListView();
+            return rootView;
+        }
+
+        private void getDataFromServerAndUpdateToDoListView() {
+            String url = Api.API_13_historyActList;
+            HttpUtil.sendOkHttpRequest(url, new Callback() {
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    final String responseText = response.body().string();
+                    final AppvalHistory appvalHistory = Utility.handleApi13HisoryActListResponse(responseText);
+                    if ( null != appvalHistory.data && ! appvalHistory.data.isEmpty() ) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if ( null != toDoListView ) {
+                                    AppvalAdapter adapter = new AppvalAdapter(getContext(), R.layout.appval_item, appvalHistory.data);
+                                    toDoListView.setAdapter(adapter);
+                                }
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+
     }
 
     /**
@@ -208,7 +264,7 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
                 case 0:
                     return new PlaceholderFragment1();
                 case 1:
-                    return new PlaceholderFragment1();
+                    return new PlaceholderFragment2();
                 case 2:
                     return new PlaceholderFragment1();
             }
