@@ -31,6 +31,8 @@ import com.example.ashi.irrigatedmanager.level2_5.ManualInspectBasicInfoAdapter;
 import com.example.ashi.irrigatedmanager.level5.Appval;
 import com.example.ashi.irrigatedmanager.level5.AppvalAdapter;
 import com.example.ashi.irrigatedmanager.level5.AppvalHistory;
+import com.example.ashi.irrigatedmanager.level5.MyProcess;
+import com.example.ashi.irrigatedmanager.level5.ProcessAdapter;
 import com.example.ashi.irrigatedmanager.util.Api;
 import com.example.ashi.irrigatedmanager.util.Const;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
@@ -248,6 +250,63 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
 
     }
 
+
+    public static class PlaceholderFragment3 extends Fragment {
+
+        ListView toDoListView;
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_listview, container, false);
+
+            AppvalAdapter adapter = new AppvalAdapter(getContext(), R.layout.appval_item, dataList);
+
+            toDoListView = (ListView) rootView.findViewById(R.id.fragment_listview_list);
+            toDoListView.setAdapter(adapter);
+            toDoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(getContext(), Level2_5_1_appvalDetails.class);
+                    startActivity(intent);
+                }
+            });
+
+            getDataFromServerAndUpdateToDoListView();
+            return rootView;
+        }
+
+        private void getDataFromServerAndUpdateToDoListView() {
+            String url = Api.API_14_getMyProcess;
+            HttpUtil.sendOkHttpRequest(url, new Callback() {
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    final String responseText = response.body().string();
+                    final MyProcess myProcess = Utility.handleApi14getMyProcessResponse(responseText);
+                    Log.d("aijun, getMyProcess", myProcess+"");
+                    Log.d("aijun, getMyProcess", myProcess.count+"");
+                    if ( null != myProcess.data &&  ! myProcess.data.isEmpty() ) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if ( null != toDoListView ) {
+                                    ProcessAdapter adapter = new ProcessAdapter(getContext(), R.layout.appval_item, myProcess.data);
+                                    toDoListView.setAdapter(adapter);
+                                }
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+
+    }
+
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -266,7 +325,7 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
                 case 1:
                     return new PlaceholderFragment2();
                 case 2:
-                    return new PlaceholderFragment1();
+                    return new PlaceholderFragment3();
             }
             return new PlaceholderFragment1();
         }
