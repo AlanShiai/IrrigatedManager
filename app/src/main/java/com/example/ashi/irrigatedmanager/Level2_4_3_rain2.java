@@ -92,7 +92,6 @@ public class Level2_4_3_rain2 extends AppCompatActivity {
                             if ( null != listView ) {
                                 RainAdapter adapter = new RainAdapter(
                                         Level2_4_3_rain2.this, R.layout.rain_item, list);
-                                listView = (ListView) findViewById(R.id.level_2_4_3_rain_list);
                                 listView.setAdapter(adapter);
                             }
                         }

@@ -24,10 +24,13 @@ import android.widget.Toast;
 import com.example.ashi.irrigatedmanager.gson.User;
 import com.example.ashi.irrigatedmanager.level2_2_3.InspectDetailInfo;
 import com.example.ashi.irrigatedmanager.level2_2_3.InspectDetailInfoAdpter;
+import com.example.ashi.irrigatedmanager.level2_4.Rain;
+import com.example.ashi.irrigatedmanager.level2_4.RainAdapter;
 import com.example.ashi.irrigatedmanager.level2_5.ManualInspectBasicInfo;
 import com.example.ashi.irrigatedmanager.level2_5.ManualInspectBasicInfoAdapter;
 import com.example.ashi.irrigatedmanager.level5.Appval;
 import com.example.ashi.irrigatedmanager.level5.AppvalAdapter;
+import com.example.ashi.irrigatedmanager.util.Api;
 import com.example.ashi.irrigatedmanager.util.Const;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
 import com.example.ashi.irrigatedmanager.util.Utility;
@@ -137,24 +140,55 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
     }
 
     public static class PlaceholderFragment1 extends Fragment {
+
+        ListView toDoListView;
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_listview, container, false);
 
-            AppvalAdapter adapter = new AppvalAdapter(
-                    getContext(), R.layout.appval_item, dataList);
+            AppvalAdapter adapter = new AppvalAdapter(getContext(), R.layout.appval_item, dataList);
 
-            ListView listView = (ListView) rootView.findViewById(R.id.fragment_listview_list);
-            listView.setAdapter(adapter);
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            toDoListView = (ListView) rootView.findViewById(R.id.fragment_listview_list);
+            toDoListView.setAdapter(adapter);
+            toDoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent intent = new Intent(getContext(), Level2_5_1_appvalDetails.class);
                     startActivity(intent);
                 }
             });
+
+            getDataFromServerAndUpdateToDoListView();
             return rootView;
+        }
+
+        private void getDataFromServerAndUpdateToDoListView() {
+            String url = Api.API_12_todoActList;
+            HttpUtil.sendOkHttpRequest(url, new Callback() {
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    final String responseText = response.body().string();
+                    final List<Appval> list = Utility.handleApi12TodoActListResponse(responseText);
+                    if ( ! list.isEmpty() ) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if ( null != toDoListView ) {
+                                    AppvalAdapter adapter = new AppvalAdapter(getContext(), R.layout.appval_item, list);
+                                    toDoListView.setAdapter(adapter);
+                                }
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    e.printStackTrace();
+                }
+            });
         }
     }
 

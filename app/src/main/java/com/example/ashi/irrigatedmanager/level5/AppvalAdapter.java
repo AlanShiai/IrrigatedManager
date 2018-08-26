@@ -42,7 +42,7 @@ public class AppvalAdapter extends ArrayAdapter<Appval> {
             view = convertView;
             viewHolder = (AppvalAdapter.ViewHolder) view.getTag(); // 重新获取ViewHolder
         }
-        viewHolder.name.setText(projectInfo.getName());
+        viewHolder.name.setText(projectInfo.title);
         return view;
     }
 
