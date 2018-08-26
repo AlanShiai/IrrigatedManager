@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.example.ashi.irrigatedmanager.gson.TotalCount;
 import com.example.ashi.irrigatedmanager.gson.User;
+import com.example.ashi.irrigatedmanager.util.Api;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
 import com.example.ashi.irrigatedmanager.util.Utility;
 
@@ -91,13 +92,13 @@ public class DrawYearMonthData extends View {
     }
 
     private void getTotalCountFromUrl() {
-        String url = "http://www.boze-tech.com/zfh_manager/a/app/patrol/queryTotalCount?userId=1";
+        String url = Api.API_29_queryTotalCount;
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 final String responseText = response.body().string();
                 Log.d("aijun login", responseText);
-                final TotalCount totalCount = Utility.handleTotalCountResponse(responseText);
+                final TotalCount totalCount = Utility.handleApi29TotalCountResponse(responseText);
 //                final Weather weather = Utility.handleWeatherResponse(responseText);
                 urlText = totalCount.yearTotal;
                 handler.post(new Runnable() {

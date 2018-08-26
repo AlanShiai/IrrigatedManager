@@ -39,7 +39,7 @@ public class RainAdapter extends ArrayAdapter<Rain> {
             view = convertView;
             viewHolder = (RainAdapter.ViewHolder) view.getTag(); // 重新获取ViewHolder
         }
-        viewHolder.name.setText(projectInfo.getName());
+        viewHolder.name.setText(projectInfo.project_name);
         return view;
     }
 

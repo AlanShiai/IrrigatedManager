@@ -332,7 +332,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 public void onResponse(Call call, Response response) throws IOException {
                     final String responseText = response.body().string();
                     Log.d("aijun login", responseText);
-                    final User user = Utility.handleLoginResponse(responseText);
+                    final User user = Utility.handleApi01LoginResponse(responseText);
                     Log.d("aijun login", Boolean.toString(user.isLoginSuccess()));
 //                        final Weather weather = Utility.handleWeatherResponse(responseText);
                     isLoginSuccess = user.isLoginSuccess();
