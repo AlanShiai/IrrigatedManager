@@ -25,9 +25,5 @@ public interface Const {
 
     String LEVEL_2_TITILE_6 = "灌溉进度";
 
-    // http://www.boze-tech.com/zfh_manager/a/app/login/loginCheck?loginName=admin&passwd=123
-    // {"id":"1","officeId":"8eff2c16d5cf45fca84ac984190b0890","phone":"8675","officeName":
-    // "漳滏河管理处","name":"系统管理员","code":"200","msg":"登陆成功","loginName":"admin"}
-    String loginUrl = "http://www.boze-tech.com/zfh_manager/a/app/login/loginCheck?";
     
 }

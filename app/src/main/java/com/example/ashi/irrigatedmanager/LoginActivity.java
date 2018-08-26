@@ -34,6 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ashi.irrigatedmanager.gson.User;
+import com.example.ashi.irrigatedmanager.util.Api;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
 import com.example.ashi.irrigatedmanager.util.Utility;
 
@@ -324,11 +325,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
-            String url = "http://www.boze-tech.com/zfh_manager/a/app/login/loginCheck?" +
-                    "loginName="+ mEmail + "&" +
-                    "passwd="+ mPassword;
+            String url = Api.API_01_loginCheck + "loginName="+ mEmail
+                    + "&passwd="+ mPassword;
             HttpUtil.sendOkHttpRequest(url, new Callback() {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
