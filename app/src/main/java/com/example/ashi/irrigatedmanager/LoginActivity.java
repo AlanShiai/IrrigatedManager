@@ -308,6 +308,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         int IS_PRIMARY = 1;
     }
 
+    static boolean hasExecute = false;
+
     /**
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
@@ -352,6 +354,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }
             });
 
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
             return true;
         }
 
@@ -361,6 +369,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (isLoginSuccess) {
+                if (hasExecute) {
+                    return;
+                }
+                hasExecute = true;
                 Intent intent = new Intent(LoginActivity.this, Level2_1_irrigateOverview.class);
                 startActivity(intent);
                 finish();

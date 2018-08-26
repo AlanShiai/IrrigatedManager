@@ -1,5 +1,7 @@
 package com.example.ashi.irrigatedmanager.util;
 
+import com.example.ashi.irrigatedmanager.IrrigationScheduleInfo;
+import com.example.ashi.irrigatedmanager.gson.InspectNote;
 import com.example.ashi.irrigatedmanager.gson.TotalCount;
 import com.example.ashi.irrigatedmanager.gson.User;
 import com.example.ashi.irrigatedmanager.level2_4.Rain;
@@ -79,6 +81,24 @@ public class Utility {
     public static List<ProjectInfo3> handleApi17ProjectListResponse(String response) {
         try {
             return new Gson().fromJson(response, new TypeToken<List<ProjectInfo3>>(){}.getType());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static List<IrrigationScheduleInfo> handleApi19queryIrrigationScheduleResponse(String response) {
+        try {
+            return new Gson().fromJson(response, new TypeToken<List<IrrigationScheduleInfo>>(){}.getType());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static List<InspectNote> handleApi20patrolResultResponse(String response) {
+        try {
+            return new Gson().fromJson(response, new TypeToken<List<InspectNote>>(){}.getType());
         } catch (Exception e) {
             e.printStackTrace();
         }

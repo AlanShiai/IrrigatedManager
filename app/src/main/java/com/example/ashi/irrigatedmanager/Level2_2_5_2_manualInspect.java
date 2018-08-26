@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.ListViewAutoScrollHelper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +20,22 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.ashi.irrigatedmanager.gson.InspectNote;
 import com.example.ashi.irrigatedmanager.level2_5.ManualInspectBasicInfo;
 import com.example.ashi.irrigatedmanager.level2_5.ManualInspectBasicInfoAdapter;
 import com.example.ashi.irrigatedmanager.level2_5.ManualInspectItem2;
 import com.example.ashi.irrigatedmanager.level2_5.ManualInspectItemAdapter;
+import com.example.ashi.irrigatedmanager.util.Api;
+import com.example.ashi.irrigatedmanager.util.HttpUtil;
+import com.example.ashi.irrigatedmanager.util.Utility;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class Level2_2_5_2_manualInspect extends AppCompatActivity {
 
@@ -87,6 +97,37 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
                 Intent intent = new Intent(Level2_2_5_2_manualInspect.this, Level2_2_5_3_manualInspect.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+
+        getDataFromServerAndUpdateListView();
+    }
+
+    private void getDataFromServerAndUpdateListView() {
+        String url = Api.API_21_patrolItem;
+        HttpUtil.sendOkHttpRequest(url, new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responseText = response.body().string();
+//                final List<InspectNote> list = Utility.handleApi20patrolResultResponse(responseText);
+                Log.d("aijun patrolResult", responseText+"");
+//                if ( ! list.isEmpty() ) {
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            if ( null != listView ) {
+//                                IrrigationScheduleInfoAdpter adapter = new IrrigationScheduleInfoAdpter(
+//                                        Level2_6_irrigationSchedule2.this, R.layout.irrigation_schedule, list);
+//                                listView.setAdapter(adapter);
+//                            }
+//                        }
+//                    });
+//                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
             }
         });
     }

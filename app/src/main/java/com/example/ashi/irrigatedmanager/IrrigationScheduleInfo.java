@@ -5,27 +5,15 @@ package com.example.ashi.irrigatedmanager;
  */
 
 public class IrrigationScheduleInfo {
-    private String name;
-    private String schedule;
+    public String id;
+    public String turn;
+    public String areaName;
+    public String totalArea;
+    public String year;
+    public String irrigationArea;
 
-    public IrrigationScheduleInfo(String name, String schedule) {
-        this.name = name;
-        this.schedule = schedule;
+    public IrrigationScheduleInfo(String name) {
+        this.areaName = name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setSchedule(String schedule) {
-        this.schedule = schedule;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getSchedule() {
-        return schedule;
-    }
 }
