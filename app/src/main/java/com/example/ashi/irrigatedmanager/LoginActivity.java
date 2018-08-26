@@ -34,6 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ashi.irrigatedmanager.gson.User;
+import com.example.ashi.irrigatedmanager.level2_6.ProjectInfo3Adpter;
 import com.example.ashi.irrigatedmanager.util.Api;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
 import com.example.ashi.irrigatedmanager.util.Utility;
@@ -336,6 +337,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     Log.d("aijun login", Boolean.toString(user.isLoginSuccess()));
 //                        final Weather weather = Utility.handleWeatherResponse(responseText);
                     isLoginSuccess = user.isLoginSuccess();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            onPostExecute(isLoginSuccess);
+                        }
+                    });
                 }
 
                 @Override
@@ -344,12 +351,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     isLoginSuccess = false;
                 }
             });
-
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
 
             return true;
         }
