@@ -109,6 +109,7 @@ public class Level2_2_2_inspectNote extends AppCompatActivity {
         });
 
         getDataFromServerAndUpdateListView();
+        getDataFromServerAndUpdateListView2();
     }
 
     private void getDataFromServerAndUpdateListView() {
@@ -119,6 +120,34 @@ public class Level2_2_2_inspectNote extends AppCompatActivity {
                 final String responseText = response.body().string();
                 final List<InspectNote> list = Utility.handleApi20patrolResultResponse(responseText);
                 Log.d("aijun patrolResult", list.size()+"");
+//                if ( ! list.isEmpty() ) {
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            if ( null != listView ) {
+//                                IrrigationScheduleInfoAdpter adapter = new IrrigationScheduleInfoAdpter(
+//                                        Level2_6_irrigationSchedule2.this, R.layout.irrigation_schedule, list);
+//                                listView.setAdapter(adapter);
+//                            }
+//                        }
+//                    });
+//                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void getDataFromServerAndUpdateListView2() {
+        String url = Api.API_28_officeUserStatistic;
+        HttpUtil.sendOkHttpRequest(url, new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responseText = response.body().string();
+                Log.d("aijun officeUserStistic", responseText+"");
 //                if ( ! list.isEmpty() ) {
 //                    runOnUiThread(new Runnable() {
 //                        @Override
