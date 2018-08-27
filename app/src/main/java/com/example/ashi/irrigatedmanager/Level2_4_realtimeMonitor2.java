@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import com.example.ashi.irrigatedmanager.level2_4.SluiceInfo;
 import com.example.ashi.irrigatedmanager.level2_4.SluiceInfoAdapter;
 import com.example.ashi.irrigatedmanager.util.Api;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
+import com.example.ashi.irrigatedmanager.util.Utility;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,7 +33,7 @@ import okhttp3.Response;
 
 public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
 
-    private List<SluiceInfo> projectInfoList = new ArrayList<SluiceInfo>();
+    private List<SluiceInfo> sluiceInfoList = new ArrayList<SluiceInfo>();
     private List<Boolean> enableList = new ArrayList<Boolean>();
 
     @Override
@@ -46,13 +48,11 @@ public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
         setContentView(R.layout.activity_level2_4_realtime_monitor2);
 
         initProjectInfoList();
-        for (int i = 0 ; i < projectInfoList.size(); i++) {
+        for (int i = 0 ; i < sluiceInfoList.size(); i++) {
             enableList.add(false);
         }
 
         createAreaForSluiceListLayout();
-
-
 
         /*
         ListView listView = (ListView) findViewById(R.id.level_2_4_1_sluice_list);
@@ -71,7 +71,7 @@ public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
             }
         });
 
-        getDataFromServerAndUpdateListView1();
+        getSluiceDataFromServerAndUpdateListView1();
         getDataFromServerAndUpdateListView2();
         getDataFromServerAndUpdateListView3();
     }
@@ -81,19 +81,20 @@ public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
         LinearLayout layout = (LinearLayout) findViewById(R.id.sluice_list_layout);
         layout.removeAllViews();
         int index = 0;
-        for (SluiceInfo sluiceInfo: projectInfoList) {
+        for (SluiceInfo sluiceInfo: sluiceInfoList) {
             View view = LayoutInflater.from(Level2_4_realtimeMonitor2.this).inflate(R.layout.sluice_item1,
                     layout, false);
-            TextView text = (TextView) view.findViewById(R.id.sluice_name);
-            text.setText(sluiceInfo.getName());
-            Button button = (Button) view.findViewById(R.id.show_details);
+            TextView name = (TextView) view.findViewById(R.id.sluice_name);
+            name.setText(sluiceInfo.getName());
+            TextView time = (TextView) view.findViewById(R.id.time);
+            time.setText(sluiceInfo.time);
             view.findViewById(R.id.show_details).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     LinearLayout layout = (LinearLayout) v.getParent();
                     TextView text = (TextView) layout.findViewById(R.id.sluice_name);
-                    for (int i = 0; i < projectInfoList.size(); i++ ) {
-                        if (text.getText().equals(projectInfoList.get(i).getName())) {
+                    for (int i = 0; i < sluiceInfoList.size(); i++ ) {
+                        if (text.getText().equals(sluiceInfoList.get(i).getName())) {
                             if (enableList.get(i) == true) {
                                 enableList.set(i, false);
                             } else {
@@ -106,7 +107,9 @@ public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
             });
             layout.addView(view);
 
+            ((ImageView) view.findViewById(R.id.show_details)).setImageResource(R.drawable.c6);
             if (enableList.get(index)) {
+                ((ImageView) view.findViewById(R.id.show_details)).setImageResource(R.drawable.e8);
                 View view2 = LayoutInflater.from(Level2_4_realtimeMonitor2.this).inflate(R.layout.sluice_item2,
                         layout, false);
                 layout.addView(view2);
@@ -115,29 +118,31 @@ public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
         }
     }
 
-    private void getDataFromServerAndUpdateListView1() {
-        // [{"project_name":"张庄桥分洪闸位","level9":"0.00","level8":"0.00","level7":"0.00",
-        // "project_type":"sluice","level6":"0.00","level10":"0.00","level5":"0.00","level4":"0.02","id":"ad407c9bd9634d0bac800651287a8c1f","level2":"0.01",
-        // "level3":"0.00","time":"2018-08-27 17:24:51","level1":"0.01","project_id":null,"hole":"5"}]
+    // [{"project_name":"张庄桥分洪闸位","level9":"0.00","level8":"0.00","level7":"0.00",
+    // "project_type":"sluice","level6":"0.00","level10":"0.00","level5":"0.00","level4":"0.02","id":"ad407c9bd9634d0bac800651287a8c1f","level2":"0.01",
+    // "level3":"0.00","time":"2018-08-27 17:24:51","level1":"0.01","project_id":null,"hole":"5"}]
+    private void getSluiceDataFromServerAndUpdateListView1() {
         String url = Api.API_03_getSluiceMonitorList;
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 final String responseText = response.body().string();
-//                final List<InspectNote> list = Utility.handleApi20patrolResultResponse(responseText);
-                Log.d("aijun SluiceMonit", responseText+"");
-//                if ( ! list.isEmpty() ) {
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            if ( null != listView ) {
-//                                IrrigationScheduleInfoAdpter adapter = new IrrigationScheduleInfoAdpter(
-//                                        Level2_6_irrigationSchedule2.this, R.layout.irrigation_schedule, list);
-//                                listView.setAdapter(adapter);
-//                            }
-//                        }
-//                    });
-//                }
+//                String hardcodeString = "[{\"project_name\":\"张庄桥分洪闸位\",\"level9\":\"0.00\",\"level8\":\"0.00\",\"level7\":\"0.00\","
+//                        + "\"project_type\":\"sluice\",\"level6\":\"0.00\",\"level10\":\"0.00\",\"level5\":\"0.00\",\"level4\":\"0.02\",\"id\":\"ad407c9bd9634d0bac800651287a8c1f\",\"level2\":\"0.01\","
+//                        + "\"level3\":\"0.00\",\"time\":\"2018-08-27 17:24:51\",\"level1\":\"0.01\",\"project_id\":null,\"hole\":\"5\"}]";
+//                final List<SluiceInfo> list = Utility.handleApi03SluiceMonitorListResponse(hardcodeString);
+                final List<SluiceInfo> list = Utility.handleApi03SluiceMonitorListResponse(responseText);
+                Log.d("aijun SluiceMonit", list+"");
+                if ( null != list ) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            sluiceInfoList.clear();
+                            sluiceInfoList.addAll(list);
+                            createAreaForSluiceListLayout();
+                        }
+                    });
+                }
             }
 
             @Override
@@ -248,7 +253,7 @@ public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
                 "豆公主干闸位" ,
         };
         for (String name : strings) {
-            projectInfoList.add(new SluiceInfo(name));
+            sluiceInfoList.add(new SluiceInfo(name));
         }
     }
 
