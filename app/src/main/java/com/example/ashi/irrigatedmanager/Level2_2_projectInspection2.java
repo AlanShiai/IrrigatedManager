@@ -218,8 +218,16 @@ public class Level2_2_projectInspection2 extends AppCompatActivity {
             case CaptureActivity.REQ_CODE:
                 switch (resultCode) {
                     case RESULT_OK:
+                        String result = data.getStringExtra(CaptureActivity.EXTRA_SCAN_RESULT);
+                        Log.d("aijun scan", result);
+                        if (result.contains("projectType")) {
+                            Intent intent = new Intent(Level2_2_projectInspection2.this, Level2_2_5_2_manualInspect.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
 //                        showText(data.getStringExtra(CaptureActivity.EXTRA_SCAN_RESULT));
-                        showText("非巡检内容");
+                            showText("非巡检内容");
+                        }
                         break;
                     case RESULT_CANCELED:
                         if (data != null) {

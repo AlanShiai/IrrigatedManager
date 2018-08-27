@@ -53,17 +53,12 @@ public class Level2_3_projectInfo2 extends AppCompatActivity {
     }
 
     private void initProjectInfoList() {
-        String[] strings = {
-                "总干渠" ,
-                "干渠" ,
-                "干渠段" ,
-                "支渠" ,
-                "排水干渠" ,
-                "排水支渠" ,
-        };
-        for (String name : strings) {
-            projectInfoList.add(new ProjectInfo(name));
-        }
+        projectInfoList.add(new ProjectInfo("总干渠", "1"));
+        projectInfoList.add(new ProjectInfo("干渠", "2"));
+        projectInfoList.add(new ProjectInfo("干渠段", "3"));
+        projectInfoList.add(new ProjectInfo("支渠", "4"));
+        projectInfoList.add(new ProjectInfo("排水干渠", "5"));
+        projectInfoList.add(new ProjectInfo("排水支渠", "6"));
     }
 
 }

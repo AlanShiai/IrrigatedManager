@@ -15,6 +15,7 @@ import com.example.ashi.irrigatedmanager.level2_6.ProjectInfo3;
 import com.example.ashi.irrigatedmanager.level2_6.ProjectInfo3Adpter;
 import com.example.ashi.irrigatedmanager.level5.BusinessForm;
 import com.example.ashi.irrigatedmanager.util.Api;
+import com.example.ashi.irrigatedmanager.util.Global;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
 import com.example.ashi.irrigatedmanager.util.Utility;
 
@@ -68,16 +69,15 @@ public class Level2_3_projectInfo3 extends AppCompatActivity {
         getDataFromServerAndUpdateListView();
     }
 
+    // "http://www.boze-tech.com/zfh_manager/a/app/project/projectList?userId=1&projectType=channel&name=&office=&subType=1";
     private void getDataFromServerAndUpdateListView() {
-        String url = Api.API_17_projectList;
+        String url = Api.API_17_projectList + "&projectType=" + Global.projectInfoType + "&subType=" + Global.projectInfoSubtype;
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 final String responseText = response.body().string();
                 final List<ProjectInfo3> list = Utility.handleApi17ProjectListResponse(responseText);
-                Log.d("aijun, projectList", list+"");
-                Log.d("aijun, projectList", list.size()+"");
-                if ( ! list.isEmpty() ) {
+                if ( null != list && ! list.isEmpty() ) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

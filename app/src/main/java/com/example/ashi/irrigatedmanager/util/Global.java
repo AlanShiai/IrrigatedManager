@@ -7,4 +7,7 @@ package com.example.ashi.irrigatedmanager.util;
 public class Global {
 
     public static boolean isExceptionFound = false;
+
+    public static String projectInfoType = "channelHead";
+    public static String projectInfoSubtype = "1";
 }

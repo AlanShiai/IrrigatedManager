@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.ashi.irrigatedmanager.util.Const;
+import com.example.ashi.irrigatedmanager.util.Global;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,6 @@ public class Level2_3_projectInfo extends AppCompatActivity {
         }
         setContentView(R.layout.activity_level2_3_project_info);
 
-
         ListView listView = (ListView) findViewById(R.id.level_2_3_projectInfo);
         initProjectInfoList();
         initProjectInfoList2();
@@ -48,6 +48,8 @@ public class Level2_3_projectInfo extends AppCompatActivity {
         listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Global.projectInfoType = "channel";
+                Global.projectInfoSubtype = projectInfoList2.get(position).getType();
                 Intent intent = new Intent(Level2_3_projectInfo.this, Level2_3_projectInfo3.class);
                 startActivity(intent);
             }
@@ -63,6 +65,8 @@ public class Level2_3_projectInfo extends AppCompatActivity {
                 if ( 0 == position) {
                     listView.setVisibility(View.VISIBLE);
                 } else {
+                    Global.projectInfoType = projectInfoList.get(position).getType();
+                    Global.projectInfoSubtype = "1";
                     listView.setVisibility(View.GONE);
                     Intent intent = new Intent(Level2_3_projectInfo.this, Level2_3_projectInfo3.class);
                     startActivity(intent);
@@ -126,35 +130,27 @@ public class Level2_3_projectInfo extends AppCompatActivity {
     }
 
     private void initProjectInfoList() {
-        String[] strings = {
-                "渠道" ,
-                "渠首" ,
-                "桥梁" ,
-                "水闸" ,
-                "枢纽" ,
-                "县界" ,
-                "跌水" ,
-                "倒虹吸" ,
-                "渡槽" ,
-                "涵洞" ,
-                "泵站" ,
-                "水电站" ,
-                "水库"};
-        for (String name : strings) {
-            projectInfoList.add(new ProjectInfo(name));
-        }
+        projectInfoList.add(new ProjectInfo("渠道", "channel"));
+        projectInfoList.add(new ProjectInfo("渠首", "channelHead"));
+        projectInfoList.add(new ProjectInfo("水闸", "sluice"));
+        projectInfoList.add(new ProjectInfo("涵洞", "culvert"));
+        projectInfoList.add(new ProjectInfo("渡槽", "aqueduct"));
+        projectInfoList.add(new ProjectInfo("桥梁", "bridge"));
+        projectInfoList.add(new ProjectInfo("水库", "reservoir"));
+        projectInfoList.add(new ProjectInfo("泵站", "pump"));
+        projectInfoList.add(new ProjectInfo("水电站", "waterPower"));
+        projectInfoList.add(new ProjectInfo("枢纽", "boundaries"));
+        projectInfoList.add(new ProjectInfo("县界", "boundaries"));
+        projectInfoList.add(new ProjectInfo("倒虹吸", "inverted"));
+        projectInfoList.add(new ProjectInfo("跌水", "waterFall"));
     }
+
     private void initProjectInfoList2() {
-        String[] strings = {
-                "总干渠" ,
-                "干渠" ,
-                "干渠段" ,
-                "支渠" ,
-                "排水干渠" ,
-                "排水支渠" ,
-        };
-        for (String name : strings) {
-            projectInfoList2.add(new ProjectInfo(name));
-        }
+        projectInfoList2.add(new ProjectInfo("总干渠", "1"));
+        projectInfoList2.add(new ProjectInfo("干渠", "2"));
+        projectInfoList2.add(new ProjectInfo("干渠段", "3"));
+        projectInfoList2.add(new ProjectInfo("支渠", "4"));
+        projectInfoList2.add(new ProjectInfo("排水干渠", "5"));
+        projectInfoList2.add(new ProjectInfo("排水支渠", "6"));
     }
 }

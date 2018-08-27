@@ -5,14 +5,20 @@ package com.example.ashi.irrigatedmanager;
  */
 
 public class ProjectInfo {
-    private String name;
 
-    public ProjectInfo(String name) {
+    private String name;
+    private String type;
+
+    public ProjectInfo(String name, String type) {
         this.name = name;
+        this.type = type;
     }
 
     public String getName() {
         return name;
+    }
+    public String getType() {
+        return type;
     }
 
     public void setName(String name) {
