@@ -12,7 +12,7 @@ public interface Api {
     String API_03_getSluiceMonitorList     = "http://www.boze-tech.com/zfh_manager/a/app/login/getSluiceMonitorList?userId=1&name=张庄桥分洪闸位";
     String API_04_getWaterLevelMonitorList = "http://www.boze-tech.com/zfh_manager/a/app/login/getWaterLevelMonitorList?userId=1&name=张庄桥分洪闸上游水位";
     String API_05_getRainMonitorList        = "http://www.boze-tech.com/zfh_manager/a/app/login/getRainMonitorList?userId=1";
-    String API_06_getRainLis                 = "http://www.boze-tech.com/zfh_manager/a/app/login/getRainLis?userId=1&name=柳林总雨量";
+    String API_06_getRainList                = "http://www.boze-tech.com/zfh_manager/a/app/login/getRainList?userId=1&name=柳林总雨量";
     String API_07_getVideoList               = "http://www.boze-tech.com/zfh_manager/a/app/login/getVideoList?userId=1&projectType=DS-2CD5A26EFWD-IZ&name=柳林管理所-闸室（枪）";
     String API_08_                             = "";
     String API_09_getLogList                 = "http://www.boze-tech.com/zfh_manager/a/app/login/getLogList?userId=1";

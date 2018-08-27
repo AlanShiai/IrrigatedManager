@@ -38,11 +38,19 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.example.ashi.irrigatedmanager.gson.HttpResult;
+import com.example.ashi.irrigatedmanager.util.Api;
+import com.example.ashi.irrigatedmanager.util.HttpUtil;
+import com.example.ashi.irrigatedmanager.util.Utility;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class Level2_2_5_3_manualInspect extends AppCompatActivity {
     public static final int TAKE_PHOTO = 1;
@@ -185,7 +193,27 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                String url = Api.API_22_patrolSave;
+                HttpUtil.sendOkHttpRequest(url, new Callback() {
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        final String responseText = response.body().string();
+                        HttpResult httpResult = Utility.handleNormalFormResponse(responseText);
+                        if (httpResult.isSuccess()) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    showText("巡检提交成功");
+                                }
+                            });
+                        }
+                    }
 
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                    }
+                });
             }
         }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override
@@ -195,6 +223,10 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
         });
 
         builder.create().show();
+    }
+
+    private void showText(String text) {
+        Toast.makeText(Level2_2_5_3_manualInspect.this, text, Toast.LENGTH_SHORT).show();
     }
 
     private void navigateTo(BDLocation location) {

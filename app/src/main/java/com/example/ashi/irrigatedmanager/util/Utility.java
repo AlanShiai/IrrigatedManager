@@ -1,6 +1,7 @@
 package com.example.ashi.irrigatedmanager.util;
 
 import com.example.ashi.irrigatedmanager.IrrigationScheduleInfo;
+import com.example.ashi.irrigatedmanager.gson.HttpResult;
 import com.example.ashi.irrigatedmanager.gson.InspectNote;
 import com.example.ashi.irrigatedmanager.gson.TotalCount;
 import com.example.ashi.irrigatedmanager.gson.User;
@@ -24,6 +25,14 @@ import java.util.List;
 
 public class Utility {
 
+    public static HttpResult handleNormalFormResponse(String response) {
+        try {
+            return new Gson().fromJson(response, HttpResult.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     public static User handleApi01LoginResponse(String response) {
         try {
             return new Gson().fromJson(response, User.class);
