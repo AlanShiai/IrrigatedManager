@@ -100,37 +100,9 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
             }
         });
 
-        getDataFromServerAndUpdateListView();
     }
 
-    private void getDataFromServerAndUpdateListView() {
-        String url = Api.API_21_patrolItem;
-        HttpUtil.sendOkHttpRequest(url, new Callback() {
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                final String responseText = response.body().string();
-//                final List<InspectNote> list = Utility.handleApi20patrolResultResponse(responseText);
-                Log.d("aijun patrolItem", responseText+"");
-//                if ( ! list.isEmpty() ) {
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            if ( null != listView ) {
-//                                IrrigationScheduleInfoAdpter adapter = new IrrigationScheduleInfoAdpter(
-//                                        Level2_6_irrigationSchedule2.this, R.layout.irrigation_schedule, list);
-//                                listView.setAdapter(adapter);
-//                            }
-//                        }
-//                    });
-//                }
-            }
 
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-        });
-    }
 
     private void initData() {
         ManualInspectItem2 item;
@@ -202,7 +174,38 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
                 index ++;
             }
 
+            getDataFromServerAndUpdateListView();
+
             return rootView;
+        }
+
+        private void getDataFromServerAndUpdateListView() {
+            String url = Api.API_21_patrolItem;
+            HttpUtil.sendOkHttpRequest(url, new Callback() {
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    final String responseText = response.body().string();
+//                final List<InspectNote> list = Utility.handleApi20patrolResultResponse(responseText);
+                    Log.d("aijun patrolItem", responseText+"");
+//                if ( ! list.isEmpty() ) {
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            if ( null != listView ) {
+//                                IrrigationScheduleInfoAdpter adapter = new IrrigationScheduleInfoAdpter(
+//                                        Level2_6_irrigationSchedule2.this, R.layout.irrigation_schedule, list);
+//                                listView.setAdapter(adapter);
+//                            }
+//                        }
+//                    });
+//                }
+                }
+
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    e.printStackTrace();
+                }
+            });
         }
     }
 
@@ -219,7 +222,39 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
 
 //            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
 //            textView.setText("Hello world 2");
+
+            getDataFromServerAndUpdateListView();
+
             return rootView;
+        }
+
+        private void getDataFromServerAndUpdateListView() {
+            String url = Api.API_23_basicInfo;
+            HttpUtil.sendOkHttpRequest(url, new Callback() {
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    final String responseText = response.body().string();
+//                final List<InspectNote> list = Utility.handleApi20patrolResultResponse(responseText);
+                    Log.d("aijun basicInfo", responseText+"");
+//                if ( ! list.isEmpty() ) {
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            if ( null != listView ) {
+//                                IrrigationScheduleInfoAdpter adapter = new IrrigationScheduleInfoAdpter(
+//                                        Level2_6_irrigationSchedule2.this, R.layout.irrigation_schedule, list);
+//                                listView.setAdapter(adapter);
+//                            }
+//                        }
+//                    });
+//                }
+                }
+
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    e.printStackTrace();
+                }
+            });
         }
     }
 
