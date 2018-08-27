@@ -21,8 +21,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +42,7 @@ import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.example.ashi.irrigatedmanager.gson.HttpResult;
 import com.example.ashi.irrigatedmanager.util.Api;
+import com.example.ashi.irrigatedmanager.util.Global;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
 import com.example.ashi.irrigatedmanager.util.Utility;
 
@@ -172,25 +175,29 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
         findViewById(R.id.manual_inspect_report).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showSingleChoiceDialog();
+                if (Global.isExceptionFound) {
+                    showExceptionReportDialog();
+                } else {
+                    showNormalReportDialog();
+                }
             }
         });
     }
 
-    private void showSingleChoiceDialog() {
+    private void showExceptionReportDialog() {
         final String[] items = new String[]{"张元一", "王文",};
-        AlertDialog.Builder builder = new AlertDialog.Builder(Level2_2_5_3_manualInspect.this);
-        builder.setTitle("下一步处理人：");
-        //千万不要加这句，不然列表显示不出来
-//        builder.setMessage("这是一个简单的列表对话框");
-        builder.setIcon(R.mipmap.launcher);
-        builder.setSingleChoiceItems(items, 1, new DialogInterface.OnClickListener() {
+        AlertDialog.Builder customizeDialog = new AlertDialog.Builder(Level2_2_5_3_manualInspect.this);
+        final View  dialogView = LayoutInflater.from(Level2_2_5_3_manualInspect.this)
+                .inflate(R.layout.dialog_customize, null);
+//        customizeDialog.setTitle("我是一个自定义Dialog");
+        customizeDialog.setCustomTitle(dialogView);
+        customizeDialog.setSingleChoiceItems(items, 1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
             }
         });
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+        customizeDialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String url = Api.API_22_patrolSave;
@@ -221,8 +228,51 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
 
             }
         });
+        customizeDialog.show();
+    }
 
-        builder.create().show();
+    private void showNormalReportDialog() {
+        {
+            AlertDialog.Builder builder = new AlertDialog.Builder(Level2_2_5_3_manualInspect.this);
+            builder.setTitle("");
+            builder.setIcon(R.drawable.e7);
+            builder.setMessage("确认没有发现异常。");
+
+            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String url = Api.API_22_patrolSave;
+                    HttpUtil.sendOkHttpRequest(url, new Callback() {
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            final String responseText = response.body().string();
+                            HttpResult httpResult = Utility.handleNormalFormResponse(responseText);
+                            if (httpResult.isSuccess()) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        showText("巡检提交成功");
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                }
+            }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+
+            builder.create().show();
+        }
+
     }
 
     private void showText(String text) {

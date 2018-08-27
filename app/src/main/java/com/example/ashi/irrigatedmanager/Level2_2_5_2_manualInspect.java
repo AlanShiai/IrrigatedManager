@@ -26,6 +26,7 @@ import com.example.ashi.irrigatedmanager.level2_5.ManualInspectBasicInfoAdapter;
 import com.example.ashi.irrigatedmanager.level2_5.ManualInspectItem2;
 import com.example.ashi.irrigatedmanager.level2_5.ManualInspectItemAdapter;
 import com.example.ashi.irrigatedmanager.util.Api;
+import com.example.ashi.irrigatedmanager.util.Global;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
 import com.example.ashi.irrigatedmanager.util.Utility;
 
@@ -38,6 +39,8 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 public class Level2_2_5_2_manualInspect extends AppCompatActivity {
+
+    static List<CheckBox> checkBoxList = new ArrayList<>();
 
     private static List<ManualInspectItem2> dataList = new ArrayList<ManualInspectItem2>();
 
@@ -94,6 +97,7 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
         findViewById(R.id.manual_inspect_report).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                checkIsExceptionFound();
                 Intent intent = new Intent(Level2_2_5_2_manualInspect.this, Level2_2_5_3_manualInspect.class);
                 startActivity(intent);
                 finish();
@@ -102,7 +106,15 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
 
     }
 
-
+    private void checkIsExceptionFound() {
+        Global.isExceptionFound = false;
+        for (CheckBox checkBox : checkBoxList) {
+            if (checkBox.isChecked()) {
+                Global.isExceptionFound = true;
+                return;
+            }
+        }
+    }
 
     private void initData() {
         ManualInspectItem2 item;
@@ -167,6 +179,7 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
                         View view2 = LayoutInflater.from(getContext()).inflate(R.layout.fragment_base_info2,
                                 layout, false);
                         CheckBox checkBox = (CheckBox) view2.findViewById(R.id.checkBox);
+                        checkBoxList.add(checkBox);
                         checkBox.setText(subItem);
                         layout.addView(view2);
                     }
