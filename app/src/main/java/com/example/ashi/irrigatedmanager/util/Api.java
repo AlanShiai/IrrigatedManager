@@ -43,5 +43,5 @@ public interface Api {
             "&&projectType=channel&name=%E6%BB%8F%E9%98%B3%E6%B2%B3%E7%A3%81%E5%8E%BF%E6%AE%B5&startDate=2018-05-16&endDate=2018-05-19";
     String API_29_queryTotalCount           = "http://www.boze-tech.com/zfh_manager/a/app/patrol/queryTotalCount?userId=1";
     String API_30_patrolInit                = "http://www.boze-tech.com/zfh_manager/a/app/patrol/patrolInit?type=";
-
+    String API_31_queryYearCount            = "http://www.boze-tech.com//zfh_manager/a/app/patrol/queryYearCount?userId=1&month=05";
 }

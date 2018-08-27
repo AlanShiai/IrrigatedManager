@@ -7,6 +7,7 @@ import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -15,6 +16,14 @@ import com.example.ashi.irrigatedmanager.level2_2_3.DrawColumn;
 import com.example.ashi.irrigatedmanager.level2_2_3.DrawColumnAndPie;
 import com.example.ashi.irrigatedmanager.level2_2_3.DrawPie;
 import com.example.ashi.irrigatedmanager.level2_2_3.DrawYearMonthData;
+import com.example.ashi.irrigatedmanager.util.Api;
+import com.example.ashi.irrigatedmanager.util.HttpUtil;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class Level2_2_3_inspectDetailsPie extends AppCompatActivity {
 
@@ -53,6 +62,66 @@ public class Level2_2_3_inspectDetailsPie extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showSingleChoiceDialog();
+            }
+        });
+
+        getDataFromServerAndUpdateListView();
+        getDataFromServerAndUpdateListView2();
+    }
+
+    private void getDataFromServerAndUpdateListView() {
+        String url = Api.API_30_patrolInit;
+        HttpUtil.sendOkHttpRequest(url, new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responseText = response.body().string();
+//                final List<InspectNote> list = Utility.handleApi20patrolResultResponse(responseText);
+                Log.d("aijun patrolInit", responseText+"");
+//                if ( ! list.isEmpty() ) {
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            if ( null != listView ) {
+//                                IrrigationScheduleInfoAdpter adapter = new IrrigationScheduleInfoAdpter(
+//                                        Level2_6_irrigationSchedule2.this, R.layout.irrigation_schedule, list);
+//                                listView.setAdapter(adapter);
+//                            }
+//                        }
+//                    });
+//                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+    private void getDataFromServerAndUpdateListView2() {
+        String url = Api.API_31_queryYearCount;
+        HttpUtil.sendOkHttpRequest(url, new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responseText = response.body().string();
+//                final List<InspectNote> list = Utility.handleApi20patrolResultResponse(responseText);
+                Log.d("aijun queryYearCount", responseText+"");
+//                if ( ! list.isEmpty() ) {
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            if ( null != listView ) {
+//                                IrrigationScheduleInfoAdpter adapter = new IrrigationScheduleInfoAdpter(
+//                                        Level2_6_irrigationSchedule2.this, R.layout.irrigation_schedule, list);
+//                                listView.setAdapter(adapter);
+//                            }
+//                        }
+//                    });
+//                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
             }
         });
     }

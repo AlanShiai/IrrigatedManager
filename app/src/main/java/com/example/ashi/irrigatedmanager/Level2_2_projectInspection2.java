@@ -10,12 +10,26 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ashi.irrigatedmanager.gson.TotalCount;
 import com.example.ashi.irrigatedmanager.level2_2_3.DrawYearMonthData;
 import com.acker.simplezxing.activity.CaptureActivity;
+import com.example.ashi.irrigatedmanager.util.Api;
+import com.example.ashi.irrigatedmanager.util.HttpUtil;
+import com.example.ashi.irrigatedmanager.util.Utility;
+
+import org.w3c.dom.Text;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class Level2_2_projectInspection2 extends AppCompatActivity {
 
@@ -39,6 +53,34 @@ public class Level2_2_projectInspection2 extends AppCompatActivity {
         addListernerForTopToolbar();
         addListernerForBackButton();
         addListernerForBottomToolbar();
+        getDataFromServerAndUpdateListView();
+    }
+
+    private void getDataFromServerAndUpdateListView() {
+        String url = Api.API_29_queryTotalCount;
+        HttpUtil.sendOkHttpRequest(url, new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responseText = response.body().string();
+                Log.d("aijun queryTotalCount", responseText);
+                final TotalCount totalCount = Utility.handleApi29TotalCountResponse(responseText);
+                Log.d("aijun queryTotalCount", totalCount.yearTotal);
+                if ( null != totalCount.yearTotal ) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            TextView textView = (TextView) findViewById(R.id.yearTotal);
+                            textView.setText(totalCount.yearTotal);
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     private void showText(String text) {
