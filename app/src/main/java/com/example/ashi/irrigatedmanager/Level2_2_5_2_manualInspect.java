@@ -256,6 +256,7 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
                 }
             });
         }
+
     }
 
     /**

@@ -48,16 +48,33 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="正常80个，异常"
+                    android:text="正常"
+                    android:textSize="14sp"
+                    android:textColor="#AFAFAF"
+                    />
+                <TextView
+                    android:id="@+id/total1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="80"
+                    android:textSize="14sp"
+                    android:textColor="#000000"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="个，异常"
                     android:textSize="14sp"
                     android:textColor="#AFAFAF"
                     />
 
                 <TextView
+                    android:id="@+id/abnormalTotal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="right"
-                    android:layout_marginRight="5dp"
                     android:text="20"
                     android:textColor="#F04649"
                     android:textSize="14sp"

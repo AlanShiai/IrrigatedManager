@@ -5,29 +5,16 @@ package com.example.ashi.irrigatedmanager.level2_2_3;
  */
 
 public class InspectDetailInfo {
+    //{"total":5,"id":"33bd93b576b34efc8198a10f5f75b441","abnormalTotal":0,"total1":1,"name":"成安管理所","type":"user"},
 
-    private String name;
-
-    private String num;
+    public int total;
+    public String id;
+    public int abnormalTotal;
+    public String total1;
+    public String name;
+    public String type;
 
     public InspectDetailInfo(String name, String num) {
         this.name = name;
-        this.num = num;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getNum() {
-        return num;
-    }
-
-    public void setNum(String num) {
-        this.num = num;
     }
 }
