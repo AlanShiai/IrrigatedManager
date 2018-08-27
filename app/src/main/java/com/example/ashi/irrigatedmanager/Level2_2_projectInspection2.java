@@ -218,7 +218,8 @@ public class Level2_2_projectInspection2 extends AppCompatActivity {
             case CaptureActivity.REQ_CODE:
                 switch (resultCode) {
                     case RESULT_OK:
-                        showText(data.getStringExtra(CaptureActivity.EXTRA_SCAN_RESULT));
+//                        showText(data.getStringExtra(CaptureActivity.EXTRA_SCAN_RESULT));
+                        showText("非巡检内容");
                         break;
                     case RESULT_CANCELED:
                         if (data != null) {
