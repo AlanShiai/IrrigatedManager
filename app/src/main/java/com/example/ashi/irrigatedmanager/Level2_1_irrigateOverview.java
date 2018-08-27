@@ -44,11 +44,11 @@ public class Level2_1_irrigateOverview extends AppCompatActivity implements View
         setContentView(R.layout.activity_level2_1_irrigate_overview);
 
         imgIds = new int[] {
-                R.drawable.bing1,
+//                R.drawable.bing1,
                 R.drawable.bing2,
                 R.drawable.bing3,
                 R.drawable.bing4,
-                R.drawable.bing5,
+//                R.drawable.bing5,
                 R.drawable.bing6,
                 R.drawable.bing7,
                 R.drawable.bing8,
