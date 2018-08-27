@@ -7,6 +7,7 @@ import com.example.ashi.irrigatedmanager.gson.TotalCount;
 import com.example.ashi.irrigatedmanager.gson.User;
 import com.example.ashi.irrigatedmanager.level2_2_3.InspectDetailInfo;
 import com.example.ashi.irrigatedmanager.level2_4.Rain;
+import com.example.ashi.irrigatedmanager.level2_5.ManualInspectItem;
 import com.example.ashi.irrigatedmanager.level2_6.ProjectInfo3;
 import com.example.ashi.irrigatedmanager.level5.Appval;
 import com.example.ashi.irrigatedmanager.level5.AppvalHistory;
@@ -34,6 +35,7 @@ public class Utility {
         }
         return null;
     }
+
     public static User handleApi01LoginResponse(String response) {
         try {
             return new Gson().fromJson(response, User.class);
@@ -118,6 +120,15 @@ public class Utility {
     public static List<InspectDetailInfo> handleApi25officeStatisticResponse(String response) {
         try {
             return new Gson().fromJson(response, new TypeToken<List<InspectDetailInfo>>(){}.getType());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static List<ManualInspectItem> handleApi26patrolDesQueryResponse(String response) {
+        try {
+            return new Gson().fromJson(response, new TypeToken<List<ManualInspectItem>>(){}.getType());
         } catch (Exception e) {
             e.printStackTrace();
         }
