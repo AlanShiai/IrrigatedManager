@@ -11,11 +11,18 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 
+import com.example.ashi.irrigatedmanager.util.Global;
+
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by ashi on 8/24/2018.
  */
 
 public class DrawPie extends View {
+
+    List<Integer> colors = Arrays.asList(0xFFFF69B4, 0xFF90EE90, 0xFF6495ED, 0xFF87CEFA, 0xFFD19275);
 
     private Paint mPaint;
     private int mCurWidth;            //当前屏幕的宽 pixel
@@ -80,65 +87,119 @@ public class DrawPie extends View {
         float circle_x = pieRectF.centerX(), circle_y = pieRectF.centerY();
         float sum = 21 + 20 + 9 + 2 + 8;
 
+
+
         float startAngle = 0;
-        float sweepAngle = 21/sum * 360;
-        mPaint.setColor(0xFFFF69B4);
-        canvas.drawArc(pieRectF, startAngle, sweepAngle, true, mPaint);
-        float pxs = (float) (mRadius * Math.cos(Math.toRadians(startAngle + sweepAngle / 2)));
-        float pys = (float) (mRadius * Math.sin(Math.toRadians(startAngle + sweepAngle / 2)));
-        mPaint.setColor(0xFFC0C0C0);
-        canvas.drawLine(circle_x + pxs, circle_y + pys, circle_x + pxs + 20, circle_y + pys + 20, mPaint);
-        canvas.drawLine(circle_x + pxs + 20, circle_y + pys + 20, circle_x + pxs + 240, circle_y + pys + 20, mPaint);
-        mPaint.setColor(0xFFFF69B4);
-        canvas.drawText("渠首 21个", circle_x + pxs + 60, circle_y + pys + 10, mPaint);
+        float sweepAngle = 0;
+        float pxs=0, pys = 0;
+//        mPaint.setColor(0xFFFF69B4);
+//        canvas.drawArc(pieRectF, startAngle, sweepAngle, true, mPaint);
+//        float pxs = (float) (mRadius * Math.cos(Math.toRadians(startAngle + sweepAngle / 2)));
+//        float pys = (float) (mRadius * Math.sin(Math.toRadians(startAngle + sweepAngle / 2)));
+//        mPaint.setColor(0xFFC0C0C0);
+//        canvas.drawLine(circle_x + pxs, circle_y + pys, circle_x + pxs + 20, circle_y + pys + 20, mPaint);
+//        canvas.drawLine(circle_x + pxs + 20, circle_y + pys + 20, circle_x + pxs + 240, circle_y + pys + 20, mPaint);
+//        mPaint.setColor(0xFFFF69B4);
+//        canvas.drawText("渠首 21个", circle_x + pxs + 60, circle_y + pys + 10, mPaint);
 
-        startAngle = startAngle + sweepAngle;
-        sweepAngle = 20 / sum * 360;
-        mPaint.setColor(0xFF90EE90);
-        canvas.drawArc(pieRectF, startAngle, sweepAngle, true, mPaint);
-        pxs = (float) (mRadius * Math.cos(Math.toRadians(startAngle + sweepAngle / 2)));
-        pys = (float) (mRadius * Math.sin(Math.toRadians(startAngle + sweepAngle / 2)));
-        mPaint.setColor(0xFFC0C0C0);
-        canvas.drawLine(circle_x + pxs, circle_y + pys, circle_x + pxs - 20, circle_y + pys + 20, mPaint);
-        canvas.drawLine(circle_x + pxs - 20, circle_y + pys + 20, circle_x + pxs - 240, circle_y + pys + 20, mPaint);
-        mPaint.setColor(0xFF90EE90);
-        canvas.drawText("闸门 20个", circle_x + pxs - 240 + 60, circle_y + pys + 10, mPaint);
+        float yearAbnormalNumberSum = 0;
+        for(int i = 0; i < Global.abnormalList.size(); i++) {
+            int yearNumber = Integer.parseInt(Global.abnormalList.get(i).yearAbnormalNumber);
+            yearAbnormalNumberSum += yearNumber;
+        }
+        if ( 0 == yearAbnormalNumberSum ) {
+            return;
+        }
 
-        startAngle = startAngle + sweepAngle;
-        sweepAngle = 9 / sum * 360;
-        mPaint.setColor(0xFF6495ED);
-        canvas.drawArc(pieRectF, startAngle, sweepAngle, true, mPaint);
-        pxs = (float) (mRadius * Math.cos(Math.toRadians(startAngle + sweepAngle / 2)));
-        pys = (float) (mRadius * Math.sin(Math.toRadians(startAngle + sweepAngle / 2)));
-        mPaint.setColor(0xFFC0C0C0);
-        canvas.drawLine(circle_x + pxs, circle_y + pys, circle_x + pxs - 20, circle_y + pys - 20, mPaint);
-        canvas.drawLine(circle_x + pxs - 20, circle_y + pys - 20, circle_x + pxs - 240, circle_y + pys - 20, mPaint);
-        mPaint.setColor(0xFF6495ED);
-        canvas.drawText("桥梁 9个", circle_x + pxs - 240 + 60, circle_y + pys - 20 - 10, mPaint);
+        for(int i = 0; i < Global.abnormalList.size(); i++) {
+            int yearAbnormalNumber = Integer.parseInt(Global.abnormalList.get(i).yearAbnormalNumber);
+            if ( 0 == yearAbnormalNumber ) {
+                continue;
+            }
+            startAngle = startAngle + sweepAngle;
+            sweepAngle = yearAbnormalNumber / yearAbnormalNumberSum * 360;
+            mPaint.setColor(colors.get(i%colors.size()));
+            canvas.drawArc(pieRectF, startAngle, sweepAngle, true, mPaint);
+            pxs = (float) (mRadius * Math.cos(Math.toRadians(startAngle + sweepAngle / 2)));
+            pys = (float) (mRadius * Math.sin(Math.toRadians(startAngle + sweepAngle / 2)));
+            mPaint.setColor(0xFFC0C0C0);
+            float textAngle = startAngle + sweepAngle / 2;
+            String str = Global.abnormalList.get(i).projectLabel + yearAbnormalNumber + "个";
+            if ( textAngle >= 0 && textAngle < 90) {
+                mPaint.setColor(0xFFC0C0C0);
+                canvas.drawLine(circle_x + pxs, circle_y + pys, circle_x + pxs + 20, circle_y + pys + 20, mPaint);
+                canvas.drawLine(circle_x + pxs + 20, circle_y + pys + 20, circle_x + pxs + 240, circle_y + pys + 20, mPaint);
+                mPaint.setColor(0xFFFF69B4);
+                canvas.drawText(str, circle_x + pxs + 60, circle_y + pys + 10, mPaint);
+            } else if ( textAngle >= 90 && textAngle < 180) {
+                canvas.drawLine(circle_x + pxs, circle_y + pys, circle_x + pxs - 20, circle_y + pys + 20, mPaint);
+                canvas.drawLine(circle_x + pxs - 20, circle_y + pys + 20, circle_x + pxs - 240, circle_y + pys + 20, mPaint);
+                mPaint.setColor(colors.get(i%colors.size()));
+                canvas.drawText(str, circle_x + pxs - 240 + 60, circle_y + pys + 10, mPaint);
+            } else if ( textAngle >= 180 && textAngle < 270) {
+                mPaint.setColor(0xFFC0C0C0);
+                canvas.drawLine(circle_x + pxs, circle_y + pys, circle_x + pxs - 20, circle_y + pys - 20, mPaint);
+                canvas.drawLine(circle_x + pxs - 20, circle_y + pys - 20, circle_x + pxs - 240, circle_y + pys - 20, mPaint);
+                mPaint.setColor(0xFF6495ED);
+                canvas.drawText(str, circle_x + pxs - 240 + 60, circle_y + pys - 20 - 10, mPaint);
+            } else {
+                mPaint.setColor(0xFFC0C0C0);
+                canvas.drawLine(circle_x + pxs, circle_y + pys, circle_x + pxs + 20, circle_y + pys - 20, mPaint);
+                canvas.drawLine(circle_x + pxs + 20, circle_y + pys - 20, circle_x + pxs + 240, circle_y + pys - 20, mPaint);
+                mPaint.setColor(0xFFD19275);
+                canvas.drawText(str, circle_x + pxs  + 60, circle_y + pys - 20 - 10, mPaint);
+            }
+        }
 
-        startAngle = startAngle + sweepAngle;
-        sweepAngle = 2 / sum * 360;
-        mPaint.setColor(0xFF87CEFA);
-        canvas.drawArc(pieRectF, startAngle, sweepAngle, true, mPaint);
-        pxs = (float) (mRadius * Math.cos(Math.toRadians(startAngle + sweepAngle / 2)));
-        pys = (float) (mRadius * Math.sin(Math.toRadians(startAngle + sweepAngle / 2)));
-        mPaint.setColor(0xFFC0C0C0);
-        canvas.drawLine(circle_x + pxs, circle_y + pys, circle_x + pxs + 20, circle_y + pys - 20, mPaint);
-        canvas.drawLine(circle_x + pxs + 20, circle_y + pys - 20, circle_x + pxs + 240, circle_y + pys - 20, mPaint);
-        mPaint.setColor(0xFF87CEFA);
-        canvas.drawText("渡槽 2个", circle_x + pxs  + 60, circle_y + pys - 20 - 10, mPaint);
+//        startAngle = startAngle + sweepAngle;
+//        sweepAngle = 20 / sum * 360;
+//        mPaint.setColor(0xFF90EE90);
+//        canvas.drawArc(pieRectF, startAngle, sweepAngle, true, mPaint);
+//        pxs = (float) (mRadius * Math.cos(Math.toRadians(startAngle + sweepAngle / 2)));
+//        pys = (float) (mRadius * Math.sin(Math.toRadians(startAngle + sweepAngle / 2)));
+//        mPaint.setColor(0xFFC0C0C0);
+//        canvas.drawLine(circle_x + pxs, circle_y + pys, circle_x + pxs - 20, circle_y + pys + 20, mPaint);
+//        canvas.drawLine(circle_x + pxs - 20, circle_y + pys + 20, circle_x + pxs - 240, circle_y + pys + 20, mPaint);
+//        mPaint.setColor(0xFF90EE90);
+//        canvas.drawText("闸门 20个", circle_x + pxs - 240 + 60, circle_y + pys + 10, mPaint);
+//
+//        startAngle = startAngle + sweepAngle;
+//        sweepAngle = 9 / sum * 360;
+//        mPaint.setColor(0xFF6495ED);
+//        canvas.drawArc(pieRectF, startAngle, sweepAngle, true, mPaint);
+//        pxs = (float) (mRadius * Math.cos(Math.toRadians(startAngle + sweepAngle / 2)));
+//        pys = (float) (mRadius * Math.sin(Math.toRadians(startAngle + sweepAngle / 2)));
+//        mPaint.setColor(0xFFC0C0C0);
+//        canvas.drawLine(circle_x + pxs, circle_y + pys, circle_x + pxs - 20, circle_y + pys - 20, mPaint);
+//        canvas.drawLine(circle_x + pxs - 20, circle_y + pys - 20, circle_x + pxs - 240, circle_y + pys - 20, mPaint);
+//        mPaint.setColor(0xFF6495ED);
+//        canvas.drawText("桥梁 9个", circle_x + pxs - 240 + 60, circle_y + pys - 20 - 10, mPaint);
+//
+//        startAngle = startAngle + sweepAngle;
+//        sweepAngle = 2 / sum * 360;
+//        mPaint.setColor(0xFF87CEFA);
+//        canvas.drawArc(pieRectF, startAngle, sweepAngle, true, mPaint);
+//        pxs = (float) (mRadius * Math.cos(Math.toRadians(startAngle + sweepAngle / 2)));
+//        pys = (float) (mRadius * Math.sin(Math.toRadians(startAngle + sweepAngle / 2)));
+//        mPaint.setColor(0xFFC0C0C0);
+//        canvas.drawLine(circle_x + pxs, circle_y + pys, circle_x + pxs + 20, circle_y + pys - 20, mPaint);
+//        canvas.drawLine(circle_x + pxs + 20, circle_y + pys - 20, circle_x + pxs + 240, circle_y + pys - 20, mPaint);
+//        mPaint.setColor(0xFF87CEFA);
+//        canvas.drawText("渡槽 2个", circle_x + pxs  + 60, circle_y + pys - 20 - 10, mPaint);
+//
+//        startAngle = startAngle + sweepAngle;
+//        sweepAngle = 8 / sum * 360;
+//        mPaint.setColor(0xFFD19275);
+//        canvas.drawArc(pieRectF, startAngle, sweepAngle, true, mPaint);
+//        pxs = (float) (mRadius * Math.cos(Math.toRadians(startAngle + sweepAngle / 2)));
+//        pys = (float) (mRadius * Math.sin(Math.toRadians(startAngle + sweepAngle / 2)));
+//        mPaint.setColor(0xFFC0C0C0);
+//        canvas.drawLine(circle_x + pxs, circle_y + pys, circle_x + pxs + 20, circle_y + pys - 20, mPaint);
+//        canvas.drawLine(circle_x + pxs + 20, circle_y + pys - 20, circle_x + pxs + 240, circle_y + pys - 20, mPaint);
+//        mPaint.setColor(0xFFD19275);
+//        canvas.drawText("涵洞 8个", circle_x + pxs  + 60, circle_y + pys - 20 - 10, mPaint);
 
-        startAngle = startAngle + sweepAngle;
-        sweepAngle = 8 / sum * 360;
-        mPaint.setColor(0xFFD19275);
-        canvas.drawArc(pieRectF, startAngle, sweepAngle, true, mPaint);
-        pxs = (float) (mRadius * Math.cos(Math.toRadians(startAngle + sweepAngle / 2)));
-        pys = (float) (mRadius * Math.sin(Math.toRadians(startAngle + sweepAngle / 2)));
-        mPaint.setColor(0xFFC0C0C0);
-        canvas.drawLine(circle_x + pxs, circle_y + pys, circle_x + pxs + 20, circle_y + pys - 20, mPaint);
-        canvas.drawLine(circle_x + pxs + 20, circle_y + pys - 20, circle_x + pxs + 240, circle_y + pys - 20, mPaint);
-        mPaint.setColor(0xFFD19275);
-        canvas.drawText("涵洞 8个", circle_x + pxs  + 60, circle_y + pys - 20 - 10, mPaint);
+
 
         mPaint.setColor(Color.WHITE);
 //        canvas.drawArc(pieRectF., 0, 360, true, mPaint);
@@ -164,35 +225,44 @@ public class DrawPie extends View {
         int textWidth = rect.width();//文字宽
         int textHeight = rect.height();
 
-        str = "渠首";
-        int start = (int) ((right - ((40 + textWidth)*5 + 4*textWidth))/2.0);
-        mPaint.setColor(0xFFFF69B4);
-        canvas.drawCircle(start, pieRectF.bottom + textHeight*(float)1.6, 10, mPaint);
-        canvas.drawText(str, start+20, pieRectF.bottom + textHeight*2, mPaint);
+        int start = (int) ((right - ((40 + textWidth)*Global.abnormalList.size() + 4*textWidth))/2.0) - (2*textWidth + 30);
+        for(int i = 0; i < Global.abnormalList.size(); i++) {
+            str = Global.abnormalList.get(i).projectLabel;
+            start = start + 2*textWidth + 30;
+            mPaint.setColor(colors.get(i%colors.size()));
+            canvas.drawCircle(start, pieRectF.bottom + textHeight*(float)1.6, 10, mPaint);
+            canvas.drawText(str, start+20, pieRectF.bottom + textHeight*2, mPaint);
+        }
 
-        str = "闸门";
-        start = start + 2*textWidth + 30;
-        mPaint.setColor(0xFF90EE90);
-        canvas.drawCircle(start, pieRectF.bottom + textHeight*(float)1.6, 10, mPaint);
-        canvas.drawText(str, start+20, pieRectF.bottom + textHeight*2, mPaint);
+//        str = "渠首";
+//        int start = (int) ((right - ((40 + textWidth)*5 + 4*textWidth))/2.0);
+//        mPaint.setColor(0xFFFF69B4);
+//        canvas.drawCircle(start, pieRectF.bottom + textHeight*(float)1.6, 10, mPaint);
+//        canvas.drawText(str, start+20, pieRectF.bottom + textHeight*2, mPaint);
 
-        str = "桥梁";
-        start = start + 2*textWidth + 30;
-        mPaint.setColor(0xFF6495ED);
-        canvas.drawCircle(start, pieRectF.bottom + textHeight*(float)1.6, 10, mPaint);
-        canvas.drawText(str, start+20, pieRectF.bottom + textHeight*2, mPaint);
-
-        str = "渡槽";
-        start = start + 2*textWidth + 30;
-        mPaint.setColor(0xFF87CEFA);
-        canvas.drawCircle(start, pieRectF.bottom + textHeight*(float)1.6, 10, mPaint);
-        canvas.drawText(str, start+20, pieRectF.bottom + textHeight*2, mPaint);
-
-        str = "涵洞";
-        start = start + 2*textWidth + 30;
-        mPaint.setColor(0xFFD19275);
-        canvas.drawCircle(start, pieRectF.bottom + textHeight*(float)1.6, 10, mPaint);
-        canvas.drawText(str, start+20, pieRectF.bottom + textHeight*2, mPaint);
+//        str = "闸门";
+//        start = start + 2*textWidth + 30;
+//        mPaint.setColor(0xFF90EE90);
+//        canvas.drawCircle(start, pieRectF.bottom + textHeight*(float)1.6, 10, mPaint);
+//        canvas.drawText(str, start+20, pieRectF.bottom + textHeight*2, mPaint);
+//
+//        str = "桥梁";
+//        start = start + 2*textWidth + 30;
+//        mPaint.setColor(0xFF6495ED);
+//        canvas.drawCircle(start, pieRectF.bottom + textHeight*(float)1.6, 10, mPaint);
+//        canvas.drawText(str, start+20, pieRectF.bottom + textHeight*2, mPaint);
+//
+//        str = "渡槽";
+//        start = start + 2*textWidth + 30;
+//        mPaint.setColor(0xFF87CEFA);
+//        canvas.drawCircle(start, pieRectF.bottom + textHeight*(float)1.6, 10, mPaint);
+//        canvas.drawText(str, start+20, pieRectF.bottom + textHeight*2, mPaint);
+//
+//        str = "涵洞";
+//        start = start + 2*textWidth + 30;
+//        mPaint.setColor(0xFFD19275);
+//        canvas.drawCircle(start, pieRectF.bottom + textHeight*(float)1.6, 10, mPaint);
+//        canvas.drawText(str, start+20, pieRectF.bottom + textHeight*2, mPaint);
     }
 
     private int getStringWidth(String str) {

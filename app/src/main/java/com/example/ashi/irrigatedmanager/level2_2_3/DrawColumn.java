@@ -8,6 +8,12 @@ import android.graphics.Rect;
 import android.util.DisplayMetrics;
 import android.view.View;
 
+import com.example.ashi.irrigatedmanager.util.Global;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by ashi on 8/24/2018.
  */
@@ -51,6 +57,10 @@ public class DrawColumn extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        if (Global.abnormalList.isEmpty()) {
+            return;
+        }
+
         int left = getLeft(), right = getRight();
         int top = getTop(),   bottom = getBottom();
 
@@ -83,28 +93,74 @@ public class DrawColumn extends View {
         canvas.drawLine(0 + x_space, bottom - y_space, 0 + x_space, 0, mPaint); // y - axls
 
         // draw x string
-        String[] items = new String[] {
-                "渠首",
-                "闸门",
-                "桥梁",
-                "渡槽",
-                "涵洞",
-        };
-        int x_grid = (right - x_space) / (items.length * 4);
-        canvas.drawText("渠首", x_space + x_grid + x_grid*0, bottom - y_space + fontSize + 20, mPaint);
-        canvas.drawText("闸门", x_space + x_grid + x_grid*4, bottom - y_space + fontSize + 20, mPaint);
-        canvas.drawText("桥梁", x_space + x_grid + x_grid*8, bottom - y_space + fontSize + 20, mPaint);
-        canvas.drawText("渡槽", x_space + x_grid + x_grid*12, bottom - y_space + fontSize + 20, mPaint);
-        canvas.drawText("涵洞", x_space + x_grid + x_grid*16, bottom - y_space + fontSize + 20, mPaint);
+//        String[] items = new String[] {
+//                "渠首",
+//                "闸门",
+//                "桥梁",
+//                "渡槽",
+//                "涵洞",
+//        };
+        int x_grid = (right - x_space) / (Global.abnormalList.size() * 4);
+        for (int i= 0; i < Global.abnormalList.size(); i++) {
+            canvas.drawText(Global.abnormalList.get(i).projectLabel, x_space + x_grid + x_grid*i*4, bottom - y_space + fontSize + 20, mPaint);
+        }
+
+//        canvas.drawText("渠首", x_space + x_grid + x_grid*0, bottom - y_space + fontSize + 20, mPaint);
+//        canvas.drawText("闸门", x_space + x_grid + x_grid*4, bottom - y_space + fontSize + 20, mPaint);
+//        canvas.drawText("桥梁", x_space + x_grid + x_grid*8, bottom - y_space + fontSize + 20, mPaint);
+//        canvas.drawText("渡槽", x_space + x_grid + x_grid*12, bottom - y_space + fontSize + 20, mPaint);
+//        canvas.drawText("涵洞", x_space + x_grid + x_grid*16, bottom - y_space + fontSize + 20, mPaint);
+
+        int max = 0;
+        for (int i = 0; i < Global.abnormalList.size(); i++) {
+            int yearNumber = Integer.parseInt(Global.abnormalList.get(i).yearNumber);
+            if (max < yearNumber) {
+                max = yearNumber;
+            }
+        }
+        if ( 0 == max ) {
+            return;
+        }
+        List<String> xAnixString = new ArrayList<>();
+        if ( max > 0 && max <= 10) {
+            xAnixString.add("0"); xAnixString.add("2"); xAnixString.add("4"); xAnixString.add("6"); xAnixString.add("8"); xAnixString.add("10");
+        }
+        if ( max > 10 && max <= 20) {
+            xAnixString.add("0"); xAnixString.add("5"); xAnixString.add("10"); xAnixString.add("15"); xAnixString.add("20"); xAnixString.add("25");
+        }
+        if ( max > 20 && max <= 50) {
+            xAnixString.add("0"); xAnixString.add("10"); xAnixString.add("20"); xAnixString.add("30"); xAnixString.add("40"); xAnixString.add("50");
+        }
+        if ( max > 50 && max <= 100) {
+            xAnixString.add("0"); xAnixString.add("20"); xAnixString.add("40"); xAnixString.add("60"); xAnixString.add("80"); xAnixString.add("100");
+        }
+        if ( max > 100 && max <= 200) {
+            xAnixString.add("0"); xAnixString.add("40"); xAnixString.add("80"); xAnixString.add("120"); xAnixString.add("160"); xAnixString.add("200");
+        }
+        if ( max > 200 && max <= 500) {
+            xAnixString.add("0"); xAnixString.add("100"); xAnixString.add("200"); xAnixString.add("300"); xAnixString.add("400"); xAnixString.add("500");
+        }
+        if ( max > 500 && max <= 1000) {
+            xAnixString.add("0"); xAnixString.add("200"); xAnixString.add("400"); xAnixString.add("600"); xAnixString.add("800"); xAnixString.add("1000");
+        }
+        if ( max > 1000 && max <= 10000) {
+            xAnixString.add("0"); xAnixString.add("2000"); xAnixString.add("4000"); xAnixString.add("6000"); xAnixString.add("8000"); xAnixString.add("10000");
+        }
+        if ( max > 10000) {
+            xAnixString.add("0"); xAnixString.add("2000"); xAnixString.add("4000"); xAnixString.add("6000"); xAnixString.add("8000"); xAnixString.add("10000");
+        }
 
         // y axis string
-        float y_grid = (bottom - y_space) / 6;
-        canvas.drawText("0",   x_space - width_0 - 20 , bottom - y_space - y_grid * 0, mPaint);
-        canvas.drawText("100", x_space - width_100 - 20, bottom - y_space - y_grid * 1, mPaint);
-        canvas.drawText("200", x_space - width_100 - 20, bottom - y_space - y_grid * 2, mPaint);
-        canvas.drawText("300", x_space - width_100 - 20, bottom - y_space - y_grid * 3, mPaint);
-        canvas.drawText("400", x_space - width_100 - 20, bottom - y_space - y_grid * 4, mPaint);
-        canvas.drawText("500", x_space - width_100 - 20, bottom - y_space - y_grid * 5, mPaint);
+        float y_grid = (bottom - y_space) / 5;
+//        canvas.drawText("0",   x_space - width_0 - 20 , bottom - y_space - y_grid * 0, mPaint);
+//        canvas.drawText("100", x_space - width_100 - 20, bottom - y_space - y_grid * 1, mPaint);
+//        canvas.drawText("200", x_space - width_100 - 20, bottom - y_space - y_grid * 2, mPaint);
+//        canvas.drawText("300", x_space - width_100 - 20, bottom - y_space - y_grid * 3, mPaint);
+//        canvas.drawText("400", x_space - width_100 - 20, bottom - y_space - y_grid * 4, mPaint);
+//        canvas.drawText("500", x_space - width_100 - 20, bottom - y_space - y_grid * 5, mPaint);
+        for (int i = 0; i < xAnixString.size(); i++ ) {
+            canvas.drawText(xAnixString.get(i), x_space - width_100 - 20, bottom - y_space - y_grid * i + 30, mPaint);
+        }
 
         // x axis line
         mPaint.setColor(0xFFC0C0C0);
@@ -116,58 +172,77 @@ public class DrawColumn extends View {
         canvas.drawLine(x_space - 10, bottom - y_space - y_grid * 5, right, bottom - y_space - y_grid * 5, mPaint); // x - axls
 
         // draw column
-        int [] times = new int[] {
-                532,
-                166,
-                433,
-                344,
-                124,
-        };
+//        int [] times = new int[] {
+//                532,
+//                166,
+//                433,
+//                344,
+//                124,
+//        };
 
-        int rectWidth = width_text;
-        int rectHigh = (int) ((600-532)/600.0 * (bottom - y_space));
-        int rectX = x_space + x_grid + x_grid*0;
-        mPaint.setColor(0xFFFF69B4);
-        canalHeadRect = new Rect(rectX, rectHigh, (rectX+rectWidth), bottom - y_space - 2);
-        canvas.drawRect(canalHeadRect, mPaint);
-        mPaint.setColor(Color.WHITE);
-        if (canalHeadRect.contains(touched_x, touched_y)) {
-            canvas.drawText("22", rectX + 5, rectHigh + fontSize + 20, mPaint);
-        } else {
-            canvas.drawText("532", rectX + 5, rectHigh + fontSize + 20, mPaint);
+        List<Integer> colors = Arrays.asList(0xFFFF69B4, 0xFF90EE90, 0xFF6495ED, 0xFF87CEFA, 0xFFD19275);
+
+        int axixMax = Integer.parseInt(xAnixString.get(xAnixString.size()-1));
+        for (int i = 0; i < Global.abnormalList.size(); i++) {
+            int yearNumber = Integer.parseInt(Global.abnormalList.get(i).yearNumber);
+            int rectWidth = width_text;
+            int rectHigh = (int) ((axixMax-yearNumber)/(float)axixMax * (bottom - y_space));
+            int rectX = x_space + x_grid + x_grid*i*4;
+            mPaint.setColor(colors.get(i%colors.size()));
+            Rect canalHeadRect = new Rect(rectX, rectHigh, (rectX+rectWidth), bottom - y_space - 2);
+            canvas.drawRect(canalHeadRect, mPaint);
+            mPaint.setColor(Color.BLACK);
+            if ((bottom - y_space + fontSize + 20) - (rectHigh + fontSize + 20) < fontSize + 20) {
+                canvas.drawText(yearNumber + "", rectX + 5, rectHigh - fontSize, mPaint);
+            } else {
+                canvas.drawText(yearNumber + "", rectX + 5, rectHigh + fontSize + 20, mPaint);
+            }
         }
 
-        rectX = x_space + x_grid + x_grid*4;
-        rectHigh = (int) ((600-166)/600.0 * (bottom - y_space));
-        sluiceGateRect = new Rect(rectX, rectHigh, rectX+rectWidth, bottom - y_space - 2);
-        mPaint.setColor(0xFF90EE90);
-        canvas.drawRect(sluiceGateRect, mPaint);
-        mPaint.setColor(Color.WHITE);
-        canvas.drawText("166", rectX + 5, rectHigh + fontSize + 20, mPaint);
+//        int rectWidth = width_text;
+//        int rectHigh = (int) ((600-532)/600.0 * (bottom - y_space));
+//        int rectX = x_space + x_grid + x_grid*0;
+//        mPaint.setColor(0xFFFF69B4);
+//        canalHeadRect = new Rect(rectX, rectHigh, (rectX+rectWidth), bottom - y_space - 2);
+//        canvas.drawRect(canalHeadRect, mPaint);
+//        mPaint.setColor(Color.WHITE);
+//        if (canalHeadRect.contains(touched_x, touched_y)) {
+//            canvas.drawText("22", rectX + 5, rectHigh + fontSize + 20, mPaint);
+//        } else {
+//            canvas.drawText("532", rectX + 5, rectHigh + fontSize + 20, mPaint);
+//        }
 
-        rectX = x_space + x_grid + x_grid*8;
-        rectHigh = (int) ((600-433)/600.0 * (bottom - y_space));
-        bridgeRect = new Rect(rectX, rectHigh, rectX+rectWidth, bottom - y_space - 2);
-        mPaint.setColor(0xFF6495ED);
-        canvas.drawRect(bridgeRect, mPaint);
-        mPaint.setColor(Color.WHITE);
-        canvas.drawText("433", rectX + 5, rectHigh + fontSize + 20, mPaint);
-
-        rectX = x_space + x_grid + x_grid*12;
-        rectHigh = (int) ((600-344)/600.0 * (bottom - y_space));
-        launderRect = new Rect(rectX, rectHigh, rectX+rectWidth, bottom - y_space - 2);
-        mPaint.setColor(0xFF87CEFA);
-        canvas.drawRect(launderRect, mPaint);
-        mPaint.setColor(Color.WHITE);
-        canvas.drawText("344", rectX + 5, rectHigh + fontSize + 20, mPaint);
-
-        rectX = x_space + x_grid + x_grid*16;
-        rectHigh = (int) ((600-124)/600.0 * (bottom - y_space));
-        culvertRect = new Rect(rectX, rectHigh, rectX+rectWidth, bottom - y_space - 2);
-        mPaint.setColor(0xFFD19275);
-        canvas.drawRect(culvertRect, mPaint);
-        mPaint.setColor(Color.WHITE);
-        canvas.drawText("124", rectX + 5, rectHigh + fontSize + 20, mPaint);
+//        rectX = x_space + x_grid + x_grid*4;
+//        rectHigh = (int) ((600-166)/600.0 * (bottom - y_space));
+//        sluiceGateRect = new Rect(rectX, rectHigh, rectX+rectWidth, bottom - y_space - 2);
+//        mPaint.setColor(0xFF90EE90);
+//        canvas.drawRect(sluiceGateRect, mPaint);
+//        mPaint.setColor(Color.WHITE);
+//        canvas.drawText("166", rectX + 5, rectHigh + fontSize + 20, mPaint);
+//
+//        rectX = x_space + x_grid + x_grid*8;
+//        rectHigh = (int) ((600-433)/600.0 * (bottom - y_space));
+//        bridgeRect = new Rect(rectX, rectHigh, rectX+rectWidth, bottom - y_space - 2);
+//        mPaint.setColor(0xFF6495ED);
+//        canvas.drawRect(bridgeRect, mPaint);
+//        mPaint.setColor(Color.WHITE);
+//        canvas.drawText("433", rectX + 5, rectHigh + fontSize + 20, mPaint);
+//
+//        rectX = x_space + x_grid + x_grid*12;
+//        rectHigh = (int) ((600-344)/600.0 * (bottom - y_space));
+//        launderRect = new Rect(rectX, rectHigh, rectX+rectWidth, bottom - y_space - 2);
+//        mPaint.setColor(0xFF87CEFA);
+//        canvas.drawRect(launderRect, mPaint);
+//        mPaint.setColor(Color.WHITE);
+//        canvas.drawText("344", rectX + 5, rectHigh + fontSize + 20, mPaint);
+//
+//        rectX = x_space + x_grid + x_grid*16;
+//        rectHigh = (int) ((600-124)/600.0 * (bottom - y_space));
+//        culvertRect = new Rect(rectX, rectHigh, rectX+rectWidth, bottom - y_space - 2);
+//        mPaint.setColor(0xFFD19275);
+//        canvas.drawRect(culvertRect, mPaint);
+//        mPaint.setColor(Color.WHITE);
+//        canvas.drawText("124", rectX + 5, rectHigh + fontSize + 20, mPaint);
     }
 
     private int getStringWidth(String str) {

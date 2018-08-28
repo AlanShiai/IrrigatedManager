@@ -1,6 +1,7 @@
 package com.example.ashi.irrigatedmanager.util;
 
 import com.example.ashi.irrigatedmanager.IrrigationScheduleInfo;
+import com.example.ashi.irrigatedmanager.gson.Abnormal;
 import com.example.ashi.irrigatedmanager.gson.HttpResult;
 import com.example.ashi.irrigatedmanager.gson.InspectNote;
 import com.example.ashi.irrigatedmanager.gson.TotalCount;
@@ -154,4 +155,12 @@ public class Utility {
         return null;
     }
 
+    public static List<Abnormal> handleApi30patrolInitResponse(String response) {
+        try {
+            return new Gson().fromJson(response, new TypeToken<List<Abnormal>>(){}.getType());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
