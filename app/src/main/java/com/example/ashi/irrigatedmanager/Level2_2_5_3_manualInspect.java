@@ -2,6 +2,7 @@ package com.example.ashi.irrigatedmanager;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Dialog;
 import android.content.ContentUris;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -175,18 +176,65 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
         findViewById(R.id.manual_inspect_report).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Global.isExceptionFound) {
-                    showExceptionReportDialog();
-                } else {
-                    showNormalReportDialog();
-                }
+//                if (Global.isExceptionFound) {
+//                    showExceptionReportDialog();
+//                } else {
+//                    showNormalReportDialog();
+//                }
+                showNormalReportDialogtst();
             }
         });
     }
 
+    private void showNormalReportDialogtst() {
+        final Dialog builder = new Dialog(this, R.style.update_dialog);
+//        View view = LayoutInflater.from(Level2_2_5_3_manualInspect.this).inflate(R.layout.update_dialog, null, false);
+        View view = View.inflate(Level2_2_5_3_manualInspect.this, R.layout.update_dialog, null);
+//        View view = UIUtil.inflateView(R.layout.update_dialog);//加载自己的布局
+        Button noUpdateBtn = (Button) view.findViewById(R.id.alert_no_update_btn);
+        Button updateBtn = (Button) view.findViewById(R.id.alert_update_btn);
+        noUpdateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //2、如果选择不更新，则直接判断是否是第一次进入
+                builder.dismiss();
+            }
+        });
+        updateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = Api.API_22_patrolSave;
+                HttpUtil.sendOkHttpRequest(url, new Callback() {
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        final String responseText = response.body().string();
+                        HttpResult httpResult = Utility.handleNormalFormResponse(responseText);
+                        if (httpResult.isSuccess()) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    showText("巡检提交成功");
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+                builder.dismiss();
+            }
+        });
+        builder.setContentView(view);//这里还可以指定布局参数
+        builder.setCancelable(false);// 不可以用“返回键”取消
+        builder.show();
+    }
+
     private void showExceptionReportDialog() {
         final String[] items = new String[]{"张元一", "王文",};
-        AlertDialog.Builder customizeDialog = new AlertDialog.Builder(Level2_2_5_3_manualInspect.this);
+        AlertDialog.Builder customizeDialog = new AlertDialog.Builder(Level2_2_5_3_manualInspect.this, android.R.style.Theme_Translucent);
         final View  dialogView = LayoutInflater.from(Level2_2_5_3_manualInspect.this)
                 .inflate(R.layout.dialog_customize, null);
 //        customizeDialog.setTitle("我是一个自定义Dialog");
