@@ -11,6 +11,7 @@ import com.example.ashi.irrigatedmanager.level2_4.Rain;
 import com.example.ashi.irrigatedmanager.level2_4.SluiceInfo;
 import com.example.ashi.irrigatedmanager.level2_5.ManualInspectItem;
 import com.example.ashi.irrigatedmanager.level2_6.ProjectInfo3;
+import com.example.ashi.irrigatedmanager.level2_6.ProjectInfo4;
 import com.example.ashi.irrigatedmanager.level5.Appval;
 import com.example.ashi.irrigatedmanager.level5.AppvalHistory;
 import com.example.ashi.irrigatedmanager.level5.BusinessForm;
@@ -104,6 +105,15 @@ public class Utility {
     public static List<ProjectInfo3> handleApi17ProjectListResponse(String response) {
         try {
             return new Gson().fromJson(response, new TypeToken<List<ProjectInfo3>>(){}.getType());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static ProjectInfo4 handleApi18projectDetailResponse(String response) {
+        try {
+            return new Gson().fromJson(response, ProjectInfo4.class);
         } catch (Exception e) {
             e.printStackTrace();
         }

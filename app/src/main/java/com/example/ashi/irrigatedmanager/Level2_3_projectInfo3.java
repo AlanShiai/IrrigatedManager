@@ -51,6 +51,7 @@ public class Level2_3_projectInfo3 extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Global.projectId = projectInfoList.get(position).id;
                 Intent intent = new Intent(Level2_3_projectInfo3.this, Level2_3_projectInfo4.class);
                 startActivity(intent);
             }
@@ -82,6 +83,8 @@ public class Level2_3_projectInfo3 extends AppCompatActivity {
                         @Override
                         public void run() {
                             if ( null != listView ) {
+                                projectInfoList.clear();
+                                projectInfoList.addAll(list);
                                 ProjectInfo3Adpter adapter = new ProjectInfo3Adpter(Level2_3_projectInfo3.this, R.layout.project_item_3, list);
                                 listView.setAdapter(adapter);
                             }

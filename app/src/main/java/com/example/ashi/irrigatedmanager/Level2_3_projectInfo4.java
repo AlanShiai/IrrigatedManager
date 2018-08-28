@@ -14,12 +14,18 @@ import com.example.ashi.irrigatedmanager.level2_5.ManualInspectBasicInfo;
 import com.example.ashi.irrigatedmanager.level2_5.ManualInspectBasicInfoAdapter;
 import com.example.ashi.irrigatedmanager.level2_6.ProjectInfo3;
 import com.example.ashi.irrigatedmanager.level2_6.ProjectInfo3Adpter;
+import com.example.ashi.irrigatedmanager.level2_6.ProjectInfo4;
+import com.example.ashi.irrigatedmanager.level2_6.ProjectInfo4Adapter;
 import com.example.ashi.irrigatedmanager.util.Api;
+import com.example.ashi.irrigatedmanager.util.Global;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
 import com.example.ashi.irrigatedmanager.util.Utility;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import okhttp3.Call;
@@ -27,6 +33,8 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 public class Level2_3_projectInfo4 extends AppCompatActivity {
+
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +49,7 @@ public class Level2_3_projectInfo4 extends AppCompatActivity {
 
         ManualInspectBasicInfoAdapter adapter = new ManualInspectBasicInfoAdapter(
                 Level2_3_projectInfo4.this, R.layout.fragment_listview_item, new ArrayList<String>(ManualInspectBasicInfo.getInfo().keySet()));
-        ListView listView = (ListView) findViewById(R.id.project_info_list);
+        listView = (ListView) findViewById(R.id.project_info_list);
         listView.setAdapter(adapter);
 
         Button backButton = (Button) findViewById(R.id.back_button);
@@ -58,24 +66,48 @@ public class Level2_3_projectInfo4 extends AppCompatActivity {
     }
 
     private void getDataFromServerAndUpdateListView() {
-        String url = Api.API_18_projectDetail;
+        // "http://www.boze-tech.com/zfh_manager/a/app/project/projectDetail?userId=1&projectType=channel&id=331d737641434a0bb476265b38d9db1c";
+        String url = Api.API_18_projectDetail + "&projectType=" + Global.projectInfoType
+                + "&id=" + Global.projectId;
+        Log.d("aijun jectDetail" , url);
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 final String responseText = response.body().string();
-//                final List<ProjectInfo3> list = Utility.handleApi17ProjectListResponse(responseText);
+                final ProjectInfo4 projectInfo4 = Utility.handleApi18projectDetailResponse(responseText);
                 Log.d("aijun, projectDetail;", responseText+"");
-//                if ( ! list.isEmpty() ) {
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            if ( null != listView ) {
-//                                ProjectInfo3Adpter adapter = new ProjectInfo3Adpter(Level2_3_projectInfo3.this, R.layout.project_item_3, list);
-//                                listView.setAdapter(adapter);
-//                            }
-//                        }
-//                    });
-//                }
+                Log.d("aijun, projectDetail;", projectInfo4+"");
+                if ( null != projectInfo4 ) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Global.projectDetails = new LinkedHashMap<String, String>();
+                            String key = "", value = "";
+                            List<String> list = Arrays.asList(projectInfo4.var_00, projectInfo4.var_01, projectInfo4.var_02,
+                                    projectInfo4.var_03, projectInfo4.var_04,projectInfo4.var_05, projectInfo4.var_06,projectInfo4.var_07,
+                                    projectInfo4.var_08,projectInfo4.var_09,projectInfo4.var_10,projectInfo4.var_11,projectInfo4.var_12,
+                                    projectInfo4.var_13,projectInfo4.var_14,projectInfo4.var_15,projectInfo4.var_16,projectInfo4.var_17,
+                                    projectInfo4.var_18,projectInfo4.var_19,projectInfo4.var_20);
+                            for (String str : list) {
+                                if ( null != str && str.contains("@@")) {
+                                    key = str.substring(0, str.indexOf("@@"));
+                                    if (str.length() > str.indexOf("@@")+2) {
+                                        value = str.substring(str.indexOf("@@")+2);
+                                    }
+                                    Global.projectDetails.put(key,value);
+                                }
+                            }
+
+
+                            if (null != listView) {
+                                ProjectInfo4Adapter adapter = new ProjectInfo4Adapter(
+                                        Level2_3_projectInfo4.this, R.layout.fragment_listview_item, new ArrayList<String>(Global.projectDetails.keySet()));
+                                listView = (ListView) findViewById(R.id.project_info_list);
+                                listView.setAdapter(adapter);
+                            }
+                        }
+                    });
+                }
             }
 
             @Override

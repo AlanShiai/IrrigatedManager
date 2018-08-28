@@ -182,7 +182,7 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
 //                    showNormalReportDialog();
 //                }
                 if (Global.isExceptionFound) {
-                    showExceptionReportDialog();
+                    showNormalReportDialogtst();
                 } else {
                     showNormalReportDialog();
                 }

@@ -28,7 +28,7 @@ public interface Api {
             "&businessKey=pro_patrol_result_deal:98eaf7ee37354b48b875caf30bbad7a9&userId=xizha&flag=yes";
     String API_16_businessForm              = "http://www.boze-tech.com/zfh_manager/a/app/actTask/businessForm?businessKey=pro_patrol_result_deal:98eaf7ee37354b48b875caf30bbad7a9";
     String API_17_projectList               = "http://www.boze-tech.com/zfh_manager/a/app/project/projectList?userId=1&name=&office=";
-    String API_18_projectDetail             = "http://www.boze-tech.com/zfh_manager/a/app/project/projectDetail?userId=1&projectType=channel&id=331d737641434a0bb476265b38d9db1c";
+    String API_18_projectDetail             = "http://www.boze-tech.com/zfh_manager/a/app/project/projectDetail?userId=1";
     String API_19_queryIrrigationSchedule = "http://www.boze-tech.com/zfh_manager/a/app/project/queryIrrigationSchedule?userId=1&year=2018&turn=1";
     String API_20_patrolResult              = "http://www.boze-tech.com/zfh_manager/a/app/patrol/patrolResult?userId=1&day=2018-07-11&dayType=1&type=&resultType=&status=";
     String API_21_patrolItem                = "http://www.boze-tech.com/zfh_manager/a/app/patrol/patrolItem?type=channel";
