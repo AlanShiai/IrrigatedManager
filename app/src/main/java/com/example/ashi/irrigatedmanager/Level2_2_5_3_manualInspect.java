@@ -100,9 +100,9 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
                 + "\t有向渠道内排放污水、废液，倾倒工业废渣、垃圾等废弃物现象。"
         );
 
-        Button takePhoto = (Button) findViewById(R.id.take_photo);
+        ImageView takePhoto = (ImageView) findViewById(R.id.take_photo);
         Button chooseFromAlbum = (Button) findViewById(R.id.choose_from_album);
-        picture = (ImageView) findViewById(R.id.picture);
+        picture = (ImageView) findViewById(R.id.image1);
         takePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -176,13 +176,8 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
         findViewById(R.id.manual_inspect_report).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (Global.isExceptionFound) {
-//                    showExceptionReportDialog();
-//                } else {
-//                    showNormalReportDialog();
-//                }
                 if (Global.isExceptionFound) {
-                    showNormalReportDialogtst();
+                    showExceptiontDialog();
                 } else {
                     showNormalReportDialog();
                 }
@@ -190,7 +185,7 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
         });
     }
 
-    private void showNormalReportDialogtst() {
+    private void showExceptiontDialog() {
         final Dialog builder = new Dialog(this, R.style.update_dialog);
 //        View view = LayoutInflater.from(Level2_2_5_3_manualInspect.this).inflate(R.layout.update_dialog, null, false);
         View view = View.inflate(Level2_2_5_3_manualInspect.this, R.layout.update_dialog, null);
@@ -234,53 +229,6 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
         builder.setContentView(view);//这里还可以指定布局参数
         builder.setCancelable(false);// 不可以用“返回键”取消
         builder.show();
-    }
-
-    private void showExceptionReportDialog() {
-        final String[] items = new String[]{"张元一", "王文",};
-        AlertDialog.Builder customizeDialog = new AlertDialog.Builder(Level2_2_5_3_manualInspect.this, android.R.style.Theme_Translucent);
-        final View  dialogView = LayoutInflater.from(Level2_2_5_3_manualInspect.this)
-                .inflate(R.layout.dialog_customize, null);
-//        customizeDialog.setTitle("我是一个自定义Dialog");
-        customizeDialog.setCustomTitle(dialogView);
-        customizeDialog.setSingleChoiceItems(items, 1, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-        customizeDialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String url = Api.API_22_patrolSave;
-                HttpUtil.sendOkHttpRequest(url, new Callback() {
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        final String responseText = response.body().string();
-                        HttpResult httpResult = Utility.handleNormalFormResponse(responseText);
-                        if (httpResult.isSuccess()) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    showText("巡检提交成功");
-                                }
-                            });
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        e.printStackTrace();
-                    }
-                });
-            }
-        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-        customizeDialog.show();
     }
 
     private void showNormalReportDialog() {
