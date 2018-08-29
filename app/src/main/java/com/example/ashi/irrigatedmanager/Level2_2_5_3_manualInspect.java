@@ -64,6 +64,8 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
 
     private ImageView replacedByChoose;
 
+    private ImageView takePhoto;
+
     private ImageView imageView1, imageView2, imageView3, imageView4, imageView5, imageView6;
 
     private Button manualInspectReportButton, backButton;
@@ -96,85 +98,48 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
 
         setContentView(R.layout.activity_level2_2_5_3_manual_inspect);
 
-        ImageView located = (ImageView) findViewById(R.id.located);
-        located.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                requestLocation();
-            }
-        });
-
-        ImageView takePhoto = (ImageView) findViewById(R.id.take_photo);
-        Button chooseFromAlbum = (Button) findViewById(R.id.choose_from_album);
-        takePhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                File outputImage = new File(getExternalCacheDir(), "output_image.jpg");
-                try {
-                    if (outputImage.exists()) {
-                        outputImage.delete();
-                    }
-                    outputImage.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                if (Build.VERSION.SDK_INT < 24) {
-                    imageUri = Uri.fromFile(outputImage);
-                } else {
-                    imageUri = FileProvider.getUriForFile(Level2_2_5_3_manualInspect.this, "com.example.ashi.irrigatedmanager.fileprovider", outputImage);
-                }
-                if (ContextCompat.checkSelfPermission(Level2_2_5_3_manualInspect.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(Level2_2_5_3_manualInspect.this, new String[]{Manifest.permission.CAMERA}, 1);
-                } else {
-                    // start take photo
-                    Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                    startActivityForResult(intent, TAKE_PHOTO);
-                }
-            }
-        });
-        chooseFromAlbum.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (ContextCompat.checkSelfPermission(Level2_2_5_3_manualInspect.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(Level2_2_5_3_manualInspect.this, new String[]{ Manifest.permission. WRITE_EXTERNAL_STORAGE }, 1);
-                } else {
-                    openAlbum();
-//                    requestLocation();
-                }
-            }
-        });
-
 //        mapView = (MapView) findViewById(R.id.bmapView);
 //        baiduMap = mapView.getMap();
 //        baiduMap.setMyLocationEnabled(true);
 
         positionText = (TextView) findViewById(R.id.position_text_view);
-        List<String> permissionList = new ArrayList<>();
-        if (ContextCompat.checkSelfPermission(Level2_2_5_3_manualInspect.this, Manifest.permission
-                .ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
-        }
-        if (ContextCompat.checkSelfPermission(Level2_2_5_3_manualInspect.this, Manifest.permission
-                .READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(Manifest.permission.READ_PHONE_STATE);
-        }
-        if (ContextCompat.checkSelfPermission(Level2_2_5_3_manualInspect.this, Manifest.permission
-                .WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        }
-        if ( ! permissionList.isEmpty() ) {
-            String[] permissions = permissionList.toArray(new String[0]);
-            ActivityCompat.requestPermissions(Level2_2_5_3_manualInspect.this, permissions, 1);
-        } else {
-            requestLocation();
-        }
+
+
+        ImageView located = (ImageView) findViewById(R.id.located);
+        located.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("aijun located", "adfasdf tst located.");
+                List<String> permissionList = new ArrayList<>();
+                if (ContextCompat.checkSelfPermission(Level2_2_5_3_manualInspect.this, Manifest.permission
+                        .ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
+                }
+                if (ContextCompat.checkSelfPermission(Level2_2_5_3_manualInspect.this, Manifest.permission
+                        .READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                    permissionList.add(Manifest.permission.READ_PHONE_STATE);
+                }
+                if (ContextCompat.checkSelfPermission(Level2_2_5_3_manualInspect.this, Manifest.permission
+                        .WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                }
+                if ( ! permissionList.isEmpty() ) {
+                    String[] permissions = permissionList.toArray(new String[0]);
+                    ActivityCompat.requestPermissions(Level2_2_5_3_manualInspect.this, permissions, 1);
+                } else {
+                    requestLocation();
+                }
+            }
+        });
+
+
 
         findViewsById();
         setOnClickListeners();
     }
 
     private void findViewsById() {
+        takePhoto = (ImageView) findViewById(R.id.take_photo);
         imageView1 = (ImageView) findViewById(R.id.imageview1);
         imageView2 = (ImageView) findViewById(R.id.imageview2);
         imageView3 = (ImageView) findViewById(R.id.imageview3);
@@ -204,6 +169,35 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
         imageView4.setOnClickListener(imageListener);
         imageView5.setOnClickListener(imageListener);
         imageView6.setOnClickListener(imageListener);
+
+        takePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                File outputImage = new File(getExternalCacheDir(), "output_image.jpg");
+                try {
+                    if (outputImage.exists()) {
+                        outputImage.delete();
+                    }
+                    outputImage.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if (Build.VERSION.SDK_INT < 24) {
+                    imageUri = Uri.fromFile(outputImage);
+                } else {
+                    imageUri = FileProvider.getUriForFile(Level2_2_5_3_manualInspect.this, "com.example.ashi.irrigatedmanager.fileprovider", outputImage);
+                }
+                if (ContextCompat.checkSelfPermission(Level2_2_5_3_manualInspect.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(Level2_2_5_3_manualInspect.this, new String[]{Manifest.permission.CAMERA}, 1);
+                } else {
+                    // start take photo
+                    Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                    startActivityForResult(intent, TAKE_PHOTO);
+                }
+            }
+        });
+
 
         manualInspectReportButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -350,6 +344,7 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mLocationClient.stop();
 //        mapView.onDestroy();
 //        baiduMap.setMyLocationEnabled(false);
     }
@@ -361,6 +356,7 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
     private void initLocation() {
         LocationClientOption option = new LocationClientOption();
         option.setIsNeedAddress(true);
+//        option.scanSpan = 20000;
         mLocationClient.setLocOption(option);
     }
 
@@ -484,21 +480,22 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
                 @Override
                 public void run() {
                     StringBuilder currentPosition = new StringBuilder();
-                    currentPosition.append("weidu:").append(bdLocation.getLatitude()).append("\n");
-                    currentPosition.append("jindu:").append(bdLocation.getLongitude()).append("\n");
-                    currentPosition.append("Country:").append(bdLocation.getCountry()).append("\n");
-                    currentPosition.append("Province:").append(bdLocation.getProvince()).append("\n");
-                    currentPosition.append("City:").append(bdLocation.getCity()).append("\n");
-                    currentPosition.append("District:").append(bdLocation.getDistrict()).append("\n");
-                    currentPosition.append("Street:").append(bdLocation.getStreet()).append("\n");
-                    currentPosition.append("location method:");
-                    if (bdLocation.getLocType() == BDLocation.TypeGpsLocation) {
-                        currentPosition.append("GPS");
-                    } else if (bdLocation.getLocType() == BDLocation.TypeNetWorkLocation) {
-                        currentPosition.append("NetWork");
-                    }
+                    currentPosition.append("纬度：").append(bdLocation.getLatitude()).append("\n");
+                    currentPosition.append("经度：").append(bdLocation.getLongitude()).append("\n");
+                    currentPosition.append("国家：").append(bdLocation.getCountry()).append("\n");
+                    currentPosition.append("省份：").append(bdLocation.getProvince()).append("\n");
+                    currentPosition.append("城市：").append(bdLocation.getCity()).append("\n");
+                    currentPosition.append("区域：").append(bdLocation.getDistrict()).append("\n");
+                    currentPosition.append("街道：").append(bdLocation.getStreet()).append("\n");
+//                    currentPosition.append("location method:");
+//                    if (bdLocation.getLocType() == BDLocation.TypeGpsLocation) {
+//                        currentPosition.append("GPS");
+//                    } else if (bdLocation.getLocType() == BDLocation.TypeNetWorkLocation) {
+//                        currentPosition.append("NetWork");
+//                    }
                     positionText.setText(currentPosition);
                     showText(currentPosition.toString());
+                    mLocationClient.stop();
                 }
             });
         }
