@@ -13,6 +13,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.ContactsContract;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
@@ -61,7 +62,11 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
 
     public static final int CHOOSE_PHOTO = 2;
 
-    private ImageView picture;
+    private ImageView replacedByChoose;
+
+    private ImageView imageView1, imageView2, imageView3, imageView4, imageView5, imageView6;
+
+    private Button manualInspectReportButton, backButton;
 
     private Uri imageUri;
 
@@ -101,11 +106,9 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
 
         ImageView takePhoto = (ImageView) findViewById(R.id.take_photo);
         Button chooseFromAlbum = (Button) findViewById(R.id.choose_from_album);
-        picture = (ImageView) findViewById(R.id.image1);
         takePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 创建File对象，用于存储拍照后的图片
                 File outputImage = new File(getExternalCacheDir(), "output_image.jpg");
                 try {
                     if (outputImage.exists()) {
@@ -123,7 +126,7 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
                 if (ContextCompat.checkSelfPermission(Level2_2_5_3_manualInspect.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(Level2_2_5_3_manualInspect.this, new String[]{Manifest.permission.CAMERA}, 1);
                 } else {
-                    // 启动相机程序
+                    // start take photo
                     Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
                     startActivityForResult(intent, TAKE_PHOTO);
@@ -137,17 +140,8 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
                     ActivityCompat.requestPermissions(Level2_2_5_3_manualInspect.this, new String[]{ Manifest.permission. WRITE_EXTERNAL_STORAGE }, 1);
                 } else {
                     openAlbum();
-                    requestLocation();
+//                    requestLocation();
                 }
-            }
-        });
-
-        findViewById(R.id.leve1_2_2_5_2_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Level2_2_5_3_manualInspect.this, Level2_2_5_2_manualInspect.class);
-                startActivity(intent);
-                finish();
             }
         });
 
@@ -176,7 +170,42 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
             requestLocation();
         }
 
-        findViewById(R.id.manual_inspect_report).setOnClickListener(new View.OnClickListener() {
+        findViewsById();
+        setOnClickListeners();
+    }
+
+    private void findViewsById() {
+        imageView1 = (ImageView) findViewById(R.id.imageview1);
+        imageView2 = (ImageView) findViewById(R.id.imageview2);
+        imageView3 = (ImageView) findViewById(R.id.imageview3);
+        imageView4 = (ImageView) findViewById(R.id.imageview4);
+        imageView5 = (ImageView) findViewById(R.id.imageview5);
+        imageView6 = (ImageView) findViewById(R.id.imageview6);
+        manualInspectReportButton = (Button) findViewById(R.id.manual_inspect_report);
+        backButton = (Button) findViewById(R.id.back_button);
+    }
+
+    int addImage = R.drawable.d2;
+    private void setOnClickListeners() {
+        View.OnClickListener imageListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(Level2_2_5_3_manualInspect.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(Level2_2_5_3_manualInspect.this, new String[]{ Manifest.permission. WRITE_EXTERNAL_STORAGE }, 1);
+                } else {
+                    replacedByChoose = (ImageView) v;
+                    openAlbum();
+                }
+            }
+        };
+        imageView1.setOnClickListener(imageListener);
+        imageView2.setOnClickListener(imageListener);
+        imageView3.setOnClickListener(imageListener);
+        imageView4.setOnClickListener(imageListener);
+        imageView5.setOnClickListener(imageListener);
+        imageView6.setOnClickListener(imageListener);
+
+        manualInspectReportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (Global.isExceptionFound) {
@@ -186,13 +215,19 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
                 }
             }
         });
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Level2_2_5_3_manualInspect.this, Level2_2_5_2_manualInspect.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void showExceptiontDialog() {
         final Dialog builder = new Dialog(this, R.style.update_dialog);
-//        View view = LayoutInflater.from(Level2_2_5_3_manualInspect.this).inflate(R.layout.update_dialog, null, false);
         View view = View.inflate(Level2_2_5_3_manualInspect.this, R.layout.update_dialog, null);
-//        View view = UIUtil.inflateView(R.layout.update_dialog);//加载自己的布局
         Button noUpdateBtn = (Button) view.findViewById(R.id.alert_no_update_btn);
         Button updateBtn = (Button) view.findViewById(R.id.alert_update_btn);
         noUpdateBtn.setOnClickListener(new View.OnClickListener() {
@@ -360,7 +395,7 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
                     try {
                         // 将拍摄的照片显示出来
                         Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
-                        picture.setImageBitmap(bitmap);
+                        imageView1.setImageBitmap(bitmap);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -431,7 +466,7 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
     private void displayImage(String imagePath) {
         if (imagePath != null) {
             Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-            picture.setImageBitmap(bitmap);
+            replacedByChoose.setImageBitmap(bitmap);
         } else {
             Toast.makeText(this, "failed to get image", Toast.LENGTH_SHORT).show();
         }
