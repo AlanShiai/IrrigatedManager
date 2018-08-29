@@ -25,6 +25,8 @@ import com.example.ashi.irrigatedmanager.level2_5.ManualInspectBasicInfo;
 import com.example.ashi.irrigatedmanager.level2_5.ManualInspectBasicInfoAdapter;
 import com.example.ashi.irrigatedmanager.level2_5.ManualInspectItem2;
 import com.example.ashi.irrigatedmanager.level2_5.ManualInspectItemAdapter;
+import com.example.ashi.irrigatedmanager.level2_6.ProjectInfo4;
+import com.example.ashi.irrigatedmanager.level2_6.ProjectInfo4Adapter;
 import com.example.ashi.irrigatedmanager.util.Api;
 import com.example.ashi.irrigatedmanager.util.Global;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
@@ -32,6 +34,8 @@ import com.example.ashi.irrigatedmanager.util.Utility;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import okhttp3.Call;
@@ -44,19 +48,8 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
 
     private static List<ManualInspectItem2> dataList = new ArrayList<ManualInspectItem2>();
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
     private ViewPager mViewPager;
 
     @Override
@@ -72,10 +65,6 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
 
         initData();
 
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
         mSectionsPagerAdapter = new Level2_2_5_2_manualInspect.SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
@@ -223,15 +212,18 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
     }
 
     public static class PlaceholderFragment2 extends Fragment {
+
+        private ListView listView;
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_listview, container, false);
 
-            ManualInspectBasicInfoAdapter adapter = new ManualInspectBasicInfoAdapter(
-                    getContext(), R.layout.fragment_listview_item, new ArrayList<String>(ManualInspectBasicInfo.getInfo().keySet()));
-            ListView listView = (ListView) rootView.findViewById(R.id.fragment_listview_list);
-            listView.setAdapter(adapter);
+//            ManualInspectBasicInfoAdapter adapter = new ManualInspectBasicInfoAdapter(
+//                    getContext(), R.layout.fragment_listview_item, new ArrayList<String>(ManualInspectBasicInfo.getInfo().keySet()));
+            listView = (ListView) rootView.findViewById(R.id.fragment_listview_list);
+//            listView.setAdapter(adapter);
 
 //            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
 //            textView.setText("Hello world 2");
@@ -242,13 +234,48 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
         }
 
         private void getDataFromServerAndUpdateListView() {
-            String url = Api.API_23_basicInfo;
+            // "http://www.boze-tech.com/zfh_manager/a/app/patrol/basicInfo?id=8502f69d32304ee6a9aacd99920fdcd7&type=channel&userId=1";
+            // Api.API_23_basicInfo = http://www.boze-tech.com/zfh_manager/a/app/patrol/basicInfo?userId=1
+            String url = Api.API_23_basicInfo + "&id=" + Global.patrolId
+                    + "&type="+Global.patrolType;
+            Log.d("aijun basicInfo", url+"");
             HttpUtil.sendOkHttpRequest(url, new Callback() {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     final String responseText = response.body().string();
 //                final List<InspectNote> list = Utility.handleApi20patrolResultResponse(responseText);
-                    Log.d("aijun basicInfo", responseText+"");
+                    final ProjectInfo4 projectInfo4 = Utility.handleApi18projectDetailResponse(responseText);
+                    Log.d("aijun, projectDetail;", responseText+"");
+                    Log.d("aijun, projectDetail;", projectInfo4+"");
+                    if ( null != projectInfo4 ) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Global.patrolDetails = new LinkedHashMap<String, String>();
+                                String key = "", value = "";
+                                List<String> list = Arrays.asList(projectInfo4.var_00, projectInfo4.var_01, projectInfo4.var_02,
+                                        projectInfo4.var_03, projectInfo4.var_04,projectInfo4.var_05, projectInfo4.var_06,projectInfo4.var_07,
+                                        projectInfo4.var_08,projectInfo4.var_09,projectInfo4.var_10,projectInfo4.var_11,projectInfo4.var_12,
+                                        projectInfo4.var_13,projectInfo4.var_14,projectInfo4.var_15,projectInfo4.var_16,projectInfo4.var_17,
+                                        projectInfo4.var_18,projectInfo4.var_19,projectInfo4.var_20);
+                                for (String str : list) {
+                                    if ( null != str && str.contains("@@")) {
+                                        key = str.substring(0, str.indexOf("@@"));
+                                        if (str.length() > str.indexOf("@@")+2) {
+                                            value = str.substring(str.indexOf("@@")+2);
+                                        }
+                                        Global.patrolDetails.put(key,value);
+                                    }
+                                }
+
+                                if (null != listView) {
+                                    ManualInspectBasicInfoAdapter adapter = new ManualInspectBasicInfoAdapter(
+                                            getContext(), R.layout.fragment_listview_item, new ArrayList<String>(Global.patrolDetails.keySet()));
+                                    listView.setAdapter(adapter);
+                                }
+                            }
+                        });
+                    }
 //                if ( ! list.isEmpty() ) {
 //                    runOnUiThread(new Runnable() {
 //                        @Override

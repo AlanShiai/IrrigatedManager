@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.ashi.irrigatedmanager.R;
+import com.example.ashi.irrigatedmanager.util.Global;
 
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class ManualInspectBasicInfoAdapter extends ArrayAdapter<String> {
             viewHolder = (ManualInspectBasicInfoAdapter.ViewHolder) view.getTag(); // 重新获取ViewHolder
         }
         viewHolder.keyText.setText(infoKey);
-        viewHolder.valueText.setText(ManualInspectBasicInfo.getInfo().get(infoKey));
+        viewHolder.valueText.setText(Global.patrolDetails.get(infoKey));
         return view;
     }
 

@@ -98,11 +98,9 @@ public class Level2_3_projectInfo4 extends AppCompatActivity {
                                 }
                             }
 
-
                             if (null != listView) {
                                 ProjectInfo4Adapter adapter = new ProjectInfo4Adapter(
                                         Level2_3_projectInfo4.this, R.layout.fragment_listview_item, new ArrayList<String>(Global.projectDetails.keySet()));
-                                listView = (ListView) findViewById(R.id.project_info_list);
                                 listView.setAdapter(adapter);
                             }
                         }

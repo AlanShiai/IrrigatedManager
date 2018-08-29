@@ -19,5 +19,10 @@ public class Global {
     public static String projectInfoSubtype = "1";
     public static HashMap<String,String> projectDetails = new HashMap<>();
 
+    // patrol
+    public static String patrolType = "channel";
+    public static String patrolId = "62c59e22820b41e094fa17788df11b66";
+    public static HashMap<String,String> patrolDetails = new HashMap<>();
+
     public static List<Abnormal> abnormalList = new ArrayList<>();
 }

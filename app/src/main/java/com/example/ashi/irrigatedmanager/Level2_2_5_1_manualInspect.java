@@ -15,6 +15,7 @@ import com.example.ashi.irrigatedmanager.level2_2_3.InspectDetailInfoAdpter;
 import com.example.ashi.irrigatedmanager.level2_5.ManualInspectItem;
 import com.example.ashi.irrigatedmanager.level2_5.ManualInspectItemAdapter;
 import com.example.ashi.irrigatedmanager.util.Api;
+import com.example.ashi.irrigatedmanager.util.Global;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
 import com.example.ashi.irrigatedmanager.util.Utility;
 
@@ -53,6 +54,8 @@ public class Level2_2_5_1_manualInspect extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Global.patrolId = dataList.get(position).goalId;
+                Global.patrolType = dataList.get(position).type;
                 Intent intent = new Intent(Level2_2_5_1_manualInspect.this, Level2_2_5_2_manualInspect.class);
                 startActivity(intent);
             }
@@ -82,6 +85,8 @@ public class Level2_2_5_1_manualInspect extends AppCompatActivity {
                         @Override
                         public void run() {
                             if ( null != listView ) {
+                                dataList.clear();
+                                dataList.addAll(list);
                                 ManualInspectItemAdapter adapter = new ManualInspectItemAdapter(
                                         Level2_2_5_1_manualInspect.this, R.layout.manual_inspect, list);
                                 listView.setAdapter(adapter);
