@@ -19,8 +19,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -91,14 +91,13 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
 
         setContentView(R.layout.activity_level2_2_5_3_manual_inspect);
 
-        TextView normal_exception_info = (TextView) findViewById(R.id.normal_exception_info);
-        normal_exception_info.setText("\n在 民有一干渠成安段 发现异常\n"
-                + "堤坝：\n"
-                + "\t检查渠道是否被损坏，堤坝是否决堤。\n"
-                + "渠底：\n"
-                + "\t有明显影响输水的水藻、杂草等杂物。\n"
-                + "\t有向渠道内排放污水、废液，倾倒工业废渣、垃圾等废弃物现象。"
-        );
+        ImageView located = (ImageView) findViewById(R.id.located);
+        located.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                requestLocation();
+            }
+        });
 
         ImageView takePhoto = (ImageView) findViewById(R.id.take_photo);
         Button chooseFromAlbum = (Button) findViewById(R.id.choose_from_album);
@@ -121,10 +120,14 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
                 } else {
                     imageUri = FileProvider.getUriForFile(Level2_2_5_3_manualInspect.this, "com.example.ashi.irrigatedmanager.fileprovider", outputImage);
                 }
-                // 启动相机程序
-                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                startActivityForResult(intent, TAKE_PHOTO);
+                if (ContextCompat.checkSelfPermission(Level2_2_5_3_manualInspect.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(Level2_2_5_3_manualInspect.this, new String[]{Manifest.permission.CAMERA}, 1);
+                } else {
+                    // 启动相机程序
+                    Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                    startActivityForResult(intent, TAKE_PHOTO);
+                }
             }
         });
         chooseFromAlbum.setOnClickListener(new View.OnClickListener() {
@@ -338,7 +341,7 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
         switch (requestCode) {
             case 1:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    openAlbum();
+//                    openAlbum();
                     requestLocation();
                 } else {
                     Toast.makeText(this, "You denied the permission", Toast.LENGTH_SHORT).show();
@@ -460,6 +463,7 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
                         currentPosition.append("NetWork");
                     }
                     positionText.setText(currentPosition);
+                    showText(currentPosition.toString());
                 }
             });
         }
