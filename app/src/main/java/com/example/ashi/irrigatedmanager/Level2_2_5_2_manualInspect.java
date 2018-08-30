@@ -322,6 +322,14 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
                                     }
                                 }
 
+                                if (Global.patrolDetails.keySet().contains("图片")) {
+                                    String picture = Global.patrolDetails.get("图片");
+                                    Global.patrolDetails.remove("图片");
+                                    if (picture != null && !picture.trim().equals("")) {
+                                        Global.patrolDetails.put("图片", picture);
+                                    }
+                                }
+
                                 if (null != listView) {
                                     ManualInspectBasicInfoAdapter adapter = new ManualInspectBasicInfoAdapter(
                                             getContext(), R.layout.fragment_listview_item, new ArrayList<String>(Global.patrolDetails.keySet()));
