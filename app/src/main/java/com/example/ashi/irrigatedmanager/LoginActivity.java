@@ -36,6 +36,7 @@ import android.widget.Toast;
 import com.example.ashi.irrigatedmanager.gson.User;
 import com.example.ashi.irrigatedmanager.level2_6.ProjectInfo3Adpter;
 import com.example.ashi.irrigatedmanager.util.Api;
+import com.example.ashi.irrigatedmanager.util.Global;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
 import com.example.ashi.irrigatedmanager.util.Utility;
 
@@ -342,6 +343,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            Global.userId = user.id;
                             onPostExecute(isLoginSuccess);
                         }
                     });

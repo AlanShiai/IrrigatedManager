@@ -12,6 +12,8 @@ import java.util.List;
 
 public class Global {
 
+    public static String userId = "1";
+
     public static boolean isExceptionFound = false;
     public static String exceptionMsg = "";
 
