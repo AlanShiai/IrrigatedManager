@@ -47,10 +47,10 @@ public class Level2_3_projectInfo4 extends AppCompatActivity {
         }
         setContentView(R.layout.activity_level2_3_project_info4);
 
-        ManualInspectBasicInfoAdapter adapter = new ManualInspectBasicInfoAdapter(
-                Level2_3_projectInfo4.this, R.layout.fragment_listview_item, new ArrayList<String>(ManualInspectBasicInfo.getInfo().keySet()));
         listView = (ListView) findViewById(R.id.project_info_list);
-        listView.setAdapter(adapter);
+//        ManualInspectBasicInfoAdapter adapter = new ManualInspectBasicInfoAdapter(
+//                Level2_3_projectInfo4.this, R.layout.fragment_listview_item, new ArrayList<String>(ManualInspectBasicInfo.getInfo().keySet()));
+//        listView.setAdapter(adapter);
 
         Button backButton = (Button) findViewById(R.id.back_button);
         backButton.setOnClickListener(new View.OnClickListener() {
