@@ -46,10 +46,10 @@ public class Level2_2_5_1_manualInspect extends AppCompatActivity {
 
         initData();
 
-        ManualInspectItemAdapter adapter = new ManualInspectItemAdapter(
-                Level2_2_5_1_manualInspect.this, R.layout.manual_inspect, dataList);
         listView = (ListView) findViewById(R.id.level_2_2_5_1_inspect_details);
-        listView.setAdapter(adapter);
+//        ManualInspectItemAdapter adapter = new ManualInspectItemAdapter(
+//                Level2_2_5_1_manualInspect.this, R.layout.manual_inspect, dataList);
+//        listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
