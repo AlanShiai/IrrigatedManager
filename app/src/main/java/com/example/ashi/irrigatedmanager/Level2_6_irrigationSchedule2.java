@@ -35,9 +35,9 @@ public class Level2_6_irrigationSchedule2 extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.level_2_6_irrigation_schedule);
         initProjectInfoList();
-        IrrigationScheduleInfoAdpter adapter = new IrrigationScheduleInfoAdpter(
-                Level2_6_irrigationSchedule2.this, R.layout.irrigation_schedule, projectInfoList);
-        listView.setAdapter(adapter);
+//        IrrigationScheduleInfoAdpter adapter = new IrrigationScheduleInfoAdpter(
+//                Level2_6_irrigationSchedule2.this, R.layout.irrigation_schedule, projectInfoList);
+//        listView.setAdapter(adapter);
 
         addListernerForBackButton();
         findViewById(R.id.select).setOnClickListener(new View.OnClickListener() {
