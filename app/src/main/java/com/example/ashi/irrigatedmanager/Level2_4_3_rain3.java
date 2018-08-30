@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
@@ -12,13 +13,26 @@ import com.example.ashi.irrigatedmanager.level2_4.Rain;
 import com.example.ashi.irrigatedmanager.level2_4.RainAdapter;
 import com.example.ashi.irrigatedmanager.level2_4.RainDetail;
 import com.example.ashi.irrigatedmanager.level2_4.RainDetailAdapter;
+import com.example.ashi.irrigatedmanager.level2_4.RainDetailData;
+import com.example.ashi.irrigatedmanager.util.Api;
+import com.example.ashi.irrigatedmanager.util.HttpUtil;
+import com.example.ashi.irrigatedmanager.util.Utility;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class Level2_4_3_rain3 extends AppCompatActivity {
 
     private List<RainDetail> dataList = new ArrayList<RainDetail>();
+
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +45,81 @@ public class Level2_4_3_rain3 extends AppCompatActivity {
         }
         setContentView(R.layout.activity_level2_4_3_rain3);
 
-        initData();
-        RainDetailAdapter adapter = new RainDetailAdapter(
-                Level2_4_3_rain3.this, R.layout.rain_detail_item, dataList);
-        ListView listView = (ListView) findViewById(R.id.level_2_4_3_rain_list);
-        listView.setAdapter(adapter);
+//        initData();
+        listView = (ListView) findViewById(R.id.level_2_4_3_rain_list);
+
+//        RainDetailAdapter adapter = new RainDetailAdapter(
+//                Level2_4_3_rain3.this, R.layout.rain_detail_item, dataList);
+//        listView.setAdapter(adapter);
 
         addListernerForBackButton();
+
+        getDataFromServerAndUpdateView();
+    }
+
+    private void getDataFromServerAndUpdateView() {
+        String url = Api.API_06_getRainList;
+        HttpUtil.sendOkHttpRequest(url, new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responseText = response.body().string();
+                final List<RainDetailData> list = Utility.handleApi06getRainListResponse(responseText);
+                Log.d("aijun getRainList", responseText+"");
+                Log.d("aijun getRainList", list+"");
+                if ( null != list && ! list.isEmpty() ) {
+                    updateData(list);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if ( null != listView ) {
+                                RainDetailAdapter adapter = new RainDetailAdapter(
+                                        Level2_4_3_rain3.this, R.layout.rain_detail_item, dataList);
+                                listView.setAdapter(adapter);
+                            }
+                        }
+                    });
+                }
+            }
+
+            public void updateData(List<RainDetailData> list) {
+                dataList.clear();
+                HashMap<String, String> map = new HashMap<String, String>();
+                for (RainDetailData rainDetailData : list) {
+                    map.put(rainDetailData.time, rainDetailData.rain_data);
+                }
+
+                int lastDay = getCurrentMonthLastDay();
+                int halfDays = lastDay/2;
+                if (lastDay % 2 != 0) {
+                    halfDays = lastDay/2 + 1;
+                } else {
+                    halfDays = lastDay/2;
+                }
+                String day1, rain1, day2, rain2;
+                for (int i = 1; i <= lastDay/2 ; i++ ) {
+                    day1=i+""; rain1="0"; day2=halfDays+i+""; rain2="0";
+                    if(map.containsKey(day1)) {
+                        rain1 = map.get(day1);
+                    }
+                    if(map.containsKey(day2)) {
+                        rain2 = map.get(day2);
+                    }
+                    dataList.add(new RainDetail(day1, rain1, day2, rain2));
+                }
+                if (lastDay % 2 != 0) {
+                    day1=lastDay/2+1+""; rain1="0";
+                    if(map.containsKey(day1)) {
+                        rain1 = map.get(day1);
+                    }
+                    dataList.add(new RainDetail(day1, rain1, "-", "-"));
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     private void addListernerForBackButton() {
@@ -52,20 +134,42 @@ public class Level2_4_3_rain3 extends AppCompatActivity {
     }
 
     private void initData() {
-        dataList.add(new RainDetail("1", "0", "16", "0"));
-        dataList.add(new RainDetail("2", "13.2", "17", "0"));
-        dataList.add(new RainDetail("3", "0", "18", "0"));
-        dataList.add(new RainDetail("4", "0", "19", "0"));
-        dataList.add(new RainDetail("5", "0", "20", "0.6"));
-        dataList.add(new RainDetail("6", "0", "21", "0"));
-        dataList.add(new RainDetail("7", "0", "22", "0"));
-        dataList.add(new RainDetail("8", "0", "23", "0"));
-        dataList.add(new RainDetail("9", "0", "24", "0"));
-        dataList.add(new RainDetail("10", "0", "25", "0"));
-        dataList.add(new RainDetail("11", "0", "26", "0"));
-        dataList.add(new RainDetail("12", "0", "27", "0"));
-        dataList.add(new RainDetail("13", "0", "28", "0"));
-        dataList.add(new RainDetail("14", "0", "29", "0"));
-        dataList.add(new RainDetail("15", "0", "30", "0"));
+        int lastDay = getCurrentMonthLastDay();
+        int halfDays = lastDay/2;
+        if (lastDay % 2 != 0) {
+            halfDays = lastDay/2 + 1;
+        } else {
+            halfDays = lastDay/2;
+        }
+        for (int i = 1; i <= lastDay/2 ; i++ ) {
+            dataList.add(new RainDetail(i+"", "0", halfDays+i+"", "0"));
+        }
+        if (lastDay % 2 != 0) {
+            dataList.add(new RainDetail(lastDay/2+1+"", "0", "-", "-"));
+        }
+    }
+
+    /**
+     * 取得当月天数
+     * */
+    public static int getCurrentMonthLastDay() {
+        Calendar a = Calendar.getInstance();
+        a.set(Calendar.DATE, 1);//把日期设置为当月第一天
+        a.roll(Calendar.DATE, -1);//日期回滚一天，也就是最后一天
+        int maxDate = a.get(Calendar.DATE);
+        return maxDate;
+    }
+
+    /**
+     * 得到指定月的天数
+     * */
+    public static int getMonthLastDay(int year, int month) {
+        Calendar a = Calendar.getInstance();
+        a.set(Calendar.YEAR, year);
+        a.set(Calendar.MONTH, month - 1);
+        a.set(Calendar.DATE, 1);//把日期设置为当月第一天
+        a.roll(Calendar.DATE, -1);//日期回滚一天，也就是最后一天
+        int maxDate = a.get(Calendar.DATE);
+        return maxDate;
     }
 }
