@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.ashi.irrigatedmanager.gson.Abnormal;
 import com.example.ashi.irrigatedmanager.gson.AbnormalAdpter;
+import com.example.ashi.irrigatedmanager.gson.ScanObject;
 import com.example.ashi.irrigatedmanager.gson.TotalCount;
 import com.example.ashi.irrigatedmanager.level2_2_3.DrawYearMonthData;
 import com.acker.simplezxing.activity.CaptureActivity;
@@ -261,9 +262,17 @@ public class Level2_2_projectInspection2 extends AppCompatActivity {
                         String result = data.getStringExtra(CaptureActivity.EXTRA_SCAN_RESULT);
                         Log.d("aijun scan", result);
                         if (result.contains("projectType")) {
-                            Intent intent = new Intent(Level2_2_projectInspection2.this, Level2_2_5_2_manualInspect.class);
-                            startActivity(intent);
-                            finish();
+                            ScanObject scanObject = Utility.handleScanResponse(result);
+                            if (scanObject.projectId != null && !scanObject.projectId.trim().equals("")
+                                    && scanObject.projectType != null && !scanObject.projectType.trim().equals("")) {
+                                Global.patrolId = scanObject.projectId;
+                                Global.patrolType = scanObject.projectType;
+                                Intent intent = new Intent(Level2_2_projectInspection2.this, Level2_2_5_3_manualInspect.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                showText("非巡检内容");
+                            }
                         } else {
 //                        showText(data.getStringExtra(CaptureActivity.EXTRA_SCAN_RESULT));
                             showText("非巡检内容");

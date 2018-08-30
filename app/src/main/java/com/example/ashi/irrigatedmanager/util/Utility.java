@@ -4,6 +4,7 @@ import com.example.ashi.irrigatedmanager.IrrigationScheduleInfo;
 import com.example.ashi.irrigatedmanager.gson.Abnormal;
 import com.example.ashi.irrigatedmanager.gson.HttpResult;
 import com.example.ashi.irrigatedmanager.gson.InspectNote;
+import com.example.ashi.irrigatedmanager.gson.ScanObject;
 import com.example.ashi.irrigatedmanager.gson.TotalCount;
 import com.example.ashi.irrigatedmanager.gson.User;
 import com.example.ashi.irrigatedmanager.level2_2_3.InspectDetailInfo;
@@ -30,6 +31,15 @@ import java.util.List;
  */
 
 public class Utility {
+
+    public static ScanObject handleScanResponse(String response) {
+        try {
+            return new Gson().fromJson(response, ScanObject.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public static HttpResult handleNormalFormResponse(String response) {
         try {
