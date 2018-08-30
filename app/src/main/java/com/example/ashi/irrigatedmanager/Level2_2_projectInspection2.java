@@ -267,7 +267,7 @@ public class Level2_2_projectInspection2 extends AppCompatActivity {
                                     && scanObject.projectType != null && !scanObject.projectType.trim().equals("")) {
                                 Global.patrolId = scanObject.projectId;
                                 Global.patrolType = scanObject.projectType;
-                                Intent intent = new Intent(Level2_2_projectInspection2.this, Level2_2_5_3_manualInspect.class);
+                                Intent intent = new Intent(Level2_2_projectInspection2.this, Level2_2_5_2_manualInspect.class);
                                 startActivity(intent);
                                 finish();
                             } else {
