@@ -45,9 +45,9 @@ public class Level2_3_projectInfo3 extends AppCompatActivity {
         setContentView(R.layout.activity_level2_3_project_info3);
 
         listView = (ListView) findViewById(R.id.project_info_list);
-        initProjectInfoList();
-        ProjectInfo3Adpter adapter = new ProjectInfo3Adpter(Level2_3_projectInfo3.this, R.layout.project_item_3, projectInfoList);
-        listView.setAdapter(adapter);
+//        initProjectInfoList();
+//        ProjectInfo3Adpter adapter = new ProjectInfo3Adpter(Level2_3_projectInfo3.this, R.layout.project_item_3, projectInfoList);
+//        listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
