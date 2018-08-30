@@ -74,7 +74,7 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        initData();
+//        initData();
 
         findViewById(R.id.leve1_2_5_back).setOnClickListener(new View.OnClickListener() {
             @Override
