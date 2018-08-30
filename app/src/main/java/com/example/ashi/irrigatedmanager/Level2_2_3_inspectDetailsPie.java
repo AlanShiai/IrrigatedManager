@@ -46,7 +46,7 @@ public class Level2_2_3_inspectDetailsPie extends AppCompatActivity {
         }
         setContentView(R.layout.activity_level2_2_3_inspect_details_pie);
 
-        initData();
+//        initData();
 
 //        LinearLayout ll_body = (LinearLayout) findViewById(R.id.inspect_detail_pie);
 //        DrawColumnAndPie view = new DrawColumnAndPie(getApplicationContext());

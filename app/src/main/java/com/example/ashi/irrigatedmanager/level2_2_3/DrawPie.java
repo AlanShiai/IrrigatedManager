@@ -216,7 +216,6 @@ public class DrawPie extends View {
         str_width = getStringWidth(str);
         canvas.drawText(str, pieRectF.centerX() - str_width / 2, pieRectF.centerY() - 30, mPaint);
 
-
         mPaint.setTextSize(mDensity * 12);
         mPaint.setTypeface(Typeface.DEFAULT);
 
