@@ -30,4 +30,6 @@ public class Global {
     public static List<Abnormal> abnormalList = new ArrayList<>();
 
     public static String rain_name = "柳林总雨量";
+
+    public static int irrigation_turn = 1;
 }

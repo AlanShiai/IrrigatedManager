@@ -7,10 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.ashi.irrigatedmanager.util.Api;
+import com.example.ashi.irrigatedmanager.util.Global;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
 import com.example.ashi.irrigatedmanager.util.Utility;
 
@@ -28,6 +30,8 @@ public class Level2_6_irrigationSchedule2 extends AppCompatActivity {
 
     ListView listView;
 
+    Button selectButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +44,8 @@ public class Level2_6_irrigationSchedule2 extends AppCompatActivity {
 //        listView.setAdapter(adapter);
 
         addListernerForBackButton();
-        findViewById(R.id.select).setOnClickListener(new View.OnClickListener() {
+        selectButton = (Button) findViewById(R.id.select);
+        selectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showSingleChoiceDialog();
@@ -51,14 +56,16 @@ public class Level2_6_irrigationSchedule2 extends AppCompatActivity {
     }
 
     private void getDataFromServerAndUpdateListView() {
-        String url = Api.API_19_queryIrrigationSchedule;
+        // "http://www.boze-tech.com/zfh_manager/a/app/project/queryIrrigationSchedule?userId="+ Global.userId + "&year=2018&turn=1";
+        String url = Api.API_19_queryIrrigationSchedule + "&turn=" + Global.irrigation_turn;
+        Log.d("aijun, irrigation", url);
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 final String responseText = response.body().string();
                 final List<IrrigationScheduleInfo> list = Utility.handleApi19queryIrrigationScheduleResponse(responseText);
                 Log.d("aijun IrrigationSched", list+"");
-                if ( ! list.isEmpty() ) {
+                if ( null != list ) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -79,22 +86,33 @@ public class Level2_6_irrigationSchedule2 extends AppCompatActivity {
         });
     }
 
+    int newIndex;
+    int selectIndex;
     private void showSingleChoiceDialog() {
+        selectIndex = Global.irrigation_turn - 1;
+        newIndex = Global.irrigation_turn - 1;
+
         final String[] items = new String[]{"第一轮", "第二轮", "第三轮", "第四轮", "第五轮", "第六轮", "第七轮", "第八轮", "第九轮", "第十轮",};
         AlertDialog.Builder builder = new AlertDialog.Builder(Level2_6_irrigationSchedule2.this);
         builder.setTitle("选择对话框");
         //千万不要加这句，不然列表显示不出来
 //        builder.setMessage("这是一个简单的列表对话框");
         builder.setIcon(R.mipmap.launcher);
-        builder.setSingleChoiceItems(items, 1, new DialogInterface.OnClickListener() {
+        builder.setSingleChoiceItems(items, selectIndex, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                newIndex = which;
                 showText(items[which]);
             }
         });
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                if(Global.irrigation_turn != newIndex + 1) {
+                    selectButton.setText(items[newIndex]);
+                    Global.irrigation_turn = newIndex + 1;
+                    getDataFromServerAndUpdateListView();
+                }
                 showText("确定");
             }
         }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
