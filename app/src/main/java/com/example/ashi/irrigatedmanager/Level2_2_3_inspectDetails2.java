@@ -43,12 +43,12 @@ public class Level2_2_3_inspectDetails2 extends AppCompatActivity {
         }
         setContentView(R.layout.activity_level2_2_3_inspect_details2);
 
-        initData();
-
-        InspectDetailInfoAdpter adapter = new InspectDetailInfoAdpter(
-                Level2_2_3_inspectDetails2.this, R.layout.inspect_details, dataList);
         listView = (ListView) findViewById(R.id.level_2_2_3_inspect_details);
-        listView.setAdapter(adapter);
+
+//        initData();
+//        InspectDetailInfoAdpter adapter = new InspectDetailInfoAdpter(
+//                Level2_2_3_inspectDetails2.this, R.layout.inspect_details, dataList);
+//        listView.setAdapter(adapter);
 
         findViewById(R.id.leve1_2_1_back).setOnClickListener(new View.OnClickListener() {
             @Override
