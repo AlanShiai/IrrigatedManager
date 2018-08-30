@@ -318,6 +318,7 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
                                 for (String str : list) {
                                     if ( null != str && str.contains("@@")) {
                                         key = str.substring(0, str.indexOf("@@"));
+                                        value = "";
                                         if (str.length() > str.indexOf("@@")+2) {
                                             value = str.substring(str.indexOf("@@")+2);
                                         }
