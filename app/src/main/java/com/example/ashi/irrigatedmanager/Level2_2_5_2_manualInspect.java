@@ -1,5 +1,6 @@
 package com.example.ashi.irrigatedmanager;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -25,6 +26,7 @@ import com.example.ashi.irrigatedmanager.level2_5.ManualInspectBasicInfo;
 import com.example.ashi.irrigatedmanager.level2_5.ManualInspectBasicInfoAdapter;
 import com.example.ashi.irrigatedmanager.level2_5.ManualInspectItem2;
 import com.example.ashi.irrigatedmanager.level2_5.ManualInspectItemAdapter;
+import com.example.ashi.irrigatedmanager.level2_5.PatrolItem;
 import com.example.ashi.irrigatedmanager.level2_6.ProjectInfo4;
 import com.example.ashi.irrigatedmanager.level2_6.ProjectInfo4Adapter;
 import com.example.ashi.irrigatedmanager.util.Api;
@@ -35,6 +37,7 @@ import com.example.ashi.irrigatedmanager.util.Utility;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -148,11 +151,13 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
      */
     public static class PlaceholderFragment1 extends Fragment {
 
+        public LinearLayout layout;
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_my_tab, container, false);
-            LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.tab1_layout);
+            layout = (LinearLayout) rootView.findViewById(R.id.tab1_layout);
             layout.removeAllViews();
 
             int index = 1;
@@ -182,25 +187,74 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
         }
 
         private void getDataFromServerAndUpdateListView() {
-            String url = Api.API_21_patrolItem;
+            // "http://www.boze-tech.com/zfh_manager/a/app/patrol/patrolItem?type=channel";
+            String url = Api.API_21_patrolItem + "type=" + Global.patrolType;
+            Log.d("aijun patrolItem", url+"");
             HttpUtil.sendOkHttpRequest(url, new Callback() {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     final String responseText = response.body().string();
-//                final List<InspectNote> list = Utility.handleApi20patrolResultResponse(responseText);
+                    final List<PatrolItem> list = Utility.handleApi21patrolItemResponse(responseText);
                     Log.d("aijun patrolItem", responseText+"");
-//                if ( ! list.isEmpty() ) {
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            if ( null != listView ) {
-//                                IrrigationScheduleInfoAdpter adapter = new IrrigationScheduleInfoAdpter(
-//                                        Level2_6_irrigationSchedule2.this, R.layout.irrigation_schedule, list);
-//                                listView.setAdapter(adapter);
-//                            }
-//                        }
-//                    });
-//                }
+                    Log.d("aijun patrolItem", list.size()+"");
+
+                    if ( ! list.isEmpty() ) {
+                        updateDataList(list);
+                        Log.d("aijun patrolItem 2", dataList+"");
+                        Log.d("aijun patrolItem 2", dataList.size()+"");
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if ( null != layout ) {
+                                    layout.removeAllViews();
+
+                                    int index = 1;
+                                    for (ManualInspectItem2 item : dataList) {
+                                        if ( ! item.getItems().isEmpty()) {
+                                            View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_base_info,
+                                                    layout, false);
+                                            TextView text = (TextView) view.findViewById(R.id.fragment_base_info);
+                                            text.setText(index + ". " +item.getName());
+                                            layout.addView(view);
+
+                                            for(String subItem : item.getItems()) {
+                                                View view2 = LayoutInflater.from(getContext()).inflate(R.layout.fragment_base_info2,
+                                                        layout, false);
+                                                CheckBox checkBox = (CheckBox) view2.findViewById(R.id.checkBox);
+                                                checkBoxList.add(checkBox);
+                                                checkBox.setText(subItem);
+                                                layout.addView(view2);
+                                            }
+                                        }
+                                        index ++;
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
+
+                private void updateDataList(List<PatrolItem> list) {
+                    dataList = new ArrayList<ManualInspectItem2>();
+                    ManualInspectItem2 item;
+                    Iterator<PatrolItem> iterator = list.iterator();
+
+                    List<String> mainPositions = new ArrayList<String>();
+                    for(PatrolItem patrolItem : list) {
+                        if ( ! mainPositions.contains(patrolItem.mainPosition) ) {
+                            mainPositions.add(patrolItem.mainPosition);
+                        }
+                    }
+
+                    for(String mainPosition : mainPositions) {
+                        item = new ManualInspectItem2(mainPosition);
+                        dataList.add(item);
+                        for(PatrolItem patrolItem : list) {
+                            if ( mainPosition.equals(patrolItem.mainPosition) ) {
+                                item.getItems().add(patrolItem.contents);
+                            }
+                        }
+                    }
                 }
 
                 @Override
@@ -276,18 +330,6 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
                             }
                         });
                     }
-//                if ( ! list.isEmpty() ) {
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            if ( null != listView ) {
-//                                IrrigationScheduleInfoAdpter adapter = new IrrigationScheduleInfoAdpter(
-//                                        Level2_6_irrigationSchedule2.this, R.layout.irrigation_schedule, list);
-//                                listView.setAdapter(adapter);
-//                            }
-//                        }
-//                    });
-//                }
                 }
 
                 @Override

@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ManualInspectItem2 {
 
-    private String name;
+    public String name;
 
     private List<String> items = new ArrayList<>();
 

@@ -10,6 +10,7 @@ import com.example.ashi.irrigatedmanager.level2_2_3.InspectDetailInfo;
 import com.example.ashi.irrigatedmanager.level2_4.Rain;
 import com.example.ashi.irrigatedmanager.level2_4.SluiceInfo;
 import com.example.ashi.irrigatedmanager.level2_5.ManualInspectItem;
+import com.example.ashi.irrigatedmanager.level2_5.PatrolItem;
 import com.example.ashi.irrigatedmanager.level2_6.ProjectInfo3;
 import com.example.ashi.irrigatedmanager.level2_6.ProjectInfo4;
 import com.example.ashi.irrigatedmanager.level5.Appval;
@@ -132,6 +133,15 @@ public class Utility {
     public static List<InspectNote> handleApi20patrolResultResponse(String response) {
         try {
             return new Gson().fromJson(response, new TypeToken<List<InspectNote>>(){}.getType());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static List<PatrolItem> handleApi21patrolItemResponse(String response) {
+        try {
+            return new Gson().fromJson(response, new TypeToken<List<PatrolItem>>(){}.getType());
         } catch (Exception e) {
             e.printStackTrace();
         }

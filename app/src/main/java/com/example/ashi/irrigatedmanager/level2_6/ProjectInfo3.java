@@ -1,5 +1,7 @@
 package com.example.ashi.irrigatedmanager.level2_6;
 
+import com.example.ashi.irrigatedmanager.util.CreateDate;
+
 /**
  * Created by AShi on 8/17/2018.
  */
@@ -19,17 +21,4 @@ public class ProjectInfo3 {
     public String longitude;
     public String latitude;
     public CreateDate createDate;
-}
-
-class CreateDate {
-    public long nanos;
-    public long time;
-    public long minutes;
-    public long seconds;
-    public long hours;
-    public long month;
-    public long year;
-    public long timezoneOffset;
-    public long day;
-    public long date;
 }
