@@ -91,9 +91,17 @@ public class Level2_3_projectInfo4 extends AppCompatActivity {
                             for (String str : list) {
                                 if ( null != str && str.contains("@@")) {
                                     key = str.substring(0, str.indexOf("@@"));
+                                    value = "";
                                     if (str.length() > str.indexOf("@@")+2) {
                                         value = str.substring(str.indexOf("@@")+2);
                                     }
+                                    if (value.contains("00:00:00")) {
+                                        value = value.replace("00:00:00", "");
+                                    }
+                                    if (value.contains("&mdash;")) {
+                                        value =  value.replace("&mdash;", "--");
+                                    }
+
                                     Global.projectDetails.put(key,value);
                                 }
                             }
