@@ -102,6 +102,8 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
         Global.isExceptionFound = false;
         for (CheckBox checkBox : checkBoxList) {
             if (checkBox.isChecked()) {
+                Log.d("aijun, checked", checkBox.getText().toString());
+                Global.exceptionMsg = checkBox.getText().toString();
                 Global.isExceptionFound = true;
                 return;
             }
@@ -206,6 +208,7 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
                             @Override
                             public void run() {
                                 if ( null != layout ) {
+                                    checkBoxList.clear();
                                     layout.removeAllViews();
 
                                     int index = 1;

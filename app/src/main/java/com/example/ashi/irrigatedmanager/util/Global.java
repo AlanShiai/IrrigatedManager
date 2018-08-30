@@ -13,6 +13,7 @@ import java.util.List;
 public class Global {
 
     public static boolean isExceptionFound = false;
+    public static String exceptionMsg = "";
 
     public static String projectInfoType = "channelHead";
     public static String projectId = "331d737641434a0bb476265b38d9db1c";

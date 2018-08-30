@@ -241,7 +241,8 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
                 // &goalId=8502f69d32304ee6a9aacd99920fdcd7%22%20+%20%22&longitude=116.429489&latitude=39.87182
                 // &images=&itemResults=&createBy=1&contents=%E6%98%AF%E6%98%AF%E6%98%AF&userId=1
                 String url = Api.API_22_patrolSave + "&type=" + Global.patrolType
-                        + "&goalId=" + Global.patrolId + "&contents=" + editText.getText().toString();
+                        + "&goalId=" + Global.patrolId + "&contents=" + editText.getText().toString()
+                        + "&itemResults=" + Global.exceptionMsg;
                 Log.d("aijun, patrolSave", url);
                 HttpUtil.sendOkHttpRequest(url, new Callback() {
                     @Override
@@ -282,7 +283,8 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     String url = Api.API_22_patrolSave + "&type=" + Global.patrolType
-                            + "&goalId=" + Global.patrolId + "&contents=" + editText.getText().toString();
+                            + "&goalId=" + Global.patrolId + "&contents=" + editText.getText().toString()
+                            + "&itemResults=";
                     Log.d("aijun, patrolSave", url);
                     HttpUtil.sendOkHttpRequest(url, new Callback() {
                         @Override
