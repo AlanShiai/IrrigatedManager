@@ -43,10 +43,10 @@ public class Level2_4_3_rain2 extends AppCompatActivity {
         setContentView(R.layout.activity_level2_4_3_rain2);
 
         initData();
-        RainAdapter adapter = new RainAdapter(
-                Level2_4_3_rain2.this, R.layout.rain_item, dataList);
         listView = (ListView) findViewById(R.id.level_2_4_3_rain_list);
-        listView.setAdapter(adapter);
+//        RainAdapter adapter = new RainAdapter(
+//                Level2_4_3_rain2.this, R.layout.rain_item, dataList);
+//        listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
