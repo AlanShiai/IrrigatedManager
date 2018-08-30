@@ -160,26 +160,26 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
             layout = (LinearLayout) rootView.findViewById(R.id.tab1_layout);
             layout.removeAllViews();
 
-            int index = 1;
-            for (ManualInspectItem2 item : dataList) {
-                if ( ! item.getItems().isEmpty()) {
-                    View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_base_info,
-                            layout, false);
-                    TextView text = (TextView) view.findViewById(R.id.fragment_base_info);
-                    text.setText(index + ". " +item.getName());
-                    layout.addView(view);
-
-                    for(String subItem : item.getItems()) {
-                        View view2 = LayoutInflater.from(getContext()).inflate(R.layout.fragment_base_info2,
-                                layout, false);
-                        CheckBox checkBox = (CheckBox) view2.findViewById(R.id.checkBox);
-                        checkBoxList.add(checkBox);
-                        checkBox.setText(subItem);
-                        layout.addView(view2);
-                    }
-                }
-                index ++;
-            }
+//            int index = 1;
+//            for (ManualInspectItem2 item : dataList) {
+//                if ( ! item.getItems().isEmpty()) {
+//                    View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_base_info,
+//                            layout, false);
+//                    TextView text = (TextView) view.findViewById(R.id.fragment_base_info);
+//                    text.setText(index + ". " +item.getName());
+//                    layout.addView(view);
+//
+//                    for(String subItem : item.getItems()) {
+//                        View view2 = LayoutInflater.from(getContext()).inflate(R.layout.fragment_base_info2,
+//                                layout, false);
+//                        CheckBox checkBox = (CheckBox) view2.findViewById(R.id.checkBox);
+//                        checkBoxList.add(checkBox);
+//                        checkBox.setText(subItem);
+//                        layout.addView(view2);
+//                    }
+//                }
+//                index ++;
+//            }
 
             getDataFromServerAndUpdateListView();
 
