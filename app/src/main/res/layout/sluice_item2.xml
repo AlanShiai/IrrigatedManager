@@ -30,6 +30,7 @@
                 android:textSize="16sp"
                 />
             <TextView
+                android:id="@+id/sluice_1"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -64,6 +65,7 @@
                 android:textSize="16sp"
                 />
             <TextView
+                android:id="@+id/sluice_2"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -98,6 +100,7 @@
                 android:textSize="16sp"
                 />
             <TextView
+                android:id="@+id/sluice_3"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -141,6 +144,235 @@
                 android:textSize="16sp"
                 />
             <TextView
+                android:id="@+id/sluice_4"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textColor="#24AAFF"
+                android:gravity="right"
+                android:layout_gravity="center"
+                android:text="0.28"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="米"
+                android:textSize="16sp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_shape"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="闸位5"
+                android:textSize="16sp"
+                />
+            <TextView
+                android:id="@+id/sluice_5"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textColor="#24AAFF"
+                android:gravity="right"
+                android:layout_gravity="center"
+                android:text="1.58"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="米"
+                android:textSize="16sp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_shape"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="闸位6"
+                android:textSize="16sp"
+                />
+            <TextView
+                android:id="@+id/sluice_6"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textColor="#24AAFF"
+                android:gravity="right"
+                android:layout_gravity="center"
+                android:text="0.98"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="米"
+                android:textSize="16sp"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        >
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_shape"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="闸位4"
+                android:textSize="16sp"
+                />
+            <TextView
+                android:id="@+id/sluice_7"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textColor="#24AAFF"
+                android:gravity="right"
+                android:layout_gravity="center"
+                android:text="0.28"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="米"
+                android:textSize="16sp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_shape"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="闸位5"
+                android:textSize="16sp"
+                />
+            <TextView
+                android:id="@+id/sluice_8"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textColor="#24AAFF"
+                android:gravity="right"
+                android:layout_gravity="center"
+                android:text="1.58"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="米"
+                android:textSize="16sp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_shape"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="闸位6"
+                android:textSize="16sp"
+                />
+            <TextView
+                android:id="@+id/sluice_9"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textColor="#24AAFF"
+                android:gravity="right"
+                android:layout_gravity="center"
+                android:text="0.98"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="米"
+                android:textSize="16sp"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        >
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_shape"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="闸位4"
+                android:textSize="16sp"
+                />
+            <TextView
+                android:id="@+id/sluice_10"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -258,6 +490,7 @@
             android:textSize="16sp"
             />
         <TextView
+            android:id="@+id/sluice_before_water"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#24AAFF"
@@ -278,14 +511,17 @@
             android:text="闸后水位："
             android:textSize="16sp"
             />
+
         <TextView
+            android:id="@+id/sluice_after_water"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#24AAFF"
             android:gravity="right"
             android:layout_gravity="center"
             android:text="58.00"
-            />
+             />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

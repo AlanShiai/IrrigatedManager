@@ -48,13 +48,8 @@ public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
         setContentView(R.layout.activity_level2_4_realtime_monitor2);
 
 //        initProjectInfoList();
+        initEnableList();
         createAreaForSluiceListLayout();
-
-        /*
-        ListView listView = (ListView) findViewById(R.id.level_2_4_1_sluice_list);
-        SluiceInfoAdapter adapter = new SluiceInfoAdapter(Level2_4_realtimeMonitor2.this, R.layout.sluice_item1, projectInfoList);
-        listView.setAdapter(adapter);
-        */
 
         addListernerForTopToolbar();
         addListernerForBackButton();
@@ -72,12 +67,14 @@ public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
         getDataFromServerAndUpdateListView3();
     }
 
-    private void createAreaForSluiceListLayout() {
+    private void initEnableList() {
         enableList.clear();
         for (int i = 0 ; i < sluiceInfoList.size(); i++) {
             enableList.add(false);
         }
+    }
 
+    private void createAreaForSluiceListLayout() {
         boolean displayDetails = true;
         LinearLayout layout = (LinearLayout) findViewById(R.id.sluice_list_layout);
         layout.removeAllViews();
@@ -113,6 +110,46 @@ public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
                 ((ImageView) view.findViewById(R.id.show_details)).setImageResource(R.drawable.e8);
                 View view2 = LayoutInflater.from(Level2_4_realtimeMonitor2.this).inflate(R.layout.sluice_item2,
                         layout, false);
+
+                ((TextView) view2.findViewById(R.id.sluice_1)).setText(sluiceInfo.level1);
+                ((TextView) view2.findViewById(R.id.sluice_2)).setText(sluiceInfo.level2);
+                ((TextView) view2.findViewById(R.id.sluice_3)).setText(sluiceInfo.level3);
+                ((TextView) view2.findViewById(R.id.sluice_4)).setText(sluiceInfo.level4);
+                ((TextView) view2.findViewById(R.id.sluice_5)).setText(sluiceInfo.level5);
+                ((TextView) view2.findViewById(R.id.sluice_6)).setText(sluiceInfo.level6);
+                ((TextView) view2.findViewById(R.id.sluice_7)).setText(sluiceInfo.level7);
+                ((TextView) view2.findViewById(R.id.sluice_8)).setText(sluiceInfo.level8);
+                ((TextView) view2.findViewById(R.id.sluice_9)).setText(sluiceInfo.level9);
+                ((TextView) view2.findViewById(R.id.sluice_10)).setText(sluiceInfo.level10);
+                ((TextView) view2.findViewById(R.id.sluice_before_water)).setText("0");
+                ((TextView) view2.findViewById(R.id.sluice_after_water)).setText("0");
+                if (sluiceInfo.waterData != null) {
+                    // "闸前水位:4.39毫米 闸后水位:0.16毫米 "
+                    if(sluiceInfo.waterData.contains("闸前水位:")) {
+                        int len = "闸前水位:".length();
+                        int start = sluiceInfo.waterData.indexOf("闸前水位:");
+                        int end = sluiceInfo.waterData.indexOf("毫米");
+                        try {
+                            String str = sluiceInfo.waterData.substring(start + len, end);
+                            TextView sluice_before_water = (TextView) view2.findViewById(R.id.sluice_before_water);
+                            sluice_before_water.setText(str);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if(sluiceInfo.waterData.contains("闸后水位:")) {
+                        int len = "闸后水位:".length();
+                        int start = sluiceInfo.waterData.indexOf("闸后水位:");
+                        int end = sluiceInfo.waterData.lastIndexOf("毫米");
+                        try {
+                            String str = sluiceInfo.waterData.substring(start+len, end);
+                            TextView sluice_after_water = (TextView) view2.findViewById(R.id.sluice_after_water);
+                            sluice_after_water.setText(str);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
                 layout.addView(view2);
             }
             index ++;
@@ -128,11 +165,14 @@ public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 final String responseText = response.body().string();
-//                String hardcodeString = "[{\"project_name\":\"张庄桥分洪闸位\",\"level9\":\"0.00\",\"level8\":\"0.00\",\"level7\":\"0.00\","
-//                        + "\"project_type\":\"sluice\",\"level6\":\"0.00\",\"level10\":\"0.00\",\"level5\":\"0.00\",\"level4\":\"0.02\",\"id\":\"ad407c9bd9634d0bac800651287a8c1f\",\"level2\":\"0.01\","
-//                        + "\"level3\":\"0.00\",\"time\":\"2018-08-27 17:24:51\",\"level1\":\"0.01\",\"project_id\":null,\"hole\":\"5\"}]";
+//                String hardcodeString = "[{\"project_name\":\"张庄桥分洪闸位\",\"level9\":\"0.00\"," +
+//                        "\"level8\":\"0.00\",\"level7\":\"0.00\",\"project_type\":\"sluice\",\"level6\":\"0.00\"," +
+//                        "\"level10\":\"0.00\",\"level5\":\"0.00\",\"level4\":\"0.02\",\"id\":\"ad407c9bd9634d0bac800651287a8c1f\"," +
+//                        "\"level2\":\"0.01\",\"level3\":\"0.00\",\"time\":\"2018-08-30 15:38:51\",\"level1\":\"0.01\"," +
+//                        "\"project_id\":null,\"waterData\":\"闸前水位:4.39毫米 闸后水位:0.16毫米 \",\"hole\":\"5\"}]";
 //                final List<SluiceInfo> list = Utility.handleApi03SluiceMonitorListResponse(hardcodeString);
                 final List<SluiceInfo> list = Utility.handleApi03SluiceMonitorListResponse(responseText);
+                Log.d("aijun SluiceMonit", responseText+"");
                 Log.d("aijun SluiceMonit", list+"");
                 if ( null != list ) {
                     runOnUiThread(new Runnable() {
@@ -140,6 +180,7 @@ public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
                         public void run() {
                             sluiceInfoList.clear();
                             sluiceInfoList.addAll(list);
+                            initEnableList();
                             createAreaForSluiceListLayout();
                         }
                     });
