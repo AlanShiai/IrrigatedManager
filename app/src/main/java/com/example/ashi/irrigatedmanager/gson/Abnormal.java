@@ -10,7 +10,7 @@ public class Abnormal {
 
     public String monthAbnormalNumber = "0";
     public String yearAbnormalNumber = "0";
-    public String projectLabel;
+    public String projectLabel = "";
     public String yearNumber = "0";
     public String monthNumber = "0";
 

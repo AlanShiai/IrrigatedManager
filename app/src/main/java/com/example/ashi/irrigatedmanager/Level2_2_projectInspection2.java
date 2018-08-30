@@ -13,19 +13,25 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ashi.irrigatedmanager.gson.Abnormal;
+import com.example.ashi.irrigatedmanager.gson.AbnormalAdpter;
 import com.example.ashi.irrigatedmanager.gson.TotalCount;
 import com.example.ashi.irrigatedmanager.level2_2_3.DrawYearMonthData;
 import com.acker.simplezxing.activity.CaptureActivity;
+import com.example.ashi.irrigatedmanager.level2_2_3.InspectDetailInfoAdpter;
 import com.example.ashi.irrigatedmanager.util.Api;
+import com.example.ashi.irrigatedmanager.util.Global;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
 import com.example.ashi.irrigatedmanager.util.Utility;
 
 import org.w3c.dom.Text;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -34,6 +40,8 @@ import okhttp3.Response;
 public class Level2_2_projectInspection2 extends AppCompatActivity {
 
     private static final int REQ_CODE_PERMISSION = 0x1111;
+
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +54,8 @@ public class Level2_2_projectInspection2 extends AppCompatActivity {
         }
         setContentView(R.layout.activity_level2_2_project_inspection2);
 
+        listView = (ListView) findViewById(R.id.list_view);
+
 //        LinearLayout ll_body = (LinearLayout) findViewById(R.id.draw_year_month_data);
 //        DrawYearMonthData view = new DrawYearMonthData(getApplicationContext());
 //        ll_body.addView(view);
@@ -53,10 +63,40 @@ public class Level2_2_projectInspection2 extends AppCompatActivity {
         addListernerForTopToolbar();
         addListernerForBackButton();
         addListernerForBottomToolbar();
+        getDataFromServerAndUpdateTotalCount();
         getDataFromServerAndUpdateListView();
     }
 
     private void getDataFromServerAndUpdateListView() {
+        String url = Api.API_30_patrolInit;
+        HttpUtil.sendOkHttpRequest(url, new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responseText = response.body().string();
+                final List<Abnormal> list = Utility.handleApi30patrolInitResponse(responseText);
+                Log.d("aijun patrolInit", responseText+"");
+                if ( null != list ) {
+                    Global.abnormalList.clear();
+                    Global.abnormalList.addAll(list);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            AbnormalAdpter adapter = new AbnormalAdpter(
+                                    Level2_2_projectInspection2.this, R.layout.item_patrol, list);
+                            listView.setAdapter(adapter);
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void getDataFromServerAndUpdateTotalCount() {
         String url = Api.API_29_queryTotalCount;
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
