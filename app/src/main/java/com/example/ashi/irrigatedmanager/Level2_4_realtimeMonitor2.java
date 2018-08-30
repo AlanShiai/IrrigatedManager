@@ -47,11 +47,7 @@ public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
         }
         setContentView(R.layout.activity_level2_4_realtime_monitor2);
 
-        initProjectInfoList();
-        for (int i = 0 ; i < sluiceInfoList.size(); i++) {
-            enableList.add(false);
-        }
-
+//        initProjectInfoList();
         createAreaForSluiceListLayout();
 
         /*
@@ -77,6 +73,11 @@ public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
     }
 
     private void createAreaForSluiceListLayout() {
+        enableList.clear();
+        for (int i = 0 ; i < sluiceInfoList.size(); i++) {
+            enableList.add(false);
+        }
+
         boolean displayDetails = true;
         LinearLayout layout = (LinearLayout) findViewById(R.id.sluice_list_layout);
         layout.removeAllViews();
