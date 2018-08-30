@@ -98,6 +98,14 @@ public class Level2_3_projectInfo4 extends AppCompatActivity {
                                 }
                             }
 
+                            if (Global.projectDetails.keySet().contains("图片")) {
+                                String picture = Global.projectDetails.get("图片");
+                                Global.projectDetails.remove("图片");
+                                if (picture != null && !picture.trim().equals("")) {
+                                    Global.projectDetails.put("图片", picture);
+                                }
+                            }
+
                             if (null != listView) {
                                 ProjectInfo4Adapter adapter = new ProjectInfo4Adapter(
                                         Level2_3_projectInfo4.this, R.layout.fragment_listview_item, new ArrayList<String>(Global.projectDetails.keySet()));
