@@ -34,17 +34,20 @@ public class RainAdapter extends ArrayAdapter<Rain> {
             view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
             viewHolder = new RainAdapter.ViewHolder();
             viewHolder.name = (TextView) view.findViewById (R.id.rain_name);
+            viewHolder.time = (TextView) view.findViewById (R.id.time);
             view.setTag(viewHolder); // 将ViewHolder存储在View中
         } else {
             view = convertView;
             viewHolder = (RainAdapter.ViewHolder) view.getTag(); // 重新获取ViewHolder
         }
         viewHolder.name.setText(projectInfo.project_name);
+        viewHolder.time.setText(projectInfo.time);
         return view;
     }
 
     class ViewHolder {
         TextView name;
+        TextView time;
     }
 
 }

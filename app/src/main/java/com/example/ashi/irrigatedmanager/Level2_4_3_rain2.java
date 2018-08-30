@@ -42,7 +42,7 @@ public class Level2_4_3_rain2 extends AppCompatActivity {
         }
         setContentView(R.layout.activity_level2_4_3_rain2);
 
-        initData();
+//        initData();
         listView = (ListView) findViewById(R.id.level_2_4_3_rain_list);
 //        RainAdapter adapter = new RainAdapter(
 //                Level2_4_3_rain2.this, R.layout.rain_item, dataList);
@@ -85,6 +85,8 @@ public class Level2_4_3_rain2 extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 final String responseText = response.body().string();
                 final List<Rain> list = Utility.handleApi05RainMonitorListResponse(responseText);
+                Log.d("aijun RainMonitor", responseText+"");
+                Log.d("aijun RainMonitor", list+"");
                 if ( ! list.isEmpty() ) {
                     runOnUiThread(new Runnable() {
                         @Override
