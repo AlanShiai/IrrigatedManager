@@ -74,6 +74,8 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
 
     public LocationClient mLocationClient;
 
+    private EditText editText;
+
     private TextView positionText;
 
 //    private MapView mapView;
@@ -139,6 +141,7 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
     }
 
     private void findViewsById() {
+        editText = (EditText) findViewById(R.id.editText);
         takePhoto = (ImageView) findViewById(R.id.take_photo);
         imageView1 = (ImageView) findViewById(R.id.imageview1);
         imageView2 = (ImageView) findViewById(R.id.imageview2);
@@ -234,7 +237,12 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
         updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String url = Api.API_22_patrolSave;
+                // http://www.boze-tech.com/zfh_manager/a/app/patrol/patrolSave?type=channel
+                // &goalId=8502f69d32304ee6a9aacd99920fdcd7%22%20+%20%22&longitude=116.429489&latitude=39.87182
+                // &images=&itemResults=&createBy=1&contents=%E6%98%AF%E6%98%AF%E6%98%AF&userId=1
+                String url = Api.API_22_patrolSave + "&type=" + Global.patrolType
+                        + "&goalId=" + Global.patrolId + "&contents=" + editText.getText().toString();
+                Log.d("aijun, patrolSave", url);
                 HttpUtil.sendOkHttpRequest(url, new Callback() {
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
@@ -273,7 +281,9 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
             builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    String url = Api.API_22_patrolSave;
+                    String url = Api.API_22_patrolSave + "&type=" + Global.patrolType
+                            + "&goalId=" + Global.patrolId + "&contents=" + editText.getText().toString();
+                    Log.d("aijun, patrolSave", url);
                     HttpUtil.sendOkHttpRequest(url, new Callback() {
                         @Override
                         public void onResponse(Call call, Response response) throws IOException {

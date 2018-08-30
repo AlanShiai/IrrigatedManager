@@ -32,8 +32,8 @@ public interface Api {
     String API_19_queryIrrigationSchedule = "http://www.boze-tech.com/zfh_manager/a/app/project/queryIrrigationSchedule?userId=1&year=2018&turn=1";
     String API_20_patrolResult              = "http://www.boze-tech.com/zfh_manager/a/app/patrol/patrolResult?userId=1&day=2018-07-11&dayType=1&type=&resultType=&status=";
     String API_21_patrolItem                = "http://www.boze-tech.com/zfh_manager/a/app/patrol/patrolItem?";
-    String API_22_patrolSave                = "http://www.boze-tech.com/zfh_manager/a/app/patrol/patrolSave?type=channel&goalId=8502f69d32304ee6a9aacd99920fdcd7" +
-            "&longitude=116.429489&latitude=39.87182&images=&itemResults=&createBy=1&contents=是是是&userId=1";
+    String API_22_patrolSave                = "http://www.boze-tech.com/zfh_manager/a/app/patrol/patrolSave?" +
+            "longitude=116.429489&latitude=39.87182&images=&itemResults=&createBy=1&userId=1";
     String API_23_basicInfo                 = "http://www.boze-tech.com/zfh_manager/a/app/patrol/basicInfo?userId=1";
     String API_24_patrolDetail              = "http://www.boze-tech.com/zfh_manager/a/app/patrol/patrolDetail?id=30136878e084460cad141af485addea2";
     String API_25_officeStatistic           = "http://www.boze-tech.com/zfh_manager/a/app/patrol/officeStatistic?endDate=2018-07-12&startDate=2018-07-11&userId=1&dayType=&office=";
