@@ -25,6 +25,7 @@ import com.example.ashi.irrigatedmanager.util.Utility;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import okhttp3.Call;
@@ -123,6 +124,9 @@ public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
                 ((TextView) view2.findViewById(R.id.sluice_10)).setText(sluiceInfo.level10);
                 ((TextView) view2.findViewById(R.id.sluice_before_water)).setText("0");
                 ((TextView) view2.findViewById(R.id.sluice_after_water)).setText("0");
+
+                setSluiceVisiable(view2, sluiceInfo.hole);
+
                 if (sluiceInfo.waterData != null) {
                     // "闸前水位:4.39毫米 闸后水位:0.16毫米 "
                     if(sluiceInfo.waterData.contains("闸前水位:")) {
@@ -153,6 +157,44 @@ public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
                 layout.addView(view2);
             }
             index ++;
+        }
+    }
+
+    private void setSluiceVisiable(View view2, String hole) {
+        int num = 10;
+        try {
+            num = Integer.parseInt(hole);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if ( num == 0) {
+            view2.findViewById(R.id.sluice_1_2_3_layout).setVisibility(View.GONE);
+            view2.findViewById(R.id.sluice_4_5_6_layout).setVisibility(View.GONE);
+            view2.findViewById(R.id.sluice_7_8_9_layout).setVisibility(View.GONE);
+            view2.findViewById(R.id.sluice_10_11_12_layout).setVisibility(View.GONE);
+        }
+        if ( num == 1 || num == 2 || num == 3) {
+            view2.findViewById(R.id.sluice_4_5_6_layout).setVisibility(View.GONE);
+            view2.findViewById(R.id.sluice_7_8_9_layout).setVisibility(View.GONE);
+            view2.findViewById(R.id.sluice_10_11_12_layout).setVisibility(View.GONE);
+        }
+        if ( num == 4 || num == 5 || num == 6) {
+            view2.findViewById(R.id.sluice_7_8_9_layout).setVisibility(View.GONE);
+            view2.findViewById(R.id.sluice_10_11_12_layout).setVisibility(View.GONE);
+        }
+        if ( num == 7 || num == 8 || num == 9) {
+            view2.findViewById(R.id.sluice_10_11_12_layout).setVisibility(View.GONE);
+        }
+
+        List<Integer> ids = Arrays.asList(
+                R.id.sluice_1_before, R.id.sluice_1, R.id.sluice_1_end, R.id.sluice_2_before, R.id.sluice_2, R.id.sluice_2_end,
+                R.id.sluice_3_before, R.id.sluice_3, R.id.sluice_3_end, R.id.sluice_4_before, R.id.sluice_4, R.id.sluice_4_end,
+                R.id.sluice_5_before, R.id.sluice_5, R.id.sluice_5_end, R.id.sluice_6_before, R.id.sluice_6, R.id.sluice_6_end,
+                R.id.sluice_7_before, R.id.sluice_7, R.id.sluice_7_end, R.id.sluice_8_before, R.id.sluice_8, R.id.sluice_8_end,
+                R.id.sluice_9_before, R.id.sluice_9, R.id.sluice_9_end, R.id.sluice_10_before, R.id.sluice_10, R.id.sluice_10_end
+                );
+        for (int i = num * 3; i < ids.size(); i++) {
+            view2.findViewById(ids.get(i)).setVisibility(View.GONE);
         }
     }
 
