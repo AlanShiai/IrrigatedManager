@@ -15,6 +15,7 @@ import com.example.ashi.irrigatedmanager.level2_4.RainDetail;
 import com.example.ashi.irrigatedmanager.level2_4.RainDetailAdapter;
 import com.example.ashi.irrigatedmanager.level2_4.RainDetailData;
 import com.example.ashi.irrigatedmanager.util.Api;
+import com.example.ashi.irrigatedmanager.util.Global;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
 import com.example.ashi.irrigatedmanager.util.Utility;
 
@@ -58,7 +59,8 @@ public class Level2_4_3_rain3 extends AppCompatActivity {
     }
 
     private void getDataFromServerAndUpdateView() {
-        String url = Api.API_06_getRainList;
+        // "http://www.boze-tech.com/zfh_manager/a/app/login/getRainList?userId=1&name=柳林总雨量";
+        String url = Api.API_06_getRainList + "&name=" + Global.rain_name;
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {

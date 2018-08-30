@@ -26,4 +26,6 @@ public class Global {
     public static HashMap<String,String> patrolDetails = new HashMap<>();
 
     public static List<Abnormal> abnormalList = new ArrayList<>();
+
+    public static String rain_name = "柳林总雨量";
 }

@@ -14,6 +14,7 @@ import com.example.ashi.irrigatedmanager.gson.User;
 import com.example.ashi.irrigatedmanager.level2_4.Rain;
 import com.example.ashi.irrigatedmanager.level2_4.RainAdapter;
 import com.example.ashi.irrigatedmanager.util.Api;
+import com.example.ashi.irrigatedmanager.util.Global;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
 import com.example.ashi.irrigatedmanager.util.Utility;
 
@@ -50,6 +51,8 @@ public class Level2_4_3_rain2 extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Rain rain = dataList.get(position);
+                Global.rain_name = rain.project_name;
                 Intent intent = new Intent(Level2_4_3_rain2.this, Level2_4_3_rain3.class);
                 startActivity(intent);
             }
@@ -92,8 +95,10 @@ public class Level2_4_3_rain2 extends AppCompatActivity {
                         @Override
                         public void run() {
                             if ( null != listView ) {
+                                dataList.clear();
+                                dataList.addAll(list);
                                 RainAdapter adapter = new RainAdapter(
-                                        Level2_4_3_rain2.this, R.layout.rain_item, list);
+                                        Level2_4_3_rain2.this, R.layout.rain_item, dataList);
                                 listView.setAdapter(adapter);
                             }
                         }
