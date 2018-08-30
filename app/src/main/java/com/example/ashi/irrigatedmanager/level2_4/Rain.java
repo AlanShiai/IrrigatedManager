@@ -1,5 +1,6 @@
 package com.example.ashi.irrigatedmanager.level2_4;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,13 +14,17 @@ public class Rain {
     public String id;
     public String time;
     public String project_name;
-    public Map<String,Object> dataDay;
+    public List<RainData> dataDay; // day_rain
     public String project_id;
-    public Map<String,Object> dataMonth;
+    public RainData dataMonth; // month_rain
     public String project_type;
 
     public Rain(String name) {
         this.project_name = name;
     }
+}
 
+class RainData {
+    public float rainData;
+    public String projectName;
 }

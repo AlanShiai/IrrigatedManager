@@ -69,11 +69,12 @@
                     />
 
                 <TextView
+                    android:id="@+id/month_rain"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="right"
                     android:layout_marginRight="5dp"
-                    android:text="102"
+                    android:text="0"
                     android:textColor="#24AAFF"
                     android:textSize="14sp"
                     />
@@ -87,11 +88,12 @@
                     />
 
                 <TextView
+                    android:id="@+id/day_rain"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="right"
                     android:layout_marginRight="5dp"
-                    android:text="20"
+                    android:text="0"
                     android:textColor="#24AAFF"
                     android:textSize="14sp"
                     />

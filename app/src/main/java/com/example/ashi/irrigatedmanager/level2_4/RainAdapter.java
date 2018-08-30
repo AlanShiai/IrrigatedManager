@@ -35,6 +35,8 @@ public class RainAdapter extends ArrayAdapter<Rain> {
             viewHolder = new RainAdapter.ViewHolder();
             viewHolder.name = (TextView) view.findViewById (R.id.rain_name);
             viewHolder.time = (TextView) view.findViewById (R.id.time);
+            viewHolder.day_rain = (TextView) view.findViewById (R.id.day_rain);
+            viewHolder.month_rain = (TextView) view.findViewById (R.id.month_rain);
             view.setTag(viewHolder); // 将ViewHolder存储在View中
         } else {
             view = convertView;
@@ -42,12 +44,20 @@ public class RainAdapter extends ArrayAdapter<Rain> {
         }
         viewHolder.name.setText(projectInfo.project_name);
         viewHolder.time.setText(projectInfo.time);
+        if ( null != projectInfo.dataMonth ) {
+            viewHolder.month_rain.setText(projectInfo.dataMonth.rainData + "");
+        }
+        if ( null != projectInfo.dataDay  && !projectInfo.dataDay.isEmpty()) {
+            viewHolder.day_rain.setText(projectInfo.dataDay.get(0).rainData + "");
+        }
         return view;
     }
 
     class ViewHolder {
         TextView name;
         TextView time;
+        TextView day_rain;
+        TextView month_rain;
     }
 
 }
