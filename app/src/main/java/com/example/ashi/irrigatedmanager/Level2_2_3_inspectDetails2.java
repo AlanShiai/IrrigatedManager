@@ -157,7 +157,7 @@ public class Level2_2_3_inspectDetails2 extends AppCompatActivity {
         builder.setTitle("选择对话框");
         //千万不要加这句，不然列表显示不出来
 //        builder.setMessage("这是一个简单的列表对话框");
-        builder.setIcon(R.mipmap.launcher);
+//        builder.setIcon(R.mipmap.launcher);
         builder.setSingleChoiceItems(itemKeys.toArray(new String[0]), oldSelector, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
