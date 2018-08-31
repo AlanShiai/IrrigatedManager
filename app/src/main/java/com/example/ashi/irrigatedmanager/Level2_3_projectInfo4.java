@@ -91,12 +91,16 @@ public class Level2_3_projectInfo4 extends AppCompatActivity {
                             for (String str : list) {
                                 if ( null != str && str.contains("@@")) {
                                     key = str.substring(0, str.indexOf("@@"));
+                                    if ( Global.projectInfoType.equals("channelHead") && key.equals("建设年代") ) {
+                                        continue;
+                                    }
                                     value = "";
                                     if (str.length() > str.indexOf("@@")+2) {
                                         value = str.substring(str.indexOf("@@")+2);
                                     }
-                                    if (value.contains("00:00:00")) {
-                                        value = value.replace("00:00:00", "");
+                                    int index = value.indexOf("-"), lastIndex = value.lastIndexOf("-");
+                                    if (index != -1 && lastIndex != -1 && index != lastIndex) {
+                                        value = value.substring(0, lastIndex);
                                     }
                                     if (value.contains("&mdash;")) {
                                         value =  value.replace("&mdash;", "--");

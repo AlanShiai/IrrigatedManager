@@ -119,6 +119,7 @@ public class Level2_2_2_inspectNote extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 final String responseText = response.body().string();
                 final List<InspectNote> list = Utility.handleApi20patrolResultResponse(responseText);
+                Log.d("aijun patrolResult", responseText+"");
                 Log.d("aijun patrolResult", list.size()+"");
 //                if ( ! list.isEmpty() ) {
 //                    runOnUiThread(new Runnable() {

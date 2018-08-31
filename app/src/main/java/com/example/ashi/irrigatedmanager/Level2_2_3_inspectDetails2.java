@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ashi.irrigatedmanager.level2_2_3.InspectDetailInfo;
@@ -20,7 +21,10 @@ import com.example.ashi.irrigatedmanager.util.Utility;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -30,7 +34,24 @@ public class Level2_2_3_inspectDetails2 extends AppCompatActivity {
 
     private List<InspectDetailInfo> dataList = new ArrayList<InspectDetailInfo>();
 
+    static List<String> itemKeys = new ArrayList<>();
+
+    final static Map<String, String> items = new LinkedHashMap<>();
+    static {
+        items.put("渠道", "channel");
+        items.put("水闸", "sluice");
+        items.put("涵洞", "culvert");
+        items.put("渡槽", "aqueduct");
+        items.put("桥梁", "bridge");
+        items.put("倒虹吸", "inverted");
+        itemKeys.addAll(items.keySet());
+    }
+    int oldSelector = 0;
+    int newSelector = 0;
+
     ListView listView;
+
+    TextView type_text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,17 +79,22 @@ public class Level2_2_3_inspectDetails2 extends AppCompatActivity {
                 finish();
             }
         });
-        findViewById(R.id.select).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.type_select).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showSingleChoiceDialog();
             }
         });
 
+        type_text = (TextView) findViewById(R.id.type_text);
+        type_text.setText(itemKeys.get(oldSelector));
+
         getDataFromServerAndUpdateListView();
     }
     private void getDataFromServerAndUpdateListView() {
-        String url = Api.API_25_officeStatistic;
+        // "http://www.boze-tech.com/zfh_manager/a/app/patrol/officeStatistic?endDate=2018-07-12&startDate=2018-07-11&userId="+ Global.userId+"&dayType=&office=";
+        String url = Api.API_25_officeStatistic + "&projectType=" + items.get(itemKeys.get(oldSelector));
+        Log.d("aijun officeStatistic", url);
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
@@ -97,21 +123,26 @@ public class Level2_2_3_inspectDetails2 extends AppCompatActivity {
     }
 
     private void showSingleChoiceDialog() {
-        final String[] items = new String[]{"渠首", "闸门", "桥梁",  "渡槽", "涵洞",};
         AlertDialog.Builder builder = new AlertDialog.Builder(Level2_2_3_inspectDetails2.this);
         builder.setTitle("选择对话框");
         //千万不要加这句，不然列表显示不出来
 //        builder.setMessage("这是一个简单的列表对话框");
         builder.setIcon(R.mipmap.launcher);
-        builder.setSingleChoiceItems(items, 1, new DialogInterface.OnClickListener() {
+        builder.setSingleChoiceItems(itemKeys.toArray(new String[0]), oldSelector, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                showText(items[which]);
+                newSelector = which;
+                showText(itemKeys.get(which));
             }
         });
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                if (oldSelector != newSelector) {
+                    oldSelector = newSelector;
+                    type_text.setText(itemKeys.get(oldSelector));
+                    getDataFromServerAndUpdateListView();
+                }
                 showText("确定");
             }
         }).setNegativeButton("取消", new DialogInterface.OnClickListener() {

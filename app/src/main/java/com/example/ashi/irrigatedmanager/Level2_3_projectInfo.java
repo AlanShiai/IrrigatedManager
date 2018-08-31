@@ -139,7 +139,7 @@ public class Level2_3_projectInfo extends AppCompatActivity {
         projectInfoList.add(new ProjectInfo("水库", "reservoir"));
         projectInfoList.add(new ProjectInfo("泵站", "pump"));
         projectInfoList.add(new ProjectInfo("水电站", "waterPower"));
-        projectInfoList.add(new ProjectInfo("枢纽", "boundaries"));
+        projectInfoList.add(new ProjectInfo("枢纽", "hinge"));
         projectInfoList.add(new ProjectInfo("县界", "boundaries"));
         projectInfoList.add(new ProjectInfo("倒虹吸", "inverted"));
         projectInfoList.add(new ProjectInfo("跌水", "waterFall"));
