@@ -35,7 +35,6 @@ public class Level2_2_3_inspectDetails2 extends AppCompatActivity {
     private List<InspectDetailInfo> dataList = new ArrayList<InspectDetailInfo>();
 
     static List<String> itemKeys = new ArrayList<>();
-
     final static Map<String, String> items = new LinkedHashMap<>();
     static {
         items.put("渠道", "channel");
@@ -48,10 +47,30 @@ public class Level2_2_3_inspectDetails2 extends AppCompatActivity {
     }
     int oldSelector = 0;
     int newSelector = 0;
+    TextView type_text;
+
+    static List<String> monthKeys = new ArrayList<>();
+    final static Map<String, String> months = new LinkedHashMap<>();
+    static {
+        months.put("一月", "01");
+        months.put("二月", "02");
+        months.put("三月", "03");
+        months.put("四月", "04");
+        months.put("五月", "05");
+        months.put("六月", "06");
+        months.put("七月", "07");
+        months.put("八月", "08");
+        months.put("九月", "09");
+        months.put("十月", "10");
+        months.put("十一月", "11");
+        months.put("十二月", "12");
+        monthKeys.addAll(months.keySet());
+    }
+    int monthOldSelector = 0;
+    int monthNewSelector = 0;
+    TextView month_text;
 
     ListView listView;
-
-    TextView type_text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,15 +104,26 @@ public class Level2_2_3_inspectDetails2 extends AppCompatActivity {
                 showSingleChoiceDialog();
             }
         });
+        findViewById(R.id.month_select).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMonthSingleChoiceDialog();
+            }
+        });
 
         type_text = (TextView) findViewById(R.id.type_text);
         type_text.setText(itemKeys.get(oldSelector));
 
+        month_text = (TextView) findViewById(R.id.month_text);
+        month_text.setText(monthKeys.get(oldSelector));
+
         getDataFromServerAndUpdateListView();
     }
+
     private void getDataFromServerAndUpdateListView() {
         // "http://www.boze-tech.com/zfh_manager/a/app/patrol/officeStatistic?endDate=2018-07-12&startDate=2018-07-11&userId="+ Global.userId+"&dayType=&office=";
-        String url = Api.API_25_officeStatistic + "&projectType=" + items.get(itemKeys.get(oldSelector));
+        String url = Api.API_25_officeStatistic + "&projectType=" + items.get(itemKeys.get(oldSelector)) +
+                "&month=" + months.get(monthKeys.get(monthOldSelector));
         Log.d("aijun officeStatistic", url);
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
@@ -141,6 +171,39 @@ public class Level2_2_3_inspectDetails2 extends AppCompatActivity {
                 if (oldSelector != newSelector) {
                     oldSelector = newSelector;
                     type_text.setText(itemKeys.get(oldSelector));
+                    getDataFromServerAndUpdateListView();
+                }
+                showText("确定");
+            }
+        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                showText("取消");
+            }
+        });
+
+        builder.create().show();
+    }
+
+    private void showMonthSingleChoiceDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(Level2_2_3_inspectDetails2.this);
+        builder.setTitle("选择对话框");
+        //千万不要加这句，不然列表显示不出来
+//        builder.setMessage("这是一个简单的列表对话框");
+//        builder.setIcon(R.mipmap.launcher);
+        builder.setSingleChoiceItems(monthKeys.toArray(new String[0]), monthOldSelector, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                monthNewSelector = which;
+                showText(monthKeys.get(which));
+            }
+        });
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (monthOldSelector != monthNewSelector) {
+                    monthOldSelector = monthNewSelector;
+                    month_text.setText(monthKeys.get(monthOldSelector));
                     getDataFromServerAndUpdateListView();
                 }
                 showText("确定");
