@@ -2,6 +2,7 @@ package com.example.ashi.irrigatedmanager;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.ContentUris;
 import android.content.DialogInterface;
@@ -258,6 +259,9 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
                                 @Override
                                 public void run() {
                                     showText("巡检提交成功");
+                                    Intent intent = new Intent(getApplicationContext(), Level2_2_projectInspection2.class);
+                                    startActivity(intent);
+                                    finish();
                                 }
                             });
                         }
@@ -301,6 +305,9 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
                                     @Override
                                     public void run() {
                                         showText("巡检提交成功");
+                                        Intent intent = new Intent(getApplicationContext(), Level2_2_projectInspection2.class);
+                                        startActivity(intent);
+                                        finish();
                                     }
                                 });
                             }
