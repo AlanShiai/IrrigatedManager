@@ -29,6 +29,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +44,10 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.example.ashi.irrigatedmanager.gson.AbnormalAdpter;
 import com.example.ashi.irrigatedmanager.gson.HttpResult;
+import com.example.ashi.irrigatedmanager.gson.PatrolManager;
+import com.example.ashi.irrigatedmanager.gson.PatrolManagerAdpter;
 import com.example.ashi.irrigatedmanager.util.Api;
 import com.example.ashi.irrigatedmanager.util.Global;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
@@ -81,6 +85,8 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
 
     private double latitude = 116.429489;
     private double longitude = 39.87182;
+
+    List<PatrolManager> dataList = new ArrayList<>();
 
 //    private MapView mapView;
 
@@ -138,10 +144,9 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
             }
         });
 
-
-
         findViewsById();
         setOnClickListeners();
+        updatePatrolManagerList();
     }
 
     private void findViewsById() {
@@ -205,7 +210,6 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
             }
         });
 
-
         manualInspectReportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -226,9 +230,34 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
         });
     }
 
+    private void updatePatrolManagerList() {
+        String url = Api.API_32_getUserOfPatrol;
+        Log.d("aijun, PatrolManager", url);
+        HttpUtil.sendOkHttpRequest(url, new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responseText = response.body().string();
+                List<PatrolManager> list = Utility.handleApi32getUserOfPatrolResponse(responseText);
+                if (null != list) {
+                    dataList.clear();
+                    dataList.addAll(list);
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
     private void showExceptiontDialog() {
         final Dialog builder = new Dialog(this, R.style.update_dialog);
         View view = View.inflate(Level2_2_5_3_manualInspect.this, R.layout.update_dialog, null);
+        ListView listView = (ListView) view.findViewById(R.id.list_view);
+        PatrolManagerAdpter adapter = new PatrolManagerAdpter(
+                Level2_2_5_3_manualInspect.this, R.layout.item_check_box, dataList);
+        listView.setAdapter(adapter);
         Button noUpdateBtn = (Button) view.findViewById(R.id.alert_no_update_btn);
         Button updateBtn = (Button) view.findViewById(R.id.alert_update_btn);
         noUpdateBtn.setOnClickListener(new View.OnClickListener() {

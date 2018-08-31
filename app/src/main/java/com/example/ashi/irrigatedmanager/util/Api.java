@@ -41,5 +41,6 @@ public interface Api {
     String API_28_officeUserStatistic       = "http://www.boze-tech.com/zfh_manager/a/app/patrol/officeUserStatistic?userId="+ Global.userId + "&office=06b21ce1eaec48e59e2a40025b0991ce";
     String API_29_queryTotalCount           = "http://www.boze-tech.com/zfh_manager/a/app/patrol/queryTotalCount?userId="+ Global.userId;
     String API_30_patrolInit                = "http://www.boze-tech.com/zfh_manager/a/app/patrol/patrolInit?type=";
-    String API_31_queryYearCount            = "http://www.boze-tech.com//zfh_manager/a/app/patrol/queryYearCount?userId="+ Global.userId+"&month=05";
+    String API_31_queryYearCount            = "http://www.boze-tech.com//zfh_manager/a/app/patrol/queryYearCount?userId="+ Global.userId + "&month=05";
+    String API_32_getUserOfPatrol           = "http://www.boze-tech.com/zfh_manager/a/app/patrol/getUserOfPatrol?userId=" + Global.userId;
 }
