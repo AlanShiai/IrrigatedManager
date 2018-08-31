@@ -75,20 +75,27 @@ public class Level2_2_5_1_manualInspect extends AppCompatActivity {
 
     private void getDataFromServerAndUpdateListView() {
         String url = Api.API_26_patrolDesQuery;
+        Log.d("aijun patrolDesQuery", url);
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 final String responseText = response.body().string();
+                Log.d("aijun patrolDesQuery", responseText);
                 final List<ManualInspectItem> list = Utility.handleApi26patrolDesQueryResponse(responseText);
+                Log.d("aijun patrolDesQuery", list.size()+"");
                 if ( ! list.isEmpty() ) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             if ( null != listView ) {
                                 dataList.clear();
-                                dataList.addAll(list);
+                                for (ManualInspectItem manualInspectItem : list) {
+                                    if (null != manualInspectItem.goalName) {
+                                        dataList.add(manualInspectItem);
+                                    }
+                                }
                                 ManualInspectItemAdapter adapter = new ManualInspectItemAdapter(
-                                        Level2_2_5_1_manualInspect.this, R.layout.manual_inspect, list);
+                                        Level2_2_5_1_manualInspect.this, R.layout.manual_inspect, dataList);
                                 listView.setAdapter(adapter);
                             }
                         }
