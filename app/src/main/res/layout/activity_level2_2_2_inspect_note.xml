@@ -122,6 +122,7 @@
                 >
 
                 <LinearLayout
+                    android:id="@+id/start_date"
                     android:layout_marginTop="15dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
@@ -143,6 +144,7 @@
                         />
 
                     <TextView
+                        android:id="@+id/start_date_text"
                         android:layout_margin="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -161,7 +163,9 @@
                         />
 
                 </LinearLayout>
+
                 <LinearLayout
+                    android:id="@+id/end_date"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
@@ -183,6 +187,7 @@
                         />
 
                     <TextView
+                        android:id="@+id/end_date_text"
                         android:layout_margin="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -201,6 +206,7 @@
                         />
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="20dp"
@@ -211,6 +217,18 @@
                     android:background="@drawable/item_input_shape"
                     >
 
+                    <Spinner
+                        android:id="@+id/type_spinner"
+                        android:layout_margin="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="类型"
+                        android:textSize="14sp"
+                        />
+
+                    <!--
                     <TextView
                         android:layout_margin="5dp"
                         android:layout_width="wrap_content"
@@ -221,6 +239,7 @@
                         android:textSize="14sp"
                         />
 
+
                     <ImageView
                         android:layout_margin="5dp"
                         android:layout_width="wrap_content"
@@ -228,8 +247,10 @@
                         android:src="@drawable/c6"
                         android:scaleType="centerCrop"
                         />
+                     -->
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="20dp"
@@ -241,6 +262,7 @@
                     >
 
                     <EditText
+                        android:id="@+id/name"
                         android:layout_margin="5dp"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -259,6 +281,7 @@
                         />
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="20dp"
@@ -274,6 +297,7 @@
                         android:layout_weight="1" />
 
                     <Button
+                        android:id="@+id/patrol_search"
                         android:layout_margin="5dp"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -303,292 +327,13 @@
             android:layout_weight="5"
             >
 
-            <LinearLayout
-                android:orientation="horizontal"
+            <ListView
+                android:id="@+id/inspect_note_list2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#FFFFFF"
+                android:divider="@null"
                 >
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    >
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginLeft="10dp"
-                            android:text="滏阳河张庄桥"
-                            android:textSize="16sp"
-                            android:textColor="#333333"
-                            />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:layout_marginRight="10dp"
-                            android:text="2018-08-15  05:20:14"
-                            android:textColor="#AFAFAF"
-                            />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        >
-                        <ImageView
-                            android:layout_marginLeft="10dp"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:background="@drawable/c9"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center_vertical"
-                            android:text="结果："
-                            android:textSize="14sp"
-                            android:textColor="#AFAFAF"
-                            />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center_vertical"
-                            android:layout_marginRight="5dp"
-                            android:text="正常"
-                            android:textColor="#3BBA85"
-                            android:textSize="14sp"
-                            />
-                        <Space
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center_vertical"
-                            android:layout_marginRight="5dp"
-                            android:text="巡检人：张丽"
-                            android:textColor="#AFAFAF"
-                            />
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="8dp"
-                >
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#FFFFFF"
-                >
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    >
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginLeft="10dp"
-                            android:text="滏阳河张庄桥"
-                            android:textSize="16sp"
-                            android:textColor="#333333"
-                            />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:layout_marginRight="5dp"
-                            android:text="2018-08-15  05:20:14"
-                            android:textColor="#AFAFAF"
-                            />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        >
-                        <ImageView
-                            android:layout_marginLeft="10dp"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/c9"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center_vertical"
-                            android:text="结果："
-                            android:textSize="14sp"
-                            android:textColor="#AFAFAF"
-                            />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center_vertical"
-                            android:layout_marginRight="5dp"
-                            android:text="异常"
-                            android:textColor="#F24646"
-                            android:textSize="14sp"
-                            />
-
-                        <Space
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center_vertical"
-                            android:layout_marginRight="5dp"
-                            android:text="巡检人：张丽"
-                            android:textColor="#AFAFAF"
-                            />
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                >
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#FFFFFF"
-                >
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    >
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginLeft="10dp"
-                            android:text="滏阳河张庄桥"
-                            android:textSize="16sp"
-                            android:textColor="#333333"
-                            />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:layout_marginRight="5dp"
-                            android:text="2018-08-15  05:20:14"
-                            android:textColor="#AFAFAF"
-                            />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        >
-                        <ImageView
-                            android:layout_marginLeft="10dp"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/c9"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center_vertical"
-                            android:text="结果："
-                            android:textSize="14sp"
-                            android:textColor="#AFAFAF"
-                            />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center_vertical"
-                            android:layout_marginRight="5dp"
-                            android:text="正常"
-                            android:textColor="#3BBA85"
-                            android:textSize="14sp"
-                            />
-
-                        <Space
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center_vertical"
-                            android:layout_marginRight="5dp"
-                            android:text="巡检人：张丽"
-                            android:textColor="#AFAFAF"
-                            />
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="8dp"
-                >
-            </LinearLayout>
+            </ListView>
 
         </LinearLayout>
 
@@ -677,299 +422,19 @@
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FFFFFF"
             >
-
-            <LinearLayout
-                android:orientation="vertical"
+            <ListView
+                android:id="@+id/inspect_note_list1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:divider="@null"
                 >
+            </ListView>
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginLeft="10dp"
-                        android:text="滏阳河张庄桥"
-                        android:textSize="16sp"
-                        android:textColor="#333333"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="right"
-                        android:layout_marginRight="10dp"
-                        android:text="2018-08-15  05:20:14"
-                        android:textColor="#AFAFAF"
-                        />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
-                    <ImageView
-                        android:layout_marginLeft="10dp"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:background="@drawable/c9"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:text="结果："
-                        android:textSize="14sp"
-                        android:textColor="#AFAFAF"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:layout_marginRight="5dp"
-                        android:text="正常"
-                        android:textColor="#3BBA85"
-                        android:textSize="14sp"
-                        />
-                    <Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:layout_marginRight="5dp"
-                        android:text="巡检人：张丽"
-                        android:textColor="#AFAFAF"
-                        />
-                </LinearLayout>
-            </LinearLayout>
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="8dp"
-            >
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            >
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                >
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginLeft="10dp"
-                        android:text="滏阳河张庄桥"
-                        android:textSize="16sp"
-                        android:textColor="#333333"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="right"
-                        android:layout_marginRight="5dp"
-                        android:text="2018-08-15  05:20:14"
-                        android:textColor="#AFAFAF"
-                        />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
-                    <ImageView
-                        android:layout_marginLeft="10dp"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/c9"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:text="结果："
-                        android:textSize="14sp"
-                        android:textColor="#AFAFAF"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:layout_marginRight="5dp"
-                        android:text="异常"
-                        android:textColor="#F24646"
-                        android:textSize="14sp"
-                        />
-
-                    <Space
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:layout_marginRight="5dp"
-                        android:text="巡检人：张丽"
-                        android:textColor="#AFAFAF"
-                        />
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            >
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            >
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                >
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginLeft="10dp"
-                        android:text="滏阳河张庄桥"
-                        android:textSize="16sp"
-                        android:textColor="#333333"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="right"
-                        android:layout_marginRight="5dp"
-                        android:text="2018-08-15  05:20:14"
-                        android:textColor="#AFAFAF"
-                        />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
-                    <ImageView
-                        android:layout_marginLeft="10dp"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/c9"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:text="结果："
-                        android:textSize="14sp"
-                        android:textColor="#AFAFAF"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:layout_marginRight="5dp"
-                        android:text="正常"
-                        android:textColor="#3BBA85"
-                        android:textSize="14sp"
-                        />
-
-                    <Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:layout_marginRight="5dp"
-                        android:text="巡检人：张丽"
-                        android:textColor="#AFAFAF"
-                        />
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="8dp"
-            >
-        </LinearLayout>
-
-        <ListView
-            android:id="@+id/inspect_note_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            >
-        </ListView>
 
     </LinearLayout>
 

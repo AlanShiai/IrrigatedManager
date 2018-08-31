@@ -39,8 +39,7 @@ public interface Api {
     String API_25_officeStatistic           = "http://www.boze-tech.com/zfh_manager/a/app/patrol/officeStatistic?userId=" + Global.userId + "&office=8eff2c16d5cf45fca84ac984190b0890";
     String API_26_patrolDesQuery            = "http://www.boze-tech.com/zfh_manager/a/app/patrol/patrolDesQuery?userId="+ Global.userId+"&type";
     String API_27_patrolQueryUser           = "http://www.boze-tech.com/zfh_manager/a/app/patrol/patrolQueryUser?userName=系统管理员";
-    String API_28_officeUserStatistic       = "http://www.boze-tech.com/zfh_manager/a/app/patrol/officeUserStatistic?userId="+ Global.userId+"&office=06b21ce1eaec48e59e2a40025b0991ce" +
-            "&&projectType=channel&name=%E6%BB%8F%E9%98%B3%E6%B2%B3%E7%A3%81%E5%8E%BF%E6%AE%B5&startDate=2018-05-16&endDate=2018-05-19";
+    String API_28_officeUserStatistic       = "http://www.boze-tech.com/zfh_manager/a/app/patrol/officeUserStatistic?userId="+ Global.userId + "&office=06b21ce1eaec48e59e2a40025b0991ce";
     String API_29_queryTotalCount           = "http://www.boze-tech.com/zfh_manager/a/app/patrol/queryTotalCount?userId="+ Global.userId;
     String API_30_patrolInit                = "http://www.boze-tech.com/zfh_manager/a/app/patrol/patrolInit?type=";
     String API_31_queryYearCount            = "http://www.boze-tech.com//zfh_manager/a/app/patrol/queryYearCount?userId="+ Global.userId+"&month=05";

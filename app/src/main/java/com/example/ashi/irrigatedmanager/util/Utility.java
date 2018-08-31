@@ -4,6 +4,7 @@ import com.example.ashi.irrigatedmanager.IrrigationScheduleInfo;
 import com.example.ashi.irrigatedmanager.gson.Abnormal;
 import com.example.ashi.irrigatedmanager.gson.HttpResult;
 import com.example.ashi.irrigatedmanager.gson.InspectNote;
+import com.example.ashi.irrigatedmanager.gson.PatrolNote;
 import com.example.ashi.irrigatedmanager.gson.ScanObject;
 import com.example.ashi.irrigatedmanager.gson.TotalCount;
 import com.example.ashi.irrigatedmanager.gson.User;
@@ -180,6 +181,15 @@ public class Utility {
     public static List<ManualInspectItem> handleApi26patrolDesQueryResponse(String response) {
         try {
             return new Gson().fromJson(response, new TypeToken<List<ManualInspectItem>>(){}.getType());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static List<PatrolNote> handleApi28officeUserStatisticResponse(String response) {
+        try {
+            return new Gson().fromJson(response, new TypeToken<List<PatrolNote>>(){}.getType());
         } catch (Exception e) {
             e.printStackTrace();
         }

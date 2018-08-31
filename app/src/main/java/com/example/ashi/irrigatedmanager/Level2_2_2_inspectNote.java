@@ -12,17 +12,25 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ashi.irrigatedmanager.gson.InspectNote;
+import com.example.ashi.irrigatedmanager.gson.PatrolAdpter;
+import com.example.ashi.irrigatedmanager.gson.PatrolNote;
 import com.example.ashi.irrigatedmanager.util.Api;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
 import com.example.ashi.irrigatedmanager.util.Utility;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -33,14 +41,27 @@ public class Level2_2_2_inspectNote extends AppCompatActivity {
 
     private LinearLayout query_layout;
 
-    private String[] items = new String[] {
-            "全部",
-            "渠首",
-            "闸门",
-            "桥梁",
-            "渡槽",
-            "涵洞",
-    };
+    static List<String> itemKeys = new ArrayList<>();
+    final static Map<String, String> items = new LinkedHashMap<>();
+    static {
+        items.put("渠道", "channel");
+        items.put("水闸", "sluice");
+        items.put("涵洞", "culvert");
+        items.put("渡槽", "aqueduct");
+        items.put("桥梁", "bridge");
+        items.put("倒虹吸", "inverted");
+        itemKeys.addAll(items.keySet());
+    }
+    int typeSelector = 0;
+
+    ListView listView1, listView2;
+    List<PatrolNote> dataList = new ArrayList<>();
+
+    int start_year = 2018, start_month = 8, start_day = 15;
+    TextView start_text;
+    int end_year = 2018, end_month = 8, end_day = 30;
+    TextView end_text;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,18 +76,20 @@ public class Level2_2_2_inspectNote extends AppCompatActivity {
 
         query_layout = (LinearLayout) findViewById(R.id.query_layout);
 
-        Spinner spinner = (Spinner) findViewById(R.id.level_2_2_2_spinner);
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_multiple_choice,items);
+        Spinner spinner = (Spinner) findViewById(R.id.type_spinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, itemKeys);
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_single_choice,items);
+//        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_multiple_choice,items);
 //        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.spinner_array,
 //                R.layout.support_simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(Level2_2_2_inspectNote.this, items[position], Toast.LENGTH_SHORT).show();
+                typeSelector = position;
+//                Toast.makeText(Level2_2_2_inspectNote.this, itemKeys.get(position), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -84,21 +107,50 @@ public class Level2_2_2_inspectNote extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.btnDatePickerDialog).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.patrol_search).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDataFromServerAndUpdateListView2();
+            }
+        });
+
+        findViewById(R.id.start_date).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DatePickerDialog datePicker=new DatePickerDialog(Level2_2_2_inspectNote.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear,
                                           int dayOfMonth) {
-                        // TODO Auto-generated method stub
-                        Toast.makeText(Level2_2_2_inspectNote.this, year+"year "+(monthOfYear+1)+"month "+dayOfMonth+"day", Toast.LENGTH_SHORT).show();
+                        start_year = year; start_month = monthOfYear + 1; start_day = dayOfMonth;
+                        updateDayTextView(start_text, start_year, start_month, start_day);
                     }
-                }, 2018, 7, 15);
+                }, start_year, start_month-1, start_day);
                 datePicker.show();
             }
         });
+        start_text = (TextView) findViewById(R.id.start_date_text);
+        updateDayTextView(start_text, start_year, start_month, start_day);
 
+        findViewById(R.id.end_date).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePicker=new DatePickerDialog(Level2_2_2_inspectNote.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                          int dayOfMonth) {
+                        end_year = year; end_month = monthOfYear + 1; end_day = dayOfMonth;
+                        updateDayTextView(end_text, end_year, end_month, end_day);
+                    }
+                }, end_year, end_month-1, end_day);
+                datePicker.show();
+            }
+        });
+        end_text = (TextView) findViewById(R.id.end_date_text);
+        updateDayTextView(end_text, end_year, end_month, end_day);
+
+        findViewById(R.id.query_image).setFocusable(true);
+        findViewById(R.id.query_image).setFocusableInTouchMode(true);
+        findViewById(R.id.query_image).requestFocus();
         findViewById(R.id.query_image).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,8 +160,43 @@ public class Level2_2_2_inspectNote extends AppCompatActivity {
             }
         });
 
-        getDataFromServerAndUpdateListView();
+        dataList = new ArrayList<>();
+//        dataList.add(new PatrolNote());
+//        dataList.add(new PatrolNote("异常"));
+//        dataList.add(new PatrolNote());
+
+        listView1 = (ListView) findViewById(R.id.inspect_note_list1);
+        PatrolAdpter patrolAdpter = new PatrolAdpter(
+                Level2_2_2_inspectNote.this, R.layout.item_inspect_note, dataList);
+        listView1.setAdapter(patrolAdpter);
+
+        listView2 = (ListView) findViewById(R.id.inspect_note_list2);
+        PatrolAdpter patrolAdpter2 = new PatrolAdpter(
+                Level2_2_2_inspectNote.this, R.layout.item_inspect_note, dataList);
+        listView2.setAdapter(patrolAdpter2);
+
+//        getDataFromServerAndUpdateListView();
         getDataFromServerAndUpdateListView2();
+    }
+
+    private void updateDayTextView(TextView textView, int year, int month, int day) {
+        textView.setText(toDayString(year, month, day));
+    }
+
+    private String toDayString(int year, int month, int day) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(year);
+        stringBuilder.append("-");
+        if ( month < 10 ) {
+            stringBuilder.append("0");
+        }
+        stringBuilder.append(month);
+        stringBuilder.append("-");
+        if ( day < 10 ) {
+            stringBuilder.append("0");
+        }
+        stringBuilder.append(day);
+        return stringBuilder.toString();
     }
 
     private void getDataFromServerAndUpdateListView() {
@@ -143,24 +230,39 @@ public class Level2_2_2_inspectNote extends AppCompatActivity {
     }
 
     private void getDataFromServerAndUpdateListView2() {
-        String url = Api.API_28_officeUserStatistic;
+        // http://www.boze-tech.com/zfh_manager/a/app/patrol/officeUserStatistic?userId=1
+        // &office=06b21ce1eaec48e59e2a40025b0991ce&projectType=channel&name=%E6%BB%8F%E9%98%B3%E6%B2%B3%E7%A3%81%E5%8E%BF%E6%AE%B5
+        // &startDate=2018-05-16&endDate=2018-05-19
+        String url = Api.API_28_officeUserStatistic + "&projectType=" + items.get(itemKeys.get(typeSelector)) +
+                "&startDate=" + toDayString(start_year, start_month, start_day) +
+                "&endDate=" + toDayString(end_year, end_month, end_day) +
+                "&name=" + ((EditText) findViewById(R.id.name)).getText();
+        Log.d("aijun officeUserStatic", url);
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 final String responseText = response.body().string();
+                final List<PatrolNote> list = Utility.handleApi28officeUserStatisticResponse(responseText);
                 Log.d("aijun officeUserStistic", responseText+"");
-//                if ( ! list.isEmpty() ) {
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            if ( null != listView ) {
-//                                IrrigationScheduleInfoAdpter adapter = new IrrigationScheduleInfoAdpter(
-//                                        Level2_6_irrigationSchedule2.this, R.layout.irrigation_schedule, list);
-//                                listView.setAdapter(adapter);
-//                            }
-//                        }
-//                    });
-//                }
+                if ( null != list ) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            dataList.clear();
+                            dataList.addAll(list);
+                            if ( null != listView1 ) {
+                                PatrolAdpter patrolAdpter = new PatrolAdpter(
+                                        Level2_2_2_inspectNote.this, R.layout.item_inspect_note, dataList);
+                                listView1.setAdapter(patrolAdpter);
+                            }
+                            if ( null != listView2 ) {;
+                                PatrolAdpter patrolAdpter2 = new PatrolAdpter(
+                                        Level2_2_2_inspectNote.this, R.layout.item_inspect_note, dataList);
+                                listView2.setAdapter(patrolAdpter2);
+                            }
+                        }
+                    });
+                }
             }
 
             @Override
