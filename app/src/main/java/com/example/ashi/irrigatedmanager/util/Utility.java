@@ -1,5 +1,7 @@
 package com.example.ashi.irrigatedmanager.util;
 
+import android.util.Log;
+
 import com.example.ashi.irrigatedmanager.IrrigationScheduleInfo;
 import com.example.ashi.irrigatedmanager.gson.Abnormal;
 import com.example.ashi.irrigatedmanager.gson.HttpResult;
@@ -27,6 +29,7 @@ import com.google.gson.reflect.TypeToken;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.net.URLEncoder;
 import java.util.List;
 
 /**
@@ -34,6 +37,23 @@ import java.util.List;
  */
 
 public class Utility {
+
+    public static String toURLEncoded(String paramString) {
+        if (paramString == null || paramString.equals("")) {
+            Log.d("toURLEncoded error:", paramString);
+            return "";
+        }
+
+        try {
+            String str = new String(paramString.getBytes(), "UTF-8");
+            str = URLEncoder.encode(str, "UTF-8");
+            return str;
+        } catch (Exception localException) {
+            Log.e("toURLEncoded error:" + paramString, localException.getMessage());
+        }
+
+        return "";
+    }
 
     public static ScanObject handleScanResponse(String response) {
         try {

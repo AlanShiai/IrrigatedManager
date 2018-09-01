@@ -26,7 +26,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -55,6 +57,9 @@ import com.example.ashi.irrigatedmanager.util.Utility;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,7 +91,7 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
     private double latitude = 116.429489;
     private double longitude = 39.87182;
 
-    List<PatrolManager> dataList = new ArrayList<>();
+    List<PatrolManager> patrolManagers = new ArrayList<>();
 
 //    private MapView mapView;
 
@@ -239,8 +244,8 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
                 final String responseText = response.body().string();
                 List<PatrolManager> list = Utility.handleApi32getUserOfPatrolResponse(responseText);
                 if (null != list) {
-                    dataList.clear();
-                    dataList.addAll(list);
+                    patrolManagers.clear();
+                    patrolManagers.addAll(list);
                 }
             }
 
@@ -254,10 +259,17 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
     private void showExceptiontDialog() {
         final Dialog builder = new Dialog(this, R.style.update_dialog);
         View view = View.inflate(Level2_2_5_3_manualInspect.this, R.layout.update_dialog, null);
-        ListView listView = (ListView) view.findViewById(R.id.list_view);
-        PatrolManagerAdpter adapter = new PatrolManagerAdpter(
-                Level2_2_5_3_manualInspect.this, R.layout.item_check_box, dataList);
+        final ListView listView = (ListView) view.findViewById(R.id.list_view);
+        final PatrolManagerAdpter adapter = new PatrolManagerAdpter(
+                Level2_2_5_3_manualInspect.this, R.layout.item_check_box, patrolManagers);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                View tst = view.findViewById(R.id.user_name);
+                Log.d("aijun, tst", tst+"");
+            }
+        });
         Button noUpdateBtn = (Button) view.findViewById(R.id.alert_no_update_btn);
         Button updateBtn = (Button) view.findViewById(R.id.alert_update_btn);
         noUpdateBtn.setOnClickListener(new View.OnClickListener() {
@@ -268,15 +280,35 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
             }
         });
         updateBtn.setOnClickListener(new View.OnClickListener() {
+
+            private String getPatrolManagerString() {
+                String managerString = "";
+                for (View listChild : listView.getTouchables()) {
+                    if (listChild instanceof CheckBox) {
+                        CheckBox checkBox = (CheckBox) listChild;
+                        if (checkBox.isChecked()) {
+                            managerString = checkBox.getText().toString();
+                            break;
+                        }
+                    }
+                }
+                return managerString;
+            }
+
             @Override
             public void onClick(View view) {
                 // http://www.boze-tech.com/zfh_manager/a/app/patrol/patrolSave?type=channel
                 // &goalId=8502f69d32304ee6a9aacd99920fdcd7%22%20+%20%22&longitude=116.429489&latitude=39.87182
                 // &images=&itemResults=&createBy=1&contents=%E6%98%AF%E6%98%AF%E6%98%AF&userId=1
+
                 String url = Api.API_22_patrolSave + "&type=" + Global.patrolType
                         + "&longitude=" + longitude + "&latitude=" + latitude
                         + "&goalId=" + Global.patrolId + "&contents=" + editText.getText().toString()
-                        + "&itemResults=" + Global.exceptionMsg;
+                        + "&itemResults=" + Utility.toURLEncoded(Global.exceptionMsg)
+                        + "&createBy=" + 1;
+//                + "&createBy=" + Utility.toURLEncoded(getPatrolManagerString());
+
+
                 Log.d("aijun, patrolSave", url);
                 HttpUtil.sendOkHttpRequest(url, new Callback() {
                     @Override

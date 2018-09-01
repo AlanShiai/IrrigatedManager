@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.example.ashi.irrigatedmanager.R;
@@ -16,7 +17,6 @@ import java.util.List;
  */
 
 public class PatrolManagerAdpter extends ArrayAdapter<PatrolManager> {
-
 
     private int resourceId;
 
@@ -34,7 +34,7 @@ public class PatrolManagerAdpter extends ArrayAdapter<PatrolManager> {
         if (convertView == null) {
             view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
             viewHolder = new PatrolManagerAdpter.ViewHolder();
-            viewHolder.userName = (TextView) view.findViewById (R.id.user_name);
+            viewHolder.userName = (CheckBox) view.findViewById (R.id.user_name);
             view.setTag(viewHolder); // 将ViewHolder存储在View中
         } else {
             view = convertView;
@@ -42,10 +42,11 @@ public class PatrolManagerAdpter extends ArrayAdapter<PatrolManager> {
         }
         viewHolder.userName.setText(projectInfo.userName);
 
+
         return view;
     }
 
     class ViewHolder {
-        TextView userName;
+        CheckBox userName;
     }
 }

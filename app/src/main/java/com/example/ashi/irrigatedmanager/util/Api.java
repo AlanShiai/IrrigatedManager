@@ -32,7 +32,7 @@ public interface Api {
     String API_19_queryIrrigationSchedule = "http://www.boze-tech.com/zfh_manager/a/app/project/queryIrrigationSchedule?userId="+ Global.userId + "&year=2018";
     String API_20_patrolResult              = "http://www.boze-tech.com/zfh_manager/a/app/patrol/patrolResult?userId="+ Global.userId+"&day=2018-07-11&dayType=1&type=&resultType=&status=";
     String API_21_patrolItem                = "http://www.boze-tech.com/zfh_manager/a/app/patrol/patrolItem?";
-    String API_22_patrolSave                = "http://www.boze-tech.com/zfh_manager/a/app/patrol/patrolSave?userId=" + Global.userId + "&images=&createBy=1";
+    String API_22_patrolSave                = "http://www.boze-tech.com/zfh_manager/a/app/patrol/patrolSave?userId=" + Global.userId + "&images=";
     String API_23_basicInfo                 = "http://www.boze-tech.com/zfh_manager/a/app/patrol/basicInfo?userId=" + Global.userId;
     String API_24_patrolDetail              = "http://www.boze-tech.com/zfh_manager/a/app/patrol/patrolDetail?id=30136878e084460cad141af485addea2";
     String API_25_officeStatistic           = "http://www.boze-tech.com/zfh_manager/a/app/patrol/officeStatistic?userId=" + Global.userId + "&office=8eff2c16d5cf45fca84ac984190b0890";
