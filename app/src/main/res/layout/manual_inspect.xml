@@ -9,7 +9,6 @@
         android:id="@+id/image_view"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_gravity="center_vertical"
         android:background="@drawable/c4"
         android:layout_margin="10dp"
         />

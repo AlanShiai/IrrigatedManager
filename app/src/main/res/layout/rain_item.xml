@@ -13,10 +13,10 @@
         >
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:background="@drawable/c5"
+            android:layout_margin="10dp"
             />
 
         <LinearLayout
@@ -25,6 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
             >
 
             <LinearLayout
@@ -39,7 +40,8 @@
                     android:layout_weight="1"
                     android:layout_marginLeft="5dp"
                     android:text="柳林总雨量"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
+                    android:textColor="#323232"
                     />
 
                 <TextView
