@@ -13,55 +13,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_marginTop="20dp"
-        android:layout_height="42dp"
-        android:background="#24AAFF"
-        >
-
-        <Button
-            android:id="@+id/leve1_2_1_back"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:paddingLeft="5dp"
-            android:drawablePadding="1dp"
-            android:drawableLeft="@drawable/ic_ab_back_holo_dark_am"
-            android:text=""
-            android:gravity="left|center_vertical"
-            android:textColor="#FFFFFF"
-            style="?android:attr/borderlessButtonStyle"
-            />
-
-        <TextView
-            android:id="@+id/level_2_1_title"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="本年统计"
-            android:textSize="20sp"
-            android:textColor="#FFFFFF"
-            android:textStyle="normal"
-            />
-
-        <Button
-            android:id="@+id/select"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:paddingLeft="5dp"
-            android:drawablePadding="1dp"
-            android:drawableLeft="@drawable/d3"
-            android:text=""
-            android:gravity="left"
-            android:textColor="#FFFFFF"
-            style="?android:attr/borderlessButtonStyle"
-            android:visibility="invisible"
-            />
-    </LinearLayout>
-
-    <LinearLayout
         android:layout_marginTop="62dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -156,6 +107,55 @@
 
         </LinearLayout>
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_height="42dp"
+        android:background="#24AAFF"
+        >
+
+        <Button
+            android:id="@+id/leve1_2_1_back"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:paddingLeft="5dp"
+            android:drawablePadding="1dp"
+            android:drawableLeft="@drawable/ic_ab_back_holo_dark_am"
+            android:text=""
+            android:gravity="left|center_vertical"
+            android:textColor="#FFFFFF"
+            style="?android:attr/borderlessButtonStyle"
+            />
+
+        <TextView
+            android:id="@+id/level_2_1_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="本年统计"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:textStyle="normal"
+            />
+
+        <Button
+            android:id="@+id/select"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:paddingLeft="5dp"
+            android:drawablePadding="1dp"
+            android:drawableLeft="@drawable/d3"
+            android:text=""
+            android:gravity="left"
+            android:textColor="#FFFFFF"
+            style="?android:attr/borderlessButtonStyle"
+            android:visibility="invisible"
+            />
     </LinearLayout>
 
 </FrameLayout>
