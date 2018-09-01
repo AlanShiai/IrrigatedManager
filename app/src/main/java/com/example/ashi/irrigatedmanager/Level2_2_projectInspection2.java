@@ -78,12 +78,17 @@ public class Level2_2_projectInspection2 extends AppCompatActivity {
                 Log.d("aijun patrolInit", responseText+"");
                 if ( null != list ) {
                     Global.abnormalList.clear();
-                    Global.abnormalList.addAll(list);
+                    for (int i = 0; i < list.size(); i++) {
+                        if ( i == 3) {
+                            break;
+                        }
+                        Global.abnormalList.add(list.get(i));
+                    }
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             AbnormalAdpter adapter = new AbnormalAdpter(
-                                    Level2_2_projectInspection2.this, R.layout.item_patrol, list);
+                                    Level2_2_projectInspection2.this, R.layout.item_patrol, Global.abnormalList);
                             listView.setAdapter(adapter);
                         }
                     });
