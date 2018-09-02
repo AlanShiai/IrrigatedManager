@@ -28,9 +28,7 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="9wRT0oCbumXTUksxcWjwZOpW6RVshFBd" />
 
-        <activity android:name=".Level2_1_irrigateOverview">
-
-        </activity>
+        <activity android:name=".Level2_1_irrigateOverview"></activity>
         <activity android:name=".Level2_3_projectInfo" />
         <activity android:name=".Level2_5_appvalProcess" />
         <activity
@@ -72,7 +70,8 @@
         <activity android:name=".Level2_3_projectInfo2" />
         <activity android:name=".Level2_3_projectInfo3" />
         <activity android:name=".Level2_3_projectInfo4" />
-        <activity android:name=".Level2_4_3_rain3"></activity>
+        <activity android:name=".Level2_4_3_rain3" />
+        <activity android:name=".Logout"></activity>
     </application>
 
 </manifest>

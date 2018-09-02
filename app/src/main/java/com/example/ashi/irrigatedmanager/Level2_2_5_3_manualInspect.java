@@ -308,7 +308,6 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
                         + "&createBy=" + 1;
 //                + "&createBy=" + Utility.toURLEncoded(getPatrolManagerString());
 
-
                 Log.d("aijun, patrolSave", url);
                 HttpUtil.sendOkHttpRequest(url, new Callback() {
                     @Override
