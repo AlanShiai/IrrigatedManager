@@ -23,9 +23,9 @@ public interface Api {
     String API_10_saveDeviceInfo            = address + "/a/app/login/saveDeviceInfo?userId="+ Global.userId +"&banbenhao=DS-2CD5A26EFWD-IZ&yuyan=zh" +
             "&xinghao=x100&changshang=长虹&baiduPushUserId=11&baiduPushAppId=22&baiduChannelId=22";
     String API_11_qrLoginCheck              = address + "/a/app/login/qrLoginCheck?userId="+ Global.userId +"&sid=1&pwd=2";
-    String API_12_todoActList                = address + "/a/app/actTask/todoActList?userId=bbf042e126fc4201a761c2cb8da32475";
-    String API_13_historyActList             = address + "/a/app/actTask/historyActList?userId=bbf042e126fc4201a761c2cb8da32475";
-    String API_14_getMyProcess               = address + "/a/app/actTask/getMyProcess?userId=bbf042e126fc4201a761c2cb8da32475";
+    String API_12_todoActList                = address + "/a/app/actTask/todoActList?userId=" + Global.userId ;
+    String API_13_historyActList             = address + "/a/app/actTask/historyActList?userId=" + Global.userId ;
+    String API_14_getMyProcess               = address + "/a/app/actTask/getMyProcess?userId=" + Global.userId ;
     String API_15_handleProcess              = address + "/a/app/actTask/handleProcess?taskName=异常处理&dealType=1&comment=很好" +
             "&taskId=8539953ad40a4e0ea8ad86f7f944d1a0&taskDefKey=audit2&procInsId=93acd047627d45edad2102a7cf00cc0e" +
             "&procDefId=patrol_result_deal_new:4:a1e5c2f5962a4db1820ca13aea26f57a&procDefKey=" +
