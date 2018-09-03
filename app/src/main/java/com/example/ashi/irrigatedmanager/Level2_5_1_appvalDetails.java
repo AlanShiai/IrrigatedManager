@@ -17,6 +17,7 @@ import com.example.ashi.irrigatedmanager.level5.BusinessForm;
 import com.example.ashi.irrigatedmanager.level5.MyProcess;
 import com.example.ashi.irrigatedmanager.level5.ProcessAdapter;
 import com.example.ashi.irrigatedmanager.util.Api;
+import com.example.ashi.irrigatedmanager.util.Global;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
 import com.example.ashi.irrigatedmanager.util.Utility;
 
@@ -61,15 +62,18 @@ public class Level2_5_1_appvalDetails extends AppCompatActivity {
     }
 
     private void getDataFromServerAndUpdateListView() {
-        String url = Api.API_16_businessForm;
+        // address + "/a/app/actTask/businessForm?businessKey=pro_patrol_result_deal:98eaf7ee37354b48b875caf30bbad7a9";
+        String url = Api.API_16_businessForm + "businessKey=" + Global.businessKey;
+        Log.d("aijun ", url);
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 final String responseText = response.body().string();
                 final BusinessForm businessForm = Utility.handleApi16businessFormResponse(responseText);
+                Log.d("aijun, businessForm", responseText+"");
                 Log.d("aijun, businessForm", businessForm+"");
+                Log.d("aijun, businessForm", businessForm.name+"");
                 Log.d("aijun, businessForm", businessForm.workflow+"");
-                Log.d("aijun, businessForm", businessForm.渠道名称+"");
 //                if ( null != myProcess.data &&  ! myProcess.data.isEmpty() ) {
 //                    getActivity().runOnUiThread(new Runnable() {
 //                        @Override

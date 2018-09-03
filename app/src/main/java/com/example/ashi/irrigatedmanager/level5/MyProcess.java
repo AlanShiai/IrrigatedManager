@@ -7,19 +7,9 @@ import java.util.List;
  */
 
 public class MyProcess {
-    public String count;
-    public List<Process> data;
-}
 
-class Process {
-    public String startDate;
-    public String title;
-    public String timeUse;
-    public String processInstanceId;
-    public String status;
-    public String description;
-    public String businessKey;
-    public String pro_patrol_result_deal;
-    public String endDate;
-    public String taskName;
+    public String count;
+
+    public List<Process> data;
+
 }

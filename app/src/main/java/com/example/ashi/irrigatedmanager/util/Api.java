@@ -30,7 +30,7 @@ public interface Api {
             "&taskId=8539953ad40a4e0ea8ad86f7f944d1a0&taskDefKey=audit2&procInsId=93acd047627d45edad2102a7cf00cc0e" +
             "&procDefId=patrol_result_deal_new:4:a1e5c2f5962a4db1820ca13aea26f57a&procDefKey=" +
             "&businessKey=pro_patrol_result_deal:98eaf7ee37354b48b875caf30bbad7a9&userId=xizha&flag=yes";
-    String API_16_businessForm              = address + "/a/app/actTask/businessForm?businessKey=pro_patrol_result_deal:98eaf7ee37354b48b875caf30bbad7a9";
+    String API_16_businessForm              = address + "/a/app/actTask/businessForm?";
     String API_17_projectList               = address + "/a/app/project/projectList?userId="+ Global.userId +"&name=&office=";
     String API_18_projectDetail             = address + "/a/app/project/projectDetail?userId=" + Global.userId;
     String API_19_queryIrrigationSchedule = address + "/a/app/project/queryIrrigationSchedule?userId="+ Global.userId + "&year=2018";

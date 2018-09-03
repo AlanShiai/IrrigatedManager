@@ -35,6 +35,7 @@ import com.example.ashi.irrigatedmanager.level5.MyProcess;
 import com.example.ashi.irrigatedmanager.level5.ProcessAdapter;
 import com.example.ashi.irrigatedmanager.util.Api;
 import com.example.ashi.irrigatedmanager.util.Const;
+import com.example.ashi.irrigatedmanager.util.Global;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
 import com.example.ashi.irrigatedmanager.util.Utility;
 
@@ -53,6 +54,10 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
     private ViewPager mViewPager;
+
+    static AppvalHistory appvalHistory;
+
+    static MyProcess myProcess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,6 +163,9 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
             toDoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    if ( dataList.size() > position ) {
+                        Global.businessKey = dataList.get(position).businessKey;
+                    }
                     Intent intent = new Intent(getContext(), Level2_5_1_appvalDetails.class);
                     startActivity(intent);
                 }
@@ -169,6 +177,7 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
 
         private void getDataFromServerAndUpdateToDoListView() {
             String url = Api.API_12_todoActList;
+            Log.d("aijun todoActList", url);
             HttpUtil.sendOkHttpRequest(url, new Callback() {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
@@ -179,7 +188,9 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
                             @Override
                             public void run() {
                                 if ( null != toDoListView ) {
-                                    AppvalAdapter adapter = new AppvalAdapter(getContext(), R.layout.appval_item, list);
+                                    dataList.clear();
+                                    dataList.addAll(list);
+                                    AppvalAdapter adapter = new AppvalAdapter(getContext(), R.layout.appval_item, dataList);
                                     toDoListView.setAdapter(adapter);
                                 }
                             }
@@ -204,14 +215,16 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_listview, container, false);
-
-            AppvalAdapter adapter = new AppvalAdapter(getContext(), R.layout.appval_item, dataList);
-
             toDoListView = (ListView) rootView.findViewById(R.id.fragment_listview_list);
-            toDoListView.setAdapter(adapter);
+
+//            AppvalAdapter adapter = new AppvalAdapter(getContext(), R.layout.appval_item, dataList);
+//            toDoListView.setAdapter(adapter);
             toDoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    if ( null != appvalHistory.data &&  null != appvalHistory.data &&  appvalHistory.data.size() > position ) {
+                        Global.businessKey = appvalHistory.data.get(position).businessKey;
+                    }
                     Intent intent = new Intent(getContext(), Level2_5_1_appvalDetails.class);
                     startActivity(intent);
                 }
@@ -223,11 +236,12 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
 
         private void getDataFromServerAndUpdateToDoListView() {
             String url = Api.API_13_historyActList;
+            Log.d("aijun 13_historyActList", url);
             HttpUtil.sendOkHttpRequest(url, new Callback() {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     final String responseText = response.body().string();
-                    final AppvalHistory appvalHistory = Utility.handleApi13HisoryActListResponse(responseText);
+                    appvalHistory = Utility.handleApi13HisoryActListResponse(responseText);
                     if ( null != appvalHistory.data && ! appvalHistory.data.isEmpty() ) {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
@@ -260,13 +274,16 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_listview, container, false);
 
-            AppvalAdapter adapter = new AppvalAdapter(getContext(), R.layout.appval_item, dataList);
+//            AppvalAdapter adapter = new AppvalAdapter(getContext(), R.layout.appval_item, dataList);
+//            toDoListView.setAdapter(adapter);
 
             toDoListView = (ListView) rootView.findViewById(R.id.fragment_listview_list);
-            toDoListView.setAdapter(adapter);
             toDoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    if ( null != myProcess.data && null != myProcess.data && myProcess.data.size() > position ) {
+                        Global.businessKey = myProcess.data.get(position).businessKey;
+                    }
                     Intent intent = new Intent(getContext(), Level2_5_1_appvalDetails.class);
                     startActivity(intent);
                 }
@@ -278,12 +295,13 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
 
         private void getDataFromServerAndUpdateToDoListView() {
             String url = Api.API_14_getMyProcess;
+            Log.d("aijun 14_getMyProcess", url);
             HttpUtil.sendOkHttpRequest(url, new Callback() {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     final String responseText = response.body().string();
-                    final MyProcess myProcess = Utility.handleApi14getMyProcessResponse(responseText);
-                    if ( null != myProcess.data &&  ! myProcess.data.isEmpty() ) {
+                    myProcess = Utility.handleApi14getMyProcessResponse(responseText);
+                    if ( null != myProcess.data && null != myProcess.data && ! myProcess.data.isEmpty() ) {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {

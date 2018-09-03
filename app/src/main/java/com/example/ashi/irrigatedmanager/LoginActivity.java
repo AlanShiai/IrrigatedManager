@@ -344,7 +344,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         @Override
                         public void run() {
                             Global.userId = user.id;
-                            onPostExecute(isLoginSuccess);
+//                            onPostExecute(isLoginSuccess);
                         }
                     });
                 }

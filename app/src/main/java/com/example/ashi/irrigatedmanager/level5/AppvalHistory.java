@@ -7,6 +7,9 @@ import java.util.List;
  */
 
 public class AppvalHistory {
+
     public String count;
+
     public List<Appval> data;
+
 }
