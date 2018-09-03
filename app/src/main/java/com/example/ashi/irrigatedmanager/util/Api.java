@@ -47,4 +47,6 @@ public interface Api {
     String API_30_patrolInit                = address + "/a/app/patrol/patrolInit?type=";
     String API_31_queryYearCount            = address + "/a/app/patrol/queryYearCount?userId="+ Global.userId + "&month=05";
     String API_32_getUserOfPatrol           = address + "/a/app/patrol/getUserOfPatrol?userId=" + Global.userId;
+    String API_33_taskFlow                   = address + "/a/app/actTask/taskFlow?";
+
 }

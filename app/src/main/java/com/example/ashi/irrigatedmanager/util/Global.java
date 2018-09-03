@@ -35,4 +35,5 @@ public class Global {
 
     // appval
     public static String businessKey = "pro_patrol_result_deal:98eaf7ee37354b48b875caf30bbad7a9";
+    public static String processInstanceId = "93acd047627d45edad2102a7cf00cc0e";
 }

@@ -9,6 +9,7 @@ import com.example.ashi.irrigatedmanager.gson.InspectNote;
 import com.example.ashi.irrigatedmanager.gson.PatrolManager;
 import com.example.ashi.irrigatedmanager.gson.PatrolNote;
 import com.example.ashi.irrigatedmanager.gson.ScanObject;
+import com.example.ashi.irrigatedmanager.gson.TaskFlow;
 import com.example.ashi.irrigatedmanager.gson.TotalCount;
 import com.example.ashi.irrigatedmanager.gson.User;
 import com.example.ashi.irrigatedmanager.level2_2_3.InspectDetailInfo;
@@ -238,6 +239,15 @@ public class Utility {
     public static List<PatrolManager> handleApi32getUserOfPatrolResponse(String response) {
         try {
             return new Gson().fromJson(response, new TypeToken<List<PatrolManager>>(){}.getType());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static List<TaskFlow> handleApi33taskFlowResponse(String response) {
+        try {
+            return new Gson().fromJson(response, new TypeToken<List<TaskFlow>>(){}.getType());
         } catch (Exception e) {
             e.printStackTrace();
         }

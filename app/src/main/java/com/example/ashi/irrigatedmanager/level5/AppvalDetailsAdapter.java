@@ -33,18 +33,18 @@ public class AppvalDetailsAdapter  extends ArrayAdapter<AppvalDetails> {
         if (convertView == null) {
             view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
             viewHolder = new AppvalDetailsAdapter.ViewHolder();
-            viewHolder.name = (TextView) view.findViewById (R.id.appval_admin_name);
+            viewHolder.assigneeName = (TextView) view.findViewById (R.id.assigneeName);
             view.setTag(viewHolder); // 将ViewHolder存储在View中
         } else {
             view = convertView;
             viewHolder = (AppvalDetailsAdapter.ViewHolder) view.getTag(); // 重新获取ViewHolder
         }
-        viewHolder.name.setText(projectInfo.getName());
+        viewHolder.assigneeName.setText(projectInfo.getName());
         return view;
     }
 
     class ViewHolder {
-        TextView name;
+        TextView assigneeName;
     }
 
 }

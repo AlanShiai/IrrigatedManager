@@ -8,7 +8,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.example.ashi.irrigatedmanager.gson.TaskFlow;
+import com.example.ashi.irrigatedmanager.gson.TaskFlowAdapter;
 import com.example.ashi.irrigatedmanager.level5.Appval;
 import com.example.ashi.irrigatedmanager.level5.AppvalAdapter;
 import com.example.ashi.irrigatedmanager.level5.AppvalDetails;
@@ -31,7 +34,11 @@ import okhttp3.Response;
 
 public class Level2_5_1_appvalDetails extends AppCompatActivity {
 
-    private List<AppvalDetails> dataList = new ArrayList<AppvalDetails>();
+    private List<TaskFlow> dataList = new ArrayList<TaskFlow>();
+
+    TextView appval_details_title;
+
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +51,14 @@ public class Level2_5_1_appvalDetails extends AppCompatActivity {
         }
         setContentView(R.layout.activity_level2_5_1_appval_details);
 
+        listView = (ListView) findViewById(R.id.level_2_5_1_appval_list);
+
         initData();
-        AppvalDetailsAdapter adapter = new AppvalDetailsAdapter(
+        TaskFlowAdapter adapter = new TaskFlowAdapter(
                 Level2_5_1_appvalDetails.this, R.layout.appval_item2, dataList);
-        ListView listView = (ListView) findViewById(R.id.level_2_5_1_appval_list);
         listView.setAdapter(adapter);
+
+        appval_details_title = (TextView) findViewById(R.id.appval_details_title);
 
         findViewById(R.id.leve1_2_5_back).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +69,7 @@ public class Level2_5_1_appvalDetails extends AppCompatActivity {
         });
 
         getDataFromServerAndUpdateListView();
+        getDataFromServerAndUpdateListView2();
     }
 
     private void getDataFromServerAndUpdateListView() {
@@ -72,21 +83,51 @@ public class Level2_5_1_appvalDetails extends AppCompatActivity {
                 final BusinessForm businessForm = Utility.handleApi16businessFormResponse(responseText);
                 Log.d("aijun, businessForm", responseText+"");
                 Log.d("aijun, businessForm", businessForm+"");
-                Log.d("aijun, businessForm", businessForm.name+"");
-                Log.d("aijun, businessForm", businessForm.workflow+"");
-//                if ( null != myProcess.data &&  ! myProcess.data.isEmpty() ) {
-//                    getActivity().runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            if ( null != toDoListView ) {
-//                                ProcessAdapter adapter = new ProcessAdapter(getContext(), R.layout.appval_item, myProcess.data);
-//                                toDoListView.setAdapter(adapter);
-//                            }
-//                        }
-//                    });
-//                }
+                if ( null != businessForm) {
+                    Log.d("aijun, businessForm", businessForm.name + "");
+                    Log.d("aijun, businessForm", businessForm.workflow + "");
+                }
+                if ( null != businessForm ) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            appval_details_title.setText(businessForm.name.replace("@@", "      "));
+                        }
+                    });
+                }
             }
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
 
+    private void getDataFromServerAndUpdateListView2() {
+        // address + "/a/app/actTask/taskFlow?procInsId=93acd047627d45edad2102a7cf00cc0e";
+        String url = Api.API_33_taskFlow + "procInsId=" + Global.processInstanceId;
+        Log.d("aijun API_33_taskFlow", url);
+        HttpUtil.sendOkHttpRequest(url, new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responseText = response.body().string();
+//                final BusinessForm businessForm = Utility.handleApi16businessFormResponse(responseText);
+                Log.d("aijun, API_33_taskFlow", responseText+"");
+                final List<TaskFlow> list = Utility.handleApi33taskFlowResponse(responseText);
+                Log.d("aijun, API_33_taskFlow", list.size()+"");
+                if ( null != list ) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            dataList.clear();
+                            dataList.addAll(list);
+                            TaskFlowAdapter adapter = new TaskFlowAdapter(
+                                    Level2_5_1_appvalDetails.this, R.layout.appval_item2, dataList);
+                            listView.setAdapter(adapter);
+                        }
+                    });
+                }
+            }
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
@@ -95,7 +136,7 @@ public class Level2_5_1_appvalDetails extends AppCompatActivity {
     }
 
     private void initData() {
-        dataList.add(new AppvalDetails("系统管理员"));
-        dataList.add(new AppvalDetails("大名管理所所长"));
+        dataList.add(new TaskFlow("系统管理员"));
+        dataList.add(new TaskFlow("大名管理所所长"));
     }
 }

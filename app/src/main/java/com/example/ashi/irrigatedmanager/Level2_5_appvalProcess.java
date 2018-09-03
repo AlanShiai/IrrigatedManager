@@ -165,6 +165,7 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     if ( dataList.size() > position ) {
                         Global.businessKey = dataList.get(position).businessKey;
+                        Global.processInstanceId = dataList.get(position).processInstanceId;
                     }
                     Intent intent = new Intent(getContext(), Level2_5_1_appvalDetails.class);
                     startActivity(intent);
@@ -224,6 +225,7 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     if ( null != appvalHistory.data &&  null != appvalHistory.data &&  appvalHistory.data.size() > position ) {
                         Global.businessKey = appvalHistory.data.get(position).businessKey;
+                        Global.processInstanceId = appvalHistory.data.get(position).processInstanceId;
                     }
                     Intent intent = new Intent(getContext(), Level2_5_1_appvalDetails.class);
                     startActivity(intent);
@@ -283,6 +285,7 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     if ( null != myProcess.data && null != myProcess.data && myProcess.data.size() > position ) {
                         Global.businessKey = myProcess.data.get(position).businessKey;
+                        Global.processInstanceId = myProcess.data.get(position).processInstanceId;
                     }
                     Intent intent = new Intent(getContext(), Level2_5_1_appvalDetails.class);
                     startActivity(intent);
