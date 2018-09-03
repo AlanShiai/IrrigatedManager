@@ -72,7 +72,7 @@ public class Level2_3_projectInfo3 extends AppCompatActivity {
 
     // "http://www.boze-tech.com/zfh_manager/a/app/project/projectList?userId=1&projectType=channel&name=&office=&subType=1";
     private void getDataFromServerAndUpdateListView() {
-        String url = Api.API_17_projectList + "&projectType=" + Global.projectInfoType + "&subType=" + Global.projectInfoSubtype;
+        String url = Api.API_17_projectList + "&userId=" + Global.userId + "&projectType=" + Global.projectInfoType + "&subType=" + Global.projectInfoSubtype;
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {

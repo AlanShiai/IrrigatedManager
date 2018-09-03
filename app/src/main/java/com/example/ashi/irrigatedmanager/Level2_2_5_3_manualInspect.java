@@ -236,7 +236,7 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
     }
 
     private void updatePatrolManagerList() {
-        String url = Api.API_32_getUserOfPatrol;
+        String url = Api.API_32_getUserOfPatrol + "userId=" + Global.userId;
         Log.d("aijun, PatrolManager", url);
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
@@ -307,7 +307,7 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
                 // &goalId=8502f69d32304ee6a9aacd99920fdcd7%22%20+%20%22&longitude=116.429489&latitude=39.87182
                 // &images=&itemResults=&createBy=1&contents=%E6%98%AF%E6%98%AF%E6%98%AF&userId=1
 
-                String url = Api.API_22_patrolSave + "&type=" + Global.patrolType
+                String url = Api.API_22_patrolSave + "userId=" + Global.userId + "&images=" + "&type=" + Global.patrolType
                         + "&longitude=" + longitude + "&latitude=" + latitude
                         + "&goalId=" + Global.patrolId + "&contents=" + editText.getText().toString()
                         + "&itemResults=" + Utility.toURLEncoded(Global.exceptionMsg)
@@ -356,7 +356,7 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
             builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    String url = Api.API_22_patrolSave + "&type=" + Global.patrolType
+                    String url = Api.API_22_patrolSave  + "userId=" + Global.userId + "&images=" + "&type=" + Global.patrolType
                             + "&longitude=" + longitude + "&latitude=" + latitude
                             + "&goalId=" + Global.patrolId + "&contents=" + editText.getText().toString()
                             + "&itemResults=";

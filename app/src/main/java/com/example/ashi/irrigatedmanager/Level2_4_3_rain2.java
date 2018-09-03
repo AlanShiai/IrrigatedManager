@@ -82,7 +82,7 @@ public class Level2_4_3_rain2 extends AppCompatActivity {
     }
 
     private void getDataFromServerAndUpdateView() {
-        String url = Api.API_05_getRainMonitorList;
+        String url = Api.API_05_getRainMonitorList + "userId=" + Global.userId;
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {

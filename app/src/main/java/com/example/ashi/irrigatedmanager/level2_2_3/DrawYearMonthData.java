@@ -14,6 +14,7 @@ import android.view.View;
 import com.example.ashi.irrigatedmanager.gson.TotalCount;
 import com.example.ashi.irrigatedmanager.gson.User;
 import com.example.ashi.irrigatedmanager.util.Api;
+import com.example.ashi.irrigatedmanager.util.Global;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
 import com.example.ashi.irrigatedmanager.util.Utility;
 
@@ -92,7 +93,7 @@ public class DrawYearMonthData extends View {
     }
 
     private void getTotalCountFromUrl() {
-        String url = Api.API_29_queryTotalCount;
+        String url = Api.API_29_queryTotalCount + "userId=" + Global.userId;
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {

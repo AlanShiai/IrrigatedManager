@@ -60,7 +60,7 @@ public class Level2_4_3_rain3 extends AppCompatActivity {
 
     private void getDataFromServerAndUpdateView() {
         // "http://www.boze-tech.com/zfh_manager/a/app/login/getRainList?userId=1&name=柳林总雨量";
-        String url = Api.API_06_getRainList + "&name=" + Global.rain_name;
+        String url = Api.API_06_getRainList + "userId=" + Global.userId + "&name=" + Global.rain_name;
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {

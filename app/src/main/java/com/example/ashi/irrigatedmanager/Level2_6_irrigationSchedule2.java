@@ -65,7 +65,7 @@ public class Level2_6_irrigationSchedule2 extends AppCompatActivity {
 
     private void getDataFromServerAndUpdateListView() {
         // "http://www.boze-tech.com/zfh_manager/a/app/project/queryIrrigationSchedule?userId="+ Global.userId + "&year=2018&turn=1";
-        String url = Api.API_19_queryIrrigationSchedule + "&turn=" + Global.irrigation_turn;
+        String url = Api.API_19_queryIrrigationSchedule + "userId=" + Global.userId + "&turn=" + Global.irrigation_turn + "&year=2018";
         Log.d("aijun, irrigation", url);
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override

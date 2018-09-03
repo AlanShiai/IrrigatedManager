@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.ashi.irrigatedmanager.level2_4.SluiceInfo;
 import com.example.ashi.irrigatedmanager.level2_4.SluiceInfoAdapter;
 import com.example.ashi.irrigatedmanager.util.Api;
+import com.example.ashi.irrigatedmanager.util.Global;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
 import com.example.ashi.irrigatedmanager.util.Utility;
 
@@ -65,7 +66,6 @@ public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
 
         getSluiceDataFromServerAndUpdateListView1();
         getDataFromServerAndUpdateListView2();
-        getDataFromServerAndUpdateListView3();
     }
 
     private void initEnableList() {
@@ -202,7 +202,7 @@ public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
     // "project_type":"sluice","level6":"0.00","level10":"0.00","level5":"0.00","level4":"0.02","id":"ad407c9bd9634d0bac800651287a8c1f","level2":"0.01",
     // "level3":"0.00","time":"2018-08-27 17:24:51","level1":"0.01","project_id":null,"hole":"5"}]
     private void getSluiceDataFromServerAndUpdateListView1() {
-        String url = Api.API_03_getSluiceMonitorList;
+        String url = Api.API_03_getSluiceMonitorList + "userId=" + Global.userId;
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
@@ -239,43 +239,13 @@ public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
     // [{"id":"a2231e58787845c1a11702d7968303f1","time":"2018-08-27 17:24:51","level":"4.39",
     // "project_name":"张庄桥分洪闸上游水位","project_id":null,"project_type":"content_gague"}]
     private void getDataFromServerAndUpdateListView2() {
-        String url = Api.API_04_getWaterLevelMonitorList;
+        String url = Api.API_04_getWaterLevelMonitorList + "userId=" + Global.userId;
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 final String responseText = response.body().string();
 //                final List<InspectNote> list = Utility.handleApi20patrolResultResponse(responseText);
                 Log.d("aijun WaterLevelMo", responseText+"");
-//                if ( ! list.isEmpty() ) {
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            if ( null != listView ) {
-//                                IrrigationScheduleInfoAdpter adapter = new IrrigationScheduleInfoAdpter(
-//                                        Level2_6_irrigationSchedule2.this, R.layout.irrigation_schedule, list);
-//                                listView.setAdapter(adapter);
-//                            }
-//                        }
-//                    });
-//                }
-            }
-
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
-    // [{"time":"25","rain_data":"3.5"},{"time":"25","rain_data":"0.5"}]
-    private void getDataFromServerAndUpdateListView3() {
-        String url = Api.API_06_getRainList;
-        HttpUtil.sendOkHttpRequest(url, new Callback() {
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                final String responseText = response.body().string();
-//                final List<InspectNote> list = Utility.handleApi20patrolResultResponse(responseText);
-                Log.d("aijun RainMonito", responseText+"");
 //                if ( ! list.isEmpty() ) {
 //                    runOnUiThread(new Runnable() {
 //                        @Override

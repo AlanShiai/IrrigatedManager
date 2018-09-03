@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.ashi.irrigatedmanager.level2_2_3.InspectDetailInfo;
 import com.example.ashi.irrigatedmanager.level2_2_3.InspectDetailInfoAdpter;
 import com.example.ashi.irrigatedmanager.util.Api;
+import com.example.ashi.irrigatedmanager.util.Global;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
 import com.example.ashi.irrigatedmanager.util.Utility;
 
@@ -122,7 +123,8 @@ public class Level2_2_3_inspectDetails2 extends AppCompatActivity {
 
     private void getDataFromServerAndUpdateListView() {
         // "http://www.boze-tech.com/zfh_manager/a/app/patrol/officeStatistic?endDate=2018-07-12&startDate=2018-07-11&userId="+ Global.userId+"&dayType=&office=";
-        String url = Api.API_25_officeStatistic + "&projectType=" + items.get(itemKeys.get(oldSelector)) +
+        String url = Api.API_25_officeStatistic + "userId=" + Global.userId  + "&office=8eff2c16d5cf45fca84ac984190b0890"
+                + "&projectType=" + items.get(itemKeys.get(oldSelector)) +
                 "&month=" + months.get(monthKeys.get(monthOldSelector));
         Log.d("aijun officeStatistic", url);
         HttpUtil.sendOkHttpRequest(url, new Callback() {

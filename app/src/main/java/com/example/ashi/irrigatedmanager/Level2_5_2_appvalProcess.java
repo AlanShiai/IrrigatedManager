@@ -102,7 +102,7 @@ public class Level2_5_2_appvalProcess extends AppCompatActivity {
     }
 
     private void updatePatrolManagerList() {
-        String url = Api.API_32_getUserOfPatrol;
+        String url = Api.API_32_getUserOfPatrol + "userId=" + Global.userId;
         Log.d("aijun, PatrolManager", url);
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
