@@ -167,6 +167,8 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
                         Global.businessKey = dataList.get(position).businessKey;
                         Global.processInstanceId = dataList.get(position).processInstanceId;
                         Global.lastPageIsTodo = true;
+                        Global.appval = dataList.get(position);
+                        Log.d("aijun, Global.appval", Global.appval + "");
                     }
                     Intent intent = new Intent(getContext(), Level2_5_1_appvalDetails.class);
                     startActivity(intent);

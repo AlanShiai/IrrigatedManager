@@ -26,15 +26,12 @@ public interface Api {
     String API_12_todoActList                = address + "/a/app/actTask/todoActList?userId=" + Global.userId ;
     String API_13_historyActList             = address + "/a/app/actTask/historyActList?userId=" + Global.userId ;
     String API_14_getMyProcess               = address + "/a/app/actTask/getMyProcess?userId=" + Global.userId ;
-    String API_15_handleProcess              = address + "/a/app/actTask/handleProcess?taskName=异常处理&dealType=1&comment=很好" +
-            "&taskId=8539953ad40a4e0ea8ad86f7f944d1a0&taskDefKey=audit2&procInsId=93acd047627d45edad2102a7cf00cc0e" +
-            "&procDefId=patrol_result_deal_new:4:a1e5c2f5962a4db1820ca13aea26f57a&procDefKey=" +
-            "&businessKey=pro_patrol_result_deal:98eaf7ee37354b48b875caf30bbad7a9&userId=xizha&flag=yes";
+    String API_15_handleProcess              = address + "/a/app/actTask/handleProcess?";
     String API_16_businessForm              = address + "/a/app/actTask/businessForm?";
     String API_17_projectList               = address + "/a/app/project/projectList?userId="+ Global.userId +"&name=&office=";
     String API_18_projectDetail             = address + "/a/app/project/projectDetail?userId=" + Global.userId;
     String API_19_queryIrrigationSchedule = address + "/a/app/project/queryIrrigationSchedule?userId="+ Global.userId + "&year=2018";
-    String API_20_patrolResult              = address + "/a/app/patrol/patrolResult?userId="+ Global.userId+"&day=2018-07-11&dayType=1&type=&resultType=&status=";
+    String API_20_patrolResult              = address + "/a/app/patrol/patrolResult?userId="+ Global.userId + "&day=2018-07-11&dayType=1&type=&resultType=&status=";
     String API_21_patrolItem                = address + "/a/app/patrol/patrolItem?";
     String API_22_patrolSave                = address + "/a/app/patrol/patrolSave?userId=" + Global.userId + "&images=";
     String API_23_basicInfo                 = address + "/a/app/patrol/basicInfo?userId=" + Global.userId;

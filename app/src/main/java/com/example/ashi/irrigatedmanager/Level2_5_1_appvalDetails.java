@@ -66,11 +66,21 @@ public class Level2_5_1_appvalDetails extends AppCompatActivity {
             findViewById(R.id.next_step).setVisibility(View.INVISIBLE);
         }
 
+        findViewById(R.id.next_step).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Level2_5_1_appvalDetails.this, Level2_5_2_appvalProcess.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         findViewById(R.id.leve1_2_5_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Level2_5_1_appvalDetails.this, Level2_5_appvalProcess.class);
                 startActivity(intent);
+                finish();
             }
         });
 
