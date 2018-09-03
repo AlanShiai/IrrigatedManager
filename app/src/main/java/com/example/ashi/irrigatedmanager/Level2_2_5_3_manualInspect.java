@@ -121,7 +121,6 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
 
         positionText = (TextView) findViewById(R.id.position_text_view);
 
-
         ImageView located = (ImageView) findViewById(R.id.located);
         located.setOnClickListener(new View.OnClickListener() {
             @Override
