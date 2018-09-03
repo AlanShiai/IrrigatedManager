@@ -281,18 +281,24 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
         });
         updateBtn.setOnClickListener(new View.OnClickListener() {
 
-            private String getPatrolManagerString() {
+            private String getPatrolManagerUserId() {
                 String managerString = "";
+                String managerId = "1";
                 for (View listChild : listView.getTouchables()) {
                     if (listChild instanceof CheckBox) {
                         CheckBox checkBox = (CheckBox) listChild;
                         if (checkBox.isChecked()) {
                             managerString = checkBox.getText().toString();
-                            break;
+                            for (PatrolManager patrolManager : patrolManagers) {
+                                if (managerString.trim().equals(patrolManager.userName)) {
+                                    managerId = patrolManager.userId;
+                                    break;
+                                }
+                            }
                         }
                     }
                 }
-                return managerString;
+                return managerId;
             }
 
             @Override
@@ -305,8 +311,8 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
                         + "&longitude=" + longitude + "&latitude=" + latitude
                         + "&goalId=" + Global.patrolId + "&contents=" + editText.getText().toString()
                         + "&itemResults=" + Utility.toURLEncoded(Global.exceptionMsg)
-                        + "&createBy=" + 1;
-//                + "&createBy=" + Utility.toURLEncoded(getPatrolManagerString());
+//                        + "&createBy=" + 1;
+                        + "&createBy=" + getPatrolManagerUserId();
 
                 Log.d("aijun, patrolSave", url);
                 HttpUtil.sendOkHttpRequest(url, new Callback() {

@@ -212,8 +212,8 @@ public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
                         "\"level10\":\"0.00\",\"level5\":\"0.00\",\"level4\":\"0.02\",\"id\":\"ad407c9bd9634d0bac800651287a8c1f\"," +
                         "\"level2\":\"0.01\",\"level3\":\"0.00\",\"time\":\"2018-08-30 15:38:51\",\"level1\":\"0.01\"," +
                         "\"project_id\":null,\"waterData\":\"闸前水位:4.39毫米 闸后水位:0.16毫米 \",\"hole\":\"10\"}]";
-                final List<SluiceInfo> list = Utility.handleApi03SluiceMonitorListResponse(hardcodeString);
-//                final List<SluiceInfo> list = Utility.handleApi03SluiceMonitorListResponse(responseText);
+//                final List<SluiceInfo> list = Utility.handleApi03SluiceMonitorListResponse(hardcodeString);
+                final List<SluiceInfo> list = Utility.handleApi03SluiceMonitorListResponse(responseText);
                 Log.d("aijun SluiceMonit", responseText+"");
                 Log.d("aijun SluiceMonit", list+"");
                 if ( null != list ) {
