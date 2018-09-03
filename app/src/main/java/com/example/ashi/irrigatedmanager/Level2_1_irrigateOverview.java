@@ -131,7 +131,7 @@ public class Level2_1_irrigateOverview extends AppCompatActivity implements View
         findViewById(R.id.project_info).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Level2_1_irrigateOverview.this, Level2_3_projectInfo.class);
+                Intent intent = new Intent(Level2_1_irrigateOverview.this, Logout.class);
                 startActivity(intent);
                 finish();
             }

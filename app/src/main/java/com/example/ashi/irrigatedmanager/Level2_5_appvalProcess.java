@@ -123,7 +123,7 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
         findViewById(R.id.project_info).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Level2_5_appvalProcess.this, Level2_3_projectInfo.class);
+                Intent intent = new Intent(Level2_5_appvalProcess.this, Logout.class);
                 startActivity(intent);
                 finish();
             }

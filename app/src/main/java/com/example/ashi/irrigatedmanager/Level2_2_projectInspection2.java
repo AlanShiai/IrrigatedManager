@@ -218,13 +218,12 @@ public class Level2_2_projectInspection2 extends AppCompatActivity {
         findViewById(R.id.project_info).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Level2_2_projectInspection2.this, Level2_3_projectInfo.class);
+                Intent intent = new Intent(Level2_2_projectInspection2.this, Logout.class);
                 startActivity(intent);
                 finish();
             }
         });
     }
-
 
     private void startCaptureActivityForResult() {
         Intent intent = new Intent(Level2_2_projectInspection2.this, CaptureActivity.class);

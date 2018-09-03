@@ -371,10 +371,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (isLoginSuccess) {
-                if (hasExecute) {
-                    return;
-                }
-                hasExecute = true;
+//                if (hasExecute) {
+//                    return;ad
+//                }
+//                hasExecute = true;
                 Intent intent = new Intent(LoginActivity.this, Level2_1_irrigateOverview.class);
                 startActivity(intent);
                 finish();
