@@ -60,6 +60,12 @@ public class Level2_5_1_appvalDetails extends AppCompatActivity {
 
         appval_details_title = (TextView) findViewById(R.id.appval_details_title);
 
+        if (Global.lastPageIsTodo) {
+            findViewById(R.id.next_step).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.next_step).setVisibility(View.INVISIBLE);
+        }
+
         findViewById(R.id.leve1_2_5_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
