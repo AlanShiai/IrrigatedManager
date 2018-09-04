@@ -337,18 +337,20 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     final String responseText = response.body().string();
                     Log.d("aijun login", responseText);
                     User user = Utility.handleApi01LoginResponse(responseText);
-                    Log.d("aijun user.id", user.id);
-                    Global.userId = user.id;
-                    Log.d("aijun Global.userId", Global.userId);
-                    Log.d("aijun login", Boolean.toString(user.isLoginSuccess()));
+                    if ( null != user && null != user.id) {
+                        Log.d("aijun user.id", user.id);
+                        Global.userId = user.id;
+                        Log.d("aijun Global.userId", Global.userId);
+                        Log.d("aijun login", Boolean.toString(user.isLoginSuccess()));
 //                        final Weather weather = Utility.handleWeatherResponse(responseText);
-                    isLoginSuccess = user.isLoginSuccess();
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
+                        isLoginSuccess = user.isLoginSuccess();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
 //                            onPostExecute(isLoginSuccess);
-                        }
-                    });
+                            }
+                        });
+                    }
                 }
 
                 @Override

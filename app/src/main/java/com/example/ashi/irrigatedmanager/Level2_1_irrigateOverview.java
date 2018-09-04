@@ -1,8 +1,15 @@
 package com.example.ashi.irrigatedmanager;
 
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
+import android.provider.MediaStore;
+import android.support.annotation.DrawableRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -17,6 +24,9 @@ import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.example.ashi.irrigatedmanager.util.Const;
+import com.example.ashi.irrigatedmanager.util.HttpUtil;
+
+import java.io.IOException;
 
 public class Level2_1_irrigateOverview extends AppCompatActivity implements ViewSwitcher.ViewFactory, View.OnTouchListener {
 
@@ -134,6 +144,8 @@ public class Level2_1_irrigateOverview extends AppCompatActivity implements View
                 Intent intent = new Intent(Level2_1_irrigateOverview.this, Logout.class);
                 startActivity(intent);
                 finish();
+//                String fileUri = getResourcesUri(R.drawable.a1);
+//                HttpUtil.uploadMultiFile("/data/data/com.example.ashi.irrigatedmanager/files/assets/logo_h.png");
             }
         });
     }
@@ -187,5 +199,23 @@ public class Level2_1_irrigateOverview extends AppCompatActivity implements View
         i.setLayoutParams(new ImageSwitcher.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
 
         return i;
+    }
+
+    private String getResourcesUri(@DrawableRes int id) {
+        Resources resources = getResources();
+        Uri selectedVideoUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" +
+                resources.getResourcePackageName(id) + "/" +
+                resources.getResourceTypeName(id) + "/" +
+                resources.getResourceEntryName(id));
+        String filePath;
+        String[] filePathColumn = {MediaStore.MediaColumns.DATA};
+        Bitmap bitmap = null;
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedVideoUri);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return "";
     }
 }

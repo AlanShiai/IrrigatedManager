@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.ashi.irrigatedmanager.level2_4.Rain;
 import com.example.ashi.irrigatedmanager.level2_4.RainAdapter;
@@ -48,6 +49,9 @@ public class Level2_4_3_rain3 extends AppCompatActivity {
 
 //        initData();
         listView = (ListView) findViewById(R.id.level_2_4_3_rain_list);
+
+        TextView rain_date = (TextView) findViewById(R.id.rain_date);
+        rain_date.setText("  " + Calendar.getInstance().get(Calendar.YEAR) + "年" + (Calendar.getInstance().get(Calendar.MONTH)+1) + "月  ");
 
 //        RainDetailAdapter adapter = new RainDetailAdapter(
 //                Level2_4_3_rain3.this, R.layout.rain_detail_item, dataList);
