@@ -33,6 +33,7 @@
                 android:layout_height="wrap_content"
                 android:text="总干渠"
                 android:textColor="#ADADAD"
+                android:visibility="gone"
                 />
         </LinearLayout>
 

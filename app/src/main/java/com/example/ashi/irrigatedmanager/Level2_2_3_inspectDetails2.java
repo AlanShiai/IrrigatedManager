@@ -164,7 +164,6 @@ public class Level2_2_3_inspectDetails2 extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 newSelector = which;
-                showText(itemKeys.get(which));
             }
         });
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -175,12 +174,11 @@ public class Level2_2_3_inspectDetails2 extends AppCompatActivity {
                     type_text.setText(itemKeys.get(oldSelector));
                     getDataFromServerAndUpdateListView();
                 }
-                showText("确定");
             }
         }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                showText("取消");
+
             }
         });
 
@@ -197,7 +195,6 @@ public class Level2_2_3_inspectDetails2 extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 monthNewSelector = which;
-                showText(monthKeys.get(which));
             }
         });
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -208,12 +205,11 @@ public class Level2_2_3_inspectDetails2 extends AppCompatActivity {
                     month_text.setText(monthKeys.get(monthOldSelector));
                     getDataFromServerAndUpdateListView();
                 }
-                showText("确定");
             }
         }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                showText("取消");
+
             }
         });
 
