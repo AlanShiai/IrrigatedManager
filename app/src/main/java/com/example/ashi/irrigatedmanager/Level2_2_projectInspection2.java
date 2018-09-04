@@ -78,12 +78,7 @@ public class Level2_2_projectInspection2 extends AppCompatActivity {
                 Log.d("aijun patrolInit", responseText+"");
                 if ( null != list ) {
                     Global.abnormalList.clear();
-                    for (int i = 0; i < list.size(); i++) {
-                        if ( i == 3) {
-                            break;
-                        }
-                        Global.abnormalList.add(list.get(i));
-                    }
+                    Global.abnormalList.addAll(list);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
