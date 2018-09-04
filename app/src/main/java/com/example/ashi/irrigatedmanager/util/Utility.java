@@ -40,6 +40,22 @@ import java.util.List;
 
 public class Utility {
 
+    public static String toDayString(int year, int month, int day) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(year);
+        stringBuilder.append("-");
+        if ( month < 10 ) {
+            stringBuilder.append("0");
+        }
+        stringBuilder.append(month);
+        stringBuilder.append("-");
+        if ( day < 10 ) {
+            stringBuilder.append("0");
+        }
+        stringBuilder.append(day);
+        return stringBuilder.toString();
+    }
+
     public static int getThisYear() {
         return Calendar.getInstance().get(Calendar.YEAR);
     }

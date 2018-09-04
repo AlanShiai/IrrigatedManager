@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -67,7 +68,7 @@ public class Level2_2_3_inspectDetails2 extends AppCompatActivity {
         months.put("十二月", "12");
         monthKeys.addAll(months.keySet());
     }
-    int monthOldSelector = 0;
+    int monthOldSelector = Utility.getThisMonth() - 1;
     int monthNewSelector = 0;
     TextView month_text;
 
@@ -85,6 +86,22 @@ public class Level2_2_3_inspectDetails2 extends AppCompatActivity {
         setContentView(R.layout.activity_level2_2_3_inspect_details2);
 
         listView = (ListView) findViewById(R.id.level_2_2_3_inspect_details);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Global.inspectDetails_projectType =  items.get(itemKeys.get(oldSelector));
+                try {
+                    Global.inspectDetails_month = Integer.parseInt(months.get(monthKeys.get(monthOldSelector)));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if ( null != dataList && dataList.size() > position ) {
+                    Global.inspectDetails_officeId = dataList.get(position).id;
+                }
+                Intent intent = new Intent(Level2_2_3_inspectDetails2.this, Level2_2_3_1_inspectDetails.class);
+                startActivity(intent);
+            }
+        });
 
 //        initData();
 //        InspectDetailInfoAdpter adapter = new InspectDetailInfoAdpter(
@@ -116,14 +133,14 @@ public class Level2_2_3_inspectDetails2 extends AppCompatActivity {
         type_text.setText(itemKeys.get(oldSelector));
 
         month_text = (TextView) findViewById(R.id.month_text);
-        month_text.setText(monthKeys.get(oldSelector));
+        month_text.setText(monthKeys.get(monthOldSelector));
 
         getDataFromServerAndUpdateListView();
     }
 
     private void getDataFromServerAndUpdateListView() {
         // "http://www.boze-tech.com/zfh_manager/a/app/patrol/officeStatistic?endDate=2018-07-12&startDate=2018-07-11&userId="+ Global.userId+"&dayType=&office=";
-        String url = Api.API_25_officeStatistic + "userId=" + Global.user.id  + "&office=8eff2c16d5cf45fca84ac984190b0890"
+        String url = Api.API_25_officeStatistic + "userId=" + Global.user.id  + "&office=" + Global.user.officeId
                 + "&projectType=" + items.get(itemKeys.get(oldSelector)) +
                 "&month=" + months.get(monthKeys.get(monthOldSelector));
         Log.d("aijun officeStatistic", url);
@@ -138,8 +155,10 @@ public class Level2_2_3_inspectDetails2 extends AppCompatActivity {
                         @Override
                         public void run() {
                             if ( null != listView ) {
+                                dataList.clear();
+                                dataList.addAll(list);
                                 InspectDetailInfoAdpter adapter = new InspectDetailInfoAdpter(
-                                        Level2_2_3_inspectDetails2.this, R.layout.inspect_details, list);
+                                        Level2_2_3_inspectDetails2.this, R.layout.inspect_details, dataList);
                                 listView.setAdapter(adapter);
                             }
                         }

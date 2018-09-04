@@ -181,23 +181,7 @@ public class Level2_2_2_inspectNote extends AppCompatActivity {
     }
 
     private void updateDayTextView(TextView textView, int year, int month, int day) {
-        textView.setText(toDayString(year, month, day));
-    }
-
-    private String toDayString(int year, int month, int day) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(year);
-        stringBuilder.append("-");
-        if ( month < 10 ) {
-            stringBuilder.append("0");
-        }
-        stringBuilder.append(month);
-        stringBuilder.append("-");
-        if ( day < 10 ) {
-            stringBuilder.append("0");
-        }
-        stringBuilder.append(day);
-        return stringBuilder.toString();
+        textView.setText(Utility.toDayString(year, month, day));
     }
 
     private void getDataFromServerAndUpdateListView() {
@@ -236,8 +220,8 @@ public class Level2_2_2_inspectNote extends AppCompatActivity {
         // &startDate=2018-05-16&endDate=2018-05-19
         String url = Api.API_28_officeUserStatistic + "userId=" + Global.user.id  + "&office=06b21ce1eaec48e59e2a40025b0991ce" +
                 "&projectType=" + items.get(itemKeys.get(typeSelector)) +
-                "&startDate=" + toDayString(start_year, start_month, start_day) +
-                "&endDate=" + toDayString(end_year, end_month, end_day) +
+                "&startDate=" + Utility.toDayString(start_year, start_month, start_day) +
+                "&endDate=" + Utility.toDayString(end_year, end_month, end_day) +
                 "&name=" + ((EditText) findViewById(R.id.name)).getText();
         Log.d("aijun officeUserStatic", url);
         HttpUtil.sendOkHttpRequest(url, new Callback() {

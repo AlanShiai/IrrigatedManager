@@ -43,4 +43,9 @@ public class Global {
     // handleProcess
     public static Appval appval;
     public static int appvalSelector = 0;
+
+    // inspectDetails
+    public static String inspectDetails_projectType = "";
+    public static int inspectDetails_month = 1;
+    public static String inspectDetails_officeId = "8eff2c16d5cf45fca84ac984190b0890";
 }
