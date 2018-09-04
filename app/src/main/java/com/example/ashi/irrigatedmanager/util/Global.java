@@ -42,4 +42,5 @@ public class Global {
 
     // handleProcess
     public static Appval appval;
+    public static int appvalSelector = 0;
 }

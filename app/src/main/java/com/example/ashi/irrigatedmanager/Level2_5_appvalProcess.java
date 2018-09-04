@@ -79,6 +79,8 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
+        tabLayout.getTabAt(Global.appvalSelector).select();
+
 //        initData();
 
         findViewById(R.id.leve1_2_5_back).setOnClickListener(new View.OnClickListener() {
@@ -170,6 +172,7 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
                         Global.appval = dataList.get(position);
                         Log.d("aijun, Global.appval", Global.appval + "");
                     }
+                    Global.appvalSelector = 0;
                     Intent intent = new Intent(getContext(), Level2_5_1_appvalDetails.class);
                     startActivity(intent);
                 }
@@ -214,17 +217,17 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
 
     public static class PlaceholderFragment2 extends Fragment {
 
-        ListView toDoListView;
+        ListView historyListView;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_listview, container, false);
-            toDoListView = (ListView) rootView.findViewById(R.id.fragment_listview_list);
+            historyListView = (ListView) rootView.findViewById(R.id.fragment_listview_list);
 
 //            AppvalAdapter adapter = new AppvalAdapter(getContext(), R.layout.appval_item, dataList);
 //            toDoListView.setAdapter(adapter);
-            toDoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            historyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     if ( null != appvalHistory.data &&  null != appvalHistory.data &&  appvalHistory.data.size() > position ) {
@@ -232,6 +235,7 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
                         Global.processInstanceId = appvalHistory.data.get(position).processInstanceId;
                         Global.lastPageIsTodo = false;
                     }
+                    Global.appvalSelector = 1;
                     Intent intent = new Intent(getContext(), Level2_5_1_appvalDetails.class);
                     startActivity(intent);
                 }
@@ -253,9 +257,9 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if ( null != toDoListView ) {
+                                if ( null != historyListView ) {
                                     AppvalAdapter adapter = new AppvalAdapter(getContext(), R.layout.appval_item, appvalHistory.data);
-                                    toDoListView.setAdapter(adapter);
+                                    historyListView.setAdapter(adapter);
                                 }
                             }
                         });
@@ -293,6 +297,7 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
                         Global.processInstanceId = myProcess.data.get(position).processInstanceId;
                         Global.lastPageIsTodo = false;
                     }
+                    Global.appvalSelector = 2;
                     Intent intent = new Intent(getContext(), Level2_5_1_appvalDetails.class);
                     startActivity(intent);
                 }
