@@ -74,7 +74,7 @@ public class Level2_2_5_1_manualInspect extends AppCompatActivity {
     }
 
     private void getDataFromServerAndUpdateListView() {
-        String url = Api.API_26_patrolDesQuery + "userId=" + Global.userId  + "&type=";
+        String url = Api.API_26_patrolDesQuery + "userId=" + Global.user.id  + "&type=";
         Log.d("aijun patrolDesQuery", url);
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override

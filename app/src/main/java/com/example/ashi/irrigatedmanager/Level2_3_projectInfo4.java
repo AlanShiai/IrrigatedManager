@@ -67,7 +67,7 @@ public class Level2_3_projectInfo4 extends AppCompatActivity {
 
     private void getDataFromServerAndUpdateListView() {
         // "http://www.boze-tech.com/zfh_manager/a/app/project/projectDetail?userId=1&projectType=channel&id=331d737641434a0bb476265b38d9db1c";
-        String url = Api.API_18_projectDetail + "userId=" + Global.userId + "&projectType=" + Global.projectInfoType
+        String url = Api.API_18_projectDetail + "userId=" + Global.user.id + "&projectType=" + Global.projectInfoType
                 + "&id=" + Global.projectId;
         Log.d("aijun jectDetail" , url);
         HttpUtil.sendOkHttpRequest(url, new Callback() {

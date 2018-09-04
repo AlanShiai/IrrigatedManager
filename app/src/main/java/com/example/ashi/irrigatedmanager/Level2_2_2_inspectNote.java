@@ -234,7 +234,7 @@ public class Level2_2_2_inspectNote extends AppCompatActivity {
         // http://www.boze-tech.com/zfh_manager/a/app/patrol/officeUserStatistic?userId=1
         // &office=06b21ce1eaec48e59e2a40025b0991ce&projectType=channel&name=%E6%BB%8F%E9%98%B3%E6%B2%B3%E7%A3%81%E5%8E%BF%E6%AE%B5
         // &startDate=2018-05-16&endDate=2018-05-19
-        String url = Api.API_28_officeUserStatistic + "userId=" + Global.userId  + "&office=06b21ce1eaec48e59e2a40025b0991ce" +
+        String url = Api.API_28_officeUserStatistic + "userId=" + Global.user.id  + "&office=06b21ce1eaec48e59e2a40025b0991ce" +
                 "&projectType=" + items.get(itemKeys.get(typeSelector)) +
                 "&startDate=" + toDayString(start_year, start_month, start_day) +
                 "&endDate=" + toDayString(end_year, end_month, end_day) +

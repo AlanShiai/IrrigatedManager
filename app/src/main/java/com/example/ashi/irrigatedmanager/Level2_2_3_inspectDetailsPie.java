@@ -124,7 +124,7 @@ public class Level2_2_3_inspectDetailsPie extends AppCompatActivity {
         });
     }
     private void getDataFromServerAndUpdateListView2() {
-        String url = Api.API_31_queryYearCount + "userId=" + Global.userId + "&month=05";
+        String url = Api.API_31_queryYearCount + "userId=" + Global.user.id + "&month=05";
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {

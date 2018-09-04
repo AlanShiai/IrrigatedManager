@@ -293,7 +293,7 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
         private void getDataFromServerAndUpdateListView() {
             // "http://www.boze-tech.com/zfh_manager/a/app/patrol/basicInfo?id=8502f69d32304ee6a9aacd99920fdcd7&type=channel&userId=1";
             // Api.API_23_basicInfo = http://www.boze-tech.com/zfh_manager/a/app/patrol/basicInfo?userId=1
-            String url = Api.API_23_basicInfo  + "userId=" + Global.userId + "&id=" + Global.patrolId
+            String url = Api.API_23_basicInfo  + "userId=" + Global.user.id + "&id=" + Global.patrolId
                     + "&type="+Global.patrolType;
             Log.d("aijun basicInfo", url+"");
             HttpUtil.sendOkHttpRequest(url, new Callback() {

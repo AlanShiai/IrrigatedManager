@@ -1,6 +1,7 @@
 package com.example.ashi.irrigatedmanager.util;
 
 import com.example.ashi.irrigatedmanager.gson.Abnormal;
+import com.example.ashi.irrigatedmanager.gson.User;
 import com.example.ashi.irrigatedmanager.level5.Appval;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class Global {
 
-    public static String userId = "1";
+    public static User user = new User("1");
 
     public static boolean isExceptionFound = false;
     public static String exceptionMsg = "";

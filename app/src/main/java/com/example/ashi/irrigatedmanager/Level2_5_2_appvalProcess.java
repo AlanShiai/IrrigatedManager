@@ -81,7 +81,7 @@ public class Level2_5_2_appvalProcess extends AppCompatActivity {
 
     private String getPatrolManagerUserId() {
         String managerString = "";
-        String managerId = Global.userId;
+        String managerId = Global.user.id;
         if ( null != listView ) {
             for (View listChild : listView.getTouchables()) {
                 if (listChild instanceof CheckBox) {
@@ -137,7 +137,7 @@ public class Level2_5_2_appvalProcess extends AppCompatActivity {
     }
 
     private void updatePatrolManagerList() {
-        String url = Api.API_32_getUserOfPatrol + "userId=" + Global.userId;
+        String url = Api.API_32_getUserOfPatrol + "userId=" + Global.user.id;
         Log.d("aijun, PatrolManager", url);
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override

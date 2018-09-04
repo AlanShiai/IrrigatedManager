@@ -18,6 +18,10 @@ public class User {
     public String msg;
     public String loginName;
 
+    public User (String id) {
+        this.id = id;
+    }
+
     public boolean isLoginSuccess() {
         boolean isSuccess = false;
         if (null != code && "200".equals(code)) {

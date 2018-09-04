@@ -26,7 +26,7 @@
             />
 
         <TextView
-            android:id="@+id/level_2_1_title"
+            android:id="@+id/login_name"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
@@ -65,9 +65,46 @@
         >
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="#00F5F5F5"
+            >
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/f3"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="管理单位："
+                android:textColor="#FFFFFF"
+                />
+            <TextView
+                android:id="@+id/officeName"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="漳滏河管理处"
+                android:textColor="#FFFFFF"
+                />
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="80dp"
             >
 
             <ImageView

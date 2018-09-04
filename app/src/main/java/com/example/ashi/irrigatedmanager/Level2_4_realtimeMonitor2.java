@@ -202,7 +202,7 @@ public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
     // "project_type":"sluice","level6":"0.00","level10":"0.00","level5":"0.00","level4":"0.02","id":"ad407c9bd9634d0bac800651287a8c1f","level2":"0.01",
     // "level3":"0.00","time":"2018-08-27 17:24:51","level1":"0.01","project_id":null,"hole":"5"}]
     private void getSluiceDataFromServerAndUpdateListView1() {
-        String url = Api.API_03_getSluiceMonitorList + "userId=" + Global.userId;
+        String url = Api.API_03_getSluiceMonitorList + "userId=" + Global.user.id;
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
@@ -239,7 +239,7 @@ public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
     // [{"id":"a2231e58787845c1a11702d7968303f1","time":"2018-08-27 17:24:51","level":"4.39",
     // "project_name":"张庄桥分洪闸上游水位","project_id":null,"project_type":"content_gague"}]
     private void getDataFromServerAndUpdateListView2() {
-        String url = Api.API_04_getWaterLevelMonitorList + "userId=" + Global.userId;
+        String url = Api.API_04_getWaterLevelMonitorList + "userId=" + Global.user.id;
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {

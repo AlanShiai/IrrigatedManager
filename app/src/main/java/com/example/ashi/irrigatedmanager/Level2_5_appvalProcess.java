@@ -180,8 +180,8 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
         }
 
         private void getDataFromServerAndUpdateToDoListView() {
-            String url = Api.API_12_todoActList + "userId=" + Global.userId;
-            Log.d("aijun todoActList", Global.userId);
+            String url = Api.API_12_todoActList + "userId=" + Global.user.id;
+            Log.d("aijun todoActList", Global.user.id);
             Log.d("aijun todoActList", url);
             HttpUtil.sendOkHttpRequest(url, new Callback() {
                 @Override
@@ -242,7 +242,7 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
         }
 
         private void getDataFromServerAndUpdateToDoListView() {
-            String url = Api.API_13_historyActList + "userId=" + Global.userId;
+            String url = Api.API_13_historyActList + "userId=" + Global.user.id;
             Log.d("aijun 13_historyActList", url);
             HttpUtil.sendOkHttpRequest(url, new Callback() {
                 @Override
@@ -303,7 +303,7 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
         }
 
         private void getDataFromServerAndUpdateToDoListView() {
-            String url = Api.API_14_getMyProcess + "userId=" + Global.userId;
+            String url = Api.API_14_getMyProcess + "userId=" + Global.user.id;
             Log.d("aijun 14_getMyProcess", url);
             HttpUtil.sendOkHttpRequest(url, new Callback() {
                 @Override

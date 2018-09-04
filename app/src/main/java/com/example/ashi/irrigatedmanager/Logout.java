@@ -3,10 +3,14 @@ package com.example.ashi.irrigatedmanager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import com.example.ashi.irrigatedmanager.util.Global;
 
 public class Logout extends AppCompatActivity {
 
@@ -20,6 +24,12 @@ public class Logout extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
         setContentView(R.layout.activity_logout);
+
+        TextView loginName = (TextView) findViewById(R.id.login_name);
+        loginName.setText(Global.user.loginName);
+
+        TextView officeName = (TextView) findViewById(R.id.officeName);
+        officeName.setText(Global.user.officeName);
 
         findViewById(R.id.action_to_project_info).setOnClickListener(new View.OnClickListener() {
             @Override

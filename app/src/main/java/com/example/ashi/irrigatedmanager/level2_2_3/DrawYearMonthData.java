@@ -93,7 +93,7 @@ public class DrawYearMonthData extends View {
     }
 
     private void getTotalCountFromUrl() {
-        String url = Api.API_29_queryTotalCount + "userId=" + Global.userId;
+        String url = Api.API_29_queryTotalCount + "userId=" + Global.user.id;
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
