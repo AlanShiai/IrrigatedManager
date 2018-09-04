@@ -358,13 +358,15 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
                     String url = Api.API_22_patrolSave  + "userId=" + Global.user.id + "&images=" + "&type=" + Global.patrolType
                             + "&longitude=" + longitude + "&latitude=" + latitude
                             + "&goalId=" + Global.patrolId + "&contents=" + editText.getText().toString()
-                            + "&itemResults=";
+                            + "&itemResults="
+                            + "&createBy=" + 1;
                     Log.d("aijun, patrolSave", url);
                     HttpUtil.sendOkHttpRequest(url, new Callback() {
                         @Override
                         public void onResponse(Call call, Response response) throws IOException {
                             final String responseText = response.body().string();
                             HttpResult httpResult = Utility.handleNormalFormResponse(responseText);
+                            Log.d("aijun, patrolSave", responseText);
                             if (httpResult.isSuccess()) {
                                 runOnUiThread(new Runnable() {
                                     @Override
