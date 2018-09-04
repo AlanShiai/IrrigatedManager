@@ -58,9 +58,9 @@ public class Level2_2_2_inspectNote extends AppCompatActivity {
     ListView listView1, listView2;
     List<PatrolNote> dataList = new ArrayList<>();
 
-    int start_year = 2018, start_month = 8, start_day = 15;
+    int start_year = Utility.getThisYear(), start_month = Utility.getThisMonth(), start_day = 1;
     TextView start_text;
-    int end_year = 2018, end_month = 8, end_day = 30;
+    int end_year = Utility.getThisYear(), end_month = Utility.getThisMonth(), end_day = Utility.getCurrentMonthLastDay();;
     TextView end_text;
 
 

@@ -51,7 +51,7 @@ public class Level2_4_3_rain3 extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.level_2_4_3_rain_list);
 
         TextView rain_date = (TextView) findViewById(R.id.rain_date);
-        rain_date.setText("  " + Calendar.getInstance().get(Calendar.YEAR) + "年" + (Calendar.getInstance().get(Calendar.MONTH)+1) + "月  ");
+        rain_date.setText("  " + Utility.getThisYear() + "年" + Utility.getThisMonth() + "月  ");
 
 //        RainDetailAdapter adapter = new RainDetailAdapter(
 //                Level2_4_3_rain3.this, R.layout.rain_detail_item, dataList);
@@ -94,7 +94,7 @@ public class Level2_4_3_rain3 extends AppCompatActivity {
                     map.put(rainDetailData.time, rainDetailData.rain_data);
                 }
 
-                int lastDay = getCurrentMonthLastDay();
+                int lastDay = Utility.getCurrentMonthLastDay();
                 int halfDays = lastDay/2;
                 if (lastDay % 2 != 0) {
                     halfDays = lastDay/2 + 1;
@@ -140,7 +140,7 @@ public class Level2_4_3_rain3 extends AppCompatActivity {
     }
 
     private void initData() {
-        int lastDay = getCurrentMonthLastDay();
+        int lastDay = Utility.getCurrentMonthLastDay();
         int halfDays = lastDay/2;
         if (lastDay % 2 != 0) {
             halfDays = lastDay/2 + 1;
@@ -155,27 +155,4 @@ public class Level2_4_3_rain3 extends AppCompatActivity {
         }
     }
 
-    /**
-     * 取得当月天数
-     * */
-    public static int getCurrentMonthLastDay() {
-        Calendar a = Calendar.getInstance();
-        a.set(Calendar.DATE, 1);//把日期设置为当月第一天
-        a.roll(Calendar.DATE, -1);//日期回滚一天，也就是最后一天
-        int maxDate = a.get(Calendar.DATE);
-        return maxDate;
-    }
-
-    /**
-     * 得到指定月的天数
-     * */
-    public static int getMonthLastDay(int year, int month) {
-        Calendar a = Calendar.getInstance();
-        a.set(Calendar.YEAR, year);
-        a.set(Calendar.MONTH, month - 1);
-        a.set(Calendar.DATE, 1);//把日期设置为当月第一天
-        a.roll(Calendar.DATE, -1);//日期回滚一天，也就是最后一天
-        int maxDate = a.get(Calendar.DATE);
-        return maxDate;
-    }
 }

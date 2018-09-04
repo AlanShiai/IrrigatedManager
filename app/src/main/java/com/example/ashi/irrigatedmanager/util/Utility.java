@@ -31,6 +31,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.net.URLEncoder;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -38,6 +39,38 @@ import java.util.List;
  */
 
 public class Utility {
+
+    public static int getThisYear() {
+        return Calendar.getInstance().get(Calendar.YEAR);
+    }
+
+    public static int getThisMonth() {
+        return Calendar.getInstance().get(Calendar.MONTH)+1;
+    }
+
+    /**
+     * 取得当月天数
+     * */
+    public static int getCurrentMonthLastDay() {
+        Calendar a = Calendar.getInstance();
+        a.set(Calendar.DATE, 1);//把日期设置为当月第一天
+        a.roll(Calendar.DATE, -1);//日期回滚一天，也就是最后一天
+        int maxDate = a.get(Calendar.DATE);
+        return maxDate;
+    }
+
+    /**
+     * 得到指定月的天数
+     * */
+    public static int getMonthLastDay(int year, int month) {
+        Calendar a = Calendar.getInstance();
+        a.set(Calendar.YEAR, year);
+        a.set(Calendar.MONTH, month - 1);
+        a.set(Calendar.DATE, 1);//把日期设置为当月第一天
+        a.roll(Calendar.DATE, -1);//日期回滚一天，也就是最后一天
+        int maxDate = a.get(Calendar.DATE);
+        return maxDate;
+    }
 
     public static String toURLEncoded(String paramString) {
         if (paramString == null || paramString.equals("")) {
