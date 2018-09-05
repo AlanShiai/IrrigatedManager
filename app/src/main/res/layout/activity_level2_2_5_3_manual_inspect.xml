@@ -94,6 +94,7 @@
             android:text=""
             android:minLines="8"
             android:maxLines="10"
+            android:maxLength="500"
             android:scrollbars="vertical"
             android:background="#FFFFFF"
             />
