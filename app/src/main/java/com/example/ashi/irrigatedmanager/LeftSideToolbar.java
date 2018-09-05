@@ -32,8 +32,6 @@ public class LeftSideToolbar extends Fragment {
 
     private TextView titleText;
 
-    private Button backButton;
-
     private ListView listView;
 
     private ArrayAdapter<String> adapter;

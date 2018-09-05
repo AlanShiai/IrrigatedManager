@@ -42,8 +42,7 @@ public class Logout extends AppCompatActivity {
 
         addListernerForBottomToolbar();
 
-        Button backButton = (Button) findViewById(R.id.logout);
-        backButton.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.logout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Logout.this, LoginActivity.class);
@@ -51,8 +50,6 @@ public class Logout extends AppCompatActivity {
                 finish();
             }
         });
-
-
     }
 
     private void addListernerForBottomToolbar() {

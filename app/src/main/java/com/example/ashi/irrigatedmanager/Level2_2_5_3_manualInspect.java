@@ -78,7 +78,7 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
 
     private ImageView imageView1, imageView2, imageView3, imageView4, imageView5, imageView6;
 
-    private Button manualInspectReportButton, backButton;
+    private Button manualInspectReportButton;
 
     private Uri imageUri;
 
@@ -223,7 +223,7 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
                 }
             }
         });
-        backButton.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Level2_2_5_3_manualInspect.this, Level2_2_5_2_manualInspect.class);

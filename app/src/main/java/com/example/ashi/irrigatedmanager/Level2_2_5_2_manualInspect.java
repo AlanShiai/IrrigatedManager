@@ -66,7 +66,7 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
         }
         setContentView(R.layout.activity_level2_2_5_2_manual_inspect);
 
-        initData();
+//        initData();
 
         mSectionsPagerAdapter = new Level2_2_5_2_manualInspect.SectionsPagerAdapter(getSupportFragmentManager());
 
