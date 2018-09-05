@@ -93,7 +93,7 @@
             android:hint="填写巡检描述"
             android:text=""
             android:minLines="8"
-            android:maxLines="10"
+            android:maxLines="20"
             android:maxLength="500"
             android:scrollbars="vertical"
             android:background="#FFFFFF"

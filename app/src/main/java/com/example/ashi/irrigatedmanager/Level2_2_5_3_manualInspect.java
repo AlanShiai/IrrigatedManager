@@ -32,6 +32,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -284,9 +285,9 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
                 String managerId = "1";
                 for (View listChild : listView.getTouchables()) {
                     if (listChild instanceof CheckBox) {
-                        CheckBox checkBox = (CheckBox) listChild;
-                        if (checkBox.isChecked()) {
-                            managerString = checkBox.getText().toString();
+                        RadioButton radioButton = (RadioButton) listChild;
+                        if (radioButton.isChecked()) {
+                            managerString = radioButton.getText().toString();
                             for (PatrolManager patrolManager : patrolManagers) {
                                 if (managerString.trim().equals(patrolManager.userName)) {
                                     managerId = patrolManager.userId;
