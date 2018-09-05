@@ -22,8 +22,6 @@ import java.util.List;
 
 public class DrawPie extends View {
 
-    List<Integer> colors = Arrays.asList(0xFFFF69B4, 0xFF90EE90, 0xFF6495ED, 0xFF87CEFA, 0xFFD19275);
-
     private Paint mPaint;
     private int mCurWidth;            //当前屏幕的宽 pixel
     private int mCurHeight;           //当前屏幕的高 pixel
@@ -118,7 +116,7 @@ public class DrawPie extends View {
             }
             startAngle = startAngle + sweepAngle;
             sweepAngle = yearAbnormalNumber / yearAbnormalNumberSum * 360;
-            mPaint.setColor(colors.get(i%colors.size()));
+            mPaint.setColor(Global.colors.get(i % Global.colors.size()));
             canvas.drawArc(pieRectF, startAngle, sweepAngle, true, mPaint);
             pxs = (float) (mRadius * Math.cos(Math.toRadians(startAngle + sweepAngle / 2)));
             pys = (float) (mRadius * Math.sin(Math.toRadians(startAngle + sweepAngle / 2)));
@@ -134,7 +132,7 @@ public class DrawPie extends View {
             } else if ( textAngle >= 90 && textAngle < 180) {
                 canvas.drawLine(circle_x + pxs, circle_y + pys, circle_x + pxs - 20, circle_y + pys + 20, mPaint);
                 canvas.drawLine(circle_x + pxs - 20, circle_y + pys + 20, circle_x + pxs - 240, circle_y + pys + 20, mPaint);
-                mPaint.setColor(colors.get(i%colors.size()));
+                mPaint.setColor(Global.colors.get(i % Global.colors.size()));
                 canvas.drawText(str, circle_x + pxs - 240 + 60, circle_y + pys + 10, mPaint);
             } else if ( textAngle >= 180 && textAngle < 270) {
                 mPaint.setColor(0xFFC0C0C0);
@@ -228,7 +226,7 @@ public class DrawPie extends View {
         for(int i = 0; i < Global.abnormalList.size(); i++) {
             str = Global.abnormalList.get(i).projectLabel;
             start = start + 2*textWidth + 30;
-            mPaint.setColor(colors.get(i%colors.size()));
+            mPaint.setColor(Global.colors.get(i % Global.colors.size()));
             canvas.drawCircle(start, pieRectF.bottom + textHeight*(float)1.6, 10, mPaint);
             canvas.drawText(str, start+20, pieRectF.bottom + textHeight*2, mPaint);
         }

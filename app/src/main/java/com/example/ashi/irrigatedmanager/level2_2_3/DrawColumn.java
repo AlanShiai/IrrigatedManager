@@ -180,15 +180,13 @@ public class DrawColumn extends View {
 //                124,
 //        };
 
-        List<Integer> colors = Arrays.asList(0xFFFF69B4, 0xFF90EE90, 0xFF6495ED, 0xFF87CEFA, 0xFFD19275);
-
         int axixMax = Integer.parseInt(xAnixString.get(xAnixString.size()-1));
         for (int i = 0; i < Global.abnormalList.size(); i++) {
             int yearNumber = Integer.parseInt(Global.abnormalList.get(i).yearNumber);
             int rectWidth = width_text;
             int rectHigh = (int) ((axixMax-yearNumber)/(float)axixMax * (bottom - y_space));
             int rectX = x_space + x_grid + x_grid*i*4;
-            mPaint.setColor(colors.get(i%colors.size()));
+            mPaint.setColor(Global.colors.get(i % Global.colors.size()));
             Rect canalHeadRect = new Rect(rectX, rectHigh, (rectX+rectWidth), bottom - y_space - 2);
             canvas.drawRect(canalHeadRect, mPaint);
             mPaint.setColor(Color.BLACK);

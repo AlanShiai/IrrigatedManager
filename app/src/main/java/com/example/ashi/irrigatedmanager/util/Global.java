@@ -5,6 +5,7 @@ import com.example.ashi.irrigatedmanager.gson.User;
 import com.example.ashi.irrigatedmanager.level5.Appval;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,6 +14,8 @@ import java.util.List;
  */
 
 public class Global {
+
+    public static List<Integer> colors = Arrays.asList(0xFFFE618E, 0xFF9ADC78, 0xFF94AEE7, 0xFF77DAF7, 0xFFFE998F);
 
     public static User user = new User("1");
 
