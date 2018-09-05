@@ -51,7 +51,6 @@ public class LeftSideToolbar extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.left_side_toolbar, container, false);
         titleText = (TextView) view.findViewById(R.id.title_text);
-        backButton = (Button) view.findViewById(R.id.back_button);
         listView = (ListView) view.findViewById(R.id.list_view);
         adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, dataList);
         listView.setAdapter(adapter);

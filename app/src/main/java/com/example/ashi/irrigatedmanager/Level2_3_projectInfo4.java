@@ -52,8 +52,7 @@ public class Level2_3_projectInfo4 extends AppCompatActivity {
 //                Level2_3_projectInfo4.this, R.layout.fragment_listview_item, new ArrayList<String>(ManualInspectBasicInfo.getInfo().keySet()));
 //        listView.setAdapter(adapter);
 
-        Button backButton = (Button) findViewById(R.id.back_button);
-        backButton.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Level2_3_projectInfo4.this, Level2_3_projectInfo3.class);

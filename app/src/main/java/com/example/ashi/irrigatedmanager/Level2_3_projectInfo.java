@@ -74,8 +74,7 @@ public class Level2_3_projectInfo extends AppCompatActivity {
             }
         });
 
-        Button backButton = (Button) findViewById(R.id.back_button);
-        backButton.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Level2_3_projectInfo.this, Logout.class);

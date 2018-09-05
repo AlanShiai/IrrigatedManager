@@ -129,7 +129,7 @@ public class Level2_4_3_rain3 extends AppCompatActivity {
     }
 
     private void addListernerForBackButton() {
-        findViewById(R.id.back_button).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Level2_4_3_rain3.this, Level2_4_3_rain2.class);

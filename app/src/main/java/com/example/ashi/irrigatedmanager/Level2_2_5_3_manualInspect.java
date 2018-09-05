@@ -163,7 +163,6 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
         imageView5 = (ImageView) findViewById(R.id.imageview5);
         imageView6 = (ImageView) findViewById(R.id.imageview6);
         manualInspectReportButton = (Button) findViewById(R.id.manual_inspect_report);
-        backButton = (Button) findViewById(R.id.back_button);
     }
 
     int addImage = R.drawable.d2;
