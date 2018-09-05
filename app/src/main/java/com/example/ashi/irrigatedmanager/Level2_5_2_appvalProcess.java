@@ -52,7 +52,7 @@ public class Level2_5_2_appvalProcess extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.list_view);
         editText = (EditText) findViewById(R.id.editText);
 
-        findViewById(R.id.leve1_2_5_back).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Level2_5_2_appvalProcess.this, Level2_5_1_appvalDetails.class);

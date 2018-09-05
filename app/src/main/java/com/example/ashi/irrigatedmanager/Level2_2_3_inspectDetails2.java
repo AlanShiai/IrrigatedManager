@@ -108,7 +108,7 @@ public class Level2_2_3_inspectDetails2 extends AppCompatActivity {
 //                Level2_2_3_inspectDetails2.this, R.layout.inspect_details, dataList);
 //        listView.setAdapter(adapter);
 
-        findViewById(R.id.leve1_2_1_back).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Level2_2_3_inspectDetails2.this, Level2_2_projectInspection2.class);

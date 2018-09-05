@@ -83,7 +83,7 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
 
 //        initData();
 
-        findViewById(R.id.leve1_2_5_back).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Level2_5_appvalProcess.this, Level2_1_irrigateOverview.class);
