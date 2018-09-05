@@ -14,6 +14,8 @@ import com.example.ashi.irrigatedmanager.level2_2_3.InspectDetailInfoAdpter;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by ashi on 8/30/2018.
  */
@@ -36,6 +38,7 @@ public class AbnormalAdpter extends ArrayAdapter<Abnormal> {
         if (convertView == null) {
             view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
             viewHolder = new AbnormalAdpter.ViewHolder();
+            viewHolder.imageView = (CircleImageView) view.findViewById (R.id.image_view);
             viewHolder.projectLabel = (TextView) view.findViewById (R.id.projectLabel);
             viewHolder.yearNumber = (TextView) view.findViewById(R.id.yearNumber);
             viewHolder.yearAbnormalNumber = (TextView) view.findViewById(R.id.yearAbnormalNumber);
@@ -78,11 +81,19 @@ public class AbnormalAdpter extends ArrayAdapter<Abnormal> {
         if (monthAbnormalNumber == 0) {
             viewHolder.month_ratio.setText("0%");
         }
+        if (projectInfo.projectLabel.contains("桥") || projectInfo.projectLabel.contains("洞")) {
+            viewHolder.imageView.setImageResource(R.drawable.c3);
+        } else if (projectInfo.projectLabel.contains("闸")) {
+            viewHolder.imageView.setImageResource(R.drawable.c1);
+        } else {
+            viewHolder.imageView.setImageResource(R.drawable.c4);
+        }
 
         return view;
     }
 
     class ViewHolder {
+        CircleImageView imageView;
         TextView projectLabel;
         TextView yearNumber;
         TextView yearAbnormalNumber;
