@@ -45,6 +45,7 @@ public class Level2_2_2_inspectNote extends AppCompatActivity {
     static List<String> itemKeys = new ArrayList<>();
     final static Map<String, String> items = new LinkedHashMap<>();
     static {
+        items.put("全部", "");
         items.put("渠道", "channel");
         items.put("水闸", "sluice");
         items.put("涵洞", "culvert");
@@ -53,16 +54,17 @@ public class Level2_2_2_inspectNote extends AppCompatActivity {
         items.put("倒虹吸", "inverted");
         itemKeys.addAll(items.keySet());
     }
-    int typeSelector = 0;
 
     ListView listView1, listView2;
     List<PatrolNote> dataList = new ArrayList<>();
 
+    int typeSelector = 0;
     int start_year = Utility.getThisYear(), start_month = Utility.getThisMonth(), start_day = 1;
     TextView start_text;
     int end_year = Utility.getThisYear(), end_month = Utility.getThisMonth(), end_day = Utility.getCurrentMonthLastDay();;
     TextView end_text;
 
+    Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,14 +79,15 @@ public class Level2_2_2_inspectNote extends AppCompatActivity {
 
         query_layout = (LinearLayout) findViewById(R.id.query_layout);
 
-        Spinner spinner = (Spinner) findViewById(R.id.type_spinner);
+        spinner = (Spinner) findViewById(R.id.type_spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, itemKeys);
 //        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_single_choice,items);
 //        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_multiple_choice,items);
 //        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.spinner_array,
 //                R.layout.support_simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+//        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -110,6 +113,11 @@ public class Level2_2_2_inspectNote extends AppCompatActivity {
         findViewById(R.id.patrol_search).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Global.start_year = start_year; Global.start_month = start_month; Global.start_day = start_day;
+                Global.end_year = end_year; Global.end_month = end_month; Global.end_day = end_day;
+                Global.typeSelector = typeSelector;
+                Global.search = ((EditText) findViewById(R.id.name)).getText().toString();
+
                 getDataFromServerAndUpdateListView2();
             }
         });
@@ -177,6 +185,15 @@ public class Level2_2_2_inspectNote extends AppCompatActivity {
 
 //        getDataFromServerAndUpdateListView();
         getDataFromServerAndUpdateListView2();
+
+        restoreSearchValue();
+    }
+
+    private void restoreSearchValue() {
+        updateDayTextView(start_text, Global.start_year, Global.start_month, Global.start_day);
+        updateDayTextView(end_text, Global.end_year, Global.end_month, Global.end_day);
+        spinner.setSelection(Global.typeSelector);
+        ((EditText) findViewById(R.id.name)).setText(Global.search);
     }
 
     private void updateDayTextView(TextView textView, int year, int month, int day) {

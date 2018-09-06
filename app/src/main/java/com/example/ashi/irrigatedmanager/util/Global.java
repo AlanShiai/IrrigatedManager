@@ -51,4 +51,10 @@ public class Global {
     public static String inspectDetails_projectType = "";
     public static int inspectDetails_month = 1;
     public static String inspectDetails_officeId = "8eff2c16d5cf45fca84ac984190b0890";
+
+    // patrol_note
+    public static int start_year = Utility.getThisYear(), start_month = Utility.getThisMonth(), start_day = 1;
+    public static int end_year = Utility.getThisYear(), end_month = Utility.getThisMonth(), end_day = Utility.getCurrentMonthLastDay();;
+    public static int typeSelector = 0;
+    public static String search = "";
 }

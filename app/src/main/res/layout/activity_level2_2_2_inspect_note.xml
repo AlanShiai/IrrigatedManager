@@ -149,7 +149,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="开始时间："
+                        android:text="开始日期："
                         android:textSize="14sp"
                         android:textColor="#24AAFF"
                         />
@@ -192,7 +192,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="结束时间："
+                        android:text="结束日期："
                         android:textSize="14sp"
                         android:textColor="#24AAFF"
                         />
@@ -412,16 +412,21 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="42dp"
+            android:layout_height="62dp"
             android:background="@drawable/d5"
             >
-
-            <ImageView
-                android:id="@+id/query_image"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/d6"
-                />
+                android:layout_height="42dp"
+                >
+                <ImageView
+                    android:id="@+id/query_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/d6"
+                    />
+            </LinearLayout>
 
         </LinearLayout>
 
