@@ -55,9 +55,11 @@
 
         <ImageView
             android:id="@+id/show_details"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
             android:src="@drawable/c6"
             />
 
