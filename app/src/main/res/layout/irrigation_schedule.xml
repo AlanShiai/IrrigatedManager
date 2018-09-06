@@ -12,7 +12,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         >
@@ -93,30 +93,59 @@
 
     </LinearLayout>
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="match_parent"
-        android:layout_height="8dp"
-        android:max="100"
-        android:progress="100"
+    <FrameLayout
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:progressDrawable="@drawable/my_progressbar"
-        android:visibility="visible"
-        style="?android:attr/progressBarStyleHorizontal"
-        />
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        >
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:max="100"
+            android:progress="100"
+            android:progressDrawable="@drawable/my_progressbar"
+            android:visibility="visible"
+            style="?android:attr/progressBarStyleHorizontal"
+            />
+
+        <LinearLayout
+            android:id="@+id/progressBar_text_layout"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/progressBar_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="end"
+                android:text="100%"
+                android:textSize="10sp"
+                android:textColor="#FFFFFF"
+                />
+
+        </LinearLayout>
+
+
+    </FrameLayout>
+
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="30dp"
         >
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="5dp"
+        android:layout_height="8dp"
         android:background="#F5F5F5"
         >
     </LinearLayout>

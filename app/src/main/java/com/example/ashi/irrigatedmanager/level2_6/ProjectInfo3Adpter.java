@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.example.ashi.irrigatedmanager.R;
 import com.example.ashi.irrigatedmanager.level5.AppvalAdapter;
 import com.example.ashi.irrigatedmanager.util.Global;
+import com.example.ashi.irrigatedmanager.util.Utility;
 
 import java.util.List;
 
@@ -56,23 +57,16 @@ public class ProjectInfo3Adpter extends ArrayAdapter<ProjectInfo3> {
         if ( null != projectInfo.name) {
             if ( "channel".equals(Global.projectInfoType) ) {
                 viewHolder.subType.setVisibility(View.VISIBLE);
-                margin(viewHolder.name, 0, 0, 0, 0);
+                Utility.margin(viewHolder.name, 0, 0, 0, 0);
             } else {
                 viewHolder.subType.setVisibility(View.GONE);
-                margin(viewHolder.name, 0, 20, 0, 20);
+                Utility.margin(viewHolder.name, 0, 20, 0, 20);
             }
         }
 
         return view;
     }
 
-    public void margin(View v, int l, int t, int r, int b) {
-        if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
-            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
-            p.setMargins(l, t, r, b);
-            v.requestLayout();
-        }
-    }
 
     class ViewHolder {
         TextView name;

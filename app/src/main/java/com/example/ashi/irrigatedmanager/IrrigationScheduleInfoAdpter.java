@@ -9,8 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Space;
 import android.widget.TextView;
+
+import com.example.ashi.irrigatedmanager.util.Utility;
 
 import java.util.List;
 
@@ -42,6 +46,8 @@ public class IrrigationScheduleInfoAdpter extends ArrayAdapter<IrrigationSchedul
             viewHolder.totalArea = (TextView) view.findViewById(R.id.totalArea);
             viewHolder.irrigationArea = (TextView) view.findViewById(R.id.irrigationArea);
             viewHolder.progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+            viewHolder.progressBar_text = (TextView) view.findViewById(R.id.progressBar_text);
+            viewHolder.progressBar_text_layout = (LinearLayout) view.findViewById(R.id.progressBar_text_layout);
             view.setTag(viewHolder); // 将ViewHolder存储在View中
         } else {
             view = convertView;
@@ -56,17 +62,34 @@ public class IrrigationScheduleInfoAdpter extends ArrayAdapter<IrrigationSchedul
         }
 
         viewHolder.projectName.setText(projectInfo.areaName);
+        viewHolder.schedule.setText("100%");
         viewHolder.totalArea.setText(projectInfo.totalArea);
         viewHolder.irrigationArea.setText(projectInfo.irrigationArea);
+        viewHolder.progressBar.setProgress(100);
+        viewHolder.progressBar_text.setText("100%");
         if (irrigationArea != 0 && totalArea != 0) {
             int ratio = irrigationArea*100/totalArea;
-            viewHolder.progressBar.setProgress(ratio);
             viewHolder.schedule.setText(ratio+"%");
+            viewHolder.progressBar.setProgress(ratio);
+            viewHolder.progressBar_text.setText(ratio+"%");
+
+            moveProgressBar_text(viewHolder, irrigationArea, totalArea);
+        } else {
+            moveProgressBar_text(viewHolder, 100, 100);
         }
-        if (irrigationArea == 0 && totalArea == 0) {
-            viewHolder.schedule.setText("100%");
-        }
+
         return view;
+    }
+
+    private void moveProgressBar_text(ViewHolder viewHolder, int irrigationArea, int totalArea) {
+        int totalWidth = viewHolder.progressBar_text_layout.getRight() - viewHolder.progressBar_text_layout.getLeft();
+        int leftMargin = (int) (totalWidth * (totalArea - irrigationArea) / (float) totalArea) + 10;
+//        int widgetWidth = 30;
+//        if (totalWidth - leftMargin < widgetWidth) {
+//            leftMargin = totalWidth - widgetWidth;
+//        }
+        Utility.margin(viewHolder.progressBar_text, 0, 0, leftMargin, 0);
+//        viewHolder.progressBar_text_layout.requestLayout();
     }
 
     class ViewHolder {
@@ -75,5 +98,7 @@ public class IrrigationScheduleInfoAdpter extends ArrayAdapter<IrrigationSchedul
         TextView totalArea;
         TextView irrigationArea;
         ProgressBar progressBar;
+        TextView progressBar_text;
+        LinearLayout progressBar_text_layout;
     }
 }

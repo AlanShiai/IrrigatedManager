@@ -1,6 +1,8 @@
 package com.example.ashi.irrigatedmanager.util;
 
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.example.ashi.irrigatedmanager.IrrigationScheduleInfo;
 import com.example.ashi.irrigatedmanager.gson.Abnormal;
@@ -39,6 +41,14 @@ import java.util.List;
  */
 
 public class Utility {
+
+    public static void margin(View v, int l, int t, int r, int b) {
+        if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+            p.setMargins(l, t, r, b);
+            v.requestLayout();
+        }
+    }
 
     public static String toDayString(int year, int month, int day) {
         StringBuilder stringBuilder = new StringBuilder();
