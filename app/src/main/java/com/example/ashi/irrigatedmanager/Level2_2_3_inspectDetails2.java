@@ -205,33 +205,56 @@ public class Level2_2_3_inspectDetails2 extends AppCompatActivity {
     }
 
     private void monthSelectedDialog() {
-
-
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(Level2_2_3_inspectDetails2.this);
-        builder.setTitle("选择对话框");
-        builder.setSingleChoiceItems(monthKeys.toArray(new String[0]), monthOldSelector, new DialogInterface.OnClickListener() {
+        final Dialog builder = new Dialog(this, R.style.update_dialog);
+        View view = View.inflate(Level2_2_3_inspectDetails2.this, R.layout.dialog_select, null);
+        view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                monthNewSelector = which;
+            public void onClick(View view) {
+                builder.dismiss();
             }
         });
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+        final ListView dialogListView = (ListView) view.findViewById(R.id.list_view);
+        final DialogSelectItemAdapter adapter = new DialogSelectItemAdapter(
+                Level2_2_3_inspectDetails2.this, R.layout.dialog_select_item, monthKeys, monthOldSelector);
+        dialogListView.setAdapter(adapter);
+        dialogListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (monthOldSelector != monthNewSelector) {
-                    monthOldSelector = monthNewSelector;
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (monthOldSelector != position) {
+                    monthOldSelector = position;
                     month_text.setText(monthKeys.get(monthOldSelector));
                     getDataFromServerAndUpdateListView();
                 }
-            }
-        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
+                builder.dismiss();
             }
         });
-        builder.create().show();
+        builder.setContentView(view);//这里还可以指定布局参数
+        builder.show();
+
+//        AlertDialog.Builder builder = new AlertDialog.Builder(Level2_2_3_inspectDetails2.this);
+//        builder.setTitle("选择对话框");
+//        builder.setSingleChoiceItems(monthKeys.toArray(new String[0]), monthOldSelector, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                monthNewSelector = which;
+//            }
+//        });
+//        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                if (monthOldSelector != monthNewSelector) {
+//                    monthOldSelector = monthNewSelector;
+//                    month_text.setText(monthKeys.get(monthOldSelector));
+//                    getDataFromServerAndUpdateListView();
+//                }
+//            }
+//        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//
+//            }
+//        });
+//        builder.create().show();
     }
 
     private void showText(String text) {
