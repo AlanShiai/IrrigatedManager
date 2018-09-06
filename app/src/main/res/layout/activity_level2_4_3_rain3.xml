@@ -69,25 +69,47 @@
         android:background="#F5F5F5"
         >
 
-        <TextView
-            android:id="@+id/rain_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="  2018年8月  "
-            android:textSize="16sp"
-            android:background="@drawable/item_blue_round_shape"
-            android:gravity="center"
+        <LinearLayout
             android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
-            />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_blue_round_shape"
+            >
+
+            <TextView
+                android:id="@+id/rain_date"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2018年8月"
+                android:textSize="18sp"
+                android:textColor="#FFFFFF"
+                />
+
+        </LinearLayout>
+
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_margin="10dp"
             android:background="@drawable/item_shape"
             >
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -95,49 +117,80 @@
                 android:layout_height="wrap_content"
                 >
 
-                <TextView
+                <LinearLayout
+                    android:layout_margin="1dp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="日 期"
-                    android:textSize="16sp"
                     android:background="#24AAFF"
-                    android:layout_margin="1dp"
-                    android:gravity="center"
-                    />
+                    >
+                    <TextView
+                        android:layout_margin="3dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="日 期"
+                        android:textSize="18sp"
+                        android:gravity="center"
+                        android:textColor="#FFFFFF"
+                        />
+                </LinearLayout>
 
-                <TextView
+                <LinearLayout
+                    android:layout_margin="1dp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="雨 量"
-                    android:textSize="16sp"
                     android:background="#24AAFF"
+                    >
+                    <TextView
+                        android:layout_margin="3dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="雨 量"
+                        android:textSize="18sp"
+                        android:gravity="center"
+                        android:textColor="#FFFFFF"
+                        />
+                </LinearLayout>
+                <LinearLayout
                     android:layout_margin="1dp"
-                    android:gravity="center"
-                    />
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#24AAFF"
+                    >
+                    <TextView
+                        android:layout_margin="3dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="日 期"
+                        android:textSize="18sp"
+                        android:gravity="center"
+                        android:textColor="#FFFFFF"
+                        />
+                </LinearLayout>
 
-                <TextView
+                <LinearLayout
+                    android:layout_margin="1dp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="日 期"
-                    android:textSize="16sp"
                     android:background="#24AAFF"
-                    android:layout_margin="1dp"
-                    android:gravity="center"
-                    />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="雨 量"
-                    android:textSize="16sp"
-                    android:background="#24AAFF"
-                    android:layout_margin="1dp"
-                    android:gravity="center"
-                    />
+                    >
+                    <TextView
+                        android:layout_margin="3dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="雨 量"
+                        android:textSize="18sp"
+                        android:gravity="center"
+                        android:textColor="#FFFFFF"
+                        />
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -149,6 +202,8 @@
                 android:background="#F5F5F5"
                 >
             </ListView>
+
+            </LinearLayout>
 
         </LinearLayout>
 

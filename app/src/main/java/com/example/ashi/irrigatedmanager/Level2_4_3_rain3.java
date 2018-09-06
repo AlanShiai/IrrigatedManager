@@ -72,7 +72,7 @@ public class Level2_4_3_rain3 extends AppCompatActivity {
                 final List<RainDetailData> list = Utility.handleApi06getRainListResponse(responseText);
                 Log.d("aijun getRainList", responseText+"");
                 Log.d("aijun getRainList", list+"");
-                if ( null != list && ! list.isEmpty() ) {
+                if ( null != list ) {
                     updateData(list);
                     runOnUiThread(new Runnable() {
                         @Override
