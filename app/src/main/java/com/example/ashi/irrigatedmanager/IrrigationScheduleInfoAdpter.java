@@ -63,6 +63,9 @@ public class IrrigationScheduleInfoAdpter extends ArrayAdapter<IrrigationSchedul
             viewHolder.progressBar.setProgress(ratio);
             viewHolder.schedule.setText(ratio+"%");
         }
+        if (irrigationArea == 0 && totalArea == 0) {
+            viewHolder.schedule.setText("100%");
+        }
         return view;
     }
 
