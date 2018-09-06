@@ -19,7 +19,6 @@ import java.util.List;
 
 public class AppvalAdapter extends ArrayAdapter<Appval> {
 
-
     private int resourceId;
 
     public AppvalAdapter(Context context, int textViewResourceId,

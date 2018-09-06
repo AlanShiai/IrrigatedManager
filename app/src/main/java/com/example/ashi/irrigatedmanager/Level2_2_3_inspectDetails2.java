@@ -1,5 +1,6 @@
 package com.example.ashi.irrigatedmanager;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,15 +15,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ashi.irrigatedmanager.gson.PatrolManagerAdpter;
 import com.example.ashi.irrigatedmanager.level2_2_3.InspectDetailInfo;
 import com.example.ashi.irrigatedmanager.level2_2_3.InspectDetailInfoAdpter;
 import com.example.ashi.irrigatedmanager.util.Api;
+import com.example.ashi.irrigatedmanager.util.DialogSelectItemAdapter;
 import com.example.ashi.irrigatedmanager.util.Global;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
 import com.example.ashi.irrigatedmanager.util.Utility;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -119,13 +123,13 @@ public class Level2_2_3_inspectDetails2 extends AppCompatActivity {
         findViewById(R.id.type_select).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showSingleChoiceDialog();
+                typeSelectedDialog();
             }
         });
         findViewById(R.id.month_select).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showMonthSingleChoiceDialog();
+                monthSelectedDialog();
             }
         });
 
@@ -173,38 +177,61 @@ public class Level2_2_3_inspectDetails2 extends AppCompatActivity {
         });
     }
 
-    private void showSingleChoiceDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(Level2_2_3_inspectDetails2.this);
-        builder.setTitle("选择对话框");
-        //千万不要加这句，不然列表显示不出来
-//        builder.setMessage("这是一个简单的列表对话框");
-//        builder.setIcon(R.mipmap.launcher);
-        builder.setSingleChoiceItems(itemKeys.toArray(new String[0]), oldSelector, new DialogInterface.OnClickListener() {
+    private void typeSelectedDialog() {
+        final Dialog builder = new Dialog(this, R.style.update_dialog);
+        View view = View.inflate(Level2_2_3_inspectDetails2.this, R.layout.dialog_select, null);
+        view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                newSelector = which;
+            public void onClick(View view) {
+                builder.dismiss();
             }
         });
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+        final ListView listView = (ListView) view.findViewById(R.id.list_view);
+        final DialogSelectItemAdapter adapter = new DialogSelectItemAdapter(
+                Level2_2_3_inspectDetails2.this, R.layout.dialog_select_item, itemKeys, oldSelector);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                newSelector = position;
                 if (oldSelector != newSelector) {
                     oldSelector = newSelector;
                     type_text.setText(itemKeys.get(oldSelector));
                     getDataFromServerAndUpdateListView();
                 }
-            }
-        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
+                builder.dismiss();
             }
         });
+        builder.setContentView(view);//这里还可以指定布局参数
+        builder.show();
 
-        builder.create().show();
+//        AlertDialog.Builder builder = new AlertDialog.Builder(Level2_2_3_inspectDetails2.this);
+//        builder.setTitle("选择对话框");
+//        builder.setSingleChoiceItems(itemKeys.toArray(new String[0]), oldSelector, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                newSelector = which;
+//            }
+//        });
+//        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                if (oldSelector != newSelector) {
+//                    oldSelector = newSelector;
+//                    type_text.setText(itemKeys.get(oldSelector));
+//                    getDataFromServerAndUpdateListView();
+//                }
+//            }
+//        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//
+//            }
+//        });
+//        builder.create().show();
     }
 
-    private void showMonthSingleChoiceDialog() {
+    private void monthSelectedDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(Level2_2_3_inspectDetails2.this);
         builder.setTitle("选择对话框");
         //千万不要加这句，不然列表显示不出来
