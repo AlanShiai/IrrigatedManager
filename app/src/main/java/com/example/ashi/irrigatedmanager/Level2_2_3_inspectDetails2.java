@@ -51,8 +51,7 @@ public class Level2_2_3_inspectDetails2 extends AppCompatActivity {
         items.put("倒虹吸", "inverted");
         itemKeys.addAll(items.keySet());
     }
-    int oldSelector = 0;
-    int newSelector = 0;
+    int typeSelector = 0;
     TextView type_text;
 
     static List<String> monthKeys = new ArrayList<>();
@@ -93,7 +92,7 @@ public class Level2_2_3_inspectDetails2 extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Global.inspectDetails_projectType =  items.get(itemKeys.get(oldSelector));
+                Global.inspectDetails_projectType =  items.get(itemKeys.get(typeSelector));
                 try {
                     Global.inspectDetails_month = Integer.parseInt(months.get(monthKeys.get(monthOldSelector)));
                 } catch (Exception e) {
@@ -134,7 +133,7 @@ public class Level2_2_3_inspectDetails2 extends AppCompatActivity {
         });
 
         type_text = (TextView) findViewById(R.id.type_text);
-        type_text.setText(itemKeys.get(oldSelector));
+        type_text.setText(itemKeys.get(typeSelector));
 
         month_text = (TextView) findViewById(R.id.month_text);
         month_text.setText(monthKeys.get(monthOldSelector));
@@ -145,7 +144,7 @@ public class Level2_2_3_inspectDetails2 extends AppCompatActivity {
     private void getDataFromServerAndUpdateListView() {
         // "http://www.boze-tech.com/zfh_manager/a/app/patrol/officeStatistic?endDate=2018-07-12&startDate=2018-07-11&userId="+ Global.userId+"&dayType=&office=";
         String url = Api.API_25_officeStatistic + "userId=" + Global.user.id  + "&office=" + Global.user.officeId
-                + "&projectType=" + items.get(itemKeys.get(oldSelector)) +
+                + "&projectType=" + items.get(itemKeys.get(typeSelector)) +
                 "&month=" + months.get(monthKeys.get(monthOldSelector));
         Log.d("aijun officeStatistic", url);
         HttpUtil.sendOkHttpRequest(url, new Callback() {
@@ -186,17 +185,16 @@ public class Level2_2_3_inspectDetails2 extends AppCompatActivity {
                 builder.dismiss();
             }
         });
-        final ListView listView = (ListView) view.findViewById(R.id.list_view);
+        final ListView dialogListView = (ListView) view.findViewById(R.id.list_view);
         final DialogSelectItemAdapter adapter = new DialogSelectItemAdapter(
-                Level2_2_3_inspectDetails2.this, R.layout.dialog_select_item, itemKeys, oldSelector);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                Level2_2_3_inspectDetails2.this, R.layout.dialog_select_item, itemKeys, typeSelector);
+        dialogListView.setAdapter(adapter);
+        dialogListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                newSelector = position;
-                if (oldSelector != newSelector) {
-                    oldSelector = newSelector;
-                    type_text.setText(itemKeys.get(oldSelector));
+                if (typeSelector != position) {
+                    typeSelector = position;
+                    type_text.setText(itemKeys.get(typeSelector));
                     getDataFromServerAndUpdateListView();
                 }
                 builder.dismiss();
@@ -204,39 +202,14 @@ public class Level2_2_3_inspectDetails2 extends AppCompatActivity {
         });
         builder.setContentView(view);//这里还可以指定布局参数
         builder.show();
-
-//        AlertDialog.Builder builder = new AlertDialog.Builder(Level2_2_3_inspectDetails2.this);
-//        builder.setTitle("选择对话框");
-//        builder.setSingleChoiceItems(itemKeys.toArray(new String[0]), oldSelector, new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                newSelector = which;
-//            }
-//        });
-//        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                if (oldSelector != newSelector) {
-//                    oldSelector = newSelector;
-//                    type_text.setText(itemKeys.get(oldSelector));
-//                    getDataFromServerAndUpdateListView();
-//                }
-//            }
-//        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//
-//            }
-//        });
-//        builder.create().show();
     }
 
     private void monthSelectedDialog() {
+
+
+
         AlertDialog.Builder builder = new AlertDialog.Builder(Level2_2_3_inspectDetails2.this);
         builder.setTitle("选择对话框");
-        //千万不要加这句，不然列表显示不出来
-//        builder.setMessage("这是一个简单的列表对话框");
-//        builder.setIcon(R.mipmap.launcher);
         builder.setSingleChoiceItems(monthKeys.toArray(new String[0]), monthOldSelector, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -258,7 +231,6 @@ public class Level2_2_3_inspectDetails2 extends AppCompatActivity {
 
             }
         });
-
         builder.create().show();
     }
 
