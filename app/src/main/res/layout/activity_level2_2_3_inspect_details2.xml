@@ -92,27 +92,28 @@
                 android:layout_margin="10dp"
                 android:orientation="horizontal"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_weight="1"
                 >
                 <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="20dp"
                     android:layout_height="match_parent"
                     android:src="@drawable/e1"
-                    android:scaleType="centerInside"
                     />
                 <TextView
                     android:id="@+id/month_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="一月"
-                    android:textSize="14sp"
-                    />
-                <ImageView
+                    android:layout_marginLeft="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="一月"
+                    android:textSize="16sp"
+                    />
+                <ImageView
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent"
                     android:src="@drawable/e2"
-                    android:scaleType="centerInside"
                     />
 
             </LinearLayout>
@@ -122,7 +123,7 @@
                 android:layout_margin="10dp"
                 android:orientation="horizontal"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_weight="1"
                 >
                 <Space
@@ -131,23 +132,24 @@
                     android:layout_weight="1"
                     />
                 <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="20dp"
                     android:layout_height="match_parent"
                     android:src="@drawable/e3"
-                    android:scaleType="centerInside"
                     />
                 <TextView
+                    android:layout_marginLeft="5dp"
                     android:id="@+id/type_text"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
                     android:text="渠首"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     />
                 <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="20dp"
                     android:layout_height="match_parent"
                     android:src="@drawable/e2"
-                    android:scaleType="centerInside"
                     />
 
             </LinearLayout>
