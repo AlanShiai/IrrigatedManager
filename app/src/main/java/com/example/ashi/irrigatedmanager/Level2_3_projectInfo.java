@@ -21,9 +21,9 @@ import java.util.List;
 
 public class Level2_3_projectInfo extends AppCompatActivity {
 
-    private List<ProjectInfo> projectInfoList = new ArrayList<ProjectInfo>();
+    private List<ProjectInfo> projectTypeList = new ArrayList<ProjectInfo>();
 
-    private List<ProjectInfo> projectInfoList2 = new ArrayList<ProjectInfo>();
+    private List<ProjectInfo> projectSubTypeList = new ArrayList<ProjectInfo>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,19 +37,20 @@ public class Level2_3_projectInfo extends AppCompatActivity {
         setContentView(R.layout.activity_level2_3_project_info);
 
         ListView listView = (ListView) findViewById(R.id.level_2_3_projectInfo);
-        initProjectInfoList();
+        initProjectTypeList();
         initProjectInfoList2();
-        ProjectInfoAdpter adapter = new ProjectInfoAdpter(Level2_3_projectInfo.this, R.layout.project_item1, projectInfoList);
+        ProjectInfoAdpter adapter = new ProjectInfoAdpter(Level2_3_projectInfo.this, R.layout.project_item1, projectTypeList);
         listView.setAdapter(adapter);
 
         ListView listView2 = (ListView) findViewById(R.id.level2_menu_list);
-        ProjectInfoAdpter adapter2 = new ProjectInfoAdpter(Level2_3_projectInfo.this, R.layout.project_item2, projectInfoList2);
+        ProjectInfoAdpter adapter2 = new ProjectInfoAdpter(Level2_3_projectInfo.this, R.layout.project_item2, projectSubTypeList);
         listView2.setAdapter(adapter2);
         listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Global.projectInfoType = "channel";
-                Global.projectInfoSubtype = projectInfoList2.get(position).getType();
+                Global.projectInfoSubtype = projectSubTypeList.get(position).getType();
+                Global.projectInfoName = projectSubTypeList.get(position).getName() + "列表";
                 Intent intent = new Intent(Level2_3_projectInfo.this, Level2_3_projectInfo3.class);
                 startActivity(intent);
             }
@@ -65,8 +66,9 @@ public class Level2_3_projectInfo extends AppCompatActivity {
                 if ( 0 == position) {
                     listView.setVisibility(View.VISIBLE);
                 } else {
-                    Global.projectInfoType = projectInfoList.get(position).getType();
+                    Global.projectInfoType = projectTypeList.get(position).getType();
                     Global.projectInfoSubtype = "1";
+                    Global.projectInfoName = projectTypeList.get(position).getName() + "列表";
                     listView.setVisibility(View.GONE);
                     Intent intent = new Intent(Level2_3_projectInfo.this, Level2_3_projectInfo3.class);
                     startActivity(intent);
@@ -85,28 +87,28 @@ public class Level2_3_projectInfo extends AppCompatActivity {
 
     }
 
-    private void initProjectInfoList() {
-        projectInfoList.add(new ProjectInfo("渠道", "channel"));
-        projectInfoList.add(new ProjectInfo("渠首", "channelHead"));
-        projectInfoList.add(new ProjectInfo("水闸", "sluice"));
-        projectInfoList.add(new ProjectInfo("涵洞", "culvert"));
-        projectInfoList.add(new ProjectInfo("渡槽", "aqueduct"));
-        projectInfoList.add(new ProjectInfo("桥梁", "bridge"));
-        projectInfoList.add(new ProjectInfo("水库", "reservoir"));
-        projectInfoList.add(new ProjectInfo("泵站", "pump"));
-        projectInfoList.add(new ProjectInfo("水电站", "waterPower"));
-        projectInfoList.add(new ProjectInfo("枢纽", "hinge"));
-        projectInfoList.add(new ProjectInfo("县界", "boundaries"));
-        projectInfoList.add(new ProjectInfo("倒虹吸", "inverted"));
-        projectInfoList.add(new ProjectInfo("跌水", "waterFall"));
+    private void initProjectTypeList() {
+        projectTypeList.add(new ProjectInfo("渠道", "channel"));
+        projectTypeList.add(new ProjectInfo("渠首", "channelHead"));
+        projectTypeList.add(new ProjectInfo("水闸", "sluice"));
+        projectTypeList.add(new ProjectInfo("涵洞", "culvert"));
+        projectTypeList.add(new ProjectInfo("渡槽", "aqueduct"));
+        projectTypeList.add(new ProjectInfo("桥梁", "bridge"));
+        projectTypeList.add(new ProjectInfo("水库", "reservoir"));
+        projectTypeList.add(new ProjectInfo("泵站", "pump"));
+        projectTypeList.add(new ProjectInfo("水电站", "waterPower"));
+        projectTypeList.add(new ProjectInfo("枢纽", "hinge"));
+        projectTypeList.add(new ProjectInfo("县界", "boundaries"));
+        projectTypeList.add(new ProjectInfo("倒虹吸", "inverted"));
+        projectTypeList.add(new ProjectInfo("跌水", "waterFall"));
     }
 
     private void initProjectInfoList2() {
-        projectInfoList2.add(new ProjectInfo("总干渠", "1"));
-        projectInfoList2.add(new ProjectInfo("干渠", "2"));
-        projectInfoList2.add(new ProjectInfo("干渠段", "3"));
-        projectInfoList2.add(new ProjectInfo("支渠", "4"));
-        projectInfoList2.add(new ProjectInfo("排水干渠", "5"));
-        projectInfoList2.add(new ProjectInfo("排水支渠", "6"));
+        projectSubTypeList.add(new ProjectInfo("总干渠", "1"));
+        projectSubTypeList.add(new ProjectInfo("干渠", "2"));
+        projectSubTypeList.add(new ProjectInfo("干渠段", "3"));
+        projectSubTypeList.add(new ProjectInfo("支渠", "4"));
+        projectSubTypeList.add(new ProjectInfo("排水干渠", "5"));
+        projectSubTypeList.add(new ProjectInfo("排水支渠", "6"));
     }
 }

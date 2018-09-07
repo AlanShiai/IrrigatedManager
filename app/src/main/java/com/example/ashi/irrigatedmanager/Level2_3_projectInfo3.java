@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.ashi.irrigatedmanager.level2_6.ProjectInfo3;
 import com.example.ashi.irrigatedmanager.level2_6.ProjectInfo3Adpter;
@@ -44,6 +45,9 @@ public class Level2_3_projectInfo3 extends AppCompatActivity {
         }
         setContentView(R.layout.activity_level2_3_project_info3);
 
+        TextView title = (TextView) findViewById(R.id.title);
+        title.setText(Global.projectInfoName);
+
         listView = (ListView) findViewById(R.id.project_info_list);
 //        initProjectInfoList();
 //        ProjectInfo3Adpter adapter = new ProjectInfo3Adpter(Level2_3_projectInfo3.this, R.layout.project_item_3, projectInfoList);
@@ -52,6 +56,7 @@ public class Level2_3_projectInfo3 extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Global.projectId = projectInfoList.get(position).id;
+                Global.projectInfoName2 = projectInfoList.get(position).name;
                 Intent intent = new Intent(Level2_3_projectInfo3.this, Level2_3_projectInfo4.class);
                 startActivity(intent);
             }
@@ -72,12 +77,14 @@ public class Level2_3_projectInfo3 extends AppCompatActivity {
     // "http://www.boze-tech.com/zfh_manager/a/app/project/projectList?userId=1&projectType=channel&name=&office=&subType=1";
     private void getDataFromServerAndUpdateListView() {
         String url = Api.API_17_projectList + "&userId=" + Global.user.id + "&projectType=" + Global.projectInfoType + "&subType=" + Global.projectInfoSubtype;
+        Log.d("aijun projectList", url);
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 final String responseText = response.body().string();
+                Log.d("aijun projectList", responseText);
                 final List<ProjectInfo3> list = Utility.handleApi17ProjectListResponse(responseText);
-                if ( null != list && ! list.isEmpty() ) {
+                if ( null != list ) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

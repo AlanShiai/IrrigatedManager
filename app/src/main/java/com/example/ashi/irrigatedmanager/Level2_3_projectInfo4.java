@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.ashi.irrigatedmanager.level2_5.ManualInspectBasicInfo;
 import com.example.ashi.irrigatedmanager.level2_5.ManualInspectBasicInfoAdapter;
@@ -46,6 +47,9 @@ public class Level2_3_projectInfo4 extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
         setContentView(R.layout.activity_level2_3_project_info4);
+
+        TextView title = (TextView) findViewById(R.id.title);
+        title.setText(Global.projectInfoName2);
 
         listView = (ListView) findViewById(R.id.project_info_list);
 //        ManualInspectBasicInfoAdapter adapter = new ManualInspectBasicInfoAdapter(

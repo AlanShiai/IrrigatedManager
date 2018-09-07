@@ -6,6 +6,7 @@ import com.example.ashi.irrigatedmanager.level5.Appval;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,6 +23,8 @@ public class Global {
     public static boolean isExceptionFound = false;
     public static String exceptionMsg = "";
 
+    public static String projectInfoName = "渠道列表";
+    public static String projectInfoName2 = "渠道列表";
     public static String projectInfoType = "channelHead";
     public static String projectId = "331d737641434a0bb476265b38d9db1c";
     public static String projectInfoSubtype = "1";
@@ -32,7 +35,7 @@ public class Global {
     public static String patrolId = "62c59e22820b41e094fa17788df11b66";
     public static HashMap<String,String> patrolDetails = new HashMap<>();
 
-    public static List<Abnormal> abnormalList = new ArrayList<>();
+    public static List<Abnormal> abnormalList = Collections.synchronizedList(new ArrayList<Abnormal>());
 
     public static String rain_name = "柳林总雨量";
 
