@@ -84,7 +84,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:background="#FFFFFF"
         >
         <LinearLayout
@@ -105,7 +105,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 android:text="首页"
                 android:textColor="#24AAFF"
                 />
@@ -129,7 +129,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 android:text="巡检"
                 />
         </LinearLayout>
@@ -153,7 +153,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 android:text="监测"
                 />
         </LinearLayout>
@@ -176,7 +176,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 android:text="审批"
                 />
         </LinearLayout>
@@ -199,7 +199,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 android:text="信息"
                 />
         </LinearLayout>
