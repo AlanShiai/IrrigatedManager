@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp"
-    >
+    android:layout_marginRight="20dp">
 
 
     <LinearLayout
@@ -112,12 +112,13 @@
             style="?android:attr/progressBarStyleHorizontal"
             />
 
-        <LinearLayout
+
+        <RelativeLayout
             android:id="@+id/progressBar_text_layout"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
+            android:layout_height="match_parent"
+            >
 
             <TextView
                 android:id="@+id/progressBar_text"
@@ -128,8 +129,28 @@
                 android:textSize="10sp"
                 android:textColor="#FFFFFF"
                 />
+        </RelativeLayout>
 
-        </LinearLayout>
+        <!--
+        <android.support.percent.PercentFrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            >
+
+            <TextView
+                android:id="@+id/progressBar_text"
+                android:gravity="end"
+                android:text="100%"
+                android:textSize="10sp"
+                android:textColor="#FFFFFF"
+                android:layout_gravity="left|right"
+                app:layout_widthPercent="50%"
+                app:layout_heightPercent="100%"
+                />
+
+        </android.support.percent.PercentFrameLayout>
+-->
 
 
     </FrameLayout>

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Space;
 import android.widget.TextView;
 
@@ -47,7 +48,7 @@ public class IrrigationScheduleInfoAdpter extends ArrayAdapter<IrrigationSchedul
             viewHolder.irrigationArea = (TextView) view.findViewById(R.id.irrigationArea);
             viewHolder.progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
             viewHolder.progressBar_text = (TextView) view.findViewById(R.id.progressBar_text);
-            viewHolder.progressBar_text_layout = (LinearLayout) view.findViewById(R.id.progressBar_text_layout);
+            viewHolder.progressBar_text_layout = (RelativeLayout) view.findViewById(R.id.progressBar_text_layout);
             view.setTag(viewHolder); // 将ViewHolder存储在View中
         } else {
             view = convertView;
@@ -88,6 +89,9 @@ public class IrrigationScheduleInfoAdpter extends ArrayAdapter<IrrigationSchedul
 //        if (totalWidth - leftMargin < widgetWidth) {
 //            leftMargin = totalWidth - widgetWidth;
 //        }
+        if (leftMargin < 0) {
+            leftMargin = 0;
+        }
         Utility.margin(viewHolder.progressBar_text, 0, 0, leftMargin, 0);
 //        viewHolder.progressBar_text_layout.requestLayout();
     }
@@ -99,6 +103,6 @@ public class IrrigationScheduleInfoAdpter extends ArrayAdapter<IrrigationSchedul
         TextView irrigationArea;
         ProgressBar progressBar;
         TextView progressBar_text;
-        LinearLayout progressBar_text_layout;
+        RelativeLayout progressBar_text_layout;
     }
 }
