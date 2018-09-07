@@ -1,5 +1,6 @@
 package com.example.ashi.irrigatedmanager;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -9,17 +10,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.ashi.irrigatedmanager.util.Api;
+import com.example.ashi.irrigatedmanager.util.DialogSelectItemAdapter;
 import com.example.ashi.irrigatedmanager.util.Global;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
 import com.example.ashi.irrigatedmanager.util.Utility;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import okhttp3.Call;
@@ -33,6 +37,9 @@ public class Level2_6_irrigationSchedule2 extends AppCompatActivity {
     ListView listView;
 
     Button selectButton;
+
+    int turnSelectedIndex = 0;
+    final String[] turnSelectedItems = {"第一轮", "第二轮", "第三轮", "第四轮", "第五轮", "第六轮", "第七轮", "第八轮", "第九轮", "第十轮",};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +63,7 @@ public class Level2_6_irrigationSchedule2 extends AppCompatActivity {
         selectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showSingleChoiceDialog();
+                turnSelectorDialog();
             }
         });
 
@@ -65,7 +72,7 @@ public class Level2_6_irrigationSchedule2 extends AppCompatActivity {
 
     private void getDataFromServerAndUpdateListView() {
         // "http://www.boze-tech.com/zfh_manager/a/app/project/queryIrrigationSchedule?userId="+ Global.userId + "&year=2018&turn=1";
-        String url = Api.API_19_queryIrrigationSchedule + "userId=" + Global.user.id + "&turn=" + Global.irrigation_turn + "&year=2018";
+        String url = Api.API_19_queryIrrigationSchedule + "userId=" + Global.user.id + "&turn=" + (turnSelectedIndex + 1) + "&year=2018";
         Log.d("aijun, irrigation", url);
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
@@ -94,43 +101,33 @@ public class Level2_6_irrigationSchedule2 extends AppCompatActivity {
         });
     }
 
-    int newIndex;
-    int selectIndex;
-    private void showSingleChoiceDialog() {
-        selectIndex = Global.irrigation_turn - 1;
-        newIndex = Global.irrigation_turn - 1;
-
-        final String[] items = new String[]{"第一轮", "第二轮", "第三轮", "第四轮", "第五轮", "第六轮", "第七轮", "第八轮", "第九轮", "第十轮",};
-        AlertDialog.Builder builder = new AlertDialog.Builder(Level2_6_irrigationSchedule2.this);
-        builder.setTitle("选择对话框");
-        //千万不要加这句，不然列表显示不出来
-//        builder.setMessage("这是一个简单的列表对话框");
-//        builder.setIcon(R.mipmap.launcher);
-        builder.setSingleChoiceItems(items, selectIndex, new DialogInterface.OnClickListener() {
+    private void turnSelectorDialog() {
+        final Dialog builder = new Dialog(this, R.style.update_dialog);
+        View view = View.inflate(Level2_6_irrigationSchedule2.this, R.layout.dialog_select, null);
+        view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                newIndex = which;
-                showText(items[which]);
+            public void onClick(View view) {
+                builder.dismiss();
             }
         });
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+        final ListView dialogListView = (ListView) view.findViewById(R.id.list_view);
+        final DialogSelectItemAdapter adapter = new DialogSelectItemAdapter(
+                Level2_6_irrigationSchedule2.this, R.layout.dialog_select_item, Arrays.asList(turnSelectedItems), turnSelectedIndex);
+        dialogListView.setAdapter(adapter);
+
+        dialogListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if(Global.irrigation_turn != newIndex + 1) {
-                    selectButton.setText(items[newIndex]);
-                    Global.irrigation_turn = newIndex + 1;
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (turnSelectedIndex != position) {
+                    turnSelectedIndex = position;
+                    selectButton.setText(turnSelectedItems[turnSelectedIndex]);
                     getDataFromServerAndUpdateListView();
                 }
-                showText("确定");
-            }
-        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                showText("取消");
+                builder.dismiss();
             }
         });
-
-        builder.create().show();
+        builder.setContentView(view);
+        builder.show();
     }
 
     private void showText(String text) {

@@ -36,8 +36,6 @@ public class Global {
 
     public static String rain_name = "柳林总雨量";
 
-    public static int irrigation_turn = 1;
-
     // appval
     public static boolean lastPageIsTodo = false;
     public static String businessKey = "pro_patrol_result_deal:98eaf7ee37354b48b875caf30bbad7a9";
