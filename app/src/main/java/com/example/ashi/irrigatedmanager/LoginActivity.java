@@ -331,6 +331,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected Boolean doInBackground(Void... params) {
             String url = Api.API_01_loginCheck + "loginName="+ mEmail
                     + "&passwd="+ mPassword;
+            Log.d("aijun login url", url);
             HttpUtil.sendOkHttpRequest(url, new Callback() {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {

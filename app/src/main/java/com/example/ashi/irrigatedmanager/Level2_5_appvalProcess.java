@@ -191,18 +191,20 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
                 public void onResponse(Call call, Response response) throws IOException {
                     final String responseText = response.body().string();
                     final List<Appval> list = Utility.handleApi12TodoActListResponse(responseText);
-                    if ( ! list.isEmpty() ) {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if ( null != toDoListView ) {
-                                    dataList.clear();
-                                    dataList.addAll(list);
-                                    AppvalAdapter adapter = new AppvalAdapter(getContext(), R.layout.appval_item, dataList);
-                                    toDoListView.setAdapter(adapter);
+                    if ( null != list ) {
+                        if ( null != getActivity() ) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (null != toDoListView) {
+                                        dataList.clear();
+                                        dataList.addAll(list);
+                                        AppvalAdapter adapter = new AppvalAdapter(getContext(), R.layout.appval_item, dataList);
+                                        toDoListView.setAdapter(adapter);
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        }
                     }
                 }
 
@@ -254,15 +256,17 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
                     final String responseText = response.body().string();
                     appvalHistory = Utility.handleApi13HisoryActListResponse(responseText);
                     if ( null != appvalHistory.data && ! appvalHistory.data.isEmpty() ) {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if ( null != historyListView ) {
-                                    AppvalAdapter adapter = new AppvalAdapter(getContext(), R.layout.appval_item, appvalHistory.data);
-                                    historyListView.setAdapter(adapter);
+                        if ( null != getActivity() ) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (null != historyListView) {
+                                        AppvalAdapter adapter = new AppvalAdapter(getContext(), R.layout.appval_item, appvalHistory.data);
+                                        historyListView.setAdapter(adapter);
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        }
                     }
                 }
 
@@ -316,15 +320,17 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
                     final String responseText = response.body().string();
                     myProcess = Utility.handleApi14getMyProcessResponse(responseText);
                     if ( null != myProcess.data && null != myProcess.data && ! myProcess.data.isEmpty() ) {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if ( null != toDoListView ) {
-                                    ProcessAdapter adapter = new ProcessAdapter(getContext(), R.layout.appval_item, myProcess.data);
-                                    toDoListView.setAdapter(adapter);
+                        if ( null != getActivity() ) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (null != toDoListView) {
+                                        ProcessAdapter adapter = new ProcessAdapter(getContext(), R.layout.appval_item, myProcess.data);
+                                        toDoListView.setAdapter(adapter);
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        }
                     }
                 }
 

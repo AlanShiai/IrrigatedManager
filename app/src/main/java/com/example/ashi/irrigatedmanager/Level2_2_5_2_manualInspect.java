@@ -204,36 +204,38 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
                         updateDataList(list);
                         Log.d("aijun patrolItem 2", dataList+"");
                         Log.d("aijun patrolItem 2", dataList.size()+"");
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if ( null != layout ) {
-                                    checkBoxList.clear();
-                                    layout.removeAllViews();
+                        if ( null != getActivity() ) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (null != layout) {
+                                        checkBoxList.clear();
+                                        layout.removeAllViews();
 
-                                    int index = 1;
-                                    for (ManualInspectItem2 item : dataList) {
-                                        if ( ! item.getItems().isEmpty()) {
-                                            View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_base_info,
-                                                    layout, false);
-                                            TextView text = (TextView) view.findViewById(R.id.fragment_base_info);
-                                            text.setText(index + ". " +item.getName());
-                                            layout.addView(view);
-
-                                            for(String subItem : item.getItems()) {
-                                                View view2 = LayoutInflater.from(getContext()).inflate(R.layout.fragment_base_info2,
+                                        int index = 1;
+                                        for (ManualInspectItem2 item : dataList) {
+                                            if (!item.getItems().isEmpty()) {
+                                                View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_base_info,
                                                         layout, false);
-                                                CheckBox checkBox = (CheckBox) view2.findViewById(R.id.checkBox);
-                                                checkBoxList.add(checkBox);
-                                                checkBox.setText(subItem);
-                                                layout.addView(view2);
+                                                TextView text = (TextView) view.findViewById(R.id.fragment_base_info);
+                                                text.setText(index + ". " + item.getName());
+                                                layout.addView(view);
+
+                                                for (String subItem : item.getItems()) {
+                                                    View view2 = LayoutInflater.from(getContext()).inflate(R.layout.fragment_base_info2,
+                                                            layout, false);
+                                                    CheckBox checkBox = (CheckBox) view2.findViewById(R.id.checkBox);
+                                                    checkBoxList.add(checkBox);
+                                                    checkBox.setText(subItem);
+                                                    layout.addView(view2);
+                                                }
                                             }
+                                            index++;
                                         }
-                                        index ++;
                                     }
                                 }
-                            }
-                        });
+                            });
+                        }
                     }
                 }
 
@@ -305,42 +307,44 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
                     Log.d("aijun, projectDetail;", responseText+"");
                     Log.d("aijun, projectDetail;", projectInfo4+"");
                     if ( null != projectInfo4 ) {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Global.patrolDetails = new LinkedHashMap<String, String>();
-                                String key = "", value = "";
-                                List<String> list = Arrays.asList(projectInfo4.var_00, projectInfo4.var_01, projectInfo4.var_02,
-                                        projectInfo4.var_03, projectInfo4.var_04,projectInfo4.var_05, projectInfo4.var_06,projectInfo4.var_07,
-                                        projectInfo4.var_08,projectInfo4.var_09,projectInfo4.var_10,projectInfo4.var_11,projectInfo4.var_12,
-                                        projectInfo4.var_13,projectInfo4.var_14,projectInfo4.var_15,projectInfo4.var_16,projectInfo4.var_17,
-                                        projectInfo4.var_18,projectInfo4.var_19,projectInfo4.var_20);
-                                for (String str : list) {
-                                    if ( null != str && str.contains("@@")) {
-                                        key = str.substring(0, str.indexOf("@@"));
-                                        value = "";
-                                        if (str.length() > str.indexOf("@@")+2) {
-                                            value = str.substring(str.indexOf("@@")+2);
+                        if ( null != getActivity() ) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Global.patrolDetails = new LinkedHashMap<String, String>();
+                                    String key = "", value = "";
+                                    List<String> list = Arrays.asList(projectInfo4.var_00, projectInfo4.var_01, projectInfo4.var_02,
+                                            projectInfo4.var_03, projectInfo4.var_04, projectInfo4.var_05, projectInfo4.var_06, projectInfo4.var_07,
+                                            projectInfo4.var_08, projectInfo4.var_09, projectInfo4.var_10, projectInfo4.var_11, projectInfo4.var_12,
+                                            projectInfo4.var_13, projectInfo4.var_14, projectInfo4.var_15, projectInfo4.var_16, projectInfo4.var_17,
+                                            projectInfo4.var_18, projectInfo4.var_19, projectInfo4.var_20);
+                                    for (String str : list) {
+                                        if (null != str && str.contains("@@")) {
+                                            key = str.substring(0, str.indexOf("@@"));
+                                            value = "";
+                                            if (str.length() > str.indexOf("@@") + 2) {
+                                                value = str.substring(str.indexOf("@@") + 2);
+                                            }
+                                            Global.patrolDetails.put(key, value);
                                         }
-                                        Global.patrolDetails.put(key,value);
+                                    }
+
+                                    if (Global.patrolDetails.keySet().contains("图片")) {
+                                        String picture = Global.patrolDetails.get("图片");
+                                        Global.patrolDetails.remove("图片");
+                                        if (picture != null && !picture.trim().equals("")) {
+                                            Global.patrolDetails.put("图片", picture);
+                                        }
+                                    }
+
+                                    if (null != listView) {
+                                        ManualInspectBasicInfoAdapter adapter = new ManualInspectBasicInfoAdapter(
+                                                getContext(), R.layout.fragment_listview_item, new ArrayList<String>(Global.patrolDetails.keySet()));
+                                        listView.setAdapter(adapter);
                                     }
                                 }
-
-                                if (Global.patrolDetails.keySet().contains("图片")) {
-                                    String picture = Global.patrolDetails.get("图片");
-                                    Global.patrolDetails.remove("图片");
-                                    if (picture != null && !picture.trim().equals("")) {
-                                        Global.patrolDetails.put("图片", picture);
-                                    }
-                                }
-
-                                if (null != listView) {
-                                    ManualInspectBasicInfoAdapter adapter = new ManualInspectBasicInfoAdapter(
-                                            getContext(), R.layout.fragment_listview_item, new ArrayList<String>(Global.patrolDetails.keySet()));
-                                    listView.setAdapter(adapter);
-                                }
-                            }
-                        });
+                            });
+                        }
                     }
                 }
 

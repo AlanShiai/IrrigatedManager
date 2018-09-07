@@ -284,7 +284,7 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
                 String managerString = "";
                 String managerId = "1";
                 for (View listChild : listView.getTouchables()) {
-                    if (listChild instanceof CheckBox) {
+                    if (listChild instanceof RadioButton) {
                         RadioButton radioButton = (RadioButton) listChild;
                         if (radioButton.isChecked()) {
                             managerString = radioButton.getText().toString();
@@ -310,7 +310,6 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
                         + "&longitude=" + longitude + "&latitude=" + latitude
                         + "&goalId=" + Global.patrolId + "&contents=" + editText.getText().toString()
                         + "&itemResults=" + Utility.toURLEncoded(Global.exceptionMsg)
-//                        + "&createBy=" + 1;
                         + "&createBy=" + getPatrolManagerUserId();
 
                 Log.d("aijun, patrolSave", url);
