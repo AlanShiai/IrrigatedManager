@@ -81,26 +81,145 @@
         android:background="#F5F5F5"
         >
 
-        <EditText
-            android:id="@+id/editText"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
-            android:gravity="top"
-            android:inputType="textMultiLine"
-            android:hint="请填写评论"
-            android:text=""
-            android:minLines="8"
-            android:maxLines="10"
-            android:scrollbars="vertical"
+            android:orientation="vertical"
             android:background="#FFFFFF"
-            />
+            >
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="审批意见："
+                android:textSize="16sp"
+                android:textColor="#343434"
+                />
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:hint="填写审批意见"
+                android:text=""
+                android:minLines="8"
+                android:maxLines="10"
+                android:scrollbars="vertical"
+                android:background="#F6F6F6"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:orientation="vertical"
+            >
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="#FFFFFF"
+                >
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:gravity="center_vertical"
+                    android:text="处理类型："
+                    android:textSize="16sp"
+                    android:textColor="#343434"
+                    />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    />
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:gravity="center_vertical"
+                    android:text="本科室"
+                    android:textSize="16sp"
+                    android:textColor="#24AAFF"
+                    />
+
+                <ImageView
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="18dp"
+                    android:layout_height="30dp"
+                    android:gravity="center_vertical"
+                    android:src="@drawable/c8"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <Button
+                    android:id="@+id/agree"
+                    android:layout_margin="10dp"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="同意"
+                    android:textSize="20sp"
+                    android:textColor="#FFFFFf"
+                    android:background="@drawable/item_bt_shape"
+                    />
+
+                <Button
+                    android:id="@+id/disagree"
+                    android:layout_margin="10dp"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="驳回"
+                    android:textSize="20sp"
+                    android:textColor="#24AAFF"
+                    android:background="@drawable/shape_disagree_bt"
+                    />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:visibility="gone"
             >
 
             <ListView
@@ -118,10 +237,10 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:visibility="gone"
             >
 
             <Button
-                android:id="@+id/agree"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -133,7 +252,6 @@
                 />
 
             <Button
-                android:id="@+id/disagree"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
