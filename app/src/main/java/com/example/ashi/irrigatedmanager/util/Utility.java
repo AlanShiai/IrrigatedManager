@@ -8,6 +8,7 @@ import com.example.ashi.irrigatedmanager.IrrigationScheduleInfo;
 import com.example.ashi.irrigatedmanager.gson.Abnormal;
 import com.example.ashi.irrigatedmanager.gson.HttpResult;
 import com.example.ashi.irrigatedmanager.gson.InspectNote;
+import com.example.ashi.irrigatedmanager.gson.InspectNoteDetails;
 import com.example.ashi.irrigatedmanager.gson.PatrolManager;
 import com.example.ashi.irrigatedmanager.gson.PatrolNote;
 import com.example.ashi.irrigatedmanager.gson.ScanObject;
@@ -244,6 +245,15 @@ public class Utility {
     public static List<PatrolItem> handleApi21patrolItemResponse(String response) {
         try {
             return new Gson().fromJson(response, new TypeToken<List<PatrolItem>>(){}.getType());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static InspectNoteDetails handleApi24patrolDetailResponse(String response) {
+        try {
+            return new Gson().fromJson(response, InspectNoteDetails.class);
         } catch (Exception e) {
             e.printStackTrace();
         }

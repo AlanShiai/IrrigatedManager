@@ -35,7 +35,7 @@ public class Api {
     public static String API_21_patrolItem                = address + "/a/app/patrol/patrolItem?";
     public static String API_22_patrolSave                = address + "/a/app/patrol/patrolSave?";
     public static String API_23_basicInfo                 = address + "/a/app/patrol/basicInfo?";
-    public static String API_24_patrolDetail              = address + "/a/app/patrol/patrolDetail?id=30136878e084460cad141af485addea2";
+    public static String API_24_patrolDetail              = address + "/a/app/patrol/patrolDetail?";
     public static String API_25_officeStatistic           = address + "/a/app/patrol/officeStatistic?";
     public static String API_26_patrolDesQuery            = address + "/a/app/patrol/patrolDesQuery?";
     public static String API_27_patrolQueryUser           = address + "/a/app/patrol/patrolQueryUser?userName=系统管理员";

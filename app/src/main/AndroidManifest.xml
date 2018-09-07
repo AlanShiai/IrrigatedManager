@@ -73,7 +73,8 @@
         <activity android:name=".Level2_4_3_rain3" />
         <activity android:name=".Logout" />
         <activity android:name=".Level2_5_2_appvalProcess" />
-        <activity android:name=".Level2_2_3_1_inspectDetails"></activity>
+        <activity android:name=".Level2_2_3_1_inspectDetails" />
+        <activity android:name=".Level2_2_2_inspectNoteDetails"></activity>
     </application>
 
 </manifest>

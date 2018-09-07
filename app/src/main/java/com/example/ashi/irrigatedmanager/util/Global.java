@@ -30,6 +30,9 @@ public class Global {
     public static String projectInfoSubtype = "1";
     public static HashMap<String,String> projectDetails = new HashMap<>();
 
+    // inspect note
+    public static String inspectNoteId = "3e2971fc02764ee89bc54af0f30b55e8";
+
     // patrol
     public static String patrolType = "channel";
     public static String patrolId = "62c59e22820b41e094fa17788df11b66";

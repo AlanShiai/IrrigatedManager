@@ -107,6 +107,7 @@ public class Level2_2_2_inspectNote extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Level2_2_2_inspectNote.this, Level2_2_projectInspection2.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -173,15 +174,28 @@ public class Level2_2_2_inspectNote extends AppCompatActivity {
 //        dataList.add(new PatrolNote("异常"));
 //        dataList.add(new PatrolNote());
 
+        AdapterView.OnItemClickListener itemListener = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if ( null != dataList && dataList.size() > position+1 ) {
+                    Global.inspectNoteId = dataList.get(position).id;
+                }
+                Intent intent = new Intent(Level2_2_2_inspectNote.this, Level2_2_2_inspectNoteDetails.class);
+                startActivity(intent);
+            }
+        };
+
         listView1 = (ListView) findViewById(R.id.inspect_note_list1);
         PatrolAdpter patrolAdpter = new PatrolAdpter(
                 Level2_2_2_inspectNote.this, R.layout.item_inspect_note, dataList);
         listView1.setAdapter(patrolAdpter);
+        listView1.setOnItemClickListener(itemListener);
 
         listView2 = (ListView) findViewById(R.id.inspect_note_list2);
         PatrolAdpter patrolAdpter2 = new PatrolAdpter(
                 Level2_2_2_inspectNote.this, R.layout.item_inspect_note, dataList);
         listView2.setAdapter(patrolAdpter2);
+        listView2.setOnItemClickListener(itemListener);
 
 //        getDataFromServerAndUpdateListView();
         getDataFromServerAndUpdateListView2();
