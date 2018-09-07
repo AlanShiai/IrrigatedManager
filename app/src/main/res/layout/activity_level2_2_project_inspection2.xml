@@ -193,7 +193,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="14sp"
-                    android:text="记录"
+                    android:text="统计"
                     />
             </LinearLayout>
 
