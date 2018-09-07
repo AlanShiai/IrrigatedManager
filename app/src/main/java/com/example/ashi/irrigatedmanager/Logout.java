@@ -26,7 +26,7 @@ public class Logout extends AppCompatActivity {
         setContentView(R.layout.activity_logout);
 
         TextView loginName = (TextView) findViewById(R.id.login_name);
-        loginName.setText(Global.user.loginName);
+        loginName.setText(Global.user.name);
 
         TextView officeName = (TextView) findViewById(R.id.officeName);
         officeName.setText(Global.user.officeName);
