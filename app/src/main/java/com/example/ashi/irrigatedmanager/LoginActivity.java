@@ -349,6 +349,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             @Override
                             public void run() {
 //                            onPostExecute(isLoginSuccess);
+                                Intent intent = new Intent(LoginActivity.this, Level2_1_irrigateOverview.class);
+                                startActivity(intent);
+                                finish();
                             }
                         });
                     }
@@ -380,9 +383,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //                    return;ad
 //                }
 //                hasExecute = true;
-                Intent intent = new Intent(LoginActivity.this, Level2_1_irrigateOverview.class);
-                startActivity(intent);
-                finish();
+//                Intent intent = new Intent(LoginActivity.this, Level2_1_irrigateOverview.class);
+//                startActivity(intent);
+//                finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
