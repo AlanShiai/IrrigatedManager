@@ -259,7 +259,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="今年巡检次数"
+                    android:text="今年巡检个数"
                     android:textSize="12sp"
                     android:gravity="center"
                     />
