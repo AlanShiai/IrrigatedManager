@@ -67,21 +67,31 @@
             android:textStyle="normal"
             />
 
-        <Button
-            android:id="@+id/manual_inspect_report"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:layout_margin="5dp"
-            android:paddingLeft="5dp"
-            android:drawablePadding="1dp"
-            android:background="@drawable/button_shape"
-            android:text="下一步"
-            android:textSize="16sp"
-            android:gravity="center|center_vertical"
-            android:textColor="#FFFFFF"
-            style="?android:attr/borderlessButtonStyle"
-            />
+            >
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                />
+
+            <Button
+                android:id="@+id/manual_inspect_report"
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:background="@drawable/button_shape"
+                android:text="下一步"
+                android:textSize="15sp"
+                android:textColor="#FFFFFF"
+                style="?android:attr/borderlessButtonStyle"
+                />
+        </LinearLayout>
+
 
     </LinearLayout>
 
