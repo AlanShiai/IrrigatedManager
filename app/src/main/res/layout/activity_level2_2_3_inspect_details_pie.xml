@@ -64,6 +64,7 @@
         >
 
         <LinearLayout
+            android:layout_marginBottom="2dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:orientation="vertical"
@@ -71,20 +72,31 @@
             android:layout_height="0dp"
             android:layout_weight="4"
             android:background="@drawable/item_shape"
-            android:layout_marginBottom="2dp"
             >
 
-            <TextView
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  2018年  "
-                android:textSize="16sp"
-                android:textColor="#FFFFFF"
                 android:background="@drawable/item_blue_round_shape"
-                android:gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                />
+                >
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2018年"
+                    android:textSize="15sp"
+                    android:textColor="#FFFFFF"
+                    android:gravity="center"
+                    />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/draw_column"
