@@ -47,6 +47,9 @@ public class Level2_4_3_rain3 extends AppCompatActivity {
         }
         setContentView(R.layout.activity_level2_4_3_rain3);
 
+        TextView title = (TextView) findViewById(R.id.title);
+        title.setText(Global.rain_name);
+
 //        initData();
         listView = (ListView) findViewById(R.id.level_2_4_3_rain_list);
 
