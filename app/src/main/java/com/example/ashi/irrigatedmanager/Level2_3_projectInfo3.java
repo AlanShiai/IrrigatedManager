@@ -59,6 +59,7 @@ public class Level2_3_projectInfo3 extends AppCompatActivity {
                 Global.projectInfoName2 = projectInfoList.get(position).name;
                 Intent intent = new Intent(Level2_3_projectInfo3.this, Level2_3_projectInfo4.class);
                 startActivity(intent);
+                finish();
             }
         });
 

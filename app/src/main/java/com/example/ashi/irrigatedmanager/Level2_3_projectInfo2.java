@@ -37,6 +37,7 @@ public class Level2_3_projectInfo2 extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(Level2_3_projectInfo2.this, Level2_3_projectInfo3.class);
                 startActivity(intent);
+                finish();
             }
         });
 

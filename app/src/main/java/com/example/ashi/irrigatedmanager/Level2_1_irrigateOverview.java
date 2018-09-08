@@ -1,6 +1,7 @@
 package com.example.ashi.irrigatedmanager;
 
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -10,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.support.annotation.DrawableRes;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -105,6 +107,23 @@ public class Level2_1_irrigateOverview extends AppCompatActivity implements View
         }
     }
 
+    public void onBackPressed() {
+        new AlertDialog.Builder(this).setTitle("确认退出掌上灌区吗？")
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Level2_1_irrigateOverview.this.finish();
+                    }
+                })
+                .setNegativeButton("返回", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                }).show();
+    }
+
     private void addListernerForBottomToolbar() {
 //        findViewById(R.id.overview).setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -119,7 +138,6 @@ public class Level2_1_irrigateOverview extends AppCompatActivity implements View
             public void onClick(View v) {
                 Intent intent = new Intent(Level2_1_irrigateOverview.this, Level2_2_projectInspection2.class);
                 startActivity(intent);
-                finish();
             }
         });
         findViewById(R.id.monitor).setOnClickListener(new View.OnClickListener() {
@@ -127,7 +145,6 @@ public class Level2_1_irrigateOverview extends AppCompatActivity implements View
             public void onClick(View v) {
                 Intent intent = new Intent(Level2_1_irrigateOverview.this, Level2_4_realtimeMonitor2.class);
                 startActivity(intent);
-                finish();
             }
         });
         findViewById(R.id.overview_appval).setOnClickListener(new View.OnClickListener() {
@@ -135,7 +152,6 @@ public class Level2_1_irrigateOverview extends AppCompatActivity implements View
             public void onClick(View v) {
                 Intent intent = new Intent(Level2_1_irrigateOverview.this, Level2_5_appvalProcess.class);
                 startActivity(intent);
-                finish();
             }
         });
         findViewById(R.id.project_info).setOnClickListener(new View.OnClickListener() {
@@ -143,7 +159,6 @@ public class Level2_1_irrigateOverview extends AppCompatActivity implements View
             public void onClick(View v) {
                 Intent intent = new Intent(Level2_1_irrigateOverview.this, Logout.class);
                 startActivity(intent);
-                finish();
 //                String fileUri = getResourcesUri(R.drawable.a1);
 //                HttpUtil.uploadMultiFile("/data/data/com.example.ashi.irrigatedmanager/files/assets/logo_h.png");
             }

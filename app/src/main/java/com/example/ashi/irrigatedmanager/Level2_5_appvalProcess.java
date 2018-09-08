@@ -88,6 +88,7 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Level2_5_appvalProcess.this, Level2_1_irrigateOverview.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -175,6 +176,7 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
                     Global.appvalSelector = 0;
                     Intent intent = new Intent(getContext(), Level2_5_1_appvalDetails.class);
                     startActivity(intent);
+                    getActivity().finish();
                 }
             });
 
@@ -240,6 +242,7 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
                     Global.appvalSelector = 1;
                     Intent intent = new Intent(getContext(), Level2_5_1_appvalDetails.class);
                     startActivity(intent);
+                    getActivity().finish();
                 }
             });
 
@@ -304,6 +307,7 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
                     Global.appvalSelector = 2;
                     Intent intent = new Intent(getContext(), Level2_5_1_appvalDetails.class);
                     startActivity(intent);
+                    getActivity().finish();
                 }
             });
 

@@ -55,6 +55,7 @@ public class Level2_4_3_rain2 extends AppCompatActivity {
                 Global.rain_name = rain.project_name;
                 Intent intent = new Intent(Level2_4_3_rain2.this, Level2_4_3_rain3.class);
                 startActivity(intent);
+                finish();
             }
         });
         addListernerForBackButton();

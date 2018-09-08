@@ -182,6 +182,7 @@ public class Level2_2_2_inspectNote extends AppCompatActivity {
                 }
                 Intent intent = new Intent(Level2_2_2_inspectNote.this, Level2_2_2_inspectNoteDetails.class);
                 startActivity(intent);
+                finish();
             }
         };
 

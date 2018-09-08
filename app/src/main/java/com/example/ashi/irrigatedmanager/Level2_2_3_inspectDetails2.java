@@ -102,6 +102,7 @@ public class Level2_2_3_inspectDetails2 extends AppCompatActivity {
                 }
                 Intent intent = new Intent(Level2_2_3_inspectDetails2.this, Level2_2_3_1_inspectDetails.class);
                 startActivity(intent);
+                finish();
             }
         });
 

@@ -58,6 +58,7 @@ public class Level2_2_5_1_manualInspect extends AppCompatActivity {
                 Global.patrolType = dataList.get(position).type;
                 Intent intent = new Intent(Level2_2_5_1_manualInspect.this, Level2_2_5_2_manualInspect.class);
                 startActivity(intent);
+                finish();
             }
         });
 

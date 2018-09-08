@@ -53,6 +53,7 @@ public class Level2_3_projectInfo extends AppCompatActivity {
                 Global.projectInfoName = projectSubTypeList.get(position).getName() + "列表";
                 Intent intent = new Intent(Level2_3_projectInfo.this, Level2_3_projectInfo3.class);
                 startActivity(intent);
+                finish();
             }
         });
         listView2.setVisibility(View.GONE);
@@ -72,6 +73,7 @@ public class Level2_3_projectInfo extends AppCompatActivity {
                     listView.setVisibility(View.GONE);
                     Intent intent = new Intent(Level2_3_projectInfo.this, Level2_3_projectInfo3.class);
                     startActivity(intent);
+                    finish();
                 }
             }
         });
