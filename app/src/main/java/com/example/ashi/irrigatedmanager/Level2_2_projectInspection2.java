@@ -82,9 +82,11 @@ public class Level2_2_projectInspection2 extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            AbnormalAdpter adapter = new AbnormalAdpter(
-                                    Level2_2_projectInspection2.this, R.layout.item_patrol, Global.abnormalList);
-                            listView.setAdapter(adapter);
+                            if ( null != listView) {
+                                AbnormalAdpter adapter = new AbnormalAdpter(
+                                        Level2_2_projectInspection2.this, R.layout.item_patrol, Global.abnormalList);
+                                listView.setAdapter(adapter);
+                            }
                         }
                     });
                 }

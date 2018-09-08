@@ -45,7 +45,7 @@
                     android:layout_marginLeft="5dp"
                     android:text="闸门"
                     android:textSize="17sp"
-                    android:textColor="#000000"
+                    android:textColor="#333333"
                     />
 
                 <LinearLayout
@@ -55,20 +55,18 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="年"
-                        android:textSize="15sp"
-                        android:textColor="#FFFFFF"
-                        android:background="#24AAFF"
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/f8_year"
                         />
                     <TextView
-                        android:layout_marginLeft="3dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="年异常"
                         android:textSize="15sp"
+                        android:textColor="#999999"
                         />
 
                     <TextView
@@ -81,14 +79,11 @@
                         android:textSize="15sp"
                         android:textStyle="bold"
                         />
-                    <TextView
-                        android:layout_marginLeft="10dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="月"
-                        android:textSize="15sp"
-                        android:textColor="#FFFFFF"
-                        android:background="#24AAFF"
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/f7_month"
                         />
                     <TextView
                         android:layout_marginLeft="3dp"
@@ -96,6 +91,7 @@
                         android:layout_height="wrap_content"
                         android:text="月异常"
                         android:textSize="15sp"
+                        android:textColor="#999999"
                         />
 
                     <TextView
@@ -122,6 +118,7 @@
                     android:layout_marginLeft="5dp"
                     android:text="本年"
                     android:textSize="16sp"
+                    android:textColor="#999999"
                     />
 
                 <TextView
@@ -130,7 +127,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="right"
                     android:text="156"
-                    android:textColor="#000000"
+                    android:textColor="#333333"
                     android:textSize="16sp"
                     />
 
@@ -139,6 +136,7 @@
                     android:layout_height="wrap_content"
                     android:text="个，异常"
                     android:textSize="16sp"
+                    android:textColor="#999999"
                     />
 
                 <TextView
@@ -146,7 +144,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="30"
-                    android:textColor="#C70606"
+                    android:textColor="#F24646"
                     android:textSize="16sp"
                     />
                 <TextView
@@ -154,6 +152,7 @@
                     android:layout_height="wrap_content"
                     android:text="个  本月"
                     android:textSize="16sp"
+                    android:textColor="#999999"
                     />
 
                 <TextView
@@ -161,7 +160,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="30"
-                    android:textColor="#000000"
+                    android:textColor="#333333"
                     android:textSize="16sp"
                     />
                 <TextView
@@ -169,6 +168,7 @@
                     android:layout_height="wrap_content"
                     android:text="个，异常"
                     android:textSize="16sp"
+                    android:textColor="#999999"
                     />
 
                 <TextView
@@ -176,7 +176,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="20"
-                    android:textColor="#C70606"
+                    android:textColor="#F24646"
                     android:textSize="16sp"
                     />
                 <TextView
@@ -184,6 +184,7 @@
                     android:layout_height="wrap_content"
                     android:text="个"
                     android:textSize="16sp"
+                    android:textColor="#999999"
                     />
             </LinearLayout>
 
