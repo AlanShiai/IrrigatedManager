@@ -241,12 +241,9 @@
                         />
 
                     <ImageView
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_width="10dp"
+                        android:layout_width="20dp"
                         android:layout_height="match_parent"
                         android:src="@drawable/d4"
-                        android:scaleType="centerCrop"
                         />
 
                 </LinearLayout>
