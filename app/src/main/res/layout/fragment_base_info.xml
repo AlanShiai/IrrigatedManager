@@ -6,11 +6,12 @@
 
     <TextView
         android:id="@+id/fragment_base_info"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"
         android:text="xxxxxxxxxxxxxxxxxxxxx"
-        android:layout_marginTop="10dp"
         />
 
 </LinearLayout>

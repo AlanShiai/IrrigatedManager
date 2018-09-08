@@ -200,7 +200,7 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
                     Log.d("aijun patrolItem", responseText+"");
                     Log.d("aijun patrolItem", list.size()+"");
 
-                    if ( ! list.isEmpty() ) {
+                    if ( null != list ) {
                         updateDataList(list);
                         Log.d("aijun patrolItem 2", dataList+"");
                         Log.d("aijun patrolItem 2", dataList.size()+"");
