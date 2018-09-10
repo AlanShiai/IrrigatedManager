@@ -61,7 +61,7 @@ public class Level2_2_3_1_inspectDetails extends AppCompatActivity {
         // &office=06b21ce1eaec48e59e2a40025b0991ce&projectType=channel&name=%E6%BB%8F%E9%98%B3%E6%B2%B3%E7%A3%81%E5%8E%BF%E6%AE%B5
         // &startDate=2018-05-16&endDate=2018-05-19
         String url = Api.API_28_officeUserStatistic + "userId=" + Global.user.id  +
-                "&office=" + Global.inspectDetails_officeId +
+                "&office=" + Global.user.officeId +
                 "&projectType=" + Global.inspectDetails_projectType +
                 "&startDate=" + Utility.toDayString(Utility.getThisYear(), Global.inspectDetails_month, 1) +
                 "&endDate=" + Utility.toDayString(Utility.getThisYear(), Global.inspectDetails_month, Utility.getMonthLastDay(Utility.getThisYear(), Global.inspectDetails_month)) +
