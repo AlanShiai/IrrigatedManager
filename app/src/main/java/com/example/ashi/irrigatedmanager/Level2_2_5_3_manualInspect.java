@@ -218,7 +218,11 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (Global.isExceptionFound) {
-                    showExceptiontDialog();
+                    if (editText.getText().toString().trim().equals("")) {
+                        showNeedDescriptionDialog();
+                    } else {
+                        showExceptiontDialog();
+                    }
                 } else {
                     showNormalReportDialog();
                 }
@@ -232,6 +236,21 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void showNeedDescriptionDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(Level2_2_5_3_manualInspect.this);
+        builder.setTitle("");
+        builder.setIcon(R.drawable.e7);
+        builder.setMessage("请输入巡检信息。");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        builder.create().show();
     }
 
     private void updatePatrolManagerList() {
@@ -345,56 +364,53 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
     }
 
     private void showNormalReportDialog() {
-        {
-            AlertDialog.Builder builder = new AlertDialog.Builder(Level2_2_5_3_manualInspect.this);
-            builder.setTitle("");
-            builder.setIcon(R.drawable.e7);
-            builder.setMessage("确认没有发现异常。");
+        AlertDialog.Builder builder = new AlertDialog.Builder(Level2_2_5_3_manualInspect.this);
+        builder.setTitle("");
+        builder.setIcon(R.drawable.e7);
+        builder.setMessage("确认没有发现异常。");
 
-            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    String url = Api.API_22_patrolSave  + "userId=" + Global.user.id + "&images=" + "&type=" + Global.patrolType
-                            + "&longitude=" + longitude + "&latitude=" + latitude
-                            + "&goalId=" + Global.patrolId + "&contents=" + editText.getText().toString()
-                            + "&itemResults="
-                            + "&createBy=" + 1;
-                    Log.d("aijun, patrolSave", url);
-                    HttpUtil.sendOkHttpRequest(url, new Callback() {
-                        @Override
-                        public void onResponse(Call call, Response response) throws IOException {
-                            final String responseText = response.body().string();
-                            HttpResult httpResult = Utility.handleNormalFormResponse(responseText);
-                            Log.d("aijun, patrolSave", responseText);
-                            if (httpResult.isSuccess()) {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        showText("巡检提交成功");
-                                        Intent intent = new Intent(getApplicationContext(), Level2_2_projectInspection2.class);
-                                        startActivity(intent);
-                                        finish();
-                                    }
-                                });
-                            }
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String url = Api.API_22_patrolSave  + "userId=" + Global.user.id + "&images=" + "&type=" + Global.patrolType
+                        + "&longitude=" + longitude + "&latitude=" + latitude
+                        + "&goalId=" + Global.patrolId + "&contents=" + editText.getText().toString()
+                        + "&itemResults="
+                        + "&createBy=" + 1;
+                Log.d("aijun, patrolSave", url);
+                HttpUtil.sendOkHttpRequest(url, new Callback() {
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        final String responseText = response.body().string();
+                        HttpResult httpResult = Utility.handleNormalFormResponse(responseText);
+                        Log.d("aijun, patrolSave", responseText);
+                        if (httpResult.isSuccess()) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    showText("巡检提交成功");
+                                    Intent intent = new Intent(getApplicationContext(), Level2_2_projectInspection2.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            });
                         }
+                    }
 
-                        @Override
-                        public void onFailure(Call call, IOException e) {
-                            e.printStackTrace();
-                        }
-                    });
-                }
-            }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
 
-                }
-            });
+            }
+        });
 
-            builder.create().show();
-        }
-
+        builder.create().show();
     }
 
     private void showText(String text) {
