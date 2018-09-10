@@ -31,6 +31,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -96,11 +97,13 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
 
     List<PatrolManager> patrolManagers = new ArrayList<>();
 
-//    private MapView mapView;
+    private MapView mapView;
 
-//    private BaiduMap baiduMap;
+    private BaiduMap baiduMap;
 
     private boolean isFirstLocate = true;
+
+    private LinearLayout photo_layout, map_layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,16 +121,16 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
 
         setContentView(R.layout.activity_level2_2_5_3_manual_inspect);
 
-//        mapView = (MapView) findViewById(R.id.bmapView);
-//        baiduMap = mapView.getMap();
-//        baiduMap.setMyLocationEnabled(true);
-
-        positionText = (TextView) findViewById(R.id.position_text_view);
+        mapView = (MapView) findViewById(R.id.bmapView);
+        baiduMap = mapView.getMap();
+        baiduMap.setMyLocationEnabled(true);
 
         ImageView located = (ImageView) findViewById(R.id.located);
         located.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                photo_layout.setVisibility(View.GONE);
+                map_layout.setVisibility(View.VISIBLE);
                 Log.d("aijun located", "adfasdf tst located.");
                 List<String> permissionList = new ArrayList<>();
                 if (ContextCompat.checkSelfPermission(Level2_2_5_3_manualInspect.this, Manifest.permission
@@ -151,12 +154,14 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
             }
         });
 
-        findViewsById();
+        myFindViewsById();
         setOnClickListeners();
         updatePatrolManagerList();
     }
 
-    private void findViewsById() {
+    private void myFindViewsById() {
+        photo_layout = (LinearLayout) findViewById(R.id.photo_layout);
+        map_layout = (LinearLayout) findViewById(R.id.map_layout);
         editText = (EditText) findViewById(R.id.editText);
         takePhoto = (ImageView) findViewById(R.id.take_photo);
         imageView1 = (ImageView) findViewById(R.id.imageview1);
@@ -191,6 +196,9 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
         takePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                photo_layout.setVisibility(View.VISIBLE);
+                map_layout.setVisibility(View.GONE);
+
                 takePhotoFile = new File(getExternalCacheDir(), "output_image.jpg");
                 try {
                     if (takePhotoFile.exists()) {
@@ -609,7 +617,6 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
 //                    } else if (bdLocation.getLocType() == BDLocation.TypeNetWorkLocation) {
 //                        currentPosition.append("NetWork");
 //                    }
-                    positionText.setText(currentPosition);
                     showText(currentPosition.toString());
                     latitude = bdLocation.getLatitude();
                     longitude = bdLocation.getLongitude();
