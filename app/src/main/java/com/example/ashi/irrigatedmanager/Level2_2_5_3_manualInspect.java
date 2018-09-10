@@ -51,6 +51,7 @@ import com.example.ashi.irrigatedmanager.gson.AbnormalAdpter;
 import com.example.ashi.irrigatedmanager.gson.HttpResult;
 import com.example.ashi.irrigatedmanager.gson.PatrolManager;
 import com.example.ashi.irrigatedmanager.gson.PatrolManagerAdpter;
+import com.example.ashi.irrigatedmanager.gson.UploadImage;
 import com.example.ashi.irrigatedmanager.util.Api;
 import com.example.ashi.irrigatedmanager.util.Global;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
@@ -76,6 +77,7 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
     private ImageView replacedByChoose;
 
     private ImageView takePhoto;
+    private File takePhotoFile;
 
     private ImageView imageView1, imageView2, imageView3, imageView4, imageView5, imageView6;
 
@@ -189,19 +191,19 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
         takePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                File outputImage = new File(getExternalCacheDir(), "output_image.jpg");
+                takePhotoFile = new File(getExternalCacheDir(), "output_image.jpg");
                 try {
-                    if (outputImage.exists()) {
-                        outputImage.delete();
+                    if (takePhotoFile.exists()) {
+                        takePhotoFile.delete();
                     }
-                    outputImage.createNewFile();
+                    takePhotoFile.createNewFile();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 if (Build.VERSION.SDK_INT < 24) {
-                    imageUri = Uri.fromFile(outputImage);
+                    imageUri = Uri.fromFile(takePhotoFile);
                 } else {
-                    imageUri = FileProvider.getUriForFile(Level2_2_5_3_manualInspect.this, "com.example.ashi.irrigatedmanager.fileprovider", outputImage);
+                    imageUri = FileProvider.getUriForFile(Level2_2_5_3_manualInspect.this, "com.example.ashi.irrigatedmanager.fileprovider", takePhotoFile);
                 }
                 if (ContextCompat.checkSelfPermission(Level2_2_5_3_manualInspect.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(Level2_2_5_3_manualInspect.this, new String[]{Manifest.permission.CAMERA}, 1);
@@ -274,10 +276,34 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
         });
     }
 
+    private String getPatrolManagerUserId() {
+        String managerString = "";
+        String managerId = "1";
+        if ( null != listView) {
+            for (View listChild : listView.getTouchables()) {
+                if (listChild instanceof RadioButton) {
+                    RadioButton radioButton = (RadioButton) listChild;
+                    if (radioButton.isChecked()) {
+                        managerString = radioButton.getText().toString();
+                        for (PatrolManager patrolManager : patrolManagers) {
+                            if (managerString.trim().equals(patrolManager.userName)) {
+                                managerId = patrolManager.userId;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return managerId;
+    }
+
+    ListView listView;
+
     private void showExceptiontDialog() {
         final Dialog builder = new Dialog(this, R.style.update_dialog);
         View view = View.inflate(Level2_2_5_3_manualInspect.this, R.layout.update_dialog, null);
-        final ListView listView = (ListView) view.findViewById(R.id.list_view);
+        listView = (ListView) view.findViewById(R.id.list_view);
         final PatrolManagerAdpter adapter = new PatrolManagerAdpter(
                 Level2_2_5_3_manualInspect.this, R.layout.item_check_box, patrolManagers);
         listView.setAdapter(adapter);
@@ -299,68 +325,81 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
         });
         updateBtn.setOnClickListener(new View.OnClickListener() {
 
-            private String getPatrolManagerUserId() {
-                String managerString = "";
-                String managerId = "1";
-                for (View listChild : listView.getTouchables()) {
-                    if (listChild instanceof RadioButton) {
-                        RadioButton radioButton = (RadioButton) listChild;
-                        if (radioButton.isChecked()) {
-                            managerString = radioButton.getText().toString();
-                            for (PatrolManager patrolManager : patrolManagers) {
-                                if (managerString.trim().equals(patrolManager.userName)) {
-                                    managerId = patrolManager.userId;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
-                return managerId;
-            }
-
             @Override
             public void onClick(View view) {
                 // http://www.boze-tech.com/zfh_manager/a/app/patrol/patrolSave?type=channel
                 // &goalId=8502f69d32304ee6a9aacd99920fdcd7%22%20+%20%22&longitude=116.429489&latitude=39.87182
                 // &images=&itemResults=&createBy=1&contents=%E6%98%AF%E6%98%AF%E6%98%AF&userId=1
 
-                String url = Api.API_22_patrolSave + "userId=" + Global.user.id + "&images=" + "&type=" + Global.patrolType
-                        + "&longitude=" + longitude + "&latitude=" + latitude
-                        + "&goalId=" + Global.patrolId + "&contents=" + editText.getText().toString()
-                        + "&itemResults=" + Utility.toURLEncoded(Global.exceptionMsg)
-                        + "&createBy=" + getPatrolManagerUserId();
-
-                Log.d("aijun, patrolSave", url);
-                HttpUtil.sendOkHttpRequest(url, new Callback() {
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        final String responseText = response.body().string();
-                        HttpResult httpResult = Utility.handleNormalFormResponse(responseText);
-                        if (httpResult.isSuccess()) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    showText("巡检提交成功");
-                                    Intent intent = new Intent(getApplicationContext(), Level2_2_projectInspection2.class);
-                                    startActivity(intent);
-                                    finish();
-                                }
-                            });
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        e.printStackTrace();
-                    }
-                });
+                updateImageFile();
                 builder.dismiss();
             }
         });
         builder.setContentView(view);//这里还可以指定布局参数
         builder.setCancelable(false);// 不可以用“返回键”取消
         builder.show();
+    }
+
+    private void updateImageFile() {
+        if (takePhotoFile.exists()) {
+            String url = Api.API_34_uploadImage;
+            HttpUtil.uploadFile(url, takePhotoFile, new Callback() {
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    final String responseText = response.body().string();
+                    Log.d("aijun, updateImageFile", responseText);
+                    UploadImage uploadImage = Utility.handleApi34uploadImageResponse(responseText);
+                    if ( null != uploadImage && uploadImage.status.equals("1")) {
+                        String image = "";
+                        if (null != uploadImage.paths && ! uploadImage.paths.isEmpty()) {
+                            image = uploadImage.paths.get(0).path.substring("/home/zfh/uploads/zfh_manager/userfiles".length());
+                        }
+                        String url = Api.API_22_patrolSave + "userId=" + Global.user.id + "&images=" + image + "&type=" + Global.patrolType
+                                + "&longitude=" + longitude + "&latitude=" + latitude
+                                + "&goalId=" + Global.patrolId + "&contents=" + editText.getText().toString().trim()
+                                + "&itemResults=" + Utility.toURLEncoded(Global.exceptionMsg)
+                                + "&createBy=" + getPatrolManagerUserId();
+                        Log.d("aijun, patrolSave", url);
+                        HttpUtil.sendOkHttpRequest(url, new Callback() {
+                            @Override
+                            public void onResponse(Call call, Response response) throws IOException {
+                                final String responseText = response.body().string();
+                                HttpResult httpResult = Utility.handleNormalFormResponse(responseText);
+                                Log.d("aijun, patrolSave", responseText);
+                                if (httpResult.isSuccess()) {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            showText("巡检提交成功");
+                                            Intent intent = new Intent(getApplicationContext(), Level2_2_projectInspection2.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    });
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call call, IOException e) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        showText("巡检提交失败");
+                                    }
+                                });
+                                e.printStackTrace();
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    showText("照片上传失败");
+                    e.printStackTrace();
+                }
+            });
+        }
     }
 
     private void showNormalReportDialog() {
@@ -372,36 +411,7 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String url = Api.API_22_patrolSave  + "userId=" + Global.user.id + "&images=" + "&type=" + Global.patrolType
-                        + "&longitude=" + longitude + "&latitude=" + latitude
-                        + "&goalId=" + Global.patrolId + "&contents=" + editText.getText().toString()
-                        + "&itemResults="
-                        + "&createBy=" + 1;
-                Log.d("aijun, patrolSave", url);
-                HttpUtil.sendOkHttpRequest(url, new Callback() {
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        final String responseText = response.body().string();
-                        HttpResult httpResult = Utility.handleNormalFormResponse(responseText);
-                        Log.d("aijun, patrolSave", responseText);
-                        if (httpResult.isSuccess()) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    showText("巡检提交成功");
-                                    Intent intent = new Intent(getApplicationContext(), Level2_2_projectInspection2.class);
-                                    startActivity(intent);
-                                    finish();
-                                }
-                            });
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        e.printStackTrace();
-                    }
-                });
+                updateImageFile();
             }
         }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override

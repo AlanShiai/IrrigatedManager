@@ -44,6 +44,8 @@ public class Api {
     public static String API_30_patrolInit                = address + "/a/app/patrol/patrolInit?type=";
     public static String API_31_queryYearCount            = address + "/a/app/patrol/queryYearCount?";
     public static String API_32_getUserOfPatrol           = address + "/a/app/patrol/getUserOfPatrol?";
-    public static String API_33_taskFlow                   = address + "/a/app/actTask/taskFlow?";
+    public static String API_33_taskFlow                  = address + "/a/app/actTask/taskFlow?";
+
+    public static String API_34_uploadImage                = address +"/a/app/upload/file";
 
 }

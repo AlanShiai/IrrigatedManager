@@ -42,6 +42,47 @@ public class HttpUtil {
         client.newCall(request).enqueue(callback);
     }
 
+    public static void uploadFile(String url, File file, okhttp3.Callback callback) {
+        String name = file.getName();
+        String saveFileName = name;
+        if (name.contains(".")) {
+            saveFileName = name.substring(0, name.lastIndexOf(".")) +
+                    System.currentTimeMillis() + name.substring(name.lastIndexOf("."));
+        }
+
+        Log.d("aijun upload", "uploadFile() start upload " + file);
+
+        RequestBody fileBody = RequestBody.create(MediaType.parse("application/octet-stream"), file);
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("filename", saveFileName, fileBody)
+                .build();
+        Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+
+        final okhttp3.OkHttpClient.Builder httpBuilder = new OkHttpClient.Builder();
+        OkHttpClient okHttpClient  = httpBuilder
+                .connectTimeout(100, TimeUnit.SECONDS)
+                .writeTimeout(500, TimeUnit.SECONDS)
+                .build();
+        okHttpClient.newCall(request).enqueue(callback);
+//        okHttpClient.newCall(request).enqueue(new Callback() {
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//                Log.e("aijun upload", "uploadFile() e=" + e);
+//                e.printStackTrace();
+//            }
+//
+//            @Override
+//            public void onResponse(Call call, Response response) throws IOException {
+//                Log.i("aijun upload", "uploadFile() response=" + response.body().string());
+//                Log.i("aijun upload", "uploadFile() response=" + response.toString());
+//            }
+//        });
+    }
+
     public static void uploadMultiFile() {
         File file = new File("/data/data/com.example.ashi.irrigatedmanager/files/assets/logo_h.png");
 //        File file = new File(fileUri);
