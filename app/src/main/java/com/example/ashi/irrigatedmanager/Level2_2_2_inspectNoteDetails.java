@@ -56,10 +56,10 @@ public class Level2_2_2_inspectNoteDetails extends AppCompatActivity {
 
     private void myFindViewById() {
         userName = (TextView) findViewById(R.id.userName);
-        createDate = (TextView) findViewById(R.id.userName);
-        name = (TextView) findViewById(R.id.userName);
-        result = (TextView) findViewById(R.id.userName);
-        resultItem = (TextView) findViewById(R.id.userName);
+        createDate = (TextView) findViewById(R.id.createDate);
+        name = (TextView) findViewById(R.id.name);
+        result = (TextView) findViewById(R.id.result);
+        resultItem = (TextView) findViewById(R.id.resultItem);
     }
 
     private void getDataFromServerAndUpdateUI() {

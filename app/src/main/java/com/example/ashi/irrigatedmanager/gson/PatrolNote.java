@@ -11,6 +11,7 @@ public class PatrolNote {
     public String result = "正常";
     public String goalId = "4339bf3b0da04f92a16b688cd02f2a14";
     public String goalName = "滏阳河磁县段";
+    public String updateByName = "西闸管理所所长";
     public String type;
     public String updateDate = "2018-05-18 10:46:43 ";
 

@@ -37,6 +37,7 @@ public class PatrolAdpter extends ArrayAdapter<PatrolNote> {
             viewHolder.goalName = (TextView) view.findViewById (R.id.goalName);
             viewHolder.result = (TextView) view.findViewById (R.id.result);
             viewHolder.updateDate = (TextView) view.findViewById (R.id.updateDate);
+            viewHolder.updateByName = (TextView) view.findViewById (R.id.updateByName);
             view.setTag(viewHolder); // 将ViewHolder存储在View中
         } else {
             view = convertView;
@@ -50,6 +51,7 @@ public class PatrolAdpter extends ArrayAdapter<PatrolNote> {
         }
         viewHolder.result.setText(projectInfo.result);
         viewHolder.updateDate.setText(projectInfo.updateDate.trim());
+        viewHolder.updateByName.setText(projectInfo.updateByName.trim());
 
         return view;
     }
@@ -58,6 +60,7 @@ public class PatrolAdpter extends ArrayAdapter<PatrolNote> {
         TextView goalName;
         TextView result;
         TextView updateDate;
+        TextView updateByName;
     }
 }
 

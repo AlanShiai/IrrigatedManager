@@ -177,7 +177,7 @@ public class Level2_2_2_inspectNote extends AppCompatActivity {
         AdapterView.OnItemClickListener itemListener = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if ( null != dataList && dataList.size() > position+1 ) {
+                if ( null != dataList && dataList.size() > position ) {
                     Global.inspectNoteId = dataList.get(position).id;
                 }
                 Intent intent = new Intent(Level2_2_2_inspectNote.this, Level2_2_2_inspectNoteDetails.class);
