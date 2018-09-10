@@ -3,10 +3,18 @@ package com.example.ashi.irrigatedmanager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -34,11 +42,11 @@ import okhttp3.Response;
 
 public class Level2_5_1_appvalDetails extends AppCompatActivity {
 
-    private List<TaskFlow> dataList = new ArrayList<TaskFlow>();
+    private static List<TaskFlow> dataList = new ArrayList<TaskFlow>();
 
-    TextView appval_details_title;
+    private Level2_5_1_appvalDetails.SectionsPagerAdapter mSectionsPagerAdapter;
 
-    ListView listView;
+    private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,14 +59,23 @@ public class Level2_5_1_appvalDetails extends AppCompatActivity {
         }
         setContentView(R.layout.activity_level2_5_1_appval_details);
 
-        listView = (ListView) findViewById(R.id.level_2_5_1_appval_list);
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        initData();
-        TaskFlowAdapter adapter = new TaskFlowAdapter(
-                Level2_5_1_appvalDetails.this, R.layout.appval_item2, dataList);
-        listView.setAdapter(adapter);
+        // Set up the ViewPager with the sections adapter.
+        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        appval_details_title = (TextView) findViewById(R.id.appval_details_title);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(mViewPager);
+
+
+
+
+//        initData();
+//        TaskFlowAdapter adapter = new TaskFlowAdapter(
+//                Level2_5_1_appvalDetails.this, R.layout.appval_item2, dataList);
+//        listView.setAdapter(adapter);
+
 
         if (Global.lastPageIsTodo) {
             findViewById(R.id.next_step).setVisibility(View.VISIBLE);
@@ -107,7 +124,10 @@ public class Level2_5_1_appvalDetails extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            appval_details_title.setText(businessForm.name.replace("@@", "      "));
+                            if ( null != appval_details_title) {
+                                appval_details_title_str = businessForm.name.replace("@@", "      ");
+                                appval_details_title.setText(appval_details_title_str);
+                            }
                         }
                     });
                 }
@@ -135,11 +155,13 @@ public class Level2_5_1_appvalDetails extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            dataList.clear();
-                            dataList.addAll(list);
-                            TaskFlowAdapter adapter = new TaskFlowAdapter(
-                                    Level2_5_1_appvalDetails.this, R.layout.appval_item2, dataList);
-                            listView.setAdapter(adapter);
+                            if (null != appval_details_listView) {
+                                dataList.clear();
+                                dataList.addAll(list);
+                                TaskFlowAdapter adapter = new TaskFlowAdapter(
+                                        Level2_5_1_appvalDetails.this, R.layout.appval_item2, dataList);
+                                appval_details_listView.setAdapter(adapter);
+                            }
                         }
                     });
                 }
@@ -155,4 +177,112 @@ public class Level2_5_1_appvalDetails extends AppCompatActivity {
         dataList.add(new TaskFlow("系统管理员"));
         dataList.add(new TaskFlow("大名管理所所长"));
     }
+
+    static TextView appval_details_title;
+    static String appval_details_title_str;
+    static ListView appval_details_listView;
+    public static class PlaceholderForTab1 extends Fragment {
+
+        public LinearLayout layout;
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_tab_appval, container, false);
+            appval_details_title = (TextView) rootView.findViewById(R.id.appval_details_title);
+            appval_details_listView = (ListView) rootView.findViewById(R.id.level_2_5_1_appval_list);
+
+            if ( null != appval_details_title_str) {
+                appval_details_title.setText(appval_details_title_str);
+            }
+            TaskFlowAdapter adapter = new TaskFlowAdapter(
+                    getContext(), R.layout.appval_item2, dataList);
+            appval_details_listView.setAdapter(adapter);
+
+            return rootView;
+        }
+    }
+
+    static TextView result;
+    static TextView userName;
+    static TextView createDate;
+    static TextView longitude;
+    static TextView latitude;
+    static TextView resultItem;
+    public static class PlaceholderForTab2 extends Fragment {
+
+        public LinearLayout layout;
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_tab_patrol, container, false);
+            result = (TextView) rootView.findViewById(R.id.result);
+            userName = (TextView) rootView.findViewById(R.id.userName);
+            createDate = (TextView) rootView.findViewById(R.id.createDate);
+            longitude = (TextView) rootView.findViewById(R.id.longitude);
+            latitude = (TextView) rootView.findViewById(R.id.latitude);
+            resultItem = (TextView) rootView.findViewById(R.id.resultItem);
+
+            return rootView;
+        }
+    }
+
+    private static ListView basicInfoListView;
+    public static class PlaceholderForTab3 extends Fragment {
+
+//        private ListView listView;
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_listview, container, false);
+
+//            ManualInspectBasicInfoAdapter adapter = new ManualInspectBasicInfoAdapter(
+//                    getContext(), R.layout.fragment_listview_item, new ArrayList<String>(ManualInspectBasicInfo.getInfo().keySet()));
+            basicInfoListView = (ListView) rootView.findViewById(R.id.fragment_listview_list);
+
+            return rootView;
+        }
+    }
+
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+        public SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0:
+                    return new PlaceholderForTab1();
+                case 1:
+                    return new PlaceholderForTab2();
+                case 2:
+                    return new PlaceholderForTab3();
+            }
+            return new PlaceholderForTab1();
+        }
+
+        @Override
+        public int getCount() {
+            // Show 2 total pages.
+            return 3;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "审批详情";
+                case 1:
+                    return "巡检详情";
+                case 2:
+                    return "基本信息";
+            }
+            return null;
+        }
+    }
+
 }

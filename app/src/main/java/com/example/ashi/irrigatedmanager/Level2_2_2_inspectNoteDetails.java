@@ -60,7 +60,7 @@ public class Level2_2_2_inspectNoteDetails extends AppCompatActivity {
         }
         setContentView(R.layout.activity_level2_2_2_inspect_note_details);
 
-        mSectionsPagerAdapter = new Level2_2_2_inspectNoteDetails.SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
