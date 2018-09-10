@@ -157,10 +157,16 @@ public class Level2_1_irrigateOverview extends AppCompatActivity implements View
         findViewById(R.id.project_info).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Level2_1_irrigateOverview.this, Logout.class);
-                startActivity(intent);
-//                String fileUri = getResourcesUri(R.drawable.a1);
-//                HttpUtil.uploadMultiFile("/data/data/com.example.ashi.irrigatedmanager/files/assets/logo_h.png");
+                HttpUtil.uploadMultiFile();
+//                Intent intent = new Intent(Level2_1_irrigateOverview.this, Logout.class);
+//                startActivity(intent);
+//                new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        HttpUtil.uploadFile();
+//                    }
+//                }).start();
+
             }
         });
     }
