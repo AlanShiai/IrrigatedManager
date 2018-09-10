@@ -16,7 +16,7 @@ import java.util.List;
 
 public class Global {
 
-    public static List<Integer> colors = Arrays.asList(0xFFFE618E, 0xFF9ADC78, 0xFF94AEE7, 0xFF77DAF7, 0xFFFE998F);
+    public static List<Integer> colors = Arrays.asList(0xFFFE618E, 0xFF9ADC78, 0xFF94AEE7, 0xFF77DAF7, 0xFFFE998F, 0xFFFFD81B);
 
     public static User user = new User("1");
 
