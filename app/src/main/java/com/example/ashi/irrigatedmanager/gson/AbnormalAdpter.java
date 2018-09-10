@@ -81,10 +81,16 @@ public class AbnormalAdpter extends ArrayAdapter<Abnormal> {
         if (monthAbnormalNumber == 0) {
             viewHolder.month_ratio.setText("0%");
         }
-        if (projectInfo.projectLabel.contains("桥") || projectInfo.projectLabel.contains("洞")) {
+        if (projectInfo.projectLabel.contains("桥梁") ) {
             viewHolder.imageView.setImageResource(R.drawable.c3);
-        } else if (projectInfo.projectLabel.contains("闸")) {
+        } else if (projectInfo.projectLabel.contains("水闸")) {
             viewHolder.imageView.setImageResource(R.drawable.c1);
+        } else if (projectInfo.projectLabel.contains("涵洞")) {
+            viewHolder.imageView.setImageResource(R.drawable.handong_r);
+        } else if (projectInfo.projectLabel.contains("渡槽")) {
+            viewHolder.imageView.setImageResource(R.drawable.ducao_r);
+        } else if (projectInfo.projectLabel.contains("倒虹吸")) {
+            viewHolder.imageView.setImageResource(R.drawable.daohongxi_r);
         } else {
             viewHolder.imageView.setImageResource(R.drawable.c4);
         }
