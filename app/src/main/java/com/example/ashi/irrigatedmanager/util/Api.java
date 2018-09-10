@@ -28,7 +28,7 @@ public class Api {
     public static String API_14_getMyProcess               = address + "/a/app/actTask/getMyProcess?";
     public static String API_15_handleProcess              = address + "/a/app/actTask/handleProcess?";
     public static String API_16_businessForm              = address + "/a/app/actTask/businessForm?";
-    public static String API_17_projectList               = address + "/a/app/project/projectList?name=&office=";
+    public static String API_17_projectList               = address + "/a/app/project/projectList?name=";
     public static String API_18_projectDetail             = address + "/a/app/project/projectDetail?";
     public static String API_19_queryIrrigationSchedule = address + "/a/app/project/queryIrrigationSchedule?";
     public static String API_20_patrolResult              = address + "/a/app/patrol/patrolResult?userId="+ Global.user.id + "&day=2018-07-11&dayType=1&type=&resultType=&status=";
