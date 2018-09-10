@@ -36,7 +36,7 @@ public class InspectDetailInfoAdpter extends ArrayAdapter<InspectDetailInfo>  {
             view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
             viewHolder = new InspectDetailInfoAdpter.ViewHolder();
             viewHolder.projectName = (TextView) view.findViewById (R.id.inspect_detail_name);
-            viewHolder.total1 = (TextView) view.findViewById(R.id.total1);
+            viewHolder.total = (TextView) view.findViewById(R.id.total);
             viewHolder.abnormalTotal = (TextView) view.findViewById(R.id.abnormalTotal);
             view.setTag(viewHolder); // 将ViewHolder存储在View中
         } else {
@@ -44,14 +44,14 @@ public class InspectDetailInfoAdpter extends ArrayAdapter<InspectDetailInfo>  {
             viewHolder = (InspectDetailInfoAdpter.ViewHolder) view.getTag(); // 重新获取ViewHolder
         }
         viewHolder.projectName.setText(projectInfo.name);
-        viewHolder.total1.setText(projectInfo.total1+"");
+        viewHolder.total.setText(projectInfo.total+"");
         viewHolder.abnormalTotal.setText(projectInfo.abnormalTotal+"");
         return view;
     }
 
     class ViewHolder {
         TextView projectName;
-        TextView total1;
+        TextView total;
         TextView abnormalTotal;
     }
 }
