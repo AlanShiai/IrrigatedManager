@@ -153,7 +153,7 @@ public class Level2_2_3_inspectDetails2 extends AppCompatActivity {
                 final String responseText = response.body().string();
                 final List<InspectDetailInfo> list = Utility.handleApi25officeStatisticResponse(responseText);
                 Log.d("aijun officeStatistic", list.size()+"");
-                if ( ! list.isEmpty() ) {
+                if ( null != list ) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

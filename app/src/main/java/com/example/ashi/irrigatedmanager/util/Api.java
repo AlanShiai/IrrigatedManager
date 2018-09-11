@@ -8,7 +8,7 @@ public class Api {
 
     public static String product_address                    = "http://221.193.192.143:8091/zfh_manager";
     public static String test_address                       = "http://www.boze-tech.com/zfh_manager";
-    public static String address                             = test_address;
+    public static String address                             = product_address;
 
     // "http://www.boze-tech.com/zfh_manager/a/app/login/loginCheck?loginName=admin&passwd=123";
     public static String API_01_loginCheck                 = address + "/a/app/login/loginCheck?";

@@ -84,7 +84,7 @@ public class Level2_2_5_1_manualInspect extends AppCompatActivity {
                 Log.d("aijun patrolDesQuery", responseText);
                 final List<ManualInspectItem> list = Utility.handleApi26patrolDesQueryResponse(responseText);
                 Log.d("aijun patrolDesQuery", list.size()+"");
-                if ( ! list.isEmpty() ) {
+                if ( null != list ) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
