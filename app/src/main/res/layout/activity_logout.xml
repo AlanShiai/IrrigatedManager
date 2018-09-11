@@ -142,13 +142,20 @@
                     >
                     <ImageView
                         android:layout_margin="10dp"
-                        android:layout_width="30dp"
+                        android:layout_width="25dp"
                         android:layout_height="40dp"
                         android:src="@drawable/f1"
                         />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#FFFFFF"
+                        android:layout_marginTop="5dp"
+                        >
+                    </LinearLayout>
                     <ImageView
                         android:layout_margin="10dp"
-                        android:layout_width="30dp"
+                        android:layout_width="25dp"
                         android:layout_height="40dp"
                         android:src="@drawable/f2"
                         />
@@ -172,7 +179,7 @@
                             android:gravity="center_vertical"
                             android:text="工程信息"
                             android:textColor="#000000"
-                            android:textSize="18sp"
+                            android:textSize="16sp"
                             />
                         <Space
                             android:layout_width="0dp"
@@ -206,11 +213,11 @@
                             android:gravity="center_vertical"
                             android:text="版本更新"
                             android:textColor="#000000"
-                            android:textSize="18sp"
+                            android:textSize="16sp"
                             />
                         <ImageView
                             android:layout_marginLeft="10dp"
-                            android:layout_width="60dp"
+                            android:layout_width="50dp"
                             android:layout_height="match_parent"
                             android:src="@drawable/f5"
                             />
