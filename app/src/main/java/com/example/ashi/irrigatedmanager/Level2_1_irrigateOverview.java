@@ -36,13 +36,16 @@ public class Level2_1_irrigateOverview extends AppCompatActivity implements View
 
     private int[] imgIds;
 
-    private int currentPosition;
+    private int currentPosition = 0;
 
     private  float downX;
 
     private LinearLayout linearLayout;
 
     private ImageView[] tips;
+
+//    private  int Iindex=0;
+    private  int DuringTime = 5000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +74,18 @@ public class Level2_1_irrigateOverview extends AppCompatActivity implements View
         mImageSwitcher = (ImageSwitcher) findViewById(R.id.image_switcher);
         mImageSwitcher.setFactory(this);
         mImageSwitcher.setOnTouchListener(this);
+        mImageSwitcher.postDelayed(new Runnable() {
+            public void run() {
+                if(currentPosition == imgIds.length - 1){
+                    currentPosition = 0;
+                }else{
+                    currentPosition++;
+                }
+                setImageBackground(currentPosition);
+                mImageSwitcher.setImageResource(imgIds[currentPosition]);
+                mImageSwitcher.postDelayed(this, DuringTime);
+            }
+        }, DuringTime);
 
         linearLayout = (LinearLayout) findViewById(R.id.viewGroup);
 
@@ -94,7 +109,6 @@ public class Level2_1_irrigateOverview extends AppCompatActivity implements View
         content.setText(Const.LEVEL_2_CONTENT);
 
         addListernerForBottomToolbar();
-
     }
 
     private void setImageBackground(int selectItems) {
