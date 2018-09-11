@@ -189,11 +189,13 @@ public class DrawColumn extends View {
             mPaint.setColor(Global.colors.get(i % Global.colors.size()));
             Rect canalHeadRect = new Rect(rectX, rectHigh, (rectX+rectWidth), bottom - y_space - 2);
             canvas.drawRect(canalHeadRect, mPaint);
+
             mPaint.setColor(Color.BLACK);
+            int realStrWidth = getStringWidth(yearNumber+"");
             if ((bottom - y_space + fontSize + 20) - (rectHigh + fontSize + 20) < fontSize + 20) {
-                canvas.drawText(yearNumber + "", rectX + 5, rectHigh - fontSize, mPaint);
+                canvas.drawText(yearNumber + "", rectX + rectWidth/2 - realStrWidth/2, rectHigh - fontSize, mPaint);
             } else {
-                canvas.drawText(yearNumber + "", rectX + 5, rectHigh + fontSize + 20, mPaint);
+                canvas.drawText(yearNumber + "", rectX + rectWidth/2 - realStrWidth/2, rectHigh + fontSize + 20, mPaint);
             }
         }
 
