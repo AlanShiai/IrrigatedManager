@@ -85,8 +85,6 @@ public class DrawPie extends View {
         float circle_x = pieRectF.centerX(), circle_y = pieRectF.centerY();
         float sum = 21 + 20 + 9 + 2 + 8;
 
-
-
         float startAngle = 0;
         float sweepAngle = 0;
         float pxs=0, pys = 0;
@@ -127,7 +125,7 @@ public class DrawPie extends View {
                 mPaint.setColor(0xFFC0C0C0);
                 canvas.drawLine(circle_x + pxs, circle_y + pys, circle_x + pxs + 20, circle_y + pys + 20, mPaint);
                 canvas.drawLine(circle_x + pxs + 20, circle_y + pys + 20, circle_x + pxs + 240, circle_y + pys + 20, mPaint);
-                mPaint.setColor(0xFFFF69B4);
+                mPaint.setColor(Global.colors.get(i % Global.colors.size()));
                 canvas.drawText(str, circle_x + pxs + 60, circle_y + pys + 10, mPaint);
             } else if ( textAngle >= 90 && textAngle < 180) {
                 canvas.drawLine(circle_x + pxs, circle_y + pys, circle_x + pxs - 20, circle_y + pys + 20, mPaint);
@@ -138,13 +136,13 @@ public class DrawPie extends View {
                 mPaint.setColor(0xFFC0C0C0);
                 canvas.drawLine(circle_x + pxs, circle_y + pys, circle_x + pxs - 20, circle_y + pys - 20, mPaint);
                 canvas.drawLine(circle_x + pxs - 20, circle_y + pys - 20, circle_x + pxs - 240, circle_y + pys - 20, mPaint);
-                mPaint.setColor(0xFF6495ED);
+                mPaint.setColor(Global.colors.get(i % Global.colors.size()));
                 canvas.drawText(str, circle_x + pxs - 240 + 60, circle_y + pys - 20 - 10, mPaint);
             } else {
                 mPaint.setColor(0xFFC0C0C0);
                 canvas.drawLine(circle_x + pxs, circle_y + pys, circle_x + pxs + 20, circle_y + pys - 20, mPaint);
                 canvas.drawLine(circle_x + pxs + 20, circle_y + pys - 20, circle_x + pxs + 240, circle_y + pys - 20, mPaint);
-                mPaint.setColor(0xFFD19275);
+                mPaint.setColor(Global.colors.get(i % Global.colors.size()));
                 canvas.drawText(str, circle_x + pxs  + 60, circle_y + pys - 20 - 10, mPaint);
             }
         }
