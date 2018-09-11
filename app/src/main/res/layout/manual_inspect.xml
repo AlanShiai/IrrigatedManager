@@ -37,7 +37,7 @@
         <ImageView
             android:layout_width="20dp"
             android:layout_height="match_parent"
-            android:src="@drawable/right_arrow"
+            android:src="@drawable/c8"
             />
         <!--
         <Button

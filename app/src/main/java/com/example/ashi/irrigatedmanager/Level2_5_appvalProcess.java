@@ -157,7 +157,7 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_listview, container, false);
+            View rootView = inflater.inflate(R.layout.appval_list, container, false);
 
             AppvalAdapter adapter = new AppvalAdapter(getContext(), R.layout.appval_item, dataList);
 
@@ -226,7 +226,7 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_listview, container, false);
+            View rootView = inflater.inflate(R.layout.appval_list, container, false);
             historyListView = (ListView) rootView.findViewById(R.id.fragment_listview_list);
 
 //            AppvalAdapter adapter = new AppvalAdapter(getContext(), R.layout.appval_item, dataList);
@@ -290,7 +290,7 @@ public class Level2_5_appvalProcess extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_listview, container, false);
+            View rootView = inflater.inflate(R.layout.appval_list, container, false);
 
 //            AppvalAdapter adapter = new AppvalAdapter(getContext(), R.layout.appval_item, dataList);
 //            toDoListView.setAdapter(adapter);
