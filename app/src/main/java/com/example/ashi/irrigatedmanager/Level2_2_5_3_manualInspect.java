@@ -349,7 +349,7 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
     }
 
     private void updateImageFile() {
-        if (takePhotoFile.exists()) {
+        if ( null != takePhotoFile && takePhotoFile.exists()) {
             String url = Api.API_34_uploadImage;
             HttpUtil.uploadFile(url, takePhotoFile, new Callback() {
                 @Override
@@ -362,42 +362,7 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
                         if (null != uploadImage.paths && ! uploadImage.paths.isEmpty()) {
                             image = uploadImage.paths.get(0).path.substring("/home/zfh/uploads/zfh_manager/userfiles".length());
                         }
-                        String url = Api.API_22_patrolSave + "userId=" + Global.user.id + "&images=" + image + "&type=" + Global.patrolType
-                                + "&longitude=" + longitude + "&latitude=" + latitude
-                                + "&goalId=" + Global.patrolId + "&contents=" + editText.getText().toString().trim()
-                                + "&itemResults=" + Utility.toURLEncoded(Global.exceptionMsg)
-                                + "&createBy=" + getPatrolManagerUserId();
-                        Log.d("aijun, patrolSave", url);
-                        HttpUtil.sendOkHttpRequest(url, new Callback() {
-                            @Override
-                            public void onResponse(Call call, Response response) throws IOException {
-                                final String responseText = response.body().string();
-                                HttpResult httpResult = Utility.handleNormalFormResponse(responseText);
-                                Log.d("aijun, patrolSave", responseText);
-                                if (httpResult.isSuccess()) {
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            showText("巡检提交成功");
-                                            Intent intent = new Intent(getApplicationContext(), Level2_2_projectInspection2.class);
-                                            startActivity(intent);
-                                            finish();
-                                        }
-                                    });
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call call, IOException e) {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        showText("巡检提交失败");
-                                    }
-                                });
-                                e.printStackTrace();
-                            }
-                        });
+                        commitItWithImage(image);
                     }
                 }
 
@@ -407,7 +372,48 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
                     e.printStackTrace();
                 }
             });
+        } else {
+            commitItWithImage("");
         }
+    }
+
+    private void commitItWithImage(String image) {
+        String url = Api.API_22_patrolSave + "userId=" + Global.user.id + "&images=" + image + "&type=" + Global.patrolType
+                + "&longitude=" + longitude + "&latitude=" + latitude
+                + "&goalId=" + Global.patrolId + "&contents=" + editText.getText().toString().trim()
+                + "&itemResults=" + Utility.toURLEncoded(Global.exceptionMsg)
+                + "&createBy=" + getPatrolManagerUserId();
+        Log.d("aijun, patrolSave", url);
+        HttpUtil.sendOkHttpRequest(url, new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responseText = response.body().string();
+                HttpResult httpResult = Utility.handleNormalFormResponse(responseText);
+                Log.d("aijun, patrolSave", responseText);
+                if (httpResult.isSuccess()) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            showText("巡检提交成功");
+                            Intent intent = new Intent(getApplicationContext(), Level2_2_projectInspection2.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        showText("巡检提交失败");
+                    }
+                });
+                e.printStackTrace();
+            }
+        });
     }
 
     private void showNormalReportDialog() {
