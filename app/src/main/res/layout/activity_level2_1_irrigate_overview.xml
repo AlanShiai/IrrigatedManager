@@ -57,21 +57,29 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="20dp"
             android:background="#FFFFFF"
             >
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/level_2_1_content"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
-            android:text="level_2_1_content"
-            android:textSize="18sp"
-            android:letterSpacing="0.30"
             android:background="#FFFFFF"
-            />
+            >
+            <TextView
+                android:id="@+id/level_2_1_content"
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="level_2_1_content"
+                android:textSize="18sp"
+                android:letterSpacing="0.30"
+                android:background="#FFFFFF"
+                />
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
