@@ -41,6 +41,7 @@ import okhttp3.Response;
 public class Level2_2_2_inspectNote extends AppCompatActivity {
 
     private LinearLayout query_layout;
+    private LinearLayout query_button_layout;
 
     static List<String> itemKeys = new ArrayList<>();
     final static Map<String, String> items = new LinkedHashMap<>();
@@ -78,6 +79,7 @@ public class Level2_2_2_inspectNote extends AppCompatActivity {
         setContentView(R.layout.activity_level2_2_2_inspect_note);
 
         query_layout = (LinearLayout) findViewById(R.id.query_layout);
+        query_button_layout = (LinearLayout) findViewById(R.id.query_button_layout);
 
         spinner = (Spinner) findViewById(R.id.type_spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, itemKeys);
@@ -120,6 +122,12 @@ public class Level2_2_2_inspectNote extends AppCompatActivity {
                 Global.search = ((EditText) findViewById(R.id.name)).getText().toString();
 
                 getDataFromServerAndUpdateListView2();
+                if (null != query_layout) {
+                    query_layout.setVisibility(View.VISIBLE);
+                }
+                if (null != query_button_layout) {
+                    query_button_layout.setVisibility(View.GONE);
+                }
             }
         });
 
@@ -165,6 +173,9 @@ public class Level2_2_2_inspectNote extends AppCompatActivity {
             public void onClick(View v) {
                 if (null != query_layout) {
                     query_layout.setVisibility(View.GONE);
+                }
+                if (null != query_button_layout) {
+                    query_button_layout.setVisibility(View.VISIBLE);
                 }
             }
         });
