@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,26 +75,29 @@ public class IrrigationScheduleInfoAdpter extends ArrayAdapter<IrrigationSchedul
             viewHolder.progressBar.setProgress(ratio);
             viewHolder.progressBar_text.setText(ratio+"%");
 
-            moveProgressBar_text(viewHolder, irrigationArea, totalArea);
+            moveProgressBar_text(view, viewHolder, irrigationArea, totalArea);
         } else {
-            moveProgressBar_text(viewHolder, 100, 100);
+            viewHolder.schedule.setText("0%");
+            viewHolder.progressBar.setProgress(0);
+            viewHolder.progressBar_text.setText("0%");
+            moveProgressBar_text(view, viewHolder, 100, 100);
+
         }
 
         return view;
     }
 
-    private void moveProgressBar_text(ViewHolder viewHolder, int irrigationArea, int totalArea) {
-        int totalWidth = viewHolder.progressBar_text_layout.getRight() - viewHolder.progressBar_text_layout.getLeft();
-        int leftMargin = (int) (totalWidth * (totalArea - irrigationArea) / (float) totalArea) + 10;
+    private void moveProgressBar_text(View view, ViewHolder viewHolder, int irrigationArea, int totalArea) {
+        int totalWidth = view.getResources().getDisplayMetrics().widthPixels - 40;
+        int rightMargin = (int) (totalWidth * (totalArea - irrigationArea) / (float) totalArea);
 //        int widgetWidth = 30;
 //        if (totalWidth - leftMargin < widgetWidth) {
 //            leftMargin = totalWidth - widgetWidth;
 //        }
-        if (leftMargin < 0) {
-            leftMargin = 0;
+        if (rightMargin < 0) {
+            rightMargin = 0;
         }
-        Utility.margin(viewHolder.progressBar_text, 0, 0, leftMargin, 0);
-//        viewHolder.progressBar_text_layout.requestLayout();
+        Utility.margin(viewHolder.progressBar_text, 0, 0, rightMargin, 0);
     }
 
     class ViewHolder {
