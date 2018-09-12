@@ -24,6 +24,8 @@ import com.example.ashi.irrigatedmanager.gson.TotalCount;
 import com.example.ashi.irrigatedmanager.level2_2_3.DrawYearMonthData;
 import com.acker.simplezxing.activity.CaptureActivity;
 import com.example.ashi.irrigatedmanager.level2_2_3.InspectDetailInfoAdpter;
+import com.example.ashi.irrigatedmanager.level2_5.ManualInspectBasicInfoAdapter;
+import com.example.ashi.irrigatedmanager.level2_6.ProjectInfo4;
 import com.example.ashi.irrigatedmanager.util.Api;
 import com.example.ashi.irrigatedmanager.util.Global;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
@@ -32,6 +34,9 @@ import com.example.ashi.irrigatedmanager.util.Utility;
 import org.w3c.dom.Text;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import okhttp3.Call;
@@ -253,6 +258,41 @@ public class Level2_2_projectInspection2 extends AppCompatActivity {
         }
     }
 
+    private void checkBasicInfoIsNull() {
+        // "http://www.boze-tech.com/zfh_manager/a/app/patrol/basicInfo?id=8502f69d32304ee6a9aacd99920fdcd7&type=channel&userId=1";
+        // Api.API_23_basicInfo = http://www.boze-tech.com/zfh_manager/a/app/patrol/basicInfo?userId=1
+        String url = Api.API_23_basicInfo  + "userId=" + Global.user.id + "&id=" + Global.patrolId
+                + "&type="+Global.patrolType;
+        Log.d("aijun basicInfo", url+"");
+        HttpUtil.sendOkHttpRequest(url, new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responseText = response.body().string();
+//                final List<InspectNote> list = Utility.handleApi20patrolResultResponse(responseText);
+                final ProjectInfo4 projectInfo4 = Utility.handleApi18projectDetailResponse(responseText);
+                Log.d("aijun, basicInfo;", responseText+"");
+                Log.d("aijun, basicInfo;", projectInfo4+"");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if ( null != projectInfo4 ) {
+                            Intent intent = new Intent(Level2_2_projectInspection2.this, Level2_2_5_2_manualInspect.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            showText("没有巡检该扫描项的权限");
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -268,9 +308,7 @@ public class Level2_2_projectInspection2 extends AppCompatActivity {
                                     && scanObject.projectType != null && !scanObject.projectType.trim().equals("")) {
                                 Global.patrolId = scanObject.projectId;
                                 Global.patrolType = scanObject.projectType;
-                                Intent intent = new Intent(Level2_2_projectInspection2.this, Level2_2_5_2_manualInspect.class);
-                                startActivity(intent);
-                                finish();
+                                checkBasicInfoIsNull();
                             } else {
                                 showText("非巡检内容");
                             }
