@@ -7,21 +7,11 @@
     >
 
     <LinearLayout
-        android:id="@+id/top_toolbar_layout"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:background="#24AAFF"
-        >
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_below="@+id/top_toolbar_layout"
         android:id="@+id/toolbar_layout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_gravity="top"
-        android:layout_height="42dp"
+        android:layout_height="62dp"
         android:background="#24AAFF"
         >
 
@@ -82,8 +72,9 @@
             <Button
                 android:id="@+id/manual_inspect_report"
                 android:layout_width="70dp"
-                android:layout_height="match_parent"
+                android:layout_height="30dp"
                 android:layout_margin="5dp"
+                android:layout_gravity="center_vertical"
                 android:background="@drawable/button_shape"
                 android:text="下一步"
                 android:textSize="15sp"
