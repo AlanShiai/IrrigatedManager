@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -43,6 +44,18 @@ public class Level2_2_3_1_inspectDetails extends AppCompatActivity {
         setContentView(R.layout.activity_level2_2_3_1_inspect_details);
 
         listView = (ListView) findViewById(R.id.list_view);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if ( null != dataList && dataList.size() > position ) {
+                    Global.inspectNoteId = dataList.get(position).id;
+                }
+                Intent intent = new Intent(Level2_2_3_1_inspectDetails.this, Level2_2_3_2_inspectDetails.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override

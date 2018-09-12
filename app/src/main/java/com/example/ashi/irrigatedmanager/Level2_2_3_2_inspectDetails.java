@@ -14,19 +14,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.ashi.irrigatedmanager.gson.InspectNoteDetails;
-import com.example.ashi.irrigatedmanager.gson.PatrolAdpter;
-import com.example.ashi.irrigatedmanager.gson.PatrolNote;
 import com.example.ashi.irrigatedmanager.level2_5.ManualInspectBasicInfoAdapter;
-import com.example.ashi.irrigatedmanager.level2_5.ManualInspectItem2;
-import com.example.ashi.irrigatedmanager.level2_5.PatrolItem;
-import com.example.ashi.irrigatedmanager.level2_6.ProjectInfo4;
 import com.example.ashi.irrigatedmanager.util.Api;
 import com.example.ashi.irrigatedmanager.util.Global;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
@@ -35,7 +28,6 @@ import com.example.ashi.irrigatedmanager.util.Utility;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -43,7 +35,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class Level2_2_2_inspectNoteDetails extends AppCompatActivity {
+public class Level2_2_3_2_inspectDetails extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -58,7 +50,17 @@ public class Level2_2_2_inspectNoteDetails extends AppCompatActivity {
                     | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
-        setContentView(R.layout.activity_level2_2_2_inspect_note_details);
+        setContentView(R.layout.activity_level2_2_3_2_inspect_details);
+
+        ((TextView) findViewById(R.id.title)).setText("具体详情");
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Level2_2_3_2_inspectDetails.this, Level2_2_3_1_inspectDetails.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
@@ -68,15 +70,6 @@ public class Level2_2_2_inspectNoteDetails extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
-        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Level2_2_2_inspectNoteDetails.this, Level2_2_2_inspectNote.class);
-                startActivity(intent);
-                finish();
-            }
-        });
 
         getDataFromServerAndUpdateUI();
     }
@@ -149,7 +142,7 @@ public class Level2_2_2_inspectNoteDetails extends AppCompatActivity {
 
                                 if (null != basicInfoListView) {
                                     ManualInspectBasicInfoAdapter adapter = new ManualInspectBasicInfoAdapter(
-                                            Level2_2_2_inspectNoteDetails.this, R.layout.fragment_listview_item, new ArrayList<String>(Global.patrolDetails.keySet()));
+                                            Level2_2_3_2_inspectDetails.this, R.layout.fragment_listview_item, new ArrayList<String>(Global.patrolDetails.keySet()));
                                     basicInfoListView.setAdapter(adapter);
                                 }
                             }
@@ -164,6 +157,7 @@ public class Level2_2_2_inspectNoteDetails extends AppCompatActivity {
             }
         });
     }
+
 
     static TextView result;
     static TextView userName;
