@@ -1,5 +1,6 @@
 package com.example.ashi.irrigatedmanager;
 
+import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,15 +18,18 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.example.ashi.irrigatedmanager.util.Const;
+import com.example.ashi.irrigatedmanager.util.DialogSelectItemAdapter;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
 
 import java.io.IOException;
@@ -122,20 +126,28 @@ public class Level2_1_irrigateOverview extends AppCompatActivity implements View
     }
 
     public void onBackPressed() {
-        new AlertDialog.Builder(this).setTitle("确认退出掌上灌区吗？")
-                .setIcon(android.R.drawable.ic_dialog_info)
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+        final Dialog builder = new Dialog(this, R.style.update_dialog);
+        View view = View.inflate(Level2_1_irrigateOverview.this, R.layout.dialog_info, null);
 
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Level2_1_irrigateOverview.this.finish();
-                    }
-                })
-                .setNegativeButton("返回", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                }).show();
+        final TextView info = (TextView) view.findViewById(R.id.info);
+        info.setText("确认退出掌上灌区吗？");
+
+        view.findViewById(R.id.ok).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Level2_1_irrigateOverview.this.finish();
+                builder.dismiss();
+            }
+        });
+        view.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                builder.dismiss();
+            }
+        });
+
+        builder.setContentView(view);
+        builder.show();
     }
 
     private void addListernerForBottomToolbar() {
