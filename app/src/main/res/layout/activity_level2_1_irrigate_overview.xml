@@ -74,6 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="level_2_1_content"
+                android:lineSpacingExtra="8dp"
                 android:textSize="18sp"
                 android:letterSpacing="0.30"
                 android:background="#FFFFFF"
