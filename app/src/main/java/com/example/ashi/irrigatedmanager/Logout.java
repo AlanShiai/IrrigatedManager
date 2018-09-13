@@ -1,5 +1,6 @@
 package com.example.ashi.irrigatedmanager;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -47,21 +48,30 @@ public class Logout extends AppCompatActivity {
         findViewById(R.id.logout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AlertDialog.Builder(Logout.this).setTitle("确认退出登录吗？")
-                        .setIcon(android.R.drawable.ic_dialog_info)
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(Logout.this, LoginActivity.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                        })
-                        .setNegativeButton("返回", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        }).show();
+                final Dialog builder = new Dialog(Logout.this, R.style.update_dialog);
+                View view = View.inflate(Logout.this, R.layout.dialog_info, null);
+
+                final TextView info = (TextView) view.findViewById(R.id.info);
+                info.setText("确认退出登录吗？");
+
+                view.findViewById(R.id.ok).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        builder.dismiss();
+                        Intent intent = new Intent(Logout.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+                view.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        builder.dismiss();
+                    }
+                });
+
+                builder.setContentView(view);
+                builder.show();
             }
         });
     }
