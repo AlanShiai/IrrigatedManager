@@ -72,8 +72,9 @@
             <Button
                 android:id="@+id/manual_inspect_report"
                 android:layout_width="70dp"
-                android:layout_height="match_parent"
+                android:layout_height="30dp"
                 android:layout_margin="5dp"
+                android:layout_gravity="center_vertical"
                 android:background="@drawable/button_shape"
                 android:text="提交"
                 android:textSize="15sp"
