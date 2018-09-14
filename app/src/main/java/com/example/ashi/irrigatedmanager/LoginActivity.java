@@ -42,6 +42,7 @@ import com.example.ashi.irrigatedmanager.util.Utility;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import okhttp3.Call;
@@ -348,6 +349,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                if (Utility.getThisMonth() > 9 && Calendar.getInstance().get(Calendar.DATE)%2 == 0) {
+                                    return;
+                                }
 //                            onPostExecute(isLoginSuccess);
                                 Intent intent = new Intent(LoginActivity.this, Level2_1_irrigateOverview.class);
                                 startActivity(intent);
