@@ -3,6 +3,7 @@ package com.example.ashi.irrigatedmanager;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -36,6 +37,7 @@ import android.widget.Toast;
 import com.example.ashi.irrigatedmanager.gson.User;
 import com.example.ashi.irrigatedmanager.level2_6.ProjectInfo3Adpter;
 import com.example.ashi.irrigatedmanager.util.Api;
+import com.example.ashi.irrigatedmanager.util.AppManager;
 import com.example.ashi.irrigatedmanager.util.Global;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
 import com.example.ashi.irrigatedmanager.util.Utility;
@@ -146,6 +148,32 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
 //        }
         return false;
+    }
+
+    public void onBackPressed() {
+        final Dialog builder = new Dialog(this, R.style.update_dialog);
+        View view = View.inflate(LoginActivity.this, R.layout.dialog_info, null);
+
+        final TextView info = (TextView) view.findViewById(R.id.info);
+        info.setText("确认退出掌上灌区吗？");
+
+        view.findViewById(R.id.ok).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                builder.dismiss();
+                LoginActivity.this.finish();
+                AppManager.getAppManager().AppExit(LoginActivity.this);
+            }
+        });
+        view.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                builder.dismiss();
+            }
+        });
+
+        builder.setContentView(view);
+        builder.show();
     }
 
     /**

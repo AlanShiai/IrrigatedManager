@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
+import com.example.ashi.irrigatedmanager.util.AppManager;
 import com.example.ashi.irrigatedmanager.util.Const;
 import com.example.ashi.irrigatedmanager.util.DialogSelectItemAdapter;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
@@ -113,6 +114,8 @@ public class Level2_1_irrigateOverview extends AppCompatActivity implements View
         content.setText(Const.LEVEL_2_CONTENT);
 
         addListernerForBottomToolbar();
+
+        AppManager.getAppManager().addActivity(this);
     }
 
     private void setImageBackground(int selectItems) {
@@ -135,7 +138,7 @@ public class Level2_1_irrigateOverview extends AppCompatActivity implements View
         view.findViewById(R.id.ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Level2_1_irrigateOverview.this.finish();
+                AppManager.getAppManager().AppExit(Level2_1_irrigateOverview.this);
                 builder.dismiss();
             }
         });
