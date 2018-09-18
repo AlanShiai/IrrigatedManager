@@ -118,16 +118,16 @@
 
             <ImageView
                 android:id="@+id/take_photo"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:background="@drawable/b9"
                 />
 
             <ImageView
                 android:id="@+id/located"
                 android:layout_marginLeft="10dp"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:background="@drawable/b8"
                 />
 

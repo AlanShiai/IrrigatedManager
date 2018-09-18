@@ -449,16 +449,16 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
         if (isFirstLocate) {
             LatLng ll = new LatLng(location.getLatitude(), location.getLongitude());
             MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(ll);
-//            baiduMap.animateMapStatus(update);
+            baiduMap.animateMapStatus(update);
             update = MapStatusUpdateFactory.zoomTo(16f);
-//            baiduMap.animateMapStatus(update);
+            baiduMap.animateMapStatus(update);
             isFirstLocate = false;
         }
         MyLocationData.Builder locationBuilder = new MyLocationData.Builder();
         locationBuilder.latitude(location.getLatitude());
         locationBuilder.longitude(location.getLongitude());
         MyLocationData locationData = locationBuilder.build();
-//        baiduMap.setMyLocationData(locationData);
+        baiduMap.setMyLocationData(locationData);
     }
 
 
@@ -627,7 +627,7 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
 //                    } else if (bdLocation.getLocType() == BDLocation.TypeNetWorkLocation) {
 //                        currentPosition.append("NetWork");
 //                    }
-                    showText(currentPosition.toString());
+//                    showText(currentPosition.toString());
                     latitude = bdLocation.getLatitude();
                     longitude = bdLocation.getLongitude();
                     mLocationClient.stop();
