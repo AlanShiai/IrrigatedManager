@@ -57,7 +57,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="10dp"
             android:background="#FFFFFF"
             >
         </LinearLayout>
@@ -74,7 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="level_2_1_content"
-                android:lineSpacingExtra="8dp"
+                android:lineSpacingExtra="2dp"
                 android:textSize="18sp"
                 android:letterSpacing="0.30"
                 android:background="#FFFFFF"
