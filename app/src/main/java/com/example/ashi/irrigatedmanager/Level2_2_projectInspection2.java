@@ -75,6 +75,7 @@ public class Level2_2_projectInspection2 extends AppCompatActivity {
 
     private void getDataFromServerAndUpdateListView() {
         String url = Api.API_30_patrolInit;
+        Log.d("aijun patrolInit", url+"");
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {

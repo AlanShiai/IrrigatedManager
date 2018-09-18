@@ -83,7 +83,7 @@ public class Level2_2_2_inspectNoteDetails extends AppCompatActivity {
 
     private void getDataFromServerAndUpdateUI() {
         // http://www.boze-tech.com/zfh_manager/a/app/patrol/patrolDetail?id=3e2971fc02764ee89bc54af0f30b55e8
-        String url = Api.API_24_patrolDetail + "id=" + Global.inspectNoteId ;
+        String url = Api.API_24_patrolDetail + "id=" + Global.inspectNoteId + "&flag=1";
         Log.d("aijun patrolDetail", url);
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override

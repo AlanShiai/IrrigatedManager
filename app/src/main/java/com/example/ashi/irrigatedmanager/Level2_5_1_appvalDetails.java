@@ -18,8 +18,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.ashi.irrigatedmanager.gson.InspectNoteDetails;
 import com.example.ashi.irrigatedmanager.gson.TaskFlow;
 import com.example.ashi.irrigatedmanager.gson.TaskFlowAdapter;
+import com.example.ashi.irrigatedmanager.level2_5.ManualInspectBasicInfoAdapter;
 import com.example.ashi.irrigatedmanager.level5.Appval;
 import com.example.ashi.irrigatedmanager.level5.AppvalAdapter;
 import com.example.ashi.irrigatedmanager.level5.AppvalDetails;
@@ -34,6 +36,8 @@ import com.example.ashi.irrigatedmanager.util.Utility;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import okhttp3.Call;
@@ -130,6 +134,96 @@ public class Level2_5_1_appvalDetails extends AppCompatActivity {
                             }
                         }
                     });
+
+                    if ( null != businessForm.workflow) {
+                        if ( businessForm.workflow.contains("@@") ) {
+                            String id = businessForm.workflow.substring(0, businessForm.workflow.indexOf("@@"));
+                            Log.d("aijun, businessForm", id + "");
+
+                            String url = Api.API_24_patrolDetail + "id=" + id + "&flag=0";
+                            Log.d("aijun patrolDetail", url);
+
+                            HttpUtil.sendOkHttpRequest(url, new Callback() {
+                                @Override
+                                public void onResponse(Call call, Response response) throws IOException {
+                                    final String responseText = response.body().string();
+                                    final InspectNoteDetails inspectNoteDetails = Utility.handleApi24patrolDetailResponse(responseText);
+                                    Log.d("aijun patrolDetail", responseText+"");
+                                    Log.d("aijun patrolDetail", inspectNoteDetails+"");
+                                    if ( null != inspectNoteDetails ) {
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                if ( null != inspectNoteDetails.detail) {
+                                                    if ( null !=  result && null != inspectNoteDetails.detail.result) {
+                                                        if (inspectNoteDetails.detail.result.trim().equals("1")) {
+                                                            result.setText("异常");
+                                                        } else {
+                                                            result.setText("正常");
+                                                        }
+                                                    }
+                                                    if ( null !=  userName && null != inspectNoteDetails.detail.userName) {
+                                                        userName.setText(inspectNoteDetails.detail.userName);
+                                                    }
+                                                    if ( null !=  createDate && null != inspectNoteDetails.detail.createDate) {
+                                                        createDate.setText(inspectNoteDetails.detail.createDate);
+                                                    }
+                                                    if ( null !=  longitude && null != inspectNoteDetails.detail.longitude) {
+                                                        longitude.setText(inspectNoteDetails.detail.longitude);
+                                                    }
+                                                    if ( null !=  latitude && null != inspectNoteDetails.detail.latitude) {
+                                                        latitude.setText(inspectNoteDetails.detail.latitude);
+                                                    }
+                                                    if ( null !=  resultItem && null != inspectNoteDetails.detail.resultItem) {
+                                                        resultItem.setText(inspectNoteDetails.detail.resultItem);
+                                                    }
+                                                }
+                                                if ( null != inspectNoteDetails.basic) {
+                                                    Global.patrolDetails = new LinkedHashMap<String, String>();
+                                                    String key = "", value = "";
+                                                    List<String> list = Arrays.asList(inspectNoteDetails.basic.var_00, inspectNoteDetails.basic.var_01, inspectNoteDetails.basic.var_02,
+                                                            inspectNoteDetails.basic.var_03, inspectNoteDetails.basic.var_04, inspectNoteDetails.basic.var_05, inspectNoteDetails.basic.var_06, inspectNoteDetails.basic.var_07,
+                                                            inspectNoteDetails.basic.var_08, inspectNoteDetails.basic.var_09, inspectNoteDetails.basic.var_10, inspectNoteDetails.basic.var_11, inspectNoteDetails.basic.var_12,
+                                                            inspectNoteDetails.basic.var_13, inspectNoteDetails.basic.var_14, inspectNoteDetails.basic.var_15, inspectNoteDetails.basic.var_16, inspectNoteDetails.basic.var_17,
+                                                            inspectNoteDetails.basic.var_18, inspectNoteDetails.basic.var_19, inspectNoteDetails.basic.var_20);
+                                                    for (String str : list) {
+                                                        if (null != str && str.contains("@@")) {
+                                                            key = str.substring(0, str.indexOf("@@"));
+                                                            value = "";
+                                                            if (str.length() > str.indexOf("@@") + 2) {
+                                                                value = str.substring(str.indexOf("@@") + 2);
+                                                            }
+                                                            Global.patrolDetails.put(key, value);
+                                                        }
+                                                    }
+
+                                                    if (Global.patrolDetails.keySet().contains("图片")) {
+                                                        String picture = Global.patrolDetails.get("图片");
+                                                        Global.patrolDetails.remove("图片");
+                                                        if (picture != null && !picture.trim().equals("")) {
+                                                            Global.patrolDetails.put("图片", picture);
+                                                        }
+                                                    }
+
+                                                    if (null != basicInfoListView) {
+                                                        ManualInspectBasicInfoAdapter adapter = new ManualInspectBasicInfoAdapter(
+                                                                Level2_5_1_appvalDetails.this, R.layout.fragment_listview_item, new ArrayList<String>(Global.patrolDetails.keySet()));
+                                                        basicInfoListView.setAdapter(adapter);
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call call, IOException e) {
+                                    e.printStackTrace();
+                                }
+                            });
+                        }
+
+                    }
                 }
             }
             @Override
