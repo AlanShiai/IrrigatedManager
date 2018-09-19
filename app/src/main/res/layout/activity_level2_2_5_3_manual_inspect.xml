@@ -103,6 +103,7 @@
             android:inputType="textMultiLine"
             android:hint="填写巡检描述"
             android:text=""
+            android:textSize="14sp"
             android:minLines="8"
             android:maxLines="20"
             android:maxLength="500"
@@ -111,9 +112,9 @@
             />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#F5F5F5"
+            android:background="#FFFFFF"
             >
 
             <ImageView
@@ -122,6 +123,13 @@
                 android:layout_height="40dp"
                 android:background="@drawable/b9"
                 />
+
+            <LinearLayout
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="#F5F5F5"
+                >
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/located"
@@ -143,11 +151,27 @@
             android:background="#FFFFFF"
             >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="上传图片"
-                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="#24AAFF"
+                    >
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="上传图片"
+                    android:textColor="#313131"
+                    />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_marginTop="2dp"
@@ -236,6 +260,16 @@
                 android:layout_height="300sp"
                 android:clickable="true"
                 />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#F5F5F5"
+            android:visibility="gone"
+            >
+
         </LinearLayout>
 
     </LinearLayout>
