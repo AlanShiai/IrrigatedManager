@@ -16,6 +16,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -40,6 +41,30 @@ public class HttpUtil {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(address).build();
         client.newCall(request).enqueue(callback);
+    }
+
+    public static void uploadFile(String url, List<File> files, okhttp3.Callback callback) {
+        MediaType MutilPart_Form_Data = MediaType.parse("multipart/form-data; charset=utf-8");
+        MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM);
+        for (File file : files) {
+            Log.d("aijun upload", file.getName());
+            requestBodyBuilder.addFormDataPart("files", file.getName(), RequestBody.create(MutilPart_Form_Data, file));
+        }
+        RequestBody requestBody = requestBodyBuilder.build();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+
+        final okhttp3.OkHttpClient.Builder httpBuilder = new OkHttpClient.Builder();
+        OkHttpClient okHttpClient  = httpBuilder
+                .connectTimeout(100, TimeUnit.SECONDS)
+                .writeTimeout(500, TimeUnit.SECONDS)
+                .build();
+        okHttpClient.newCall(request).enqueue(callback);
+
     }
 
     public static void uploadFile(String url, File file, okhttp3.Callback callback) {

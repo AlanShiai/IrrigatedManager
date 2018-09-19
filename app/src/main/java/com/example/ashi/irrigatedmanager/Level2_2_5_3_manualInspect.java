@@ -64,6 +64,8 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import okhttp3.Call;
@@ -76,11 +78,10 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
     public static final int CHOOSE_PHOTO = 2;
 
     private ImageView replacedByChoose;
-
     private ImageView takePhoto;
     private File takePhotoFile;
-
     private ImageView imageView1, imageView2, imageView3, imageView4, imageView5, imageView6;
+    private HashMap<ImageView, File> images = new LinkedHashMap<>();
 
     private Button manualInspectReportButton;
 
@@ -157,6 +158,17 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
         myFindViewsById();
         setOnClickListeners();
         updatePatrolManagerList();
+
+        initImages();
+    }
+
+    private void initImages() {
+        images.put(imageView1, null);
+        images.put(imageView2, null);
+        images.put(imageView3, null);
+        images.put(imageView4, null);
+        images.put(imageView5, null);
+        images.put(imageView6, null);
     }
 
     private void myFindViewsById() {
@@ -199,7 +211,7 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
                 photo_layout.setVisibility(View.VISIBLE);
                 map_layout.setVisibility(View.GONE);
 
-                takePhotoFile = new File(getExternalCacheDir(), "output_image.jpg");
+                takePhotoFile = new File(getExternalCacheDir(), "output_image" + System.currentTimeMillis()  + ".jpg");
                 try {
                     if (takePhotoFile.exists()) {
                         takePhotoFile.delete();
@@ -349,9 +361,15 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
     }
 
     private void updateImageFile() {
-        if ( null != takePhotoFile && takePhotoFile.exists()) {
+        List<File> imageFiles = new ArrayList<>();
+        for(File imageFile : images.values()) {
+            if ( null != imageFile && imageFile.exists()) {
+                imageFiles.add(imageFile);
+            }
+        }
+        if ( ! imageFiles.isEmpty() ) {
             String url = Api.API_34_uploadImage;
-            HttpUtil.uploadFile(url, takePhotoFile, new Callback() {
+            HttpUtil.uploadFile(url, imageFiles, new Callback() {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     final String responseText = response.body().string();
@@ -466,21 +484,21 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        mapView.onResume();
+        mapView.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-//        mapView.onPause();
+        mapView.onPause();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mLocationClient.stop();
-//        mapView.onDestroy();
-//        baiduMap.setMyLocationEnabled(false);
+        mapView.onDestroy();
+        baiduMap.setMyLocationEnabled(false);
     }
 
     private void requestLocation() {
@@ -493,7 +511,6 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
 //        option.scanSpan = 20000;
         mLocationClient.setLocOption(option);
     }
-
 
     private void openAlbum() {
         Intent intent = new Intent("android.intent.action.GET_CONTENT");
@@ -524,8 +541,17 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
                 if (resultCode == RESULT_OK) {
                     try {
                         // 将拍摄的照片显示出来
+                        ImageView nullViewOrLastView = null;
+                        for (ImageView imageView : images.keySet()) {
+                            nullViewOrLastView = imageView;
+                            if ( null == images.get(imageView) ) {
+                                break;
+                            }
+                        }
+                        addImageFile(nullViewOrLastView, takePhotoFile);
+
                         Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
-                        imageView1.setImageBitmap(bitmap);
+                        nullViewOrLastView.setImageBitmap(bitmap);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -595,10 +621,29 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
 
     private void displayImage(String imagePath) {
         if (imagePath != null) {
+            File file = new File(imagePath);
+            Log.d("aijun image", imagePath);
+            if (file.exists()) {
+                Log.d("aijun image", file.getAbsolutePath());
+                addImageFile(replacedByChoose, file);
+            }
             Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
             replacedByChoose.setImageBitmap(bitmap);
         } else {
             Toast.makeText(this, "failed to get image", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void addImageFile(ImageView currentImageView, File imageFile) {
+        // store imageFile, for upload.
+        images.put(currentImageView, imageFile);
+
+        // update "+" image
+        for (ImageView imageView : images.keySet()) {
+            if (images.get(imageView) == null) {
+                imageView.setImageResource(R.drawable.d2);
+                break;
+            }
         }
     }
 
