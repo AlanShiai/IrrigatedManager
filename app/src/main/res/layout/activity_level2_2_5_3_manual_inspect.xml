@@ -210,21 +210,44 @@
                         android:visibility="invisible"
                         />
                 </FrameLayout>
-
-                <ImageView
-                    android:id="@+id/imageview2"
-                    android:layout_marginLeft="5dp"
+                <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    />
-                <ImageView
-                    android:id="@+id/imageview3"
-                    android:layout_marginLeft="5dp"
+                    >
+                    <ImageView
+                        android:id="@+id/imageview2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        />
+                    <ImageView
+                        android:id="@+id/imageview2_close"
+                        android:layout_gravity="end"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/close"
+                        android:visibility="invisible"
+                        />
+                </FrameLayout>
+                <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    />
+                    >
+                    <ImageView
+                        android:id="@+id/imageview3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        />
+                    <ImageView
+                        android:id="@+id/imageview3_close"
+                        android:layout_gravity="end"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/close"
+                        android:visibility="invisible"
+                        />
+                </FrameLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -234,26 +257,63 @@
                 android:layout_weight="1"
                 android:background="#FFFFFF"
                 >
-                <ImageView
-                    android:id="@+id/imageview4"
+                <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    />
-                <ImageView
-                    android:id="@+id/imageview5"
-                    android:layout_marginLeft="5dp"
+                    >
+                    <ImageView
+                        android:id="@+id/imageview4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        />
+                    <ImageView
+                        android:id="@+id/imageview4_close"
+                        android:layout_gravity="end"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/close"
+                        android:visibility="invisible"
+                        />
+                </FrameLayout>
+                <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    />
-                <ImageView
-                    android:id="@+id/imageview6"
-                    android:layout_marginLeft="5dp"
+                    >
+                    <ImageView
+                        android:id="@+id/imageview5"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        />
+                    <ImageView
+                        android:id="@+id/imageview5_close"
+                        android:layout_gravity="end"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/close"
+                        android:visibility="invisible"
+                        />
+                </FrameLayout>
+                <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    />
+                    >
+                    <ImageView
+                        android:id="@+id/imageview6"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        />
+                    <ImageView
+                        android:id="@+id/imageview6_close"
+                        android:layout_gravity="end"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/close"
+                        android:visibility="invisible"
+                        />
+                </FrameLayout>
             </LinearLayout>
 
         </LinearLayout>

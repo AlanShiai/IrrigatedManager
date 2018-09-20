@@ -82,6 +82,8 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
     private File takePhotoFile;
     private ImageView imageView1, imageView2, imageView3, imageView4, imageView5, imageView6;
     private HashMap<ImageView, File> images = new LinkedHashMap<>();
+    private ImageView imageView1_close, imageView2_close, imageView3_close, imageView4_close, imageView5_close, imageView6_close;
+    private HashMap<ImageView, ImageView> imageCloses = new LinkedHashMap<>();
 
     private Button manualInspectReportButton;
 
@@ -169,6 +171,13 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
         images.put(imageView4, null);
         images.put(imageView5, null);
         images.put(imageView6, null);
+
+        imageCloses.put(imageView1, imageView1_close);
+        imageCloses.put(imageView2, imageView2_close);
+        imageCloses.put(imageView3, imageView3_close);
+        imageCloses.put(imageView4, imageView4_close);
+        imageCloses.put(imageView5, imageView5_close);
+        imageCloses.put(imageView6, imageView6_close);
     }
 
     private void myFindViewsById() {
@@ -182,6 +191,12 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
         imageView4 = (ImageView) findViewById(R.id.imageview4);
         imageView5 = (ImageView) findViewById(R.id.imageview5);
         imageView6 = (ImageView) findViewById(R.id.imageview6);
+        imageView1_close = (ImageView) findViewById(R.id.imageview1_close);
+        imageView2_close = (ImageView) findViewById(R.id.imageview2_close);
+        imageView3_close = (ImageView) findViewById(R.id.imageview3_close);
+        imageView4_close = (ImageView) findViewById(R.id.imageview4_close);
+        imageView5_close = (ImageView) findViewById(R.id.imageview5_close);
+        imageView6_close = (ImageView) findViewById(R.id.imageview6_close);
         manualInspectReportButton = (Button) findViewById(R.id.manual_inspect_report);
     }
 
@@ -190,6 +205,18 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
         View.OnClickListener imageListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                ImageView supportSelectImageFromAlbumView = null;
+                for (ImageView imageView : images.keySet()) {
+                    if ( null == images.get(imageView) ) {
+                        supportSelectImageFromAlbumView = imageView;
+                        break;
+                    }
+                }
+                if (supportSelectImageFromAlbumView != (ImageView) v) {
+                    return;
+                }
+
                 if (ContextCompat.checkSelfPermission(Level2_2_5_3_manualInspect.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(Level2_2_5_3_manualInspect.this, new String[]{ Manifest.permission. WRITE_EXTERNAL_STORAGE }, 1);
                 } else {
@@ -204,6 +231,76 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
         imageView4.setOnClickListener(imageListener);
         imageView5.setOnClickListener(imageListener);
         imageView6.setOnClickListener(imageListener);
+
+        View.OnClickListener closeimageListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImageView closeImage = (ImageView) v;
+                ImageView selectImageView = null;
+                for (ImageView imageView : imageCloses.keySet()) {
+                    if ( closeImage == imageCloses.get(imageView) ) {
+                        selectImageView = imageView;
+                        break;
+                    }
+                }
+                if (null == selectImageView) {
+                    return;
+                }
+
+                images.put(selectImageView, null);
+
+                // move image in hashmap
+                List<File> files = new ArrayList(images.values());
+                List<ImageView>  imageViews = new ArrayList(images.keySet());
+
+                images.put(imageView1, null);
+                images.put(imageView2, null);
+                images.put(imageView3, null);
+                images.put(imageView4, null);
+                images.put(imageView5, null);
+                images.put(imageView6, null);
+
+                File file = null;
+                for (int i = 0, j = 0; i < files.size(); i++ ) {
+                    file = files.get(i);
+                    if ( null != file) {
+                        images.put(imageViews.get(j), file);
+                        j++;
+                    }
+                }
+
+                // set all image view null
+                for (ImageView imageView : images.keySet()) {
+                    imageView.setImageDrawable(null);
+                }
+
+                // update image view
+                ImageView addImageView = null;
+                for (ImageView imageView : images.keySet()) {
+                    if ( null != images.get(imageView)) {
+                        Bitmap bitmap = BitmapFactory.decodeFile(images.get(imageView).getAbsolutePath());
+                        imageView.setImageBitmap(bitmap);
+                        imageCloses.get(imageView).setVisibility(View.VISIBLE);
+                    } else {
+                        addImageView = imageView;
+                        break;
+                    }
+                }
+
+                // update + image
+                if (null != addImageView) {
+                    addImageView.setImageResource(R.drawable.d2);
+                    imageCloses.get(addImageView).setVisibility(View.INVISIBLE);
+                }
+
+            }
+        };
+        imageView1_close.setOnClickListener(closeimageListener);
+        imageView2_close.setOnClickListener(closeimageListener);
+        imageView3_close.setOnClickListener(closeimageListener);
+        imageView4_close.setOnClickListener(closeimageListener);
+        imageView5_close.setOnClickListener(closeimageListener);
+        imageView6_close.setOnClickListener(closeimageListener);
 
         takePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -347,10 +444,6 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                // http://www.boze-tech.com/zfh_manager/a/app/patrol/patrolSave?type=channel
-                // &goalId=8502f69d32304ee6a9aacd99920fdcd7%22%20+%20%22&longitude=116.429489&latitude=39.87182
-                // &images=&itemResults=&createBy=1&contents=%E6%98%AF%E6%98%AF%E6%98%AF&userId=1
-
                 updateImageFile();
                 builder.dismiss();
             }
@@ -637,6 +730,9 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
     private void addImageFile(ImageView currentImageView, File imageFile) {
         // store imageFile, for upload.
         images.put(currentImageView, imageFile);
+
+        // set close image visible
+        imageCloses.get(currentImageView).setVisibility(View.VISIBLE);
 
         // update "+" image
         for (ImageView imageView : images.keySet()) {
