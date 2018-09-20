@@ -30,11 +30,13 @@
 
         <activity
             android:name=".Level2_1_irrigateOverview"
+            android:screenOrientation="portrait"
             android:launchMode="singleTop" />
-        <activity android:name=".Level2_3_projectInfo" />
-        <activity android:name=".Level2_5_appvalProcess" />
+        <activity android:name=".Level2_3_projectInfo" android:screenOrientation="portrait" />
+        <activity android:name=".Level2_5_appvalProcess" android:screenOrientation="portrait" />
         <activity
             android:name=".LoginActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,17 +44,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Level2_2_2_inspectNote" />
-        <activity android:name=".Level2_2_5_1_manualInspect" />
-        <activity android:name=".Level2_5_1_appvalDetails" />
-        <activity android:name=".Level2_2_5_2_manualInspect" />
-        <activity android:name=".Level2_2_projectInspection2" />
-        <activity android:name=".Level2_4_realtimeMonitor2" />
-        <activity android:name=".Level2_4_3_rain2" />
-        <activity android:name=".Level2_6_irrigationSchedule2" />
-        <activity android:name=".Level2_2_3_inspectDetails2" />
-        <activity android:name=".Level2_2_3_inspectDetailsPie" />
-        <activity android:name=".Level2_2_5_3_manualInspect" />
+        <activity android:name=".Level2_2_2_inspectNote" android:screenOrientation="portrait"/>
+        <activity android:name=".Level2_2_5_1_manualInspect" android:screenOrientation="portrait"/>
+        <activity android:name=".Level2_5_1_appvalDetails" android:screenOrientation="portrait"/>
+        <activity android:name=".Level2_2_5_2_manualInspect" android:screenOrientation="portrait"/>
+        <activity android:name=".Level2_2_projectInspection2" android:screenOrientation="portrait"/>
+        <activity android:name=".Level2_4_realtimeMonitor2" android:screenOrientation="portrait"/>
+        <activity android:name=".Level2_4_3_rain2" android:screenOrientation="portrait"/>
+        <activity android:name=".Level2_6_irrigationSchedule2" android:screenOrientation="portrait"/>
+        <activity android:name=".Level2_2_3_inspectDetails2" android:screenOrientation="portrait"/>
+        <activity android:name=".Level2_2_3_inspectDetailsPie" android:screenOrientation="portrait"/>
+        <activity android:name=".Level2_2_5_3_manualInspect" android:screenOrientation="portrait"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -69,15 +71,15 @@
             android:enabled="true"
             android:process=":remote" />
 
-        <activity android:name=".Level2_3_projectInfo2" />
-        <activity android:name=".Level2_3_projectInfo3" />
-        <activity android:name=".Level2_3_projectInfo4" />
-        <activity android:name=".Level2_4_3_rain3" />
-        <activity android:name=".Logout" />
-        <activity android:name=".Level2_5_2_appvalProcess" />
-        <activity android:name=".Level2_2_3_1_inspectDetails" />
-        <activity android:name=".Level2_2_2_inspectNoteDetails" />
-        <activity android:name=".Level2_2_3_2_inspectDetails"></activity>
+        <activity android:name=".Level2_3_projectInfo2" android:screenOrientation="portrait"/>
+        <activity android:name=".Level2_3_projectInfo3" android:screenOrientation="portrait"/>
+        <activity android:name=".Level2_3_projectInfo4" android:screenOrientation="portrait"/>
+        <activity android:name=".Level2_4_3_rain3" android:screenOrientation="portrait"/>
+        <activity android:name=".Logout" android:screenOrientation="portrait"/>
+        <activity android:name=".Level2_5_2_appvalProcess" android:screenOrientation="portrait"/>
+        <activity android:name=".Level2_2_3_1_inspectDetails" android:screenOrientation="portrait"/>
+        <activity android:name=".Level2_2_2_inspectNoteDetails" android:screenOrientation="portrait"/>
+        <activity android:name=".Level2_2_3_2_inspectDetails" android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
