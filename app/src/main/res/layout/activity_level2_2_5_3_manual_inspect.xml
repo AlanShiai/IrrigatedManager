@@ -125,6 +125,7 @@
                 />
 
             <LinearLayout
+                android:layout_marginLeft="10dp"
                 android:layout_width="2dp"
                 android:layout_height="match_parent"
                 android:background="#F5F5F5"
