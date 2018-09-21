@@ -361,18 +361,26 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
     }
 
     private void showNeedDescriptionDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(Level2_2_5_3_manualInspect.this);
-        builder.setTitle("");
-        builder.setIcon(R.drawable.e7);
-        builder.setMessage("请输入巡检信息。");
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+        final Dialog builder = new Dialog(Level2_2_5_3_manualInspect.this, R.style.update_dialog);
+        View view = View.inflate(Level2_2_5_3_manualInspect.this, R.layout.dialog_info, null);
 
+        final TextView info = (TextView) view.findViewById(R.id.info);
+        info.setText("请输入巡检信息。");
+
+        view.findViewById(R.id.ok).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                builder.dismiss();
             }
         });
-
-        builder.create().show();
+        view.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                builder.dismiss();
+            }
+        });
+        builder.setContentView(view);
+        builder.show();
     }
 
     private void updatePatrolManagerList() {
