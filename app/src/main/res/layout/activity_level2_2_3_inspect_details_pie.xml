@@ -31,16 +31,6 @@
 
     <LinearLayout
         android:layout_marginTop="62dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:layout_width="match_parent"
-        android:background="@drawable/shape_half_transparent"
-        android:layout_height="100dp"
-        >
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_marginTop="72dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_width="match_parent"
@@ -50,68 +40,13 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="82dp"
-        android:orientation="vertical"
+        android:layout_marginTop="72dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:background="@drawable/shape_half_transparent"
+        android:layout_height="100dp"
         >
-
-        <LinearLayout
-            android:layout_marginBottom="2dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="4"
-            android:background="@drawable/item_shape"
-            >
-
-            <LinearLayout
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/item_blue_round_shape"
-                >
-
-                <TextView
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="2018年"
-                    android:textSize="15sp"
-                    android:textColor="#FFFFFF"
-                    android:gravity="center"
-                    />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/draw_column"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="5"
-                >
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/draw_pie"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="5"
-            >
-
-        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -177,6 +112,71 @@
             style="?android:attr/borderlessButtonStyle"
             android:visibility="invisible"
             />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="82dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:background="@drawable/item_shape"
+            >
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/item_blue_round_shape"
+                >
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2018年"
+                    android:textSize="15sp"
+                    android:textColor="#FFFFFF"
+                    android:gravity="center"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/draw_column"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5"
+                >
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/draw_pie"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            >
+
+        </LinearLayout>
     </LinearLayout>
 
 </FrameLayout>
