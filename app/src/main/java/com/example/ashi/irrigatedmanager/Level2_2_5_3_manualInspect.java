@@ -305,8 +305,11 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
         takePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                photo_layout.setVisibility(View.VISIBLE);
-                map_layout.setVisibility(View.GONE);
+                if (View.GONE == photo_layout.getVisibility()) {
+                    photo_layout.setVisibility(View.VISIBLE);
+                    map_layout.setVisibility(View.GONE);
+                    return;
+                }
 
                 takePhotoFile = new File(getExternalCacheDir(), "output_image" + System.currentTimeMillis()  + ".jpg");
                 try {
