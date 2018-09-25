@@ -9,7 +9,7 @@
         android:id="@+id/top_toolbar_layout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="62dp"
+        android:layout_height="42dp"
         android:background="#24AAFF"
         >
 
@@ -71,7 +71,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="62dp"
+        android:layout_marginTop="42dp"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:background="#24AAFF"
@@ -79,7 +79,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="62dp"
+        android:layout_marginTop="42dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
