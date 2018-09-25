@@ -335,6 +335,11 @@ public class Level2_5_1_appvalDetails extends AppCompatActivity {
 //            ManualInspectBasicInfoAdapter adapter = new ManualInspectBasicInfoAdapter(
 //                    getContext(), R.layout.fragment_listview_item, new ArrayList<String>(ManualInspectBasicInfo.getInfo().keySet()));
             basicInfoListView = (ListView) rootView.findViewById(R.id.fragment_listview_list);
+            if ( null != Global.patrolDetails) {
+                ManualInspectBasicInfoAdapter adapter = new ManualInspectBasicInfoAdapter(
+                        getContext(), R.layout.fragment_listview_item, new ArrayList<String>(Global.patrolDetails.keySet()));
+                basicInfoListView.setAdapter(adapter);
+            }
 
             return rootView;
         }
