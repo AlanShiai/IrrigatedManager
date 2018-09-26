@@ -137,7 +137,7 @@
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:gravity="center_vertical"
-            android:text="39.871820"
+            android:text="116.429489"
             android:textSize="16sp"
             android:textColor="#343434"
             />
@@ -172,7 +172,7 @@
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:gravity="center_vertical"
-            android:text="116.429489"
+            android:text="39.871820"
             android:textSize="16sp"
             android:textColor="#343434"
             />
