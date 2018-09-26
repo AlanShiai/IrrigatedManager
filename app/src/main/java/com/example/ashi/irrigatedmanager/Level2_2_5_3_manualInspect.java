@@ -95,8 +95,8 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
 
     private TextView positionText;
 
-    private double latitude = 116.429489;
-    private double longitude = 39.87182;
+    private double latitude = 39.87182;
+    private double longitude = 116.429489;
 
     List<PatrolManager> patrolManagers = new ArrayList<>();
 
