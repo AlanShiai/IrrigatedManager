@@ -151,14 +151,14 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
      */
     public static class PlaceholderFragment1 extends Fragment {
 
-        public LinearLayout layout;
+        public LinearLayout itemResultLayout;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_my_tab, container, false);
-            layout = (LinearLayout) rootView.findViewById(R.id.tab1_layout);
-            layout.removeAllViews();
+            itemResultLayout = (LinearLayout) rootView.findViewById(R.id.tab1_layout);
+            itemResultLayout.removeAllViews();
 
 //            int index = 1;
 //            for (ManualInspectItem2 item : dataList) {
@@ -199,34 +199,34 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
                     Log.d("aijun patrolItem", list.size()+"");
 
                     if ( null != list ) {
-                        updateDataList(list);
+                        dataList = Utility.patrolItemsToManualInspectItems(list);
                         Log.d("aijun patrolItem 2", dataList+"");
                         Log.d("aijun patrolItem 2", dataList.size()+"");
                         if ( null != getActivity() ) {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    if (null != layout) {
+                                    if (null != itemResultLayout) {
                                         checkBoxList.clear();
-                                        layout.removeAllViews();
+                                        itemResultLayout.removeAllViews();
 
                                         int index = 1;
                                         for (ManualInspectItem2 item : dataList) {
                                             if (!item.items.isEmpty()) {
                                                 View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_base_info,
-                                                        layout, false);
+                                                        itemResultLayout, false);
                                                 TextView text = (TextView) view.findViewById(R.id.fragment_base_info);
                                                 text.setText(index + ". " + item.name);
-                                                layout.addView(view);
+                                                itemResultLayout.addView(view);
 
                                                 for (PatrolItem patrolItem : item.items) {
                                                     View view2 = LayoutInflater.from(getContext()).inflate(R.layout.fragment_base_info2,
-                                                            layout, false);
+                                                            itemResultLayout, false);
                                                     CheckBox checkBox = (CheckBox) view2.findViewById(R.id.checkBox);
                                                     checkBoxList.add(checkBox);
                                                     checkBox.setText(patrolItem.contents);
                                                     checkBox.setTag(patrolItem);
-                                                    layout.addView(view2);
+                                                    itemResultLayout.addView(view2);
                                                 }
                                             }
                                             index++;
@@ -234,29 +234,6 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
                                     }
                                 }
                             });
-                        }
-                    }
-                }
-
-                private void updateDataList(List<PatrolItem> list) {
-                    dataList = new ArrayList<ManualInspectItem2>();
-                    ManualInspectItem2 item;
-                    Iterator<PatrolItem> iterator = list.iterator();
-
-                    List<String> mainPositions = new ArrayList<String>();
-                    for(PatrolItem patrolItem : list) {
-                        if ( ! mainPositions.contains(patrolItem.mainPosition) ) {
-                            mainPositions.add(patrolItem.mainPosition);
-                        }
-                    }
-
-                    for(String mainPosition : mainPositions) {
-                        item = new ManualInspectItem2(mainPosition);
-                        dataList.add(item);
-                        for(PatrolItem patrolItem : list) {
-                            if ( mainPosition.equals(patrolItem.mainPosition) ) {
-                                item.items.add(patrolItem);
-                            }
                         }
                     }
                 }

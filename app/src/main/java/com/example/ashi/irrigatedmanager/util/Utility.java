@@ -21,6 +21,7 @@ import com.example.ashi.irrigatedmanager.level2_4.Rain;
 import com.example.ashi.irrigatedmanager.level2_4.RainDetailData;
 import com.example.ashi.irrigatedmanager.level2_4.SluiceInfo;
 import com.example.ashi.irrigatedmanager.level2_5.ManualInspectItem;
+import com.example.ashi.irrigatedmanager.level2_5.ManualInspectItem2;
 import com.example.ashi.irrigatedmanager.level2_5.PatrolItem;
 import com.example.ashi.irrigatedmanager.level2_6.ProjectInfo3;
 import com.example.ashi.irrigatedmanager.level2_6.ProjectInfo4;
@@ -35,7 +36,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -43,6 +46,31 @@ import java.util.List;
  */
 
 public class Utility {
+
+    public static List<ManualInspectItem2> patrolItemsToManualInspectItems(List<PatrolItem> list) {
+        List<ManualInspectItem2> dataList = new ArrayList<ManualInspectItem2>();
+        ManualInspectItem2 item;
+        Iterator<PatrolItem> iterator = list.iterator();
+
+        List<String> mainPositions = new ArrayList<String>();
+        for(PatrolItem patrolItem : list) {
+            if ( ! mainPositions.contains(patrolItem.mainPosition) ) {
+                mainPositions.add(patrolItem.mainPosition);
+            }
+        }
+
+        for(String mainPosition : mainPositions) {
+            item = new ManualInspectItem2(mainPosition);
+            dataList.add(item);
+            for(PatrolItem patrolItem : list) {
+                if ( mainPosition.equals(patrolItem.mainPosition) ) {
+                    item.items.add(patrolItem);
+                }
+            }
+        }
+        return dataList;
+    }
+
 
     public static void margin(View v, int l, int t, int r, int b) {
         if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {

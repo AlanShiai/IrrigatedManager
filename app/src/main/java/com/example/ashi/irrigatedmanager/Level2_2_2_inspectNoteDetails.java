@@ -87,6 +87,63 @@ public class Level2_2_2_inspectNoteDetails extends AppCompatActivity {
                 Log.d("aijun patrolDetail", responseText+"");
                 Log.d("aijun patrolDetail", inspectNoteDetails+"");
                 if ( null != inspectNoteDetails ) {
+                    if ( null != inspectNoteDetails.detail.type && null != inspectNoteDetails.detail.resultItem ) {
+                        // "http://www.boze-tech.com/zfh_manager/a/app/patrol/patrolItem?type=channel";
+                        String url = Api.API_21_patrolItem + "type=" + inspectNoteDetails.detail.type;
+                        Log.d("aijun patrolItem", url+"");
+                        HttpUtil.sendOkHttpRequest(url, new Callback() {
+                            @Override
+                            public void onResponse(Call call, Response response) throws IOException {
+                                final String responseText = response.body().string();
+                                final List<PatrolItem> list = Utility.handleApi21patrolItemResponse(responseText);
+                                Log.d("aijun patrolItem", responseText + "");
+                                Log.d("aijun patrolItem", list.size() + "");
+
+                                if ( null != list ) {
+                                    final List<ManualInspectItem2> dataList = Utility.patrolItemsToManualInspectItems(list);
+                                    Log.d("aijun patrolItem 2", dataList + "");
+                                    Log.d("aijun patrolItem 2", dataList.size() + "");
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if (null != itemResultLayout) {
+                                                itemResultLayout.removeAllViews();
+
+                                                int index = 1;
+                                                for (ManualInspectItem2 item : dataList) {
+                                                    if (!item.items.isEmpty()) {
+                                                        View view = LayoutInflater.from(Level2_2_2_inspectNoteDetails.this).inflate(R.layout.fragment_base_info,
+                                                                itemResultLayout, false);
+                                                        TextView text = (TextView) view.findViewById(R.id.fragment_base_info);
+                                                        text.setText(index + ". " + item.name);
+                                                        itemResultLayout.addView(view);
+
+                                                        for (PatrolItem patrolItem : item.items) {
+                                                            View view2 = LayoutInflater.from(Level2_2_2_inspectNoteDetails.this).inflate(R.layout.fragment_base_info2,
+                                                                    itemResultLayout, false);
+                                                            CheckBox checkBox = (CheckBox) view2.findViewById(R.id.checkBox);
+                                                            checkBox.setText(patrolItem.contents);
+                                                            checkBox.setEnabled(false);
+                                                            if (inspectNoteDetails.detail.resultItem.contains(patrolItem.id)) {
+                                                                checkBox.setChecked(true);
+                                                            }
+                                                            itemResultLayout.addView(view2);
+                                                        }
+                                                    }
+                                                    index++;
+                                                }
+                                            }
+                                        }
+                                    });
+                                }
+                             }
+
+                            @Override
+                            public void onFailure(Call call, IOException e) {
+                                e.printStackTrace();
+                            }
+                        });
+                    }
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -110,8 +167,8 @@ public class Level2_2_2_inspectNoteDetails extends AppCompatActivity {
                                 if ( null !=  latitude && null != inspectNoteDetails.detail.latitude) {
                                     latitude.setText(inspectNoteDetails.detail.latitude);
                                 }
-                                if ( null !=  resultItem && null != inspectNoteDetails.detail.resultItem) {
-                                    resultItem.setText(inspectNoteDetails.detail.resultItem);
+                                if ( null !=  remarks && null != inspectNoteDetails.detail.remarks) {
+                                    remarks.setText(inspectNoteDetails.detail.remarks);
                                 }
                             }
                             if ( null != inspectNoteDetails.basic) {
@@ -164,7 +221,8 @@ public class Level2_2_2_inspectNoteDetails extends AppCompatActivity {
     static TextView createDate;
     static TextView longitude;
     static TextView latitude;
-    static TextView resultItem;
+    static TextView remarks;
+    static LinearLayout itemResultLayout;
     public static class PlaceholderForTab1 extends Fragment {
 
         public LinearLayout layout;
@@ -178,7 +236,9 @@ public class Level2_2_2_inspectNoteDetails extends AppCompatActivity {
             createDate = (TextView) rootView.findViewById(R.id.createDate);
             longitude = (TextView) rootView.findViewById(R.id.longitude);
             latitude = (TextView) rootView.findViewById(R.id.latitude);
-            resultItem = (TextView) rootView.findViewById(R.id.resultItem);
+            remarks = (TextView) rootView.findViewById(R.id.remarks);
+            itemResultLayout = (LinearLayout) rootView.findViewById(R.id.tab1_layout);
+            itemResultLayout.removeAllViews();
 
             return rootView;
         }

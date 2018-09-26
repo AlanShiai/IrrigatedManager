@@ -103,8 +103,8 @@ public class Level2_2_3_2_inspectDetails extends AppCompatActivity {
                                 if ( null !=  latitude && null != inspectNoteDetails.detail.latitude) {
                                     latitude.setText(inspectNoteDetails.detail.latitude);
                                 }
-                                if ( null !=  resultItem && null != inspectNoteDetails.detail.resultItem) {
-                                    resultItem.setText(inspectNoteDetails.detail.resultItem);
+                                if ( null !=  remarks && null != inspectNoteDetails.detail.remarks) {
+                                    remarks.setText(inspectNoteDetails.detail.remarks);
                                 }
                             }
                             if ( null != inspectNoteDetails.basic) {
@@ -158,7 +158,7 @@ public class Level2_2_3_2_inspectDetails extends AppCompatActivity {
     static TextView createDate;
     static TextView longitude;
     static TextView latitude;
-    static TextView resultItem;
+    static TextView remarks;
     public static class PlaceholderForTab1 extends Fragment {
 
         public LinearLayout layout;
@@ -172,7 +172,7 @@ public class Level2_2_3_2_inspectDetails extends AppCompatActivity {
             createDate = (TextView) rootView.findViewById(R.id.createDate);
             longitude = (TextView) rootView.findViewById(R.id.longitude);
             latitude = (TextView) rootView.findViewById(R.id.latitude);
-            resultItem = (TextView) rootView.findViewById(R.id.resultItem);
+            remarks = (TextView) rootView.findViewById(R.id.remarks);
 
             return rootView;
         }
