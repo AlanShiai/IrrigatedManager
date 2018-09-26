@@ -21,7 +21,7 @@ public class Global {
     public static User user = new User("1");
 
     public static boolean isExceptionFound = false;
-    public static String exceptionMsg = "";
+    public static String itemResults = "";
 
     public static String projectInfoName = "渠道列表";
     public static String projectInfoName2 = "渠道列表";

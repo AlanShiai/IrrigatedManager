@@ -97,9 +97,13 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
         for (CheckBox checkBox : checkBoxList) {
             if (checkBox.isChecked()) {
                 Log.d("aijun, checked", checkBox.getText().toString());
-                Global.exceptionMsg = checkBox.getText().toString();
+                PatrolItem patrolItem =  (PatrolItem) checkBox.getTag();
+                if (Global.itemResults.trim().equals("")) {
+                    Global.itemResults = patrolItem.id;
+                } else {
+                    Global.itemResults += "," +patrolItem.id;
+                }
                 Global.isExceptionFound = true;
-                return;
             }
         }
     }
@@ -108,37 +112,37 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
         ManualInspectItem2 item;
 
         item = new ManualInspectItem2("堤坝");
-        item.getItems().add("检查渠道是否被损坏，堤坝是否决堤");
+        item.items.add(new PatrolItem("检查渠道是否被损坏，堤坝是否决堤"));
         dataList.add(item);
 
         item = new ManualInspectItem2("渠底");
-        item.getItems().add("有明显影响输水的水藻、杂草等杂物");
-        item.getItems().add("有向渠道内排放污水、废液，倾倒工业废渣、垃圾等废弃物现象");
-        item.getItems().add("有影响泄洪和输水的建筑物、障碍物等");
+        item.items.add(new PatrolItem("有明显影响输水的水藻、杂草等杂物"));
+        item.items.add(new PatrolItem("有向渠道内排放污水、废液，倾倒工业废渣、垃圾等废弃物现象"));
+        item.items.add(new PatrolItem("有影响泄洪和输水的建筑物、障碍物等"));
         dataList.add(item);
 
         item = new ManualInspectItem2("渠身");
-        item.getItems().add("土渠有严重雨淋沟、渗透、裂缝、塌陷等缺陷");
-        item.getItems().add("混凝土渠表面不整洁，有严重脱壳、剥落、渗漏等现象");
-        item.getItems().add("浆砌石渠有严重的塌陷，松动，隆起，底部掏空，垫层流失等现象");
+        item.items.add(new PatrolItem("土渠有严重雨淋沟、渗透、裂缝、塌陷等缺陷"));
+        item.items.add(new PatrolItem("混凝土渠表面不整洁，有严重脱壳、剥落、渗漏等现象"));
+        item.items.add(new PatrolItem("浆砌石渠有严重的塌陷，松动，隆起，底部掏空，垫层流失等现象"));
         dataList.add(item);
 
         item = new ManualInspectItem2("渠堤");
-        item.getItems().add("土渠有严重雨淋沟、渗透、裂缝、塌陷等缺陷");
-        item.getItems().add("混凝土渠表面不整洁，有严重脱壳、剥落、渗漏等现象");
-        item.getItems().add("浆砌石渠有严重的塌陷，松动，隆起，底部掏空，垫层流失等现象");
+        item.items.add(new PatrolItem("土渠有严重雨淋沟、渗透、裂缝、塌陷等缺陷"));
+        item.items.add(new PatrolItem("混凝土渠表面不整洁，有严重脱壳、剥落、渗漏等现象"));
+        item.items.add(new PatrolItem("浆砌石渠有严重的塌陷，松动，隆起，底部掏空，垫层流失等现象"));
         dataList.add(item);
 
         item = new ManualInspectItem2("渠堤");
-        item.getItems().add("土渠有严重雨淋沟、渗透、裂缝、塌陷等缺陷");
-        item.getItems().add("混凝土渠表面不整洁，有严重脱壳、剥落、渗漏等现象");
-        item.getItems().add("浆砌石渠有严重的塌陷，松动，隆起，底部掏空，垫层流失等现象");
+        item.items.add(new PatrolItem("土渠有严重雨淋沟、渗透、裂缝、塌陷等缺陷"));
+        item.items.add(new PatrolItem("混凝土渠表面不整洁，有严重脱壳、剥落、渗漏等现象"));
+        item.items.add(new PatrolItem("浆砌石渠有严重的塌陷，松动，隆起，底部掏空，垫层流失等现象"));
         dataList.add(item);
 
         item = new ManualInspectItem2("渠堤");
-        item.getItems().add("土渠有严重雨淋沟、渗透、裂缝、塌陷等缺陷");
-        item.getItems().add("混凝土渠表面不整洁，有严重脱壳、剥落、渗漏等现象");
-        item.getItems().add("浆砌石渠有严重的塌陷，松动，隆起，底部掏空，垫层流失等现象");
+        item.items.add(new PatrolItem("土渠有严重雨淋沟、渗透、裂缝、塌陷等缺陷"));
+        item.items.add(new PatrolItem("混凝土渠表面不整洁，有严重脱壳、剥落、渗漏等现象"));
+        item.items.add(new PatrolItem("浆砌石渠有严重的塌陷，松动，隆起，底部掏空，垫层流失等现象"));
         dataList.add(item);
     }
 
@@ -208,19 +212,20 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
 
                                         int index = 1;
                                         for (ManualInspectItem2 item : dataList) {
-                                            if (!item.getItems().isEmpty()) {
+                                            if (!item.items.isEmpty()) {
                                                 View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_base_info,
                                                         layout, false);
                                                 TextView text = (TextView) view.findViewById(R.id.fragment_base_info);
-                                                text.setText(index + ". " + item.getName());
+                                                text.setText(index + ". " + item.name);
                                                 layout.addView(view);
 
-                                                for (String subItem : item.getItems()) {
+                                                for (PatrolItem patrolItem : item.items) {
                                                     View view2 = LayoutInflater.from(getContext()).inflate(R.layout.fragment_base_info2,
                                                             layout, false);
                                                     CheckBox checkBox = (CheckBox) view2.findViewById(R.id.checkBox);
                                                     checkBoxList.add(checkBox);
-                                                    checkBox.setText(subItem);
+                                                    checkBox.setText(patrolItem.contents);
+                                                    checkBox.setTag(patrolItem);
                                                     layout.addView(view2);
                                                 }
                                             }
@@ -250,7 +255,7 @@ public class Level2_2_5_2_manualInspect extends AppCompatActivity {
                         dataList.add(item);
                         for(PatrolItem patrolItem : list) {
                             if ( mainPosition.equals(patrolItem.mainPosition) ) {
-                                item.getItems().add(patrolItem.contents);
+                                item.items.add(patrolItem);
                             }
                         }
                     }

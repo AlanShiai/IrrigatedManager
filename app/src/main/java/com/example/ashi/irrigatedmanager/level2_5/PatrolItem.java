@@ -19,4 +19,8 @@ public class PatrolItem {
     public String type;
     public String mainPosition;
     public String delFlag;
+
+    public PatrolItem(String contents) {
+        this.contents = contents;
+    }
 }

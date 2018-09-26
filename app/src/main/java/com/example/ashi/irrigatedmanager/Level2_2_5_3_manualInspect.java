@@ -494,9 +494,9 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
 
     private void commitItWithImage(String image) {
         String url = Api.API_22_patrolSave + "userId=" + Global.user.id + "&images=" + image + "&type=" + Global.patrolType
-                + "&longitude=" + longitude + "&latitude=" + latitude
+                + "&latitude=" + latitude + "&longitude=" + longitude
                 + "&goalId=" + Global.patrolId + "&contents=" + editText.getText().toString().trim()
-                + "&itemResults=" + Utility.toURLEncoded(Global.exceptionMsg)
+                + "&itemResults=" + Global.itemResults
                 + "&createBy=" + getPatrolManagerUserId();
         Log.d("aijun, patrolSave", url);
         HttpUtil.sendOkHttpRequest(url, new Callback() {
