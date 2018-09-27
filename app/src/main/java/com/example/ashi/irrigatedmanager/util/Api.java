@@ -42,7 +42,7 @@ public class Api {
     public static String API_27_patrolQueryUser           = address + "/a/app/patrol/patrolQueryUser?userName=系统管理员";
     public static String API_28_officeUserStatistic      = address + "/a/app/patrol/officeUserStatistic?";
     public static String API_29_queryTotalCount           = address + "/a/app/patrol/queryTotalCount?";
-    public static String API_30_patrolInit                = address + "/a/app/patrol/patrolInit?userId="+ Global.user.id +"&type=";
+    public static String API_30_patrolInit                = address + "/a/app/patrol/patrolInit?type=";
     public static String API_31_queryYearCount            = address + "/a/app/patrol/queryYearCount?";
     public static String API_32_getUserOfPatrol           = address + "/a/app/patrol/getUserOfPatrol?";
     public static String API_33_taskFlow                  = address + "/a/app/actTask/taskFlow?";

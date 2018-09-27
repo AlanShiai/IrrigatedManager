@@ -91,7 +91,7 @@ public class Level2_2_3_inspectDetailsPie extends AppCompatActivity {
     }
 
     private void getDataFromServerAndUpdateListView() {
-        String url = Api.API_30_patrolInit;
+        String url = Api.API_30_patrolInit + "&userId="+ Global.user.id;;
         Log.d("aijun patrolInit", url+"");
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
