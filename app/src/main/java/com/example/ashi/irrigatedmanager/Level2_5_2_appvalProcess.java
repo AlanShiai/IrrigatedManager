@@ -82,8 +82,8 @@ public class Level2_5_2_appvalProcess extends AppCompatActivity {
                         }
                         if ( ! patrolManagerNames.isEmpty()) {
                             selectNextHandlePeople();
+                            return;
                         }
-                        patrolManagerId = patrolManagers.get(patrolManagerSelector).userId;
                     }
                 }
                 doProcess();
@@ -150,6 +150,8 @@ public class Level2_5_2_appvalProcess extends AppCompatActivity {
                 if (patrolManagerSelector != position) {
                     patrolManagerSelector = position;
                 }
+                patrolManagerId = patrolManagers.get(patrolManagerSelector).userId;
+                doProcess();
                 builder.dismiss();
             }
         });
