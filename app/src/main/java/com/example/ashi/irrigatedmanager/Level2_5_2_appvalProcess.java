@@ -35,6 +35,9 @@ import okhttp3.Response;
 public class Level2_5_2_appvalProcess extends AppCompatActivity {
 
     List<PatrolManager> patrolManagers = new ArrayList<>();
+    List<String> patrolManagerNames = new ArrayList<>();
+    int patrolManagerSelector = 0;
+    String patrolManagerId = "";
 
     String flag = "yes";
 
@@ -69,6 +72,20 @@ public class Level2_5_2_appvalProcess extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 flag = "yes";
+                if ("audit".equals(Global.appval.taskDefKey)) {
+                    patrolManagerId="";
+                } else {
+                    if ( ! patrolManagers.isEmpty()) {
+                        patrolManagerNames.clear();
+                        for (PatrolManager patrolPeople : patrolManagers) {
+                            patrolManagerNames.add(patrolPeople.userName);
+                        }
+                        if ( ! patrolManagerNames.isEmpty()) {
+                            selectNextHandlePeople();
+                        }
+                        patrolManagerId = patrolManagers.get(patrolManagerSelector).userId;
+                    }
+                }
                 doProcess();
             }
         });
@@ -76,6 +93,7 @@ public class Level2_5_2_appvalProcess extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 flag = "no";
+                patrolManagerId="";
                 doProcess();
             }
         });
@@ -113,6 +131,32 @@ public class Level2_5_2_appvalProcess extends AppCompatActivity {
         updatePatrolManagerList();
     }
 
+    private void selectNextHandlePeople() {
+        final Dialog builder = new Dialog(Level2_5_2_appvalProcess.this, R.style.update_dialog);
+        View view = View.inflate(Level2_5_2_appvalProcess.this, R.layout.dialog_select, null);
+        view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                builder.dismiss();
+            }
+        });
+        final ListView dialogListView = (ListView) view.findViewById(R.id.list_view);
+        final DialogSelectItemAdapter adapter = new DialogSelectItemAdapter(
+                Level2_5_2_appvalProcess.this, R.layout.dialog_select_item, patrolManagerNames, patrolManagerSelector);
+        dialogListView.setAdapter(adapter);
+        dialogListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (patrolManagerSelector != position) {
+                    patrolManagerSelector = position;
+                }
+                builder.dismiss();
+            }
+        });
+        builder.setContentView(view);//这里还可以指定布局参数
+        builder.show();
+    }
+
     private String getPatrolManagerUserId() {
         String managerString = "";
         String managerId = Global.user.id;
@@ -145,8 +189,8 @@ public class Level2_5_2_appvalProcess extends AppCompatActivity {
                 + "&dealType=" + oldSelector + "&comment=" + Utility.toURLEncoded(editText.getText().toString()) + "&taskId=" + Global.appval.taskId
                 + "&taskDefKey=" + Global.appval.taskDefKey + "&procInsId=" + Global.appval.processInstanceId
                 + "&procDefId=" + Global.appval.procDefId + "&procDefKey=" + ""
-                + "&businessKey=" + Global.appval.businessKey + "&userId=" + getPatrolManagerUserId()
-                + "&flag=" + flag;
+                + "&businessKey=" + Global.appval.businessKey + "&userId=" + Global.user.id
+                + "&flag=" + flag + "&createBy" + patrolManagerId;
         Log.d("aijun, 15_handleProcess", url);
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
