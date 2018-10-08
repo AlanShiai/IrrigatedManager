@@ -101,6 +101,7 @@ public class Level2_2_projectInspection2 extends AppCompatActivity {
 
     private void getDataFromServerAndUpdateTotalCount() {
         String url = Api.API_29_queryTotalCount + "userId=" + Global.user.id;
+        Log.d("aijun queryTotalCount", url);
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
