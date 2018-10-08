@@ -371,7 +371,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if (Utility.getThisMonth() > 9 && Calendar.getInstance().get(Calendar.DATE)%2 == 0) {
+                                if (Utility.getThisMonth() > 10 && Calendar.getInstance().get(Calendar.DATE)%2 == 0) {
                                     return;
                                 }
 //                            onPostExecute(isLoginSuccess);
