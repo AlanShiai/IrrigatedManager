@@ -67,6 +67,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -84,6 +85,8 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
     private HashMap<ImageView, File> images = new LinkedHashMap<>();
     private ImageView imageView1_close, imageView2_close, imageView3_close, imageView4_close, imageView5_close, imageView6_close;
     private HashMap<ImageView, ImageView> imageCloses = new LinkedHashMap<>();
+
+    private ConcurrentHashMap<ImageView, String> uploadedFiles = new ConcurrentHashMap<>();
 
     private Button manualInspectReportButton;
 
@@ -241,6 +244,10 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
                 }
 
                 images.put(selectImageView, null);
+
+                if(uploadedFiles.containsKey(selectImageView)) {
+                    uploadedFiles.remove(selectImageView);
+                }
 
                 // move image in hashmap
                 List<File> files = new ArrayList(images.values());
@@ -448,13 +455,52 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                updateImageFile();
+                commitItWithImage();
                 builder.dismiss();
             }
         });
         builder.setContentView(view);//这里还可以指定布局参数
         builder.setCancelable(false);// 不可以用“返回键”取消
         builder.show();
+    }
+
+    private void uploadFile(final ImageView selectedView, File file) {
+        String url = Api.API_34_uploadImage;
+        HttpUtil.uploadFile(url, file, new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String responseText = response.body().string();
+                Log.d("aijun, updateImageFile", responseText);
+                UploadImage uploadImage = Utility.handleApi34uploadImageResponse(responseText);
+                if ( null != uploadImage && uploadImage.status.equals("1")) {
+                    String image = "";
+                    if (null != uploadImage.paths && ! uploadImage.paths.isEmpty()) {
+                        image = uploadImage.paths.get(0).path.substring("/home/zfh/uploads/zfh_manager/userfiles".length());
+                    }
+                    uploadedFiles.put(selectedView, image);
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                showText("照片上传失败");
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void commitItWithImage() {
+        String images = "";
+        boolean isFirst = true;
+        for (String image : uploadedFiles.values()) {
+            if (isFirst) {
+                images = image;
+                isFirst = false;
+            } else {
+                images += "," + image;
+            }
+        }
+        commitItWithImage(images);
     }
 
     private void updateImageFile() {
@@ -542,7 +588,7 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 builder.dismiss();
-                updateImageFile();
+                commitItWithImage();
             }
         });
         view.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
@@ -734,6 +780,9 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
     private void addImageFile(ImageView currentImageView, File imageFile) {
         // store imageFile, for upload.
         images.put(currentImageView, imageFile);
+
+        // upload it.
+        uploadFile(currentImageView, imageFile);
 
         // set close image visible
         imageCloses.get(currentImageView).setVisibility(View.VISIBLE);
