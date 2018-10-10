@@ -16,10 +16,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.ashi.irrigatedmanager.gson.InspectNoteDetails;
 import com.example.ashi.irrigatedmanager.gson.PatrolAdpter;
 import com.example.ashi.irrigatedmanager.gson.PatrolNote;
@@ -87,6 +89,32 @@ public class Level2_2_2_inspectNoteDetails extends AppCompatActivity {
                 Log.d("aijun patrolDetail", responseText+"");
                 Log.d("aijun patrolDetail", inspectNoteDetails+"");
                 if ( null != inspectNoteDetails ) {
+
+                    if ( null != inspectNoteDetails.detail && null != inspectNoteDetails.detail.images ) {
+                        String images = inspectNoteDetails.detail.images.trim();
+                        Log.d("aijun images", images+"");
+                        if ( ! images.equals("")) {
+                            String[] imageArray = images.split(",");
+                            if ( imageArray.length > 0 ) {
+                                for (int i = 0 ; i < imageArray.length; i++ ) {
+                                    if ( i == imageviews.size() ) {
+                                        break;
+                                    }
+                                    final ImageView imageView = imageviews.get(i);
+                                    Log.d("aijun imageArray", imageArray[i]+"");
+                                    final String picUrl = Api.API_34_userfiles + imageArray[i];
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Glide.with(Level2_2_2_inspectNoteDetails.this).load(picUrl).into(imageView);
+                                            imageView.setVisibility(View.VISIBLE);
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    }
+
                     if ( null != inspectNoteDetails.detail.type && null != inspectNoteDetails.detail.resultItem ) {
                         // "http://www.boze-tech.com/zfh_manager/a/app/patrol/patrolItem?type=channel";
                         String url = Api.API_21_patrolItem + "type=" + inspectNoteDetails.detail.type;
@@ -223,6 +251,9 @@ public class Level2_2_2_inspectNoteDetails extends AppCompatActivity {
     static TextView latitude;
     static TextView remarks;
     static LinearLayout itemResultLayout;
+    static ImageView imageview1, imageview2, imageview3, imageview4, imageview5, imageview6;
+    static List<ImageView> imageviews = new ArrayList<>();
+
     public static class PlaceholderForTab1 extends Fragment {
 
         public LinearLayout layout;
@@ -239,6 +270,24 @@ public class Level2_2_2_inspectNoteDetails extends AppCompatActivity {
             remarks = (TextView) rootView.findViewById(R.id.remarks);
             itemResultLayout = (LinearLayout) rootView.findViewById(R.id.tab1_layout);
             itemResultLayout.removeAllViews();
+
+            imageview1 = (ImageView) rootView.findViewById(R.id.imageview1);
+            imageview2 = (ImageView) rootView.findViewById(R.id.imageview2);
+            imageview3 = (ImageView) rootView.findViewById(R.id.imageview3);
+            imageview4 = (ImageView) rootView.findViewById(R.id.imageview4);
+            imageview5 = (ImageView) rootView.findViewById(R.id.imageview5);
+            imageview6 = (ImageView) rootView.findViewById(R.id.imageview6);
+            imageviews.add(imageview1);
+            imageviews.add(imageview2);
+            imageviews.add(imageview3);
+            imageviews.add(imageview4);
+            imageviews.add(imageview5);
+            imageviews.add(imageview6);
+
+//            String picUrl = "http://www.boze-tech.com/zfh_manager/userfiles/patrolImage/output_image15390458446441539045847805.jpg";
+//            String picUrl = Api.API_34_userfiles + "/patrolImage/output_image15390458446441539045847805.jpg";
+//            Glide.with(getContext()).load(picUrl).into(imageview1);
+//            imageview1.setVisibility(View.VISIBLE);
 
             return rootView;
         }

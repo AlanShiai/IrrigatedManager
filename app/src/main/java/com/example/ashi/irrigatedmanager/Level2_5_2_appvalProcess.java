@@ -192,7 +192,7 @@ public class Level2_5_2_appvalProcess extends AppCompatActivity {
                 + "&taskDefKey=" + Global.appval.taskDefKey + "&procInsId=" + Global.appval.processInstanceId
                 + "&procDefId=" + Global.appval.procDefId + "&procDefKey=" + ""
                 + "&businessKey=" + Global.appval.businessKey + "&userId=" + Global.user.id
-                + "&flag=" + flag + "&createBy" + patrolManagerId;
+                + "&flag=" + flag + "&createBy=" + patrolManagerId;
         Log.d("aijun, 15_handleProcess", url);
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override

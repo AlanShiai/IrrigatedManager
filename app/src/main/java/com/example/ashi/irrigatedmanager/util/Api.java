@@ -48,5 +48,6 @@ public class Api {
     public static String API_33_taskFlow                  = address + "/a/app/actTask/taskFlow?";
 
     public static String API_34_uploadImage                = address +"/a/app/upload/file";
+    public static String API_34_userfiles                = address +"/userfiles";
 
 }
