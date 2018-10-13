@@ -94,6 +94,12 @@ public class Level2_2_2_inspectNoteDetails extends AppCompatActivity {
                         String images = inspectNoteDetails.detail.images.trim();
                         Log.d("aijun images", images+"");
                         if ( ! images.equals("")) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    imageview_title.setVisibility(View.VISIBLE);
+                                }
+                            });
                             String[] imageArray = images.split(",");
                             if ( imageArray.length > 0 ) {
                                 for (int i = 0 ; i < imageArray.length; i++ ) {
@@ -251,8 +257,9 @@ public class Level2_2_2_inspectNoteDetails extends AppCompatActivity {
     static TextView latitude;
     static TextView remarks;
     static LinearLayout itemResultLayout;
+    static TextView imageview_title;
     static ImageView imageview1, imageview2, imageview3, imageview4, imageview5, imageview6;
-    static List<ImageView> imageviews = new ArrayList<>();
+    static List<ImageView> imageviews;
 
     public static class PlaceholderForTab1 extends Fragment {
 
@@ -271,12 +278,14 @@ public class Level2_2_2_inspectNoteDetails extends AppCompatActivity {
             itemResultLayout = (LinearLayout) rootView.findViewById(R.id.tab1_layout);
             itemResultLayout.removeAllViews();
 
+            imageview_title = (TextView) rootView.findViewById(R.id.imageview_title);
             imageview1 = (ImageView) rootView.findViewById(R.id.imageview1);
             imageview2 = (ImageView) rootView.findViewById(R.id.imageview2);
             imageview3 = (ImageView) rootView.findViewById(R.id.imageview3);
             imageview4 = (ImageView) rootView.findViewById(R.id.imageview4);
             imageview5 = (ImageView) rootView.findViewById(R.id.imageview5);
             imageview6 = (ImageView) rootView.findViewById(R.id.imageview6);
+            imageviews = new ArrayList<>();
             imageviews.add(imageview1);
             imageviews.add(imageview2);
             imageviews.add(imageview3);

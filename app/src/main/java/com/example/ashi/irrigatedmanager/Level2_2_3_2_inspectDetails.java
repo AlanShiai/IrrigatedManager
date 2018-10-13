@@ -15,10 +15,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.ashi.irrigatedmanager.gson.InspectNoteDetails;
 import com.example.ashi.irrigatedmanager.level2_5.ManualInspectBasicInfoAdapter;
 import com.example.ashi.irrigatedmanager.level2_5.ManualInspectItem2;
@@ -83,6 +85,38 @@ public class Level2_2_3_2_inspectDetails extends AppCompatActivity {
                 Log.d("aijun patrolDetail", responseText+"");
                 Log.d("aijun patrolDetail", inspectNoteDetails+"");
                 if ( null != inspectNoteDetails ) {
+
+                    if ( null != inspectNoteDetails.detail && null != inspectNoteDetails.detail.images ) {
+                        String images = inspectNoteDetails.detail.images.trim();
+                        Log.d("aijun images", images+"");
+                        if ( ! images.equals("")) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    imageview_title.setVisibility(View.VISIBLE);
+                                }
+                            });
+                            String[] imageArray = images.split(",");
+                            if ( imageArray.length > 0 ) {
+                                for (int i = 0 ; i < imageArray.length; i++ ) {
+                                    if ( i == imageviews.size() ) {
+                                        break;
+                                    }
+                                    final ImageView imageView = imageviews.get(i);
+                                    Log.d("aijun imageArray", imageArray[i]+"");
+                                    final String picUrl = Api.API_34_userfiles + imageArray[i];
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Glide.with(Level2_2_3_2_inspectDetails.this).load(picUrl).into(imageView);
+                                            imageView.setVisibility(View.VISIBLE);
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    }
+
                     if ( null != inspectNoteDetails.detail.type && null != inspectNoteDetails.detail.resultItem ) {
                         // "http://www.boze-tech.com/zfh_manager/a/app/patrol/patrolItem?type=channel";
                         String url = Api.API_21_patrolItem + "type=" + inspectNoteDetails.detail.type;
@@ -220,6 +254,10 @@ public class Level2_2_3_2_inspectDetails extends AppCompatActivity {
     static TextView latitude;
     static TextView remarks;
     static LinearLayout itemResultLayout;
+    static TextView imageview_title;
+    static ImageView imageview1, imageview2, imageview3, imageview4, imageview5, imageview6;
+    static List<ImageView> imageviews;
+
     public static class PlaceholderForTab1 extends Fragment {
 
         public LinearLayout layout;
@@ -236,6 +274,21 @@ public class Level2_2_3_2_inspectDetails extends AppCompatActivity {
             remarks = (TextView) rootView.findViewById(R.id.remarks);
             itemResultLayout = (LinearLayout) rootView.findViewById(R.id.tab1_layout);
             itemResultLayout.removeAllViews();
+
+            imageview_title = (TextView) rootView.findViewById(R.id.imageview_title);
+            imageview1 = (ImageView) rootView.findViewById(R.id.imageview1);
+            imageview2 = (ImageView) rootView.findViewById(R.id.imageview2);
+            imageview3 = (ImageView) rootView.findViewById(R.id.imageview3);
+            imageview4 = (ImageView) rootView.findViewById(R.id.imageview4);
+            imageview5 = (ImageView) rootView.findViewById(R.id.imageview5);
+            imageview6 = (ImageView) rootView.findViewById(R.id.imageview6);
+            imageviews = new ArrayList<>();
+            imageviews.add(imageview1);
+            imageviews.add(imageview2);
+            imageviews.add(imageview3);
+            imageviews.add(imageview4);
+            imageviews.add(imageview5);
+            imageviews.add(imageview6);
 
             return rootView;
         }
