@@ -1,5 +1,6 @@
 package com.example.ashi.irrigatedmanager;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -105,6 +106,7 @@ public class Level2_2_3_2_inspectDetails extends AppCompatActivity {
                                     final ImageView imageView = imageviews.get(i);
                                     Log.d("aijun imageArray", imageArray[i]+"");
                                     final String picUrl = Api.API_34_userfiles + imageArray[i];
+                                    imageView.setTag(R.id.tag_first, picUrl);
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -289,6 +291,36 @@ public class Level2_2_3_2_inspectDetails extends AppCompatActivity {
             imageviews.add(imageview4);
             imageviews.add(imageview5);
             imageviews.add(imageview6);
+
+
+            View.OnClickListener imageViewListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Object tag = v.getTag(R.id.tag_first);
+                    if (tag instanceof  String) {
+                        String picUrl = (String) tag;
+                        final Dialog builder = new Dialog(getContext(), R.style.update_dialog);
+                        View view = View.inflate(getContext(), R.layout.dialog_imageview, null);
+                        view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                builder.dismiss();
+                            }
+                        });
+                        final ImageView imageview = (ImageView) view.findViewById(R.id.imageview);
+                        Log.d("aijun picUrl", picUrl);
+                        Glide.with(getContext()).load(picUrl).into(imageview);
+                        builder.setContentView(view);//这里还可以指定布局参数
+                        builder.show();
+                    }
+                }
+            };
+            imageview1.setOnClickListener(imageViewListener);
+            imageview2.setOnClickListener(imageViewListener);
+            imageview3.setOnClickListener(imageViewListener);
+            imageview4.setOnClickListener(imageViewListener);
+            imageview5.setOnClickListener(imageViewListener);
+            imageview6.setOnClickListener(imageViewListener);
 
             return rootView;
         }

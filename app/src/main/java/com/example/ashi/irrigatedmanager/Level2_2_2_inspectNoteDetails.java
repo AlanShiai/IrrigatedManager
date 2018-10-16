@@ -1,5 +1,6 @@
 package com.example.ashi.irrigatedmanager;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -30,6 +32,7 @@ import com.example.ashi.irrigatedmanager.level2_5.ManualInspectItem2;
 import com.example.ashi.irrigatedmanager.level2_5.PatrolItem;
 import com.example.ashi.irrigatedmanager.level2_6.ProjectInfo4;
 import com.example.ashi.irrigatedmanager.util.Api;
+import com.example.ashi.irrigatedmanager.util.DialogSelectItemAdapter;
 import com.example.ashi.irrigatedmanager.util.Global;
 import com.example.ashi.irrigatedmanager.util.HttpUtil;
 import com.example.ashi.irrigatedmanager.util.Utility;
@@ -108,7 +111,9 @@ public class Level2_2_2_inspectNoteDetails extends AppCompatActivity {
                                     }
                                     final ImageView imageView = imageviews.get(i);
                                     Log.d("aijun imageArray", imageArray[i]+"");
-                                    final String picUrl = Api.API_34_userfiles + Utility.toURLEncoded(imageArray[i]);
+//                                    final String picUrl = Api.API_34_userfiles + Utility.toURLEncoded(imageArray[i]);
+                                    final String picUrl = Api.API_34_userfiles + imageArray[i];
+                                    imageView.setTag(R.id.tag_first, picUrl);
                                     Log.d("aijun picUrl", picUrl);
                                     runOnUiThread(new Runnable() {
                                         @Override
@@ -293,6 +298,35 @@ public class Level2_2_2_inspectNoteDetails extends AppCompatActivity {
             imageviews.add(imageview4);
             imageviews.add(imageview5);
             imageviews.add(imageview6);
+
+            View.OnClickListener imageViewListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Object tag = v.getTag(R.id.tag_first);
+                    if (tag instanceof  String) {
+                        String picUrl = (String) tag;
+                        final Dialog builder = new Dialog(getContext(), R.style.update_dialog);
+                        View view = View.inflate(getContext(), R.layout.dialog_imageview, null);
+                        view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                builder.dismiss();
+                            }
+                        });
+                        final ImageView imageview = (ImageView) view.findViewById(R.id.imageview);
+                        Log.d("aijun picUrl", picUrl);
+                        Glide.with(getContext()).load(picUrl).into(imageview);
+                        builder.setContentView(view);//这里还可以指定布局参数
+                        builder.show();
+                    }
+                }
+            };
+            imageview1.setOnClickListener(imageViewListener);
+            imageview2.setOnClickListener(imageViewListener);
+            imageview3.setOnClickListener(imageViewListener);
+            imageview4.setOnClickListener(imageViewListener);
+            imageview5.setOnClickListener(imageViewListener);
+            imageview6.setOnClickListener(imageViewListener);
 
 //            String picUrl = "http://www.boze-tech.com/zfh_manager/userfiles/patrolImage/output_image15390458446441539045847805.jpg";
 //            String picUrl = Api.API_34_userfiles + "/patrolImage/output_image15390458446441539045847805.jpg";
