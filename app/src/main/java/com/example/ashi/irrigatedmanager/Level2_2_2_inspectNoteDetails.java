@@ -108,7 +108,8 @@ public class Level2_2_2_inspectNoteDetails extends AppCompatActivity {
                                     }
                                     final ImageView imageView = imageviews.get(i);
                                     Log.d("aijun imageArray", imageArray[i]+"");
-                                    final String picUrl = Api.API_34_userfiles + imageArray[i];
+                                    final String picUrl = Api.API_34_userfiles + Utility.toURLEncoded(imageArray[i]);
+                                    Log.d("aijun picUrl", picUrl);
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
