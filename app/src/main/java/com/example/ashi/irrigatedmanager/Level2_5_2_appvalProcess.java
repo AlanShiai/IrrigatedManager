@@ -59,6 +59,11 @@ public class Level2_5_2_appvalProcess extends AppCompatActivity {
         dealtype_text = (TextView) findViewById(R.id.dealtype_text);
         dealtype_text.setText(items.get(oldSelector));
 
+        if ("audit2".equals(Global.appval.taskDefKey)) {
+            findViewById(R.id.select_dealtype).setVisibility(View.INVISIBLE);
+            oldSelector = 0;
+        }
+
         findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
