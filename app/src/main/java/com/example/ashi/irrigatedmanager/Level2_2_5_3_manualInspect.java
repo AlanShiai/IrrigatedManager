@@ -469,13 +469,22 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
         HttpUtil.uploadFile(url, file, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                final String responseText = response.body().string();
+                String responseText = response.body().string();
                 Log.d("aijun, updateImageFile", responseText);
+                responseText = responseText.replace("\\", "/");
+                Log.d("aijun, updateImageFile", responseText);
+//                responseText = "{\"status\":\"1\",\"paths\":[{\"path\":\"C:/zfh_project/zfh_manager/userfiles/patrolImage/output_image15397365799921539736583662.jpg\"},]}";
+//                responseText = "{\"status\":\"1\",\"paths\":[{\"path\":\"C\\:\\zfh_project\\zfh_manager\\userfiles\\patrolImage\\output_image15397365799921539736583662.jpg\"},]}";
                 UploadImage uploadImage = Utility.handleApi34uploadImageResponse(responseText);
                 if ( null != uploadImage && uploadImage.status.equals("1")) {
                     String image = "";
                     if (null != uploadImage.paths && ! uploadImage.paths.isEmpty()) {
-                        image = uploadImage.paths.get(0).path.substring("/home/zfh/uploads/zfh_manager/userfiles".length());
+                        image = uploadImage.paths.get(0).path;
+                        Log.d("aijun, updateImageFile", image);
+                        if ( image.contains("userfiles") ) {
+                            image = image.substring(image.indexOf("userfiles") + "userfiles".length());
+                        }
+                        Log.d("aijun, updateImageFile", image);
                     }
                     uploadedFiles.put(selectedView, image);
                 }
@@ -503,40 +512,40 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
         commitItWithImage(images);
     }
 
-    private void updateImageFile() {
-        List<File> imageFiles = new ArrayList<>();
-        for(File imageFile : images.values()) {
-            if ( null != imageFile && imageFile.exists()) {
-                imageFiles.add(imageFile);
-            }
-        }
-        if ( ! imageFiles.isEmpty() ) {
-            String url = Api.API_34_uploadImage;
-            HttpUtil.uploadFile(url, imageFiles, new Callback() {
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    final String responseText = response.body().string();
-                    Log.d("aijun, updateImageFile", responseText);
-                    UploadImage uploadImage = Utility.handleApi34uploadImageResponse(responseText);
-                    if ( null != uploadImage && uploadImage.status.equals("1")) {
-                        String image = "";
-                        if (null != uploadImage.paths && ! uploadImage.paths.isEmpty()) {
-                            image = uploadImage.paths.get(0).path.substring("/home/zfh/uploads/zfh_manager/userfiles".length());
-                        }
-                        commitItWithImage(image);
-                    }
-                }
-
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    showText("照片上传失败");
-                    e.printStackTrace();
-                }
-            });
-        } else {
-            commitItWithImage("");
-        }
-    }
+//    private void updateImageFile() {
+//        List<File> imageFiles = new ArrayList<>();
+//        for(File imageFile : images.values()) {
+//            if ( null != imageFile && imageFile.exists()) {
+//                imageFiles.add(imageFile);
+//            }
+//        }
+//        if ( ! imageFiles.isEmpty() ) {
+//            String url = Api.API_34_uploadImage;
+//            HttpUtil.uploadFile(url, imageFiles, new Callback() {
+//                @Override
+//                public void onResponse(Call call, Response response) throws IOException {
+//                    final String responseText = response.body().string();
+//                    Log.d("aijun, updateImageFile", responseText);
+//                    UploadImage uploadImage = Utility.handleApi34uploadImageResponse(responseText);
+//                    if ( null != uploadImage && uploadImage.status.equals("1")) {
+//                        String image = "";
+//                        if (null != uploadImage.paths && ! uploadImage.paths.isEmpty()) {
+//                            image = uploadImage.paths.get(0).path.substring("/home/zfh/uploads/zfh_manager/userfiles".length());
+//                        }
+//                        commitItWithImage(image);
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call call, IOException e) {
+//                    showText("照片上传失败");
+//                    e.printStackTrace();
+//                }
+//            });
+//        } else {
+//            commitItWithImage("");
+//        }
+//    }
 
     private void commitItWithImage(String image) {
         String url = Api.API_22_patrolSave + "userId=" + Global.user.id + "&images=" + image + "&type=" + Global.patrolType
