@@ -306,6 +306,12 @@ public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
     }
 
     private void addListernerForTopToolbar() {
+        findViewById(R.id.sluice).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSluiceDataFromServerAndUpdateListView1();
+            }
+        });
         findViewById(R.id.rain).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
