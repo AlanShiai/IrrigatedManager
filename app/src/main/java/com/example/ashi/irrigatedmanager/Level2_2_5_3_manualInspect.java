@@ -130,26 +130,7 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
             public void onClick(View v) {
                 photo_layout.setVisibility(View.GONE);
                 map_layout.setVisibility(View.VISIBLE);
-                Log.d("aijun located", "adfasdf tst located.");
-                List<String> permissionList = new ArrayList<>();
-                if (ContextCompat.checkSelfPermission(Level2_2_5_3_manualInspect.this, Manifest.permission
-                        .ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
-                }
-                if (ContextCompat.checkSelfPermission(Level2_2_5_3_manualInspect.this, Manifest.permission
-                        .READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-                    permissionList.add(Manifest.permission.READ_PHONE_STATE);
-                }
-                if (ContextCompat.checkSelfPermission(Level2_2_5_3_manualInspect.this, Manifest.permission
-                        .WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                }
-                if ( ! permissionList.isEmpty() ) {
-                    String[] permissions = permissionList.toArray(new String[0]);
-                    ActivityCompat.requestPermissions(Level2_2_5_3_manualInspect.this, permissions, 1);
-                } else {
-                    requestLocation();
-                }
+                requestPermissionsAndLocate();
             }
         });
 
@@ -158,6 +139,32 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
         updatePatrolManagerList();
 
         initImages();
+
+        photo_layout.setVisibility(View.GONE);
+        map_layout.setVisibility(View.VISIBLE);
+        requestPermissionsAndLocate();
+    }
+
+    private void requestPermissionsAndLocate() {
+        List<String> permissionList = new ArrayList<>();
+        if (ContextCompat.checkSelfPermission(Level2_2_5_3_manualInspect.this, Manifest.permission
+                .ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        }
+        if (ContextCompat.checkSelfPermission(Level2_2_5_3_manualInspect.this, Manifest.permission
+                .READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.READ_PHONE_STATE);
+        }
+        if (ContextCompat.checkSelfPermission(Level2_2_5_3_manualInspect.this, Manifest.permission
+                .WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+        if ( ! permissionList.isEmpty() ) {
+            String[] permissions = permissionList.toArray(new String[0]);
+            ActivityCompat.requestPermissions(Level2_2_5_3_manualInspect.this, permissions, 1);
+        } else {
+            requestLocation();
+        }
     }
 
     private void initImages() {
