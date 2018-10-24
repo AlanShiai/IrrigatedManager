@@ -301,13 +301,13 @@ public class Level2_2_3_2_inspectDetails extends AppCompatActivity {
                         String picUrl = (String) tag;
                         final Dialog builder = new Dialog(getContext(), R.style.update_dialog);
                         View view = View.inflate(getContext(), R.layout.dialog_imageview, null);
-                        view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+                        final ImageView imageview = (ImageView) view.findViewById(R.id.imageview);
+                        imageview.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 builder.dismiss();
                             }
                         });
-                        final ImageView imageview = (ImageView) view.findViewById(R.id.imageview);
                         Log.d("aijun picUrl", picUrl);
                         Glide.with(getContext()).load(picUrl).into(imageview);
                         builder.setContentView(view);//这里还可以指定布局参数
