@@ -667,7 +667,9 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
     private void initLocation() {
         LocationClientOption option = new LocationClientOption();
         option.setIsNeedAddress(true);
-//        option.scanSpan = 20000;
+        option.scanSpan = 5000;
+        option.setCoorType("bd09ll");
+        option.setLocationMode(LocationClientOption.LocationMode.Device_Sensors);
         mLocationClient.setLocOption(option);
     }
 
@@ -831,12 +833,12 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
                     currentPosition.append("城市：").append(bdLocation.getCity()).append("\n");
                     currentPosition.append("区域：").append(bdLocation.getDistrict()).append("\n");
                     currentPosition.append("街道：").append(bdLocation.getStreet()).append("\n");
-//                    currentPosition.append("location method:");
-//                    if (bdLocation.getLocType() == BDLocation.TypeGpsLocation) {
-//                        currentPosition.append("GPS");
-//                    } else if (bdLocation.getLocType() == BDLocation.TypeNetWorkLocation) {
-//                        currentPosition.append("NetWork");
-//                    }
+                    currentPosition.append("location method:");
+                    if (bdLocation.getLocType() == BDLocation.TypeGpsLocation) {
+                        currentPosition.append("GPS");
+                    } else if (bdLocation.getLocType() == BDLocation.TypeNetWorkLocation) {
+                        currentPosition.append("NetWork");
+                    }
 //                    showText(currentPosition.toString());
                     latitude = bdLocation.getLatitude();
                     longitude = bdLocation.getLongitude();
