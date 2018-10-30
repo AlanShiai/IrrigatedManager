@@ -368,18 +368,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         Log.d("aijun login", Boolean.toString(user.isLoginSuccess()));
 //                        final Weather weather = Utility.handleWeatherResponse(responseText);
                         isLoginSuccess = user.isLoginSuccess();
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (Utility.getThisMonth() > 10 && Calendar.getInstance().get(Calendar.DATE)%2 == 0) {
-                                    return;
-                                }
+                        if (isLoginSuccess) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
 //                            onPostExecute(isLoginSuccess);
-                                Intent intent = new Intent(LoginActivity.this, Level2_1_irrigateOverview.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                        });
+                                    Intent intent = new Intent(LoginActivity.this, Level2_1_irrigateOverview.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            });
+                        }
                     }
                 }
 
