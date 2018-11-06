@@ -30,8 +30,6 @@ import android.widget.ViewSwitcher;
 
 import com.example.ashi.irrigatedmanager.util.AppManager;
 import com.example.ashi.irrigatedmanager.util.Const;
-import com.example.ashi.irrigatedmanager.util.DialogSelectItemAdapter;
-import com.example.ashi.irrigatedmanager.util.HttpUtil;
 
 import java.io.IOException;
 

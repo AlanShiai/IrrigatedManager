@@ -23,6 +23,15 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.baidu.location.BDLocation;
+import com.baidu.mapapi.CoordType;
+import com.baidu.mapapi.SDKInitializer;
+import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.MapStatusUpdate;
+import com.baidu.mapapi.map.MapStatusUpdateFactory;
+import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.model.LatLng;
 import com.bumptech.glide.Glide;
 import com.example.ashi.irrigatedmanager.gson.InspectNoteDetails;
 import com.example.ashi.irrigatedmanager.gson.PatrolAdpter;
@@ -57,6 +66,8 @@ public class Level2_2_2_inspectNoteDetails extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SDKInitializer.initialize(getApplicationContext());
+        SDKInitializer.setCoordType(CoordType.GCJ02);
         setContentView(R.layout.activity_level2_2_2_inspect_note_details);
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -78,6 +89,31 @@ public class Level2_2_2_inspectNoteDetails extends AppCompatActivity {
         });
 
         getDataFromServerAndUpdateUI();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (null != mapView) {
+            mapView.onResume();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (null != mapView) {
+            mapView.onPause();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (null != mapView) {
+            mapView.onDestroy();
+            baiduMap.setMyLocationEnabled(false);
+        }
     }
 
     private void getDataFromServerAndUpdateUI() {
@@ -207,6 +243,9 @@ public class Level2_2_2_inspectNoteDetails extends AppCompatActivity {
                                 if ( null !=  latitude && null != inspectNoteDetails.detail.latitude) {
                                     latitude.setText(inspectNoteDetails.detail.latitude);
                                 }
+                                if (null != inspectNoteDetails.detail.latitude && null != inspectNoteDetails.detail.longitude) {
+                                    navigateTo(Double.valueOf(inspectNoteDetails.detail.latitude), Double.valueOf(inspectNoteDetails.detail.longitude));
+                                }
                                 if ( null !=  remarks && null != inspectNoteDetails.detail.remarks) {
                                     remarks.setText(inspectNoteDetails.detail.remarks);
                                 }
@@ -265,7 +304,25 @@ public class Level2_2_2_inspectNoteDetails extends AppCompatActivity {
     static LinearLayout itemResultLayout;
     static TextView imageview_title;
     static ImageView imageview1, imageview2, imageview3, imageview4, imageview5, imageview6;
-    static List<ImageView> imageviews;
+    static List<ImageView> imageviews = new ArrayList<>();
+
+    private static MapView mapView;
+
+    private static BaiduMap baiduMap;
+
+    private void navigateTo(double latitude, double longitude) {
+        LatLng ll = new LatLng(latitude, longitude);
+        MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(ll);
+        baiduMap.animateMapStatus(update);
+        update = MapStatusUpdateFactory.zoomTo(16f);
+        baiduMap.animateMapStatus(update);
+
+        MyLocationData.Builder locationBuilder = new MyLocationData.Builder();
+        locationBuilder.latitude(latitude);
+        locationBuilder.longitude(longitude);
+        MyLocationData locationData = locationBuilder.build();
+        baiduMap.setMyLocationData(locationData);
+    }
 
     public static class PlaceholderForTab1 extends Fragment {
 
@@ -283,6 +340,10 @@ public class Level2_2_2_inspectNoteDetails extends AppCompatActivity {
             remarks = (TextView) rootView.findViewById(R.id.remarks);
             itemResultLayout = (LinearLayout) rootView.findViewById(R.id.tab1_layout);
             itemResultLayout.removeAllViews();
+
+            mapView = (MapView) rootView.findViewById(R.id.bmapView);
+            baiduMap = mapView.getMap();
+            baiduMap.setMyLocationEnabled(true);
 
             imageview_title = (TextView) rootView.findViewById(R.id.imageview_title);
             imageview1 = (ImageView) rootView.findViewById(R.id.imageview1);

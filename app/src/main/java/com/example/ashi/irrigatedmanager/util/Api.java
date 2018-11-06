@@ -6,6 +6,8 @@ package com.example.ashi.irrigatedmanager.util;
 
 public class Api {
 
+    // bj : beiwei 39.26-41.03, dongjing 115.25-117.30
+
     public static String product_address                    = "http://221.193.192.143:8099/zfh_manager";
     public static String test_address                       = "http://www.boze-tech.com/zfh_manager";
 //    public static String test_address                       = "http://www.boze-tech.com:8087/zfh_manager";
