@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -112,6 +113,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        SharedPreferences sharedPreferences=getSharedPreferences("config",0);
+        //取出数据，如果取出的数据时空时，只需把getString("","")第二个参数设置成空字符串就行了，不用在判断
+        String name=sharedPreferences.getString("name","");
+        String password=sharedPreferences.getString("password","");
+        Log.d("aijun1,", name);
+        mEmailView.setText(name);
+        mPasswordView.setText(password);
     }
 
     private void populateAutoComplete() {
@@ -378,6 +387,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                     finish();
                                 }
                             });
+                            SharedPreferences sharedPreferences=getSharedPreferences("config",0);
+                            SharedPreferences.Editor editor=sharedPreferences.edit();
+                            editor.putString("name",mEmail);
+                            editor.putString("password",mPassword);
+                            editor.commit();
                         }
                     }
                 }
