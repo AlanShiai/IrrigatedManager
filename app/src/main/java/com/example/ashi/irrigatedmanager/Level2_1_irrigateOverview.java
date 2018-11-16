@@ -15,6 +15,7 @@ import android.support.annotation.DrawableRes;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,6 +105,7 @@ public class Level2_1_irrigateOverview extends AppCompatActivity implements View
 
         TextView content = (TextView) findViewById(R.id.level_2_1_content);
         content.setText(Const.LEVEL_2_CONTENT);
+        content.setMovementMethod(ScrollingMovementMethod.getInstance());
 
         addListernerForBottomToolbar();
 
