@@ -619,7 +619,7 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
     }
 
     private void showText(String text) {
-        Toast.makeText(Level2_2_5_3_manualInspect.this, text, Toast.LENGTH_SHORT).show();
+        Toast.makeText(Level2_2_5_3_manualInspect.this, text, Toast.LENGTH_LONG).show();
     }
 
     private void navigateTo(BDLocation location) {
@@ -826,20 +826,20 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
                 @Override
                 public void run() {
                     StringBuilder currentPosition = new StringBuilder();
-                    currentPosition.append("纬度：").append(bdLocation.getLatitude()).append("\n");
-                    currentPosition.append("经度：").append(bdLocation.getLongitude()).append("\n");
-                    currentPosition.append("国家：").append(bdLocation.getCountry()).append("\n");
-                    currentPosition.append("省份：").append(bdLocation.getProvince()).append("\n");
-                    currentPosition.append("城市：").append(bdLocation.getCity()).append("\n");
-                    currentPosition.append("区域：").append(bdLocation.getDistrict()).append("\n");
-                    currentPosition.append("街道：").append(bdLocation.getStreet()).append("\n");
-                    currentPosition.append("location method:");
-                    if (bdLocation.getLocType() == BDLocation.TypeGpsLocation) {
-                        currentPosition.append("GPS");
-                    } else if (bdLocation.getLocType() == BDLocation.TypeNetWorkLocation) {
-                        currentPosition.append("NetWork");
-                    }
-//                    showText(currentPosition.toString());
+//                    currentPosition.append("纬度：").append(bdLocation.getLatitude()).append("\n");
+//                    currentPosition.append("经度：").append(bdLocation.getLongitude()).append("\n");
+//                    currentPosition.append("国家：").append(bdLocation.getCountry()).append("\n");
+                    currentPosition.append("省份：").append(bdLocation.getProvince()).append(" ");
+                    currentPosition.append("城市：").append(bdLocation.getCity()).append(" ");
+                    currentPosition.append("区域：").append(bdLocation.getDistrict()).append(" ");
+                    currentPosition.append("街道：").append(bdLocation.getStreet()).append(" ");
+//                    currentPosition.append("location method:");
+//                    if (bdLocation.getLocType() == BDLocation.TypeGpsLocation) {
+//                        currentPosition.append("GPS");
+//                    } else if (bdLocation.getLocType() == BDLocation.TypeNetWorkLocation) {
+//                        currentPosition.append("NetWork");
+//                    }
+                    showText(currentPosition.toString());
                     latitude = bdLocation.getLatitude();
                     longitude = bdLocation.getLongitude();
                     mLocationClient.stop();
