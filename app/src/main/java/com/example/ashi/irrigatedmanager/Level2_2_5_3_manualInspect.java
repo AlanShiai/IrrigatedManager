@@ -143,6 +143,8 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
         photo_layout.setVisibility(View.GONE);
         map_layout.setVisibility(View.VISIBLE);
         requestPermissionsAndLocate();
+
+        positionText = (TextView) findViewById(R.id.positionText) ;
     }
 
     private void requestPermissionsAndLocate() {
@@ -829,10 +831,14 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
 //                    currentPosition.append("纬度：").append(bdLocation.getLatitude()).append("\n");
 //                    currentPosition.append("经度：").append(bdLocation.getLongitude()).append("\n");
 //                    currentPosition.append("国家：").append(bdLocation.getCountry()).append("\n");
-                    currentPosition.append("省份：").append(bdLocation.getProvince()).append(" ");
-                    currentPosition.append("城市：").append(bdLocation.getCity()).append(" ");
-                    currentPosition.append("区域：").append(bdLocation.getDistrict()).append(" ");
-                    currentPosition.append("街道：").append(bdLocation.getStreet()).append(" ");
+//                    currentPosition.append("省份：").append(bdLocation.getProvince()).append(" ");
+//                    currentPosition.append("城市：").append(bdLocation.getCity()).append(" ");
+//                    currentPosition.append("区域：").append(bdLocation.getDistrict()).append(" ");
+//                    currentPosition.append("街道：").append(bdLocation.getStreet()).append(" ");
+                    currentPosition.append("").append(bdLocation.getProvince()).append(" ");
+                    currentPosition.append("").append(bdLocation.getCity()).append(" ");
+                    currentPosition.append("").append(bdLocation.getDistrict()).append(" ");
+                    currentPosition.append("").append(bdLocation.getStreet()).append(" ");
 //                    currentPosition.append("location method:");
 //                    if (bdLocation.getLocType() == BDLocation.TypeGpsLocation) {
 //                        currentPosition.append("GPS");
@@ -840,6 +846,7 @@ public class Level2_2_5_3_manualInspect extends AppCompatActivity {
 //                        currentPosition.append("NetWork");
 //                    }
                     showText(currentPosition.toString());
+                    positionText.setText(currentPosition.toString());
                     latitude = bdLocation.getLatitude();
                     longitude = bdLocation.getLongitude();
                     mLocationClient.stop();
