@@ -10,3 +10,19 @@ VxWorksÄÚºËÓ¦ÓÃ³ÌÐòÒÔÓëÄÚºË±¾ÉíÏàÍ¬µÄÄ£Ê½ºÍÄÚ´æ¿Õ¼äÖ´ÐÐ¡£ÔÚÕâ·½Ãæ£¬ËüÃÇ²»Í¬ÓÚÓëÆ
 ÄÚºËÓ¦ÓÃÄ£¿éÒ²¿ÉÒÔ´æ´¢ÔÚFlash»òROM¡¢ROMFSÎÄ¼þÏµÍ³»ò´ÅÅÌÉÏ¡£Ò»µ©¼ÓÔØµ½Ä¿±êÖÐ£¬ÄÚºËÓ¦ÓÃ³ÌÐòÄ£¿é¾Í¿ÉÒÔ´Óshell»òWorkbench½»»¥Ê½µØÆô¶¯¡£
 ¾²Ì¬Á´½Óµ½²Ù×÷ÏµÍ³µÄÓ¦ÓÃ³ÌÐòÄ£¿é¿ÉÒÔÓëshell»òWorkbench½»»¥ÔËÐÐ¡£VxWorks»¹¿ÉÒÔ±»ÅäÖÃÎªÔÚÆô¶¯Ê±×Ô¶¯Æô¶¯ËüÃÇ¡£¾²Ì¬Á¬½ÓºÍ×Ô¶¯Æô¶¯ÏÔÈ»ÊÊÓÃÓÚÉú²úÏµÍ³¡£
 ÔÚÄÚºË¿Õ¼äÖÐÔËÐÐµÄÓ¦ÓÃ³ÌÐò²»×÷Îª½ø³ÌÖ´ÐÐ£»ËüÖ»ÊÇÔÚÄÚºË¿Õ¼äÖÐÔËÐÐµÄÁíÒ»×éÈÎÎñ¡£ÄÚºË²»±£»¤ÄÚºËÓ¦ÓÃ³ÌÐòµÄÈÎºÎ²»µ±ÐÐÎªµÄ±£»¤£¬²¢ÇÒÓ¦ÓÃ³ÌÐòÒ²Í¬Ñù²»±£»¤ÆäËûÄÚºËÓ¦ÓÃ³ÌÐòµÄ±£»¤£¬ÄÚºËÄ£¿éÔÚ³¬¼¶ÓÃ»§Ä£Ê½ÏÂÔÚÏàÍ¬µÄµØÖ·¿Õ¼äÖÐÔËÐÐ¡£
+¾¯¸æ£ºÈç¹ûÏ£Íû½«ÄÚºËÓ¦ÓÃ³ÌÐòÒÆÖ²µ½×÷ÎªÊµÊ±½ø³Ì£¨RTP£©Ö´ÐÐµÄÓÃ»§Ä£Ê½Ó¦ÓÃ³ÌÐò£¬Ôò±ØÐëÈ·±£ËüÂú×ãRTPÓ¦ÓÃ³ÌÐòµÄ´úÂëÒªÇó£¬²¢°´´Ë½øÐÐ±àÒë¡£»¹±ØÐëÈ·±£VxWorksÅäÖÃÎª¶ÔRTPsµÄÖ§³Ö¡£ÓÐ¹Ø¸ü¶àÐÅÏ¢£¬Çë²Î¼û22£¬ÄÚºËµ½RTPÓ¦ÓÃ³ÌÐòÇ¨ÒÆ¡£
+
+ÄÚºËÓ¦ÓÃºÍÄÚºË×é¼þÐèÇó
+VxWorksÊÇÒ»¸ö¸ß¶È¿ÉÅäÖÃµÄ²Ù×÷ÏµÍ³¡£µ±¹¹½¨¶ÀÁ¢ÓÚ²Ù×÷ÏµÍ³ÄÚºËÓ¦ÓÃ³ÌÐòÄ£¿éÊ±£¬¹¹½¨¹ý³ÌÎÞ·¨È·¶¨Ó¦ÓÃ³ÌÐò×îÖÕ½«ÔÚÆäÉÏÔËÐÐµÄVxWorksÊµÀýÊÇ·ñÒÑ¾­ÅäÖÃÁËÓ¦ÓÃ³ÌÐòËùÐèµÄËùÓÐ×é¼þ£¨ÀýÈç£¬ÍøÂçºÍÎÄ¼þÏµÍ³£©¡£Òò´Ë£¬Ó¦ÓÃ³ÌÐò´úÂë¼ì²éÖ¸Ê¾ÄÚºËÉèÊ©²»¿ÉÓÃµÄ´íÎó£¨¼´£¬¼ì²éAPIµ÷ÓÃµÄ·µ»ØÖµ£©²¢×ö³öÊÊµ±ÏìÓ¦ÊÇºÜÓÐÓÃµÄ¡£µ±ÄÚºËÓ¦ÓÃ³ÌÐòÄ£¿éÓë²Ù×÷ÏµÍ³Á´½ÓÊ±£¬¹¹½¨ÏµÍ³Éú³É¹ØÓÚ¶ªÊ§×é¼þµÄ´íÎó¡£WorkbenchºÍwrtoolÃüÁîÐÐ¹¤¾ß¶¼Ìá¹©ÁË¼ì²éÒÀÀµ¹ØÏµ²¢ÏàÓ¦µØÖØÐÂÅäÖÃVxWorksµÄ»úÖÆ¡£
+
+¶þ½øÖÆÎÄ¼þ¼æÈÝÐÔ
+×¢Òâ£ºÎªVxWorks¹¹½¨µÄ´úÂëÖ»ÓÐÔÚ»ùÓÚÏàÍ¬µÄVSBÅäÖÃ£¨¾ßÓÐÏàÍ¬µÄ²ãºÍ°æ±¾¼¯£©Ê±²ÅÊÇ¶þ½øÖÆ¼æÈÝµÄ¡£´ËÍâ£¬ÄÚºËC++´úÂë±ØÐëÓÃÓëVxWorksÓ³ÏñÏàÍ¬µÄ±àÒëÆ÷À´¹¹½¨¡£
+×¢Òâ£ºÈç¹ûÄ£¿éÓëVxWorksÏµÍ³²»¼æÈÝ£¬ÄÚºË¶ÔÏóÄ£¿é¼ÓÔØÆ÷½«¾Ü¾ø¸ÃÄ£¿é£¬´òÓ¡´íÎóÏûÏ¢£¬²¢ÉèÖÃerrno£¨µ±ÌåÏµ½á¹¹²»Í¬Ê±ÉèÖÃS_loadElfLib_HDR_READ£¬»òÕßµ±ÆäËûÌØÐÔ²»Í¬Ê±ÉèÖÃS_loadLib_INCOMPATIBLE_MODULE£©¡£
+
+ÄÚºËÓ¦ÓÃ³ÌÐòÓëRTPÓ¦ÓÃ³ÌÐòµÄ±È½Ï
+ÄÚºËÓ¦ÓÃ³ÌÐòºÍRTPÓ¦ÓÃ³ÌÐòÖ®¼äµÄÖ÷ÒªÇø±ðÔÚÓÚ£¬RTPÓ¦ÓÃ³ÌÐòÔÚµ¥¶ÀµÄÊÜ±£»¤µÄÄÚ´æ»·¾³ÖÐÔËÐÐ£¬¶øÄÚºËÓ¦ÓÃ³ÌÐòÔò²»ÊÇ¡£ÔÚ¸÷×ÔµÄ»·¾³ÖÐ»¹´æÔÚµÄ²îÒìÓÐ£¬¿ÉÓÃµÄÌØÐÔ£¬ÒÔ¼°ÐÔÄÜ¡¢Õ¼ÓÃ¿Õ¼äºÍÄÚ´æÊ¹ÓÃ¡£
+VxWorksÄÚºËÓ¦ÓÃ³ÌÐòÒÔÄÚºËÄ£Ê½ÔÚÄÚºËÄÚ´æ¿Õ¼äÖÐÔËÐÐ¡£ËüÃÇ¿ÉÒÔÓëÄÚºËÁ´½Ó£¬»òÕßÔÚÔËÐÐÊ±ÏÂÔØµ½ÄÚºËÖÐ£¨×÷Îª¿ÉÏÂÔØÄÚºËÄ£¿éDKMs£©¡£ÒòÎªÄÚºËÓ¦ÓÃ³ÌÐòÔÚÄÚºËÖÐÔËÐÐ£¬ËùÒÔÏµÍ³²»ÄÜ±£»¤ÄÚºËÃâÊÜÓ¦ÓÃ³ÌÐò·½ÃæµÄ²»µ±ÐÐÎª£¬Ò²²»ÄÜ±£»¤Ó¦ÓÃ³ÌÐò±Ë´ËÖ®¼ä²»·¢Éú²»µ±ÐÐÎª¡£ÔÚÔËÐÐÊ±£¬VxWorksÏµÍ³ÈÎÎñ£¨ÈçtExcTask£©ºÍÓ¦ÓÃ³ÌÐòÈÎÎñ½öÍ¨¹ýËüÃÇµÄÓÅÏÈ¼¶ºÍ´úÂëµÄ¹¦ÄÜÀ´Çø·Ö¡£
+RTPÓ¦ÓÃ³ÌÐòÔÚÓÃ»§Ä£Ê½ÏÂ×÷ÎªÊµÊ±½ø³ÌÖ´ÐÐ£¬Ã¿¸ö½ø³Ì¶¼ÔÚËüÃÇ×Ô¼ºµÄÊÜ±£»¤ÄÚ´æ¿Õ¼äÖÐ£¬¸ÃÄÚ´æ¿Õ¼äÓëÆäËûRTPÓ¦ÓÃ³ÌÐòºÍÄÚºË·Ö¿ª¡£µ±¸Ã±£»¤ÊÇÏµÍ³µÄ¹Ø¼ü¿¼ÂÇÊ±£¬Ó¦Ê¹ÓÃRTPÓ¦ÓÃ³ÌÐò¡£RTPÓ¦ÓÃ³ÌÐòÊÇ¶ÀÁ¢ÓÚÄÚºË¹¹½¨ºÍ´æ´¢µÄ£¨ÔÚ¿ª·¢ÆÚ¼äÔÚÖ÷»úÉÏÒÔ¼°²¿ÊðÏµÍ³µÄÄ¿±êÉÏ£©¡£VxWorks RTPÓ¦ÓÃ³ÌÐòÓëUNIXºÍLinuxµÈÆäËû²Ù×÷ÏµÍ³µÄÓ¦ÓÃ³ÌÐòÀàËÆ£¬Ö»ÊÇVxWorksÊµÊ±½ø³ÌÊÇÎªÊµÊ±ÏµÍ³Éè¼ÆµÄ£¨ÓÐ¹ØÕâ·½ÃæµÄ¸ü¶àÐÅÏ¢£¬Çë²ÎÔÄ2.ÊµÊ±¹ý³Ì£ºRTPs£©¡£
+ÄÚºËÓ¦ÓÃ³ÌÐò»·¾³ºÍRTPÓ¦ÓÃ³ÌÐò»·¾³¾ßÓÐÐí¶àÏàÍ¬µÄÌØÐÔ£¬µ«ÊÇ¿ÉÓÃµÄÌØÐÔ·½ÃæÒ²ÓÐËù²»Í¬¡£ÀýÈç£¬Çý¶¯³ÌÐòÖ»ÄÜ°²×°ÔÚÄÚºËÖÐ£¬¶øPTE52Ò»ÖÂÐÔÖ»ÄÜÔÚRTP»·¾³ÖÐÊµÏÖ¡£
+ËäÈ»ÔÚÄÚºË»·¾³»òRTP»·¾³ÖÐÖ´ÐÐ´úÂëµÄËÙ¶ÈÃ»ÓÐÄÚÔÚµÄ²îÒì£¬µ«ÊÇËü¿ÉÄÜÊÜµ½´úÂëÓÅ»¯£¨¾¡¹ÜÔÚRTP»·¾³ÖÐÓ°Ïì½ÏÐ¡£©ºÍÏµÍ³µ÷ÓÃ£¨ÌØ¶¨ÓÚRTP»·¾³£©µÄÊ¹ÓÃµÄÓ°Ïì¡£ÓÈÆäÊ¹ÓÃÏµÍ³µ÷ÓÃ£¨Í¨³£ÊÇÕâÖÖÇé¿ö£©µÄRTPÓ¦ÓÃ³ÌÐò±ÈÀàËÆµÄÄÚºËÓ¦ÓÃ³ÌÐòÂý¡£´ËÍâ£¬VSBÏîÄ¿¿ÉÓÃÓÚ´Ó¸÷ÖÖVxWorks¿âÖÐÉ¾³ýRTP´¦Àí´úÂë£¨Ê¹ÓÃReal-Time ProcessÑ¡Ïî£©£¬ÕâÌá¸ßÁËÕâÐ©¿âµÄÐÔÄÜ²¢¼õÐ¡ÁËËüÃÇµÄ´óÐ¡¡£
+´ËÍâ£¬ÅäÖÃÓÐRTPÖ§³Ö×é¼þµÄVxWorksÍ¼Ïñ½«ÂÔ´óÓÚ²»Ö§³ÖRTXÖ§³Ö×é¼þµÄVxWorksÍ¼Ïñ¡£¶øÇÒ£¬¶ÔÓÚ²ÉÓÃRTPÓ¦ÓÃ³ÌÐòµÄÏµÍ³£¬×ÜÌåÄÚ´æÐèÇóÍ¨³£±È¿É±È½ÏµÄÄÚºËÓ¦ÓÃ³ÌÐòµÄÏµÍ³´ó£¬ÒòÎªRTPÓ¦ÓÃ³ÌÐò°üÀ¨ÓÃ»§¶Ë¿â£¨Ëü¸´ÖÆÁËÄÚºËÖÐÒÑ¾­°üÀ¨µÄ¿â£©¡£
