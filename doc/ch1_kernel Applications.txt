@@ -26,3 +26,6 @@ RTPÓ¦ÓÃ³ÌÐòÔÚÓÃ»§Ä£Ê½ÏÂ×÷ÎªÊµÊ±½ø³ÌÖ´ÐÐ£¬Ã¿¸ö½ø³Ì¶¼ÔÚËüÃÇ×Ô¼ºµÄÊÜ±£»¤ÄÚ´æ¿Õ¼äÖÐ£
 ÄÚºËÓ¦ÓÃ³ÌÐò»·¾³ºÍRTPÓ¦ÓÃ³ÌÐò»·¾³¾ßÓÐÐí¶àÏàÍ¬µÄÌØÐÔ£¬µ«ÊÇ¿ÉÓÃµÄÌØÐÔ·½ÃæÒ²ÓÐËù²»Í¬¡£ÀýÈç£¬Çý¶¯³ÌÐòÖ»ÄÜ°²×°ÔÚÄÚºËÖÐ£¬¶øPTE52Ò»ÖÂÐÔÖ»ÄÜÔÚRTP»·¾³ÖÐÊµÏÖ¡£
 ËäÈ»ÔÚÄÚºË»·¾³»òRTP»·¾³ÖÐÖ´ÐÐ´úÂëµÄËÙ¶ÈÃ»ÓÐÄÚÔÚµÄ²îÒì£¬µ«ÊÇËü¿ÉÄÜÊÜµ½´úÂëÓÅ»¯£¨¾¡¹ÜÔÚRTP»·¾³ÖÐÓ°Ïì½ÏÐ¡£©ºÍÏµÍ³µ÷ÓÃ£¨ÌØ¶¨ÓÚRTP»·¾³£©µÄÊ¹ÓÃµÄÓ°Ïì¡£ÓÈÆäÊ¹ÓÃÏµÍ³µ÷ÓÃ£¨Í¨³£ÊÇÕâÖÖÇé¿ö£©µÄRTPÓ¦ÓÃ³ÌÐò±ÈÀàËÆµÄÄÚºËÓ¦ÓÃ³ÌÐòÂý¡£´ËÍâ£¬VSBÏîÄ¿¿ÉÓÃÓÚ´Ó¸÷ÖÖVxWorks¿âÖÐÉ¾³ýRTP´¦Àí´úÂë£¨Ê¹ÓÃReal-Time ProcessÑ¡Ïî£©£¬ÕâÌá¸ßÁËÕâÐ©¿âµÄÐÔÄÜ²¢¼õÐ¡ÁËËüÃÇµÄ´óÐ¡¡£
 ´ËÍâ£¬ÅäÖÃÓÐRTPÖ§³Ö×é¼þµÄVxWorksÍ¼Ïñ½«ÂÔ´óÓÚ²»Ö§³ÖRTXÖ§³Ö×é¼þµÄVxWorksÍ¼Ïñ¡£¶øÇÒ£¬¶ÔÓÚ²ÉÓÃRTPÓ¦ÓÃ³ÌÐòµÄÏµÍ³£¬×ÜÌåÄÚ´æÐèÇóÍ¨³£±È¿É±È½ÏµÄÄÚºËÓ¦ÓÃ³ÌÐòµÄÏµÍ³´ó£¬ÒòÎªRTPÓ¦ÓÃ³ÌÐò°üÀ¨ÓÃ»§¶Ë¿â£¨Ëü¸´ÖÆÁËÄÚºËÖÐÒÑ¾­°üÀ¨µÄ¿â£©¡£
+
+1.2 CºÍC++¿â
+VxWorks±¾µØC¿âºÍDinkum CºÍC++¿â¶¼ÊÇÎªVxWorksÓ¦ÓÃ³ÌÐò¿ª·¢Ìá¹©µÄ¡£
