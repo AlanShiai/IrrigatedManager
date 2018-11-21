@@ -100,3 +100,77 @@ VxWorksµÄÒ»Ð©ÔªËØÊÇ¿ÉÄÜ»á¸Ä±äµÄÄÚ²¿Ï¸½Ú£¬Òò´Ë²»Ó¦ÔÚÄÚºËÓ¦ÓÃ³ÌÐòÖÐÒýÓÃ¡£Ä£¿é¹¦ÄÜµ
     #include <stdio.h>
 
 1.5 ÄÚºË¶ÔÏóµÄ¾²Ì¬ÊµÀý»¯    
+VxWorksÄÚºË¶ÔÏó£¬ÈçÈÎÎñºÍÐÅºÅÁ¿¿ÉÒÔ¾²Ì¬ÊµÀý»¯£¬Ò²¿ÉÒÔ¶¯Ì¬ÊµÀý»¯¡£¾²Ì¬ÊµÀý»¯ÔÚÐÔÄÜºÍÈ·¶¨ÐÔ·½ÃæÌá¹©ÁËÓÅÊÆ¡£VxWorksÎª¾²Ì¬ÊµÀý»¯Ìá¹©ÁËÌØÊâµÄºê¡£
+
+ÄÚºË¶ÔÏóµÄ¾²Ì¬ÊµÀý»¯ÒâÎ¶×Å¸Ã¶ÔÏó±»ÉùÃ÷Îª±àÒëÊ±±äÁ¿£¨Ê¹ÓÃÌØÊâµÄVxWorksºê£©£¬Æä·¶Î§Í¨³£ÊÇÈ«¾ÖµÄ¡£Òò´Ë£¬±àÒëÆ÷ÎªÓ¦ÓÃ³ÌÐòÖÐµÄ¶ÔÏó·ÖÅä´æ´¢£¬²¢ÇÒ²»ÐèÒªÔËÐÐÊ±ÄÚ´æ·ÖÅä¡£Òò´Ë£¬ÔÚÆô¶¯Ê±£¬¸Ã¶ÔÏóÁ¢¼´¿ÉÓÃÓÚ³õÊ¼»¯¡£
+
+Óë¾²Ì¬ÊµÀý»¯²»Í¬£¬ÄÚºË¶ÔÏóµÄ¶¯Ì¬ÊµÀý»¯Éæ¼°ÏµÍ³ÄÚ´æµÄÔËÐÐÊ±·ÖÅä£¬È»ºóÔÚ¿ÉÒÔÊ¹ÓÃÖ®Ç°³õÊ¼»¯¶ÔÏó¡£¶ÔÏóÉ¾³ýÓÖÉæ¼°¶ÔÏóµÄÎÞÐ§£¬È»ºó½«ÄÚ´æ·µ»Ø¸øÏµÍ³¡£¶ÔÏó´´½¨ºÍÉ¾³ý¶¼ÒÀÀµÓÚ¶¯Ì¬ÄÚ´æ·ÖÅä£¬Í¨³£Ê¹ÓÃmalloc()ºÍfree()º¯Êý¡£
+
+Òò´Ë£¬Ê¹ÓÃ¶¯Ì¬ÊµÀý»¯µÄÓ¦ÓÃ³ÌÐò±ØÐë¿¼ÂÇÏµÍ³¿ÉÄÜºÄ¾¡ÄÚ´æ£¬²¢ÇÒ²»ÄÜ´´½¨¶ÔÏó£¨²¢ÇÒËßÖîÒ»Ð©ÊÊµ±µÄ´íÎó»Ö¸´¹ý³Ì»òÖÐÖ¹£©µÄ¿ÉÄÜÐÔ¡£´ËÍâ£¬¶¯Ì¬·ÖÅäÊÇÒ»¸öÏà¶Ô»ºÂýµÄ²Ù×÷£¬¿ÉÄÜ»á×èÈûµ÷ÓÃÈÎÎñ£¬²¢Ê¹ÏµÍ³ÐÔÄÜ²»È·¶¨ÐÔ¡£
+
+Óë¾²Ì¬ÊµÀý»¯²»Í¬£¬¶¯Ì¬ÊµÀý»¯¿ÉÒÔÍ¨¹ýµ¥¸öº¯Êýµ÷ÓÃ£¨ÀýÈç£¬taskSpawn()¡¢semXCreate()µÈÍê³É¡£
+
+ÏÂÃæµÄ´úÂëÊ¾ÀýËµÃ÷ÁË¶¯Ì¬ÊµÀý»¯Óë¾²Ì¬ÊµÀý»¯Ö®¼äµÄÇø±ð£¨µ«ÊÇ²»Ê¹ÓÃÈÎºÎVxWorks¶ÔÏóÊµÀý»¯ºê£©¡£
+¶¯Ì¬ÊµÀý»¯
+	struct my_object * pMyObj;
+	...
+	pMyObj = (struct my_object *) malloc (sizeof (struct my_object));
+	if (pMyObj != NULL)
+	{
+	fooObjectInit (pMyOjb);
+	return (OK);
+	}
+	else
+	{
+	/* failure path */
+	return (ERROR);
+	}
+¾²Ì¬ÊµÀý»¯
+	struct my_object myObj;
+	...
+	fooObjectInit (&myOjb);
+	/* myObj now ready for use */
+	
+¿ÉÒÔ±»¾²Ì¬ÊµÀý»¯µÄÄÚºË¶ÔÏó
+	ÄÚºËÈÎÎñ
+	ÐÅºÅÁ¿
+	ÏûÏ¢¶ÓÁÐ
+	¿´ÃÅ¹·¶¨Ê±Æ÷
+ÓÐ¹ØÏêÏ¸ÐÅÏ¢£¬Çë²ÎÔÄÄÚºËÈÎÎñµÄ¾²Ì¬ÊµÀý»¯£¬p.91£¬ÄÚºËÐÅºÅÁ¿µÄ¾²Ì¬ÊµÀý»¯£¬p.118£¬ÄÚºËÏûÏ¢¶ÓÁÐµÄ¾²Ì¬ÊµÀý»¯£¬p.133£¬ÒÔ¼°¿´ÃÅ¹·¶¨Ê±Æ÷µÄ¾²Ì¬ÊµÀý»¯£¬p.174¡£
+
+¾²Ì¬ÊµÀý»¯µÄ´úÂë´óÐ¡
+¶ÔÏóµÄ±àÒëÊ±ÉùÃ÷²»Õ¼ÓÃ¿ÉÖ´ÐÐÎÄ¼þ¡¢VxWorksÓ³Ïñ»ò´æ´¢½éÖÊ£¨ÈçÉÁ´æ£©ÖÐµÄÈÎºÎ¿Õ¼ä¡£Èç¹ûÔÚ±àÒëÊ±ÉùÃ÷¶ÔÏóµ«Î´³õÊ¼»¯£¬Ôò±àÒëÆ÷½«Æä·ÅÖÃÔÚÎ´³õÊ¼»¯Êý¾Ý£¨BSS£©²¿·ÖÖÐ¡£ANSI C±ê×¼ÒªÇóÎ´³õÊ¼»¯µÄÊý¾Ý¾ßÓÐÁãÖµ¡£
+
+µ±Î´³õÊ¼»¯µÄÊý¾ÝÓÐÖúÓÚÔËÐÐÊ±ÄÚ´æÕ¼ÓÃÊ±£¬¶¯Ì¬·ÖÅäÒ²ÊÇÈç´Ë¡£ÔÚÕâÁ½ÖÖÇé¿öÏÂ£¬ÄÚ´æÕ¼ÓÃ¶¼ÊÇÏàÍ¬µÄ¡£
+
+¾²Ì¬ÊµÀý»¯µÄÓÅµã
+ÄÚºË¶ÔÏóµÄ¾²Ì¬ÊµÀý»¯±È¶¯Ì¬ÊµÀý»¯Ìá¹©ÁË¼¸¸öÓÅµã£º
+	¶ÔÏóµÄ¾²Ì¬ÊµÀý»¯ËÙ¶È¸ü¿ì£¬È·¶¨ÐÔ¸üÇ¿¡£
+	Ó¦ÓÃÂß¼­¸ü¼òµ¥£¬ÒòÎªËü²»±Ø¿¼ÂÇ¶¯Ì¬·ÖÅä¿ÉÄÜÊ§°ÜµÄ¿ÉÄÜÐÔ¡£
+	¶ÔÏóµÄ¾²Ì¬ÉùÃ÷²»ÄÜÊ§°Ü£¬³ý·Ç³ÌÐò±¾ÉíÌ«´ó£¬ÎÞ·¨ÊÊÓ¦ÏµÍ³ÄÚ´æ¡£
+
+³ÌÐòºÍ¾²Ì¬ÊµÀý»¯
+ÄÚºË¶ÔÏóµÄ¾²Ì¬ÊµÀý»¯¶ÔÊµÊ±Ó¦ÓÃ³ÌÐò¾ßÓÐÏÔÖøµÄÓÅÊÆ£¬´ó¶àÊýÓ¦ÓÃ³ÌÐò¿ÉÒÔÔÚÒ»¶¨³Ì¶ÈÉÏÀûÓÃ¾²Ì¬ÊµÀý»¯¡£´ó¶àÊýÓ¦ÓÃ³ÌÐòÒªÇóÄ³Ð©¶ÔÏóÔÚÆäÖ´ÐÐµÄÉúÃüÖÜÆÚÄÚ¿ÉÓÃ£¬²¢ÇÒËüÃÇÓÀÔ¶²»»á±»É¾³ý¡£Òò´Ë£¬ÕâÐ©¶ÔÏó¿ÉÒÔ¾²Ì¬ÊµÀý»¯¡£¾¡¿ÉÄÜÊ¹ÓÃ¾²Ì¬ÊµÀý»¯Ê¹Ó¦ÓÃ³ÌÐò¸ü¼Ó½¡×³¡¢È·¶¨ÐÔºÍ¿ìËÙ¡£
+×¢Òâ£º¾²Ì¬ÊµÀý»¯Ö»ÄÜ¹»Ó¦¸ÃÔÚ¿ª·¢ÄÚºË³ÌÐò£¬²»ÄÜÊ¹ÓÃÔÚ¿ª·¢RTP³ÌÐòÉÏ¡£
+
+¾²Ì¬ÉùÃ÷µÄ×÷ÓÃÓò
+ÄÚºË¶ÔÏóÍ¨³£±»ÉùÃ÷ÎªÈ«¾Ö±äÁ¿£¬ÒòÎª¶ÔÏóIDÍ¨³£ÓÃÓÚÈÎÎñ¼äÍ¨ÐÅºÍÍ¬²½¡£È»¶ø£¬ËüÃÇ²»±ØÊÇÈ«¾Ö±äÁ¿µÄ¡£¶ÔÏóÉùÃ÷Ò²¿ÉÒÔÔÚº¯Êý·¶Î§ÄÚÍê³É£¬Ö»Òª¶ÔÏóÔÚÆäÊ¹ÓÃÆÚ¼ä±£³ÖÔÚÓÐÐ§·¶Î§ÄÚ¡£
+
+¹ØÓÚºêÊ¹ÓÃµÄ×¢ÒâÊÂÏî
+ÎªÁËÈ·±£ÊÊµ±µÄºêÀ©Õ¹£¬Èç¹ûÈÎÎñÊµÀý»¯ºêÊµÏÖµÄÉùÃ÷»òµ÷ÓÃ³¬¹ýÒ»ÐÐ£¬ÔòËüÃÇ±ØÐëÊ¹ÓÃ·´Ð±¸Ü×Ö·û¡£ÀýÈç£¬ÒÔÏÂÈ·±£±àÒëÆ÷½«ÕýÈ·µØ´¦Àí¾ßÓÐVX_TASK_INSTANTIATEºêµÄÈÎÎñµÄ¾²Ì¬ÊµÀý»¯£º
+	myTaskId = VX_TASK_INSTANTIATE(myTask, 100, 0, 4096, pEntry, \
+	0,1,2,3,4,5,6,7,8,9);
+ÔÚÄÚºËÈÎÎñµÄ¾²Ì¬ÊµÀý»¯p.91¡¢ÄÚºËÐÅºÅÁ¿µÄ¾²Ì¬ÊµÀý»¯p.118¡¢ÄÚºËÏûÏ¢¶ÓÁÐµÄ¾²Ì¬ÊµÀý»¯p.133ºÍ¿´ÃÅ¹·¶¨Ê±Æ÷µÄ¾²Ì¬ÊµÀý»¯p.174ÖÐÏêÏ¸ÃèÊöÁËºêÊ¹ÓÃ¡£
+
+1.6 Æô¶¯Ê±¼ä¹³×Óº¯Êý
+ÔÚÒýµ¼¹ý³ÌÖÐµÄÌØ¶¨µãµ÷ÓÃµÄVxWorks¹³×Óº¯Êý¿ÉÓÃÓÚÌí¼Ó×Ô¼ºµÄÒýµ¼Ê±¹¦ÄÜ»ò²âÊÔ´úÂë¡£¹³×Óº¯ÊýÔÊÐíÄúÌí¼Ó´úÂë£¬¶øÎÞÐèÐÞ¸ÄÒýµ¼¼ÓÔØ³ÌÐò»ò²Ù×÷ÏµÍ³´úÂë±¾Éí£¬»òÕßÎÞÐèÎª×Ô¼ºµÄ´úÂë´´½¨×Ô¶¨Òå×é¼þ¡£
+Äú¿ÉÒÔÌí¼ÓÔÚ²Ù×÷ÏµÍ³ÍêÈ«Æô¶¯ºÍÔËÐÐÖ®Ç°Ö´ÐÐÊ±¼ä¹Ø¼ü²Ù×÷µÄ´úÂë£¬»ò¸²¸ÇÏµÍ³Ä¬ÈÏÌØÐÔµÄ´úÂë¡£ÀýÈç£¬¿ÉÒÔÊ¹ÓÃ´Ë¹³×Óº¯Êý¹¦ÄÜÀ´Ö´ÐÐÒÔÏÂ²Ù×÷£º
+	Ìá¹©Éè±¸Æô¶¯µÄÔçÆÚ·´À¡£¨½«ÏûÏ¢´òÓ¡µ½LCDÏÔÊ¾Æ÷£©¡£
+	ÔÚÆô¶¯¹ý³ÌÖÐÖØÖÃ¿´ÃÅ¹·¶¨Ê±Æ÷¡£
+	µ÷ÓÃ×Ô¶¨ÒåÕï¶Ï»ò²âÊÔ´úÂë¡£
+	Æô¶¯³õÊ¼»¯¹ý³ÌÖÐ²»ÐèÒªÁªÍøµÄÓ¦ÓÃ³ÌÐò¡£
+	¶ÁÈ¡Ó²¼þ°æ±¾»ò²âÊÔÉè±¸×´Ì¬µÄGPIO¡£
+	ÔçÆÚÅäÖÃFPGA¡£
+Æô¶¯Ê±¼ä¹³×Óº¯ÊýÍ¨¹ýÔÚVxWorksÅäÖÃÖÐ°üÀ¨ÌØ¶¨×é¼þÀ´ÆôÓÃ¡£¹³×Óº¯Êý±ØÐë´ÓusrAppInit.cÎÄ¼þÖÐµ÷ÓÃ£¨ÔÚVIPÏîÄ¿ÖÐ£©¡£
+ÓÐ¹ØÔÚVxWorksÆô¶¯ºóÊ¹ÓÃusrAppInit.c´úÂëµÄÐÅÏ¢£¬Çë²ÎÔÄ1.8¡°Ê¹ÓÃuserAppInit()×Ô¶¯ÔËÐÐÓ¦ÓÃ³ÌÐò¡±£¬µÚ11Ò³¡£
+
