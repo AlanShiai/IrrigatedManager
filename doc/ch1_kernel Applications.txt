@@ -174,3 +174,26 @@ VxWorksÄÚºË¶ÔÏó£¬ÈçÈÎÎñºÍÐÅºÅÁ¿¿ÉÒÔ¾²Ì¬ÊµÀý»¯£¬Ò²¿ÉÒÔ¶¯Ì¬ÊµÀý»¯¡£¾²Ì¬ÊµÀý»¯ÔÚÐÔÄ
 Æô¶¯Ê±¼ä¹³×Óº¯ÊýÍ¨¹ýÔÚVxWorksÅäÖÃÖÐ°üÀ¨ÌØ¶¨×é¼þÀ´ÆôÓÃ¡£¹³×Óº¯Êý±ØÐë´ÓusrAppInit.cÎÄ¼þÖÐµ÷ÓÃ£¨ÔÚVIPÏîÄ¿ÖÐ£©¡£
 ÓÐ¹ØÔÚVxWorksÆô¶¯ºóÊ¹ÓÃusrAppInit.c´úÂëµÄÐÅÏ¢£¬Çë²ÎÔÄ1.8¡°Ê¹ÓÃuserAppInit()×Ô¶¯ÔËÐÐÓ¦ÓÃ³ÌÐò¡±£¬µÚ11Ò³¡£
 
+1.7 Æô¶¯Ê±¼ä¹³×Óº¯Êý×é¼þ
+¹³×Óº¯Êý  ÃèÊö ×é¼þ
+usrPreKernelAppInit()  ÔÚusrInit()¿ªÊ¼Ê±µ÷ÓÃ£¬Ç¡ºÃÔÚcacheLibInit()Ö®ºóµ÷ÓÃ¡£Ò²¾ÍÊÇËµ£¬ÔÚ°å×ÓÆô¶¯Ö®ºóºÍÄÚºË³õÊ¼»¯¿ªÊ¼Ö®Ç°¡£INCLUDE_USER_PRE_KERNEL_APPL_INIT
+usrPostKernelAppInit() ÔÚusrKernelCreateInit()Ö®ºóµ÷ÓÃ£¬ÕâÊÇ´ó²¿·ÖµÄÄÚºË¹¦ÄÜ¶¼ÓÐÁË£¬µ«ÊÇI/OºÍÍøÂç»¹Ã»ÓÐ¡£INCLUDE_USER_POST_KERNEL_APPL_INIT
+usrPreNetworkAppInit() ÔÚÍøÂç³õÊ¼»¯ºóµ÷ÓÃ¡£Õâ¸öÊ±ºòI/OºÍÍøÂç¶¼¿ÉÒÔÁË¡£INCLUDE_USER_PRE_NETWORK_APPL_INIT
+
+Ê¹ÓÃ×¢ÒâÊÂÏî
+	»Øµ÷º¯Êý±ØÐë´ÓusrAppInit.cÎÄ¼þÖÐµ÷ÓÃ£¨ÔÚVIPÏîÄ¿ÖÐ£©¡£
+	¶ÔÓÚusrPreKernelAppInit()£¬²»ÄÜÊ¹ÓÃVxWorks API¡£Ö»Ê¹ÓÃ×Ô¼ºµÄ´úÂë£¨ÀýÈç£¬³õÊ¼»¯¼Ä´æÆ÷»òµãÁÁÒ»¸öLED£©¡£
+	¶ÔÓÚusrPostKernelAppInit()£¬¿ÉÒÔÊ¹ÓÃ´ó¶àÊýÄÚºËAPI£¨ÓÃÓÚ´´½¨ºÍ¹ÜÀíÈÎÎñ¡¢ÐÅºÅÁ¿¡¢ÏûÏ¢¶ÓÁÐµÈ£©¡£ÀýÍâÇé¿öÊÇÄÇÐ©ÒÀÀµÓÚÏµÍ³Ê±ÖÓµÄAPI£¬¼´²»ÄÜÊ¹ÓÃ¾ßÓÐ³¬Ê±²ÎÊýµÄAPI¡£I/OÏµÍ³ºÍÍøÂçÔÚÕâÒ»µãÉÏ²»¿ÉÓÃ¡£
+	¶ÔÓÚusrPreNetworkAppInit()£¬³ýÁËÍøÂçÖ®Íâ£¬ËùÓÐÄÚºËAPI¶¼¿ÉÒÔÊ¹ÓÃ¡£
+
+1.8 ÀûÓÃusrAppInit()ÔÚÏµÍ³Æô¶¯µÄÊ±ºòÔËÐÐ³ÌÐò
+µÚÒ»²½£ºÔö¼Ó×é¼þINCLUDE_USER_APPL
+µÚ¶þ²½£ºÔÚusrAppInit()£¬µ÷ÓÃÒªÆô¶¯³ÌÐòµÄÈë¿Úº¯Êý£¬Èç£º
+	void usrAppInit (void)
+	{
+	#ifdef USER_APPL_INIT
+	USER_APPL_INIT; /* for backwards compatibility */
+	#endif
+	myAppStartUp();
+	}
+µÚÈý²½£ºÁ´½ÓDKMÏîÄ¿×÷ÎªVxWorksÄÚºË¶ÔÏó¡£
