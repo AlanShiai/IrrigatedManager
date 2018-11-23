@@ -94,4 +94,58 @@ getppid()函数返回父进程ID。如果父进程ID是内核，或者父进程ID是死的，则返回NULL。
 ■通过让父进程不知道子进程的终止，而不创建僵尸。这是通过让父进程忽略SIGCHLD信号来实现的。为此，父进程进行sigaction()调用，将SIGCHLD信号处理程序设置为SIG_IGN。
 ■通过在终止的子进程退出时不将其转换为僵尸。这可以通过父进程发出sigaction()调用来实现，该调用将sa_flag设置为SA_NOCLDWAIT。
 
+资源回收
+当一个进程终止时，该进程拥有的所有资源（对象、数据等）都返回给系统。内部用于管理进程的资源被释放，进程所拥有的所有资源也被释放。关于该进程的所有信息都从系统中删除（除了临时僵尸进程信息）。资源回收确保所有未使用的资源立即返回系统并可用于其他用途。
+然而，请注意，对一般规则有例外：
+■必须显式删除公共对象，该公共对象可以由在继续运行的其他进程中运行的任务引用。
+■在终止进程后，套接字对象可以持续一段时间。它们只有在关闭时才会被回收，这是由TCP/IP状态机的特性驱动的。某些套接字必须保持打开状态，直到达到超时为止。
+■只有当所有文件描述符被关闭时，才会调用文件描述符。当从父进程继承描述符的所有子进程终止时，这可能隐式发生。当所有引用文件描述符的应用程序都关闭它们时，它也可以显式地发生。
+有关对象所有权以及公共和私有对象的信息，请参阅7.18与公共对象的进程间通信，第147页。
 
+RTP的环境变量
+默认情况下，创建一个没有环境变量的RTP。可以通过API调用显式地创建环境变量，或者如果RTP从内核shell派生，则通过继承来创建环境变量。
+按照与POSIX标准一致的方式，RTP中的所有任务共享相同的环境变量，这与内核任务不同，内核任务各自具有自己的环境变量集。
+有关更多信息，请参见3.6 RTP环境变量P.30。
+
+RTP与POSIX
+实时过程模型提供的应用程序环境的总体行为接近POSIX 1003.1标准，同时保持了VxWorks操作系统的嵌入式和实时特性。与标准背离的关键领域是VxWorks没有提供以下内容：
+■使用fork()和exec()执行进程创建
+■文件所有权和文件权限
+有关POSIX支持的信息，请参见9 POSIX设备。
+VxWorks可以被配置为提供POSIX PSE52支持（如概要文件所定义的，针对单个进程）。有关详细信息，请参阅9.2 VxWorks Configuration with POSIX Facilities, p.179。
+
+2.2 配置VxWorks支持RTP运行
+VxWorks操作系统独立于它可能执行的任何应用程序进行配置和构建。为了支持RTP应用程序，VxWorks只需要配置用于实时进程的适当组件和应用程序所需的任何其他组件（例如，消息队列）。
+操作系统与应用程序的这种独立性允许使用基于单个VxWorks配置的不同应用程序开发各种系统。也就是说，VxWorks的单个变体可以与不同的应用程序集组合以创建不同的系统。操作系统不需要在配置和构建之前知道它将运行什么应用程序，只要它的配置包括支持相关应用程序所需的组件即可。
+注意，本章中描述的许多组件提供了配置参数。虽然在本章中没有讨论所有的内容，但是可以使用内核配置工具（Workbench或wrtool命令行工具）来检查和管理它们。
+
+配置VxWorks对RTP的基本支持
+为了在硬件目标上运行RTP应用程序，VxWorks必须在VSB和VIP项目中配置RTP支持。
+第1步：在VSB项目中，检查CORE_RTP是否被选中（默认值）。
+第2步：构建项目。
+第3步：将VIP项目建立在VSB项目上。
+第4步：在VIP项目中，选择包含INCLUDE_RTP组件。这样做将自动包含RTP支持所需的其他组件。
+第5步：构建VxWorks。
+为RTP配置VxWorks（使用INCLUDE_RTP）提供了基本的RTP重叠虚拟内存。此外，还包括用于MMU存储器保护所需的组件。RTPS需要MMU支持。
+
+2.3 与RTP相关的一些有用的VIP组件
+除了基本RTP支持所需的组件之外，各种其他组件还提供对支持RTP的开发和部署系统都有用的工具。
+
+用于RTP应用程序开发的组件
+■包含INCLUDE_ROMFS文件系统的包含ROMFS。RTP应用程序可以单独存储，也可以与VxWorks绑定到一个附加的构建步骤中，该步骤将操作系统和应用程序组合为单个系统映像（使用ROMFS文件系统）。
+■INCLUDE_RTP_APPL_USER、INCLUDE_RTP_APPL_INIT_STRING、INCLUDE_RTP_APPL_INIT_BOOTLINE和INCLUDE_RTP_APPL_INIT_CMD_SHELL_SCRIPT用于在引导时自动启动应用程序的各种方式。
+■INCLUDE_SHL共享库的包含。
+■INCLUDE_RTP_HOOKS，用于编程钩子工具，它允许注册内核函数，该内核函数将在进程的生命周期的不同点执行。
+■INCLUDE_POSIX_PTHREAD_SCHEDULER和INCLUDE_POSIX_CLOCK用于POSIX线程支持。这用以与POSIX.1一致的方式处理用户线程的调度器取代了传统的VxWorks调度器。VxWorks任务以及内核pHug都像往常一样被处理。注意，在进程中使用pthread需要INCLUDE_POSIX_PTHREAD_SCHEDULER。有关更多信息，请参见用户级时钟选择P.208。
+■INCLUDE_PROTECT_TASK_STACK堆栈保护的保护协议栈。对于部署的系统，可以省略该组件以节省内存使用。参见6.9任务栈，P.95获取更多信息。
+以下组件提供主要用于开发系统的设施，不过它们也可以用于部署的系统：
+■内核shell的各种INCLUDE_SHELL_feature组件，虽然对于应用程序和进程来说不是必需的，但是对于从命令行运行应用程序、执行shell脚本和目标上调试来说，这些组件是必需的。
+■INCLUDE_NET_SYM_TBL或INCLUDE_STANDALONE_SYM_TBL组件，其指定外壳的符号是加载的还是内置的。
+■INCLUDE_DISK_UTIL和INCLUDE_RTP_SHOW组件，它们包括有用的shell函数。
+
+其他一些RTP相关的组件
+VxWorks配置工具提供组件包，以简化常用操作系统工具集的配置过程。为进程支持提供以下组件组：
+■BUNDLE_RTP_DEPLOY是为已部署系统（最终产品）设计的，由INCLUDE_RTP、INCLUDE_RTP_APPL、INCLUDE_RTP_HOOKS、INCLUDE_SHARED_DATA和BUNDLE_SHL组件组成。
+■BUNDLE_RTP_DEVELOP是为开发环境而设计的，由BUNDLE_RTP_DEPLOY、INCLUDE_RTP_SHELL_CMD、INCLUDE_RTP_SHOW、INCLUDE_SHARED_DATA_SHOW、INCLUDE_SHOW_SHOW_SHELL_CMD、INCLUDE_SHELL_CMD、组件组成。
+■BUNDLE_RTP_POSIX_PSE52为各个进程提供POSIX PSE52支持（有关更多信息，请参阅9.2 VxWorks Configuration with POSIX Facilities, p.179）。它可以用于BUNDLE_RTP_DEPLOY or
+BUNDLE_RTP_DEVELOP。
