@@ -317,3 +317,25 @@ VxWorksÓ¦ÓÃ³ÌÐòÆô¶¯¹¤¾ß¿ÉÒÔÓëusrRtpAppInit()³õÊ¼»¯º¯ÊýÒ»ÆðÊ¹ÓÃ£¬ÒÔ±ãÔÚVxWorksÒýµ
 char * vxeName = "/romfs/myVxApp.vxe";
 
 3.13 RTP³ÌÐò·ûºÏ½âÎö
+·ûºÅ×¢²áÊÇ½«·ûºÅ´æ´¢ÔÚÓë¸ø¶¨RTPÏà¹ØÁªµÄ»ùÓÚÄÚºËµÄ·ûºÅ±íÖÐµÄ¹ý³Ì¡£
+·ûºÅ×¢²áÈ¡¾öÓÚÓ¦ÓÃ³ÌÐòÊÇÈçºÎÆô¶¯µÄ£º
+¡öµ±´ÓshellÆô¶¯Ó¦ÓÃ³ÌÐòÊ±£¬·ûºÅ»á×Ô¶¯×¢²á£¬Õâ¶ÔÓÚ¿ª·¢»·¾³×îÎª·½±ã¡£
+¡öµ±ÒÔ±à³Ì·½Ê½Æô¶¯Ó¦ÓÃ³ÌÐòÊ±£¬¼´Í¨¹ýµ÷ÓÃrtpSpawn()Ê±£¬Ä¬ÈÏÇé¿öÏÂ²»×¢²á·ûºÅ¡£ÕâÔÚÆô¶¯Ê±½ÚÊ¡ÄÚ´æ£¬Õâ¶ÔÓÚ²¿ÊðµÄÏµÍ³ÊÇÓÐÓÃµÄ¡£
+Ä¬ÈÏÇé¿öÏÂ£¬¹²Ïí¿âµÄ×¢²á²ßÂÔÓë¼ÓÔØ¹²Ïí¿âµÄÓ¦ÓÃ³ÌÐòµÄ×¢²á²ßÂÔÏàÍ¬¡£
+ÎÞÂÛÓ¦ÓÃ³ÌÐòÊÇÒÔ½»»¥·½Ê½Æô¶¯»¹ÊÇÒÔ±à³Ì·½Ê½Æô¶¯£¬¶¼¿ÉÒÔ¸²¸Ç¸ø¶¨Æô¶¯Ó¦ÓÃ³ÌÐòµÄ·½·¨µÄÄ¬ÈÏ·ûºÅ×¢²á²ßÂÔ¡£
+shellµÄÃüÁî½âÊÍÆ÷Ìá¹©ÁËrtpÖ´ÐÐÑ¡Ïî-gÓÃÓÚÈ«¾Ö·ûºÅ£¬-aÓÃÓÚËùÓÐ·ûºÅ£¨È«¾ÖºÍ±¾µØ£©£¬ÒÔ¼°-zÓÃÓÚÁã·ûºÅ¡£ÀýÈç£º
+rtp exec -a /usr/xeno/tmp/myVxApp/ppc/myVxApp.vxe one two three &
+rtp·ûºÅ¸²¸ÇÃüÁî¾ßÓÐÒÔÏÂÑ¡Ïî£º-gÓÃÓÚÈ«¾Ö·ûºÅ£¬-aÓÃÓÚËùÓÐ·ûºÅ£¨È«¾ÖºÍ±¾µØ£©£¬ÒÔ¼°-cÓÃÓÚÈ¡Ïû²ßÂÔ¸²¸Ç¡£
+rtpSpawn()Ñ¡Ïî²ÎÊýRTP_GLOBAL_SYMBOLS(0x01)ºÍRTP_ALL_SYMBOLS(0x03)¿ÉÓÃÓÚ¼ÓÔØÈ«¾Ö·ûºÅ£¬»òÕß·Ö±ð¼ÓÔØÈ«¾ÖºÍ±¾µØ·ûºÅ¡£
+shellµÄC½âÊÍÆ÷ÃüÁîrtpSp()Ìá¹©ÁËÓërtpSpOptions±äÁ¿ÏàÍ¬µÄÑ¡Ïî¡£
+·ûºÅÒ²¿ÉÒÔ´Óshell½»»¥µØ×¢²áºÍÈ¡Ïû×¢²á£¬Õâ¶ÔÓÚÃ»ÓÐ·ûºÅ×¢²á¶øÆô¶¯µÄÓ¦ÓÃ³ÌÐòºÜÓÐÓÃ¡£ÀýÈç£º
+rtp symbols add ¨Ca ¨Cs 0x10000 ¨Cf /romfs/bin/myApp.vxe
+rtp symbols remove ¨Cl ¨Cs 0x10000
+rtp symbols help
+ÓÐ¹Ø´ÓRTP¿ÉÖ´ÐÐÎÄ¼þÖÐ°þÀë·ûºÅµÄÐÅÏ¢£¬Çë²ÎÔÄ3.9 Executable File Size Reduction With the strip Facility, p.32¡£
+
+3.14 RTP³ÌÐòshow()º¯ÊýÊ¹ÓÃµÄÒ»Ð©×¢ÒâÊÂÏî
+Showº¯ÊýºÍShellÃüÁî²»ÄÜÓÃÓÚÏÔÊ¾¹ØÓÚRTP¶Ë¶ÔÏóµÄÐÅÏ¢¡£È»¶ø£¬Ðí¶àÐÅÏ¢¼ìË÷º¯Êý£¬ÀýÈçsemInfoGet()ºÍmsgQInfoGet()ÔÚRTP»·¾³ÖÐÊÇ¿ÉÓÃµÄ¡£ËüÃÇ¿ÉÒÔÓÃ±à³Ì·½Ê½¼ìË÷¹ØÓÚ¶à¸öRTP¶ÔÏóÀà±ðµÄRTP¶ËÐÅÏ¢¡£
+Èç¹û´«µÝRTP¶ÔÏó±êÊ¶·û£¬ÔòÏÔÊ¾º¯Êý²»ÄÜÏÔÊ¾¹ØÓÚRTP¶ÔÏóµÄÐÅÏ¢£¬ÒòÎªËüÃÇÔÚÄÚºË»·¾³ÖÐÖ´ÐÐ¡£ÀýÈç£¬Èç¹ûÔÚRTPÓ¦ÓÃ³ÌÐòÖÐÊ¹ÓÃµ÷ÊÔ´úÂëÀ´ÏÔÊ¾¸ø¶¨¶ÔÏó£¨ÈçÐÅºÅÁ¿£©µÄ±êÊ¶·û£¬ÔòÊ¹ÓÃ´øÓÐÏÔÊ¾º¯ÊýµÄRTP¶ÔÏó±êÊ¶·û£¨ÈçÀ´×ÔShellµÄsemShow()£©½«µ¼ÖÂ´íÎó£¨´øÓÐ¡°Invalid objectName id¡±´íÎóÏûÏ¢£©¡£
+×¢Òâ£¬Ò»Ð©RTP¶Ë¶ÔÏóÀà±ð¾ßÓÐRTP¶Ë¶ÔÏóºÍ¶ÔÓ¦µÄÄÚºË¶Ë¶ÔÏó¡£ÔÚÕâÐ©Çé¿öÏÂ£¬Ö»ÄÜÔÚRTPÄÚÊ¹ÓÃRTP²à¶ÔÏóµÄ±êÊ¶·û£¬²¢ÇÒÖ»ÄÜÔÚÄÚºËÄÚÊ¹ÓÃÄÚºË²à±êÊ¶·û¡£ÕâÒâÎ¶×Å£¬showº¯ÊýºÍShellÃüÁî£¨ÈçrtpShow()¡¢i()ºÍw()£©ÏÔÊ¾ÓëRTP¶ÔÏóÏà¹ØµÄÄÚºË¶ÔÏó±êÊ¶·û£¬Õâ¿ÉÄÜ»áµ¼ÖÂ»ìÂÒ¡£ÀýÈç£¬i()ÏÔÊ¾RTP¶ËÈÎÎñµÄÄÚºË±êÊ¶·û£¬¶øw()ÏÔÊ¾RTP¶ËÐÅºÅÁ¿ºÍÏûÏ¢¶ÓÁÐµÄÄÚºË±êÊ¶·û¡£
+ÆäËûRTP¶Ë¶ÔÏóÀà±ð£¨ÀýÈç£¬ÄÚ´æ·ÖÇø±êÊ¶·û£©Ã»ÓÐÄÚºË¶Ë¶ÔÓ¦Ïî¡£´ËÍâ£¬Ò»Ð©RTP¶Ë¶ÔÏóÀà±ð¿ÉÒÔÔÚÄÚ²¿Ê¹ÓÃÆäËû¾ßÓÐÄÚºË¶Ë¶ÔÓ¦ÏîµÄ¶ÔÏó¡£ÀýÈç£¬POSIXÏß³Ì»ùÓÚVxWorks±¾µØÈÎÎñ£¬Òò´ËÔÚÄÚ²¿Ê¹ÓÃÈÎÎñ¶ÔÏó¡£
