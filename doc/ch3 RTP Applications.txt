@@ -121,7 +121,199 @@ VxWorks发行版还提供了类似于UNIX C运行时共享库的C运行时共享库特性。有关此库的信息
 
 自定义库
 应用程序创建自定义用户模式库的信息，请参见4。RTP库和插件。
+
 API文档
 有关应用程序中可用的函数的详细信息，请参阅VxWorks应用程序API引用和Dinkumware库引用。
 
-3.6 RTP 环境变量
+3.6 RTP环境变量
+默认情况下，创建RTP里面没有环境变量。可以通过API调用显式地创建环境变量，或者如果RTP从内核shell派生，则通过继承来来自kernel shell的环境变量。
+按照与POSIX标准一致的方式，流程中的所有任务共享相同的环境变量，这与内核任务不同，内核任务各自具有自己的环境变量集。
+从进程外部应用设置环境变量
+默认情况下创建进程时没有环境变量，但是可以通过以下方式从进程外部设置它们：
+■如果新进程是由内核任务创建的，那么内核任务的环境变量可以设置到在应用程序的环境变量。envGet()函数用于获取内核任务的环境，然后在rtpSpawn()调用中使用该环境。
+■如果新进程是由进程创建的，则在rtpSpawn()调用中使用环境数组时，可以将子进程传递给父进程。
+■如果新进程是使用rtp exec命令或rtpSp()函数从kernel shell创建的，那么shell的所有环境都被传递给新进程（进程的envp是使用shell的环境变量设置的）。这使得通过首先使用putenv()在创建进程之前在shell的环境中设置变量来专门为进程设置环境变量变得简单。（例如，此方法可用于为共享库的运行时位置设置LD_LIBRARY_PATH变量；参见4.6 Shared Library Location and Loading at Run-time，p.52）。
+有关详细信息，请参阅rtpSpawn() API和3.2 RTP应用程序结构，第26页。
+
+在过程中设置环境变量
+进程（或应用程序库）中的任务可以在进程中创建、重置和删除环境变量。getenv()函数可用于获取环境变量，setenv()和unsetenv()函数用于更改或删除环境变量。环境数组也可以直接操作——但是，Wind River建议您不要这样做，因为这样会绕过RTP环境中getenv()、setenv()和putenv()的线程安全实现。
+
+3.7 RTP所需内核支持
+VxWorks是一个高度可配置的操作系统。因为RTP应用程序是独立于操作系统构建的，所以构建过程无法确定应用程序最终将在其上运行的VxWorks实例是否已经配置了应用程序所需的所有组件（例如，网络和文件系统）
+因此，应用程序代码必须检查指示内核设施不可用的错误（即，检查API调用的返回值）并做出适当响应。如果API需要未配置到内核中的工具，则调用API时返回ENOSYS的errno值。
+syscallPresent()函数还可以用于确定系统中是否存在特定的系统调用。
+
+3.8 RTP钩子函数
+RTP钩子函数可用于在产生和删除RTP时自动调用函数。
+有关使用钩子函数的信息（在执行rtpSpawn()和rtpDelete()期间调用），请参阅rtpHookLib和6.14任务扩展：使用钩子函数（Tasking Extensions：UserHookFunctions）的VxWorks API参考，第101页。
+
+3.9 使用strip API减小可执行文件大小
+对于生产系统，剥离可执行文件的一些符合或者调试信息以减小它们的大小可能是有用的。strip(arch)实用程序可以使用参数--strip-unneeded, --strip-debug (or -d), or --strip-all (or -s)。
+
+剥离绝对链接RTP可执行文件
+所有RTP可执行文件都构建为绝对链接的可执行文件。生成绝对链接的RTP可执行文件以便在预定地址处执行。因此，它们在加载阶段不需要符号信息和重定位信息。
+符号和重新定位信息可以使用--strip-all(或-s)选项的striparch实用程序从可执行文件中删除。得到的文件特别小（平均为原文件的30%到50%）。这使得它在ROMFS中的占用空间明显更小（如果可执行文件存储在ROMFS中，则可以减少整个系统的占用空间），并且使其加载时间稍短。
+请注意，在可执行文件中保留符号和重新定位信息对于调试和执行环境可能改变的情况可能是有用的。例如，如果使用VxWorks的新配置来更新已部署的系统，则现有应用程序的执行地址不再有效（但不能同时更新应用程序），则应用程序将承受重新定位的成本，但仍然执行。然而，如果应用程序被剥离，将无法使用。
+
+3.10 RTP应用程序执行
+因为进程是执行中的程序的实例，所以启动和终止应用程序涉及创建和删除进程。为了启动应用程序的执行，必须生成一个进程。当应用退出时，进程终止。进程也可以被明确终止。
+进程为应用程序提供执行环境。它们以rtpSpawn()开始，第一个参数标识可执行文件。在rtpSpawn()调用的创建阶段自动创建任何应用程序的初始任务。这个初始任务提供了调用main()的上下文。
+RTP应用程序可以通过交互、编程和自动方式启动和终止，其中各种工具作用于进程。
+启动RTP应用的方法
+可以通过以下方式启动应用程序：
+■从workbench启动
+■从kernel shell启动，具有rtpSp（用于C解释器）或rtp exec（用于命令解释器）
+■其他应用程序或来自内核的rtpSpawn()
+■在引导时自动运行应用程序的启动
+有关更多信息，请参阅3.11 RTP应用程序的交互式执行，p.33和3.12RTP应用程序的自动执行，p.35。
+
+终止RTP应用的方法
+当程序的main()函数返回时，RTP应用程序自动终止。它们也可以被明确地终止。
+当任务执行以下任一操作时，可以明确终止进程：
+■调用exit()以终止正在运行的进程，而不管进程中是否正在运行其他任务。
+■调用kill()函数以终止指定的进程（使用进程ID）。
+以编程方式或通过交互式用户命令终止过程可以用作更新或替换应用程序代码的手段。一旦进程停止，就可以替换应用程序代码，并使用新的可执行文件再次启动进程。
+自动终止留生任务运行
+默认情况下，当main()函数返回时终止进程，因为C编译器在main()的末尾自动插入exit()调用。如果main()生成其他任务，这是不期望的行为，因为终止进程会删除在其中运行的所有任务。为了防止这种情况发生，任何使用main()来生成任务的应用程序都可以调用taskExit()而不是return()作为main()函数中的最后一个语句。当main()包括taskExit()作为其最后调用时，进程的初始任务可以退出，而内核不会自动终止进程。
+
+3.11 RTP的交互执行
+交互式地运行应用程序对于开发环境显然是最理想的，但是它也可以用于在部署的系统上运行特殊的应用程序，否则这些系统就不作为正常系统操作的一部分运行（例如，用于诊断）。在后一种情况下，在ROMFS中存储辅助应用程序可能是有利的。
+本节描述shell命令行的用法。有关使用Wind River Workbench工具运行应用程序的信息，请参阅Workbench文档。
+
+从Kernel Shell启动RTP应用程序
+从shell开始，应用程序可以使用rtpSpawn()函数的shell命令启动。
+注意：如果文件没有存储在目标系统上，那么从目标本身的角度来看，路径必须是有效的。有关这方面的信息，请参阅11.4远程文件系统访问VxWorks，p.294。
+使用传统的C解释器，rtpSp命令使用如下：
+rtpSp "mars:c:/scratch/myVxApp.vxe first second third"
+在这个示例中，启动一个进程来运行应用程序文件myVxApp.vxe，该文件以c:/scratch存储在主机系统mars中。注意，必须为非NFS网络文件系统指定主机。
+应用程序接受命令行参数，在本例中，它们是第一、第二和第三。还可以使用其他参数指定初始任务优先级、堆栈大小和其他rtpSpawn()选项。
+使用shell的命令行解释器，可以以两种不同的方式启动应用程序，或者直接指定可执行文件的路径和名称以及参数（如使用UNIX shell）：
+mars:c:/scratch/myVxApp.vxe first second third
+或者，应用程序可以从rtp exec命令开始：
+rtp exec mars:c:/scratch/myVxApp.vxe first second third
+注意：对于Windows主机，必须使用正斜杠（或双反斜杠）作为路径分隔符。即使当可执行文件存储在主机系统上时，情况也是如此。
+注意，在shell中必须使用正斜杠作为路径分隔符，甚至对于Windows主机上的文件也是如此。外壳不与反斜杠分隔符一起工作。
+无论过程如何生成，应用程序都以完全相同的方式运行。
+注意，您可以使用cmd命令从C解释器切换到命令解释器；使用C命令从命令解释器切换到C解释器。命令解释器rtp exec命令具有提供对应用程序执行的更多控制的选项。
+
+从Kernel Shell中执行RTP应用程序中的函数
+VxWorks内核shell提供了在实时进程中调用应用程序函数的工具。这些设备对于调试RTP应用程序特别有用。此外，内核shell为监视系统调用提供了工具。
+有关更多信息，请参阅VxWorks 7内核Shell用户指南，以及用于函数调用、系统调用监视器和sysCallMonitor()的VxWorks 7内核API引用的条目。
+
+从Kernel Shell中终止应用程序
+应用程序可以通过终止在其中运行的进程来停止。使用shell的命令解释器，可以使用完整的rtp删除命令，或者使用shell别名kill和rtpd中的任何一个命令来终止进程。如果它在前台运行，也可以使用CTRL+C杀死它（即，在rtp exec命令和可执行文件的名称之后，它还没有使用与后台运行应用程序的UNIX shell命令语法类似的&来启动）。
+使用shell的C解释器，进程可以用kill()或rtpDelete()终止。
+有关可以终止进程的所有方式的描述，请参阅RTP终止，第16页。
+当然，重新启动系统将终止所有未配置为在引导时重新启动的进程。
+
+3.12 RTP程序的自动执行
+对于许多部署的系统，需要自动运行应用程序不需要用户干预。VxWorks应用程序可以以多种方式自动启动。此外，应用程序可执行文件可以存储在主机系统上，这在开发期间甚至当启动工具正在使用时也是有用的，或者可以存储在目标本身上。
+VxWorks应用程序启动工具被设计为同时满足开发环境和已部署系统的需要。
+对于开发环境，启动工具可以交互式地用于指定启动时要启动的各种应用程序。操作系统不需要重新构建，以运行不同的应用程序集，或者使用不同的参数或进程派生参数（例如初始任务的优先级）运行相同的应用程序。也就是说，只要VxWorks已经配置了适当的启动组件，并且具有应用程序本身所需的组件，操作系统就可以完全独立并且不知道它将运行的应用程序，直到它启动并启动它们。人们可能称之为盲目约会场景。
+对于已部署的系统，VxWorks可以通过静态定义的应用程序集进行配置和构建，以便在引导时运行（包括它们的参数和进程派生参数）。应用程序也可以使用ROMFS文件系统内置到系统映像中。这种情况可能被认为是最婚姻化的。
+在本节中，使用驻留在主机系统上的应用程序说明启动工具的使用。
+启动设备选项
+可以使用各种手段来标识要启动的应用程序，以及为初始应用程序任务提供它们的参数和进程生成参数。应用程序可以在引导时使用以下任意一种自动识别和启动：
+■ 一个应用程序启动配置参数
+■ 一个引导加载程序参数
+■ 一个VxWorks外壳脚本
+■ usrRtpAppInit()函数支持此功能的组件分别是：
+支持上面功能所需的各自的组件
+■ INCLUDE_RTP_APPL_INIT_STRING
+■ INCLUDE_RTP_APPL_INIT_BOOTLINE
+■ INCLUDE_RTP_APPL_INIT_CMD_SHELL_SCRIPT
+■ INCLUDE_RTP_APPL_USER
+引导加载程序参数和shell脚本方法既可以交互式使用（无需修改操作系统），也可以静态使用。因此，它们对于应用程序开发和已部署系统同样有用。如果开发人员想要更改一组应用程序、应用程序参数或进程派生参数，则启动配置参数和usrRtpAppInit()函数方法要求重新配置和重建操作系统。
+各种自动启动应用程序的方法之间没有速度或初始化顺序差异。所有的启动设备组件都提供了相同的性能。
+
+应用程序启动字符串语法
+启动工具配置参数和引导加载程序参数都使用公共字符串语法来标识应用程序。基本语法如下：
+#progPathName^arg1^arg2^arg3#progPathName...
+这个语法只包含两个特殊字符：
+#
+磅符号标识紧随其后的应用程序可执行文件的路径和名称。
+^
+插入符号将单个参数（如果有的话）分隔到应用程序。最后一个论点之后不需要插入符号。插入符号不是必需的-空格可以代替-与启动配置参数一起使用，但是插入符号必须与引导加载程序参数一起使用。
+下面的示例说明基本语法用法：
+#c:/apps/myVxApp.vxe
+启动C:\Apps\MyVxApp.vxe
+#c:/apps/myVxApp.vxe^one^two^three
+启动C:\Apps\MyVxApp.vxe，参数一、二、三。
+#c:/apps/myOtherVxApp.vxe
+启动C:\Apps\MyToVxApp.vxe，没有任何参数。
+{C：/Apps/MyVxApp.vxe^一^二^三μc：/APPS/MyToFVxApp.vxe
+启动两个应用程序，第一个应用程序有三个参数。
+启动工具还允许使用附加语法元素指定rtpSpawn()函数参数：
+%p=值
+设置进程的初始任务的优先级。优先级可以在0~255的范围内。
+%s＝值
+为进程的初始任务（整数参数）设置堆栈大小。
+%o＝值
+设置过程选项参数。
+%t=值
+为进程的初始任务设置任务选项。
+当使用引导加载程序参数时，选项值必须是十进制或十六进制数字。当使用启动工具配置参数时，代码在编译之前进行预处理，因此也可以使用符号常数（例如，VX_FP_TASK）。
+
+例如，以下字符串指定以参数1、2、3和初始任务优先级125启动c:appsmyVxApp.vxe，以及以选项值0x10（用于在用户模式下运行之前停止进程）启动c:\appsmy.rVxApp.vxe：
+#c:/apps/myVxApp.vxe %p=125^one^two^three#c:/apps/myOtherVxApp.vxe %o=0x10
+如果没有设置rtpSpawn()选项，则应用以下默认值：初始任务优先级为220；初始任务堆栈大小为64Kb；选项值为零；初始任务选项为VX_FP_TASK。
+分配中使用的字符串的最大大小是160字节，包括名称、参数和分隔符。分配中不能使用空格，因此不应将应用程序文件放在路径包含空格的主机目录中。
+指定具有启动配置参数的应用程序
+可以使用INCLUDE_RTP_APPL_INIT_STRING组件的RTP_APPL_INIT_STRING参数指定应用程序。
+标识字符串必须使用应用程序启动字符串语法，第36页。之后必须重新构建操作系统。
+用Boot Loader Parameter指定应用程序
+VxWorks引导加载程序包括一个参数-s参数-可以用来标识应该在引导时自动启动的应用程序，以及标识要执行的shell脚本。
+应用程序可以用s参数交互地和静态地指定。无论哪种情况，参数都设置为一个或多个可执行文件的路径和名称及其参数（如果有的话），以及应用程序处理参数（可选）。上面描述的特殊语法用于描述应用程序（参见应用程序启动字符串语法，第36页）。
+这个功能由INCLUDE_RTP_APPL_INIT_BOOTLINE组件提供。
+注意，引导加载程序的参数具有双重用途：将脚本文件名分派到shell，并将应用程序启动字符串分派到启动工具。与s参数一起使用的脚本文件只能包含C解释器命令；它们不能包括启动工具语法（请参阅使用VxWorks Shell脚本指定应用程序，第38页）。
+如果引导参数用于标识要在引导时运行的启动脚本以及应用程序，则必须在任何应用程序之前列出它。例如，要运行启动脚本文件myScript和myVxApp.vxe（带有三个参数），将需要以下序列：
+myScript#c:/apps/myVxApp.vxe^one^two^three
+引导控制台窗口中的赋值将是这样的：
+startup script (s) : myScript#c:/apps/myVxApp.vxe^one^two^three
+交互式定义的引导加载程序参数保存在目标的引导媒体中，以便应用程序在每次重新引导时自动启动。
+对于VxWorks模拟器，引导参数分配被保存在主机系统上的一个特殊文件中，与引导的图像（例如，myImageDir/nvram.vxWorks0）在同一目录中。附加在文件名上的号码是处理器ID号-模拟器的第一个实例的默认值为零。
+对于硬件目标，可以静态地识别应用程序。INCLUDE_RTP_APPL_INIT_BOOTLINE组件的DEFAULT_BOOT_LINE参数可以使用与交互方法相同的语法设置为标识字符串。当然，之后必须重新构建操作系统。
+用VxWorks外壳脚本指定应用程序
+应用程序可以用VxWorks外壳脚本自动启动。但是，根据shell脚本使用命令解释器或C解释器命令，必须使用不同的方法。
+如果为命令解释器编写了shell脚本，则可以静态地识别应用程序。
+INCLUDE_RTP_APPL_INIT_CMD_SHELL_SCRIPT组件的RTP_APPL_CMD_SCRIPT_FILE参数可以设置为shell脚本文件的位置。
+例如，命令解释器的启动shell脚本可以包含以下行：
+rtp exec c:/apps/myVxApp.vxe first second third
+注意，对于Windows主机，必须使用正斜杠或双反斜杠，而不是使用单个反斜杠作为shell的路径分隔符。
+如果为C解释器编写了shell脚本，则可以使用引导加载器的参数以与应用程序类似的方式使用相同字符串语法的子集来交互地识别它。也可以使用INCLUDE_RTP_APPL_INIT_BOOTLINE组件的DEFAULT_BOOT_LINE参数静态地标识C解释器的shell脚本。
+(See Specifying Applications with a Boot Loader Parameter, p.37 and Application Startup String Syntax, p.36.)
+操作系统必须配置有内核shell和C解释器组件，以便与C解释器shell脚本一起使用。
+用于C解释器的启动shell脚本文件可以包含以下行：
+rtpSp "c:/apps/myVxApp.vxe first second third"
+使用shell脚本文件c:script smyVxScript，引导加载程序的参数将在引导控制台上交互地设置如下：
+startup script (s) : c:/scripts/myVxScript
+注意，shell脚本可以存储在ROMFS中，以便在部署的系统中使用。
+用usrRtpAppInit( )指定应用程序
+VxWorks应用程序启动工具可以与usrRtpAppInit()初始化函数一起使用，以便在VxWorks引导时自动启动应用程序。
+为了使用此方法，必须使用INCLUDE_RTP_APPL_USER组件配置VxWorks，INCLUDE_RTP_APPL_USER组件自动将文件包括在项目中。
+对于希望启动的每个应用程序，向usrRtpAppInit()函数存根添加rtpSpawn()调用和相关代码。
+下面的示例使用三个参数启动名为myVxApp的应用程序：
+    void usrRtpAppInit (void)
+        {
+        char * vxeName = "c:/vxApps/myVxApp/PPC32diab/myVxApp.vxe";
+        char * argv[5];
+        RTP_ID rtpId = NULL;
+        /* set the application's arguments */
+        argv[0] = vxeName;
+        argv[1] = "first";
+        argv[2] = "second";
+        argv[3] = "third";
+        argv[4] = NULL;
+        /* Spawn the RTP. No environment variables are passed */
+        if ((rtpId = rtpSpawn (vxeName, argv, NULL, 220, 0x10000, 0, 0)) == NULL)
+            {
+            printErr ("Impossible to start myVxApp application (errno = %#x)",
+            errno);
+            }
+        }
+
+注意，在这个示例中，myVxApp.vxe应用程序可执行文件以c:\vxApps\myVxApp\PPC32diab存储在主机系统上。
+可执行文件也可以存储在目标系统的ROMFS中，在这种情况下，标识可执行文件的赋值语句如下所示：
+char * vxeName = "/romfs/myVxApp.vxe";
+
+3.13 RTP程序符合解析
