@@ -88,10 +88,10 @@ C++初始化
 ■检查ENOSYS是否已设置，并作出适当响应。对于系统调用，这个errno表示内核中没有包含所需的支持组件。
 ■释放由初始化函数创建或获得的所有资源。
 ■使用EDR_USER_FATAL_INJECT注入宏来报告错误。如果系统已经配置了错误检测和报告工具，则将错误记录在错误日志中（并且系统根据工具的配置方式对错误作出响应）。如果系统尚未配置错误检测和报告工具，则尝试通过串行线将消息打印到主机控制台。例如：
-if (mutex = semMCreate (SEM_Q_PRIORITY | SEM_INVERSION_SAFE)) == NULL)
-{
-EDR_USR_FATAL_INJECT (FALSE, "myLib: cannot create mutex. Abort.");
-}
+    if (mutex = semMCreate (SEM_Q_PRIORITY | SEM_INVERSION_SAFE)) == NULL)
+    {
+    EDR_USR_FATAL_INJECT (FALSE, "myLib: cannot create mutex. Abort.");
+    }
 有关更多信息，请参见RTPS、P.359的其他13.7个错误处理选项。
 共享库和插件删除
 共享库和插件在唯一（最后一个）使用它们的进程退出时从内存中删除。当唯一使用它的应用程序调用插件上的dlclose()时，插件也可以显式终止。
@@ -104,5 +104,229 @@ EDR_USR_FATAL_INJECT (FALSE, "myLib: cannot create mutex. Abort.");
 静态库（归档）由应用程序可以使用的函数和数据组成，就像共享库一样。然而，当在构建时将应用程序链接到静态库时，链接器会将对象代码（在.o文件中）从库复制到可执行文件中——它们是静态链接的。
 另一方面，对于共享库，链接器不执行此复制操作（而是将关于共享库的名称及其运行时位置的信息添加到应用程序中）。
 VxWorks开发环境提供了构建静态库（归档）的简单机制，包括一组有用的默认makefile规则。在Workbench和命令行都可以用来构建静态库。
+
+4.5 共享库开发
+共享库是由应用程序可以使用的函数和数据组成的，就像静态库一样。然而，当应用程序在构建时链接到共享库时，链接器不将对象代码从库复制到可执行文件中，和静态链接不同。相反，它将共享库名称（其共享对象名称）及其运行时位置（如果使用适当的编译器选项）的信息复制到应用程序中。此信息允许运行时动态链接器自动定位和加载应用程序的共享库。
+一旦由动态链接器加载到内存中，共享库就被保存在可被所有应用程序访问的内存部分中。使用共享库的每个应用程序都获得私有数据的自己的副本，私有数据存储在自己的内存空间中。当引用共享库的最后一个应用程序退出时，该库将从内存中删除。
+使用带有wrtool或Workbench的共享库项目来创建共享库。
+注意：使用共享库的应用程序必须作为动态可执行文件构建，以便在它们的映像中包括动态链接器。动态链接器在运行时执行共享库和应用程序的绑定。有关更多信息，请参阅4.11 RTP应用程序开发以与共享库一起使用，第60页。
+注意：为VxWorks构建的代码只有在基于相同的VSB配置（具有相同的层和版本集）时才是二进制兼容的。此外，内核C++代码必须用与VxWorks映像相同的编译器来构建。
+注意：Coldfire架构不支持共享库和插件。
+
+动态链接器
+VxWorks中的动态链接特性基于UNIX和相关操作系统中的等效功能。它使用UNIX标准的ELF二进制可执行文件格式的特性，并且使用ELF  ABI标准的许多特性，尽管由于技术原因它不是完全符合ABI的。动态链接器的源代码来自NetBSD，带有特定于VxWorks的修改。它为插件提供dlopen( )，以及其他标准特性。
+作为动态可执行文件构建的应用程序包含一个动态链接器库，该库提供在运行时定位、读取和编辑动态共享对象的代码（不同于UNIX，其中动态链接器本身是共享库）。动态链接器包含一个构造函数，该函数在过程执行的早期（在其实例化阶段）调度其初始化。它读取共享库的列表和关于可执行文件的其他信息，并使用该信息制作将要加载的共享库的列表。在读取每个共享库时，查找更多的动态信息，以便最终加载程序及其库所需的所有代码和数据。动态链接器作出特殊安排以在进程之间共享代码，将共享代码放在共享内存区域中。
+
+与位置无关的代码：PIC
+动态共享对象以一种特殊的方式编译成位置无关代码（PIC）。这种类型的代码被设计成只需要相对较少的更改就可以适应不同的负载地址。一个称为全局偏移表（GOT）的间接表用于访问所有全局函数和数据。使用给定动态共享对象的每个进程都具有库的GOT的私有副本，并且私有GOT包含指向共享代码和数据以及私有数据的指针。当PIC必须使用变量的值时，它从GOT中获取指向该变量的指针并取消引用。这意味着当来自共享对象的代码跨进程共享时，相同的代码可以获取相似变量的不同副本。动态链接器负责初始化和维护GOT。
+
+关于共享库名称和ELF记录
+为了使动态链接器确定RTP应用程序需要共享库，应用程序必须以可执行文件包括共享库项目的方式构建。
+共享库的名称（它的共享对象名称）必须在构建共享库本身时首先定义。这将在库的二进制文件中创建具有共享对象名称的ELF SONAME记录。因此，共享对象名称通常被称为SoNAME。
+当应用程序作为动态对象构建并在构建时根据共享库链接时，共享对象名称被添加到应用程序可执行文件中。这将创建一个ELF NEEDED记录，该记录包括最初在库的SONAME记录中定义的名称。为应用程序链接到的每个共享库创建一个NEEDED记录。
+应用程序的NEEDED记录在运行时被动态链接器用来标识它所需要的共享库。动态链接器按照遇到所需记录的顺序加载共享库。它以加载的相反顺序执行每个共享库中的构造函数。
+（有关动态链接器搜索共享库的顺序的信息，请参阅指定共享库位置：选项和搜索顺序，p.52）
+注意，如果动态共享对象（库和插件）依赖于其他动态共享对象，那么它们也可以具有NEEDED记录。
+有关开发过程的信息，请参阅为共享库创建共享对象名称，p.51和4.11 RTP应用程序开发，以便与共享库一起使用，p.60。有关显示ELF记录（包括SONAME和NEEDED）的示例，请参阅使用readelf检查动态ELF文件，p.58。
+
+为共享库创建共享对象名称
+必须使用共享对象名创建每个共享库，该对象名用作库的运行时名称。共享对象名与其他机制一起用于在运行时定位库，还可以用于标识库的不同版本。
+有关共享对象名称的更多信息，请参阅关于共享库名称和ELF记录，p.50。有关标识共享库的运行时位置的信息，请参阅4.6共享库位置和运行时加载，p.52。
+请注意，插件不需要共享对象名称。有关插件的信息，请参阅4.12插件开发P.61。
+
+定义共享对象名称和版本的选项
+共享对象名称和版本可以用以下方法定义：
+■默认情况下，Wind River Workbench使用共享库文件名作为共享对象名。可以使用SHAREDLIB_VERSION宏设置版本号；默认情况下不设置该宏。
+■对于VxWorks命令行构建环境，名称和版本使用LIB_BASE_NAME和SL_VERSION宏。默认情况下，将创建动态共享库的一个版本实例（即，libName.so.1）。
+■编译器的.me标志也可以用来设置共享对象名。当构建库时，共享对象名存储在ELF SONAME记录中。有关使用共享库版本的信息，请参阅使用不同版本的共享库，p.52。
+
+匹配共享对象名称和共享库文件名
+共享对象名称必须与共享库对象文件本身的名称匹配，更不用说版本扩展名。也就是说，基名称和.SO扩展必须匹配。在下面的示例中，-soname编译器选项将库的运行时名称标识为libMyFoo.so.1，因此它也被定义为使用输出文件libMyFoo.so创建的库的版本一：
+    dplus -tPPCEH:rtp -Xansi -XO -DCPU=PPC32 -DTOOL_FAMILY=diab -DTOOL=diab -Xpic
+    -Xswitch-table-off -Wl, -Xshared -Wl, -Xdynamic -soname=libMyFoo.so.1
+    -L$(WIND_BASE)/target/usr/lib/ppc/PPC32/common/PIC -lstlstd
+    PPC32diab/foo1.sho PPC32diab/foo2.sho -o libMyFoo.so
+如果SONAME信息和文件名不匹配，则动态链接器将无法定位库。
+有关显示共享对象名称的信息，请参阅使用readelf检查动态ELF文件，p.58。
+
+使用不同版本的共享库
+除了在运行时由动态链接器用来定位共享库之外，共享对象名称（sonames）还可以用于标识供不同应用程序使用的不同版本的共享库。
+例如，如果需要修改libMyFoo以支持新应用程序，但方式会使其与旧应用程序不兼容，则只需在重新编译库时更改版本号，并将新程序与新版本链接即可。如果运行时共享库的原始版本是libMyFoo.so.1，那么您将使用libMyFoo.so.2构建新版本，并将新应用程序链接到该版本（然后将新的库添加到ELF NEEDED记录中）。然后，例如，您可以将libMyFoo.so.1、libMyFoo.so.2以及新旧应用程序都安装在目标上的公共ROMFS目录中，它们都将正常工作。
+有关创建共享对象名称的更多信息，请参阅为共享库创建共享对象名称，p.51。
+
+4.6 运行时共享库的位置和加载
+动态链接器必须能够在运行时找到共享库。它使用存储在动态应用程序中的共享对象名称来标识共享库文件，但是它也需要关于文件位置的信息（在目标系统、主机或网络上）。
+在运行时有多种机制用于标识共享库的位置。此外，可以指示动态链接器在启动时加载一组库，而不是在加载需要它们的应用程序（即，预加载共享库）时。
+
+指定共享库位置：选项和搜索顺序
+结合共享库的共享对象名称（在ELF  SONAME记录中），动态链接器可以使用环境变量、配置文件、编译的位置信息和默认位置来查找其应用程序所需的共享库。
+在确定尚未加载所需的库之后，动态链接器按照列出的顺序在以下机制标识的目录中搜索它们：
+1，VxWorks环境变量LD_LIBRARY_PATH。有关更多信息，请参见使用LD.LabyLogyPATH环境变量P.53。
+2，有关更多信息，请参阅使用ld.so.conf配置文件，p.54。
+3，应用程序可执行文件中的ELF RPATH记录（使用–rpath编译器选项创建）。有关更多信息，请参见使用ELF RPATH记录P.54。
+4，与应用程序文件所在的目录相同的目录。有关更多信息，请参见使用应用程序目录P.54。
+此外，VxWorks LD_PRELOAD环境变量可用于标识一组要在启动时加载的库，然后再加载任何其他共享库。有关这方面的更多信息，请参见预加载共享库P.55。
+注意，动态链接器按照遇到所需记录的顺序加载共享库。它以加载的相反顺序执行每个共享库中的构造函数。
+
+使用LD_LIBRARY_PATH环境变量
+LD_LIBRARY_PATH环境变量可用于指定应用程序启动时的共享库位置。如果设置了，它是动态链接器用于定位库的第一个机制（参见指定共享库位置：选项和搜索顺序，p.52）。LD_LIBRARY_PATH环境变量作为其他机制的替代或作为覆盖它们的方法很有用。有关环境变量的信息，请参阅RTP和环境变量，第19页。
+注意：如果文件没有存储在目标系统上，那么从目标本身的角度来看，路径必须是有效的。有关这方面的信息，请参阅11.4远程文件系统访问VxWorks，p.294。
+注意：对于Windows主机，必须使用正斜杠（或双反斜杠）作为路径分隔符。即使当可执行文件存储在主机系统上时，情况也是如此。
+
+从Kernel Shell中设置LD_LIBRARY_PATH
+例如，使用shell的命令解释器，使用LD_LIBRARY_PATH（在本例中是在rtp exec命令中）的语法如下：
+rtp exec -e "LD_LIBRARY_PATH=libPath1;libPath2" exePathAndName arg1 arg2...
+特别注意，在引号括起来的字符串中没有空格，路径被标识为分号分隔的列表，字符串与rtp exec的可执行参数之间的一个空格是可选的（shell解析器删除命令行中参数之间的空格）。模式）。
+例如，如果共享库存储在库子目录中的目标上的ROMFS中，则命令看起来相当整洁：
+rtp exec -e "LD_LIBRARY_PATH=/romfs/lib" /romfs/app/myVxApp.vxe one two three
+存储在NFS目录中的共享库的命令看起来非常相似，路径从VxWorks上的挂载点开始。有关NFS的信息，请参阅来自VxWorks的11.4远程文件系统访问，p.294和VxWorks 7文件系统程序员指南：网络文件系统。
+在下一个示例中，命令（当然，将在一行中全部键入）标识libc.so.1文件的位置以及主机系统上的自定义共享库文件：
+rtp exec -e
+"LD_LIBRARY_PATH=mars:c:/vsbProjDir/usr/root/diab/bin;
+mars:c:/wrwb_demo/RtpAppShrdLib/lib/SIMPENTIUMdiab"
+mars:c:/wrwb_demo/RtpAppShrdLib/app/SIMPENTIUM/bin/myVxApp.vxe one two three
+注意，在这个示例中，路径包括主机名（在本例中为mars），这对于非NFS网络文件系统来说是必需的。有关这方面的更多信息，请参阅来自VxWorks的11.4远程文件系统访问，p.294。
+
+从应用程序代码中设置LD_LIBRARY_PATH路径
+下面的代码片段说明从应用程序代码设置LD_LIBRARY_PATH，这必须在生成需要指定库的任何RTP应用程序之前完成：
+#include <envLib.h>
+...
+putenv("LD_LIBRARY_PATH=/nfsdir/foo/libs");
+
+使用配置文件ld.so.conf
+第二优先机制为识别的位置配置文件和共享库（Specifying Shared Library Locations: Options and Search Order, p.52）。
+在一个简单的列表ld.so.conf文件路径，通过线。使用井号（#）的设计可以用在左边缘线的评论。动态链接的默认外观ld.so.conf在同一目录作为应用可位于其中。因此，指定的位置ld.so.conf与VxWorks的LD_SO_CONF会议等环境变量。信息关于环境变量和环境变量，RTPs and Environment Variables, p.19。
+
+使用ELF RPATH路径记录
+第三优先机制为识别的位置是ELF共享库的路径记录在应用程序的可执行文件（指定共享库湖的位置：选择和搜索命令节）。
+如果路径是在ELF文件记录创建的应用是建立在–rpath连接器选择确定在运行时共享库的位置。例如，下面的“确定subdirectory Romfs文件系统库中的位置：为共享库
+-Wl,-rpath /romfs/lib
+注：RPATH路径使用的是不同的风河风河GNU Diab编译器和编译器。在后者，平等登录必须使用（=）在路径的路径和名称。
+
+使用应用程序同目录
+如果没有其他的基于定位到的一个共享库，动态链接检查目录和应用程序本身的目录。
+VxWorks默认文件系统，创建两个应用程序和运行时共享库的可执行文件相同的目录中的内容分析（或任何文本，它运行的应用程序在开发过程中。Workbench项目不同，在不同的应用程序和创建共享库目录。
+
+预加载共享库
+加载共享库的默认，是时候让他们的应用使用的是加载。有两个这样的机制可以用于预先加载库的正常加载预压过程：使用环境变量和LD_PRELOAD使用虚拟应用程序。
+
+预加载的预加载共享库与LD_PRELOAD
+在VxWorks环境变量LD_PRELOAD预紧可以用来识别一组库加载在启动时，在任何其他共享库（这是加载，预加载它们）。的变量可以设置一个semicolon分隔列表的共享库的绝对路径是被预加载。例如：
+/romfs/lib/libMyFoo.so.1;c:/proj/lib/libMyBar.so.1;/home/moimoi/proj/libMoreStuff.so.1
+典型的使用A预加载共享库是覆盖定义的共享库是加载在正常的人。在由预加载符号定义符号定义precedence库带过或由任何其他应用程序的共享库。
+注意，即使预加载共享库是删除从内存，如果没有立即让他们使用RTP协议的应用。让他们在虚拟内存的方法(Pre-Loading Shared Libraries with a Dummy RTP Application, p.55) （RTPs and Environment Variables, p.19）。
+
+使用空的RTP项目预加载共享库
+启动速度可以增加使用虚拟库加载所有必需的RTP在RTP的提前，这样其他的时间花在不启动应用程序。一个空的加载共享库的RTP的应建立所有必要的技术要求，应设计，以保持在该系统的用户至少直到最后的开始加载库的引用计数机制的核心，这方便于库卸载。
+
+4.7 惰性绑定与共享库
+延迟绑定（也称为延迟重定位或延迟绑定）选项将延迟共享库符号的绑定，直到应用程序实际使用它们，而不是在加载库时。
+默认情况下，动态链接器在加载对象时计算动态共享对象引用的所有函数和数据的地址。动态链接器通过延迟计算可以节省一些计算函数地址的工作。
+直到第一次调用函数。如果函数从未被调用，则动态链接器不需要计算它的地址。当应用程序仅使用库中的函数子集时，该特性可以提高大型库的性能。但是，它会导致非实时潜伏期，因此默认情况下无法启用。
+要使动态链接器延迟绑定符号直到它们首次被应用程序使用，请使用以下编译器选项（与任一编译器一起）：
+-Xbind-lazy
+注意，在启动应用程序以选择或禁用延迟绑定时，可以使用VxWorks环境变量，而不管编译器选项是否与共享库一起使用。LD_BIND_NOW和LD_BIND_LAZY都覆盖编译器，并以以下方式操作：
+如果LD_BIND_LAZY设置（甚至没有）绑定是懒惰的。
+如果将LD_BIND_NOW设置为非空字符串，则绑定立即生效。如果没有设置，或者设置为零，绑定是懒惰的。
+如果两个都被设置，LD_BIND_LAZY优先。
+变量的实际值并不重要。
+有关延迟绑定和插件的讨论，请参阅使用带有插件的延迟绑定，第62页。
+
+4.8 共享库运行时信息
+RTP应用程序可以从shell开始，并在后台运行，以便shell命令可以用来打印有关共享库使用的信息。
+下面的两个命令说明了在后台启动tmPthreadLib.vxe应用程序的不同方式，以便shell可以用于其他命令：
+[vxWorks *]# tmPthreadLib.vxe 2 &
+Launching process 'tmPthreadLib.vxe' ...
+Process 'tmPthreadLib.vxe' (process Id = 0x8109a0) launched.
+Attachment number for process 'tmPthreadLib.vxe' is %1.
+和
+[vxWorks *]# rtp exec -e "LD_LIBRARY_PATH=/romfs/lib" tmPthreadLib.vxe 2 &
+Launching process 'tmPthreadLib.vxe' ...
+Process 'tmPthreadLib.vxe' (process Id = 0x807c90) launched.
+Attachment number for process 'tmPthreadLib.vxe' is %1.
+然后，RTP命令可以用来显示有关进程的信息。在这种情况下，它显示了有关上述两个命令中的第一个命令开始的过程的信息。
+[vxWorks *]# rtp
+NAME ID STATE ENTRY ADDR OPTIONS TASK CNT
+-------------------- ---------- --------------- ---------- ---------- --------
+./tmPthreadLib.vxe 0x8109a0 STATE_NORMAL 0x10002360 0x1 1
+shl命令显示有关共享库的信息。REF CNT列提供关于每个库的客户端数量的信息。共享库名称左边的<符号表示未显示完整路径。
+在本例中，libc.so.1与threadLibTest.so.1不在同一位置；它位于与可执行文件相同的目录中。
+[vxWorks *]# shl
+SHL NAME ID TEXT ADDR TEXT SIZE DATA SIZE REF CNT
+-------------------- ---------- ---------- ---------- ---------- -------
+< threadLibTest.so.1 0x30000 0x10031000 0x979c 0x6334 1
+./libc.so.1 0x40000 0x10043000 0x5fe24 0x2550c 1
+shl info命令提供完整路径。
+
+4.9 使用共享库可能遇到的问题以及解决方法
+共享库和使用它们的应用程序之间的交互问题可能由于各种原因而发生。readelf工具在纠正它们方面是有用的。
+未找到共享库
+与应用程序无法定位libc.so.1或某些其他运行时共享库有关的失败将从外壳中显示如下：
+[vxWorks *]# tmPthreadLib.vxe 2 &
+Launching process 'tmPthreadLib.vxe' ...
+Process 'tmPthreadLib.vxe' (process Id = 0x811000) launched.
+Attachment number for process 'tmPthreadLib.vxe' is %1.
+Shared object "libc.so.1" not found
+当无法找到共享库时，请确保其位置已被正确标识或位于与可执行文件相同的位置（4.6 Shared Library Location and Loading at Run-time，p.52）。如果共享库没有存储在目标上，还要确保可以从目标访问它们。
+错误启动应用程序
+如果应用程序以错误分配argv[0]开始，或者根本没有分配，则可能会损害任何相关联的共享库的行为。动态链接器使用argv[0]唯一地标识可执行文件，如果定义不正确，则链接器可能无法将可执行文件与共享库正确匹配。例如，如果在不指定argv[0]的情况下多次启动应用程序，则可以每次重新加载共享库；或者如果对于具有相同文件名但不同位置的可执行文件缺少路径，则可以针对一个或多个可执行文件加载错误的共享库。
+此问题仅适用于以rtpSpawn()开始的应用程序，其中涉及argv[0]的规范。它不适用于从具有rtpSp()的shell启动的应用程序（对于C解释器）或使用rtp exec（对于命令解释器）启动的应用程序。
+注意，如果应用程序以停止模式启动，则共享库符号不可见。在执行_start()(编译器提供的应用程序的入口点)调用动态链接器之前，尚未注册共享库符号。（有关符号注册的信息，参见3.13申请和符号注册，第40页。）
+使用RealEfter检查动态ELF文件
+readelf工具可用于从可执行文件或动态共享对象（如共享对象名称和路径）中提取动态记录。这对于确定构建是否已经创建了所需的ELF记录，尤其是共享库中的SONAME记录和使用库的动态RTP应用程序中的NEEDED记录（以及应用程序中的RPATH记录）特别有用。
+使用适合目标体系结构的readelf版本；例如，在PowerPC文件上使用readelfppc。
+-d标志使readelf按标记类型列出动态记录，例如NEEDED、SONAME和RPATH。（有关如何使用这些记录的信息，请参阅4.6运行时共享库位置和加载，p.52和使用ELF RPATH记录，p.54）。
+
+readelf查看RTP程序例子
+下面的示例显示了关于已经链接到MySharedLibrary.so.1和libc.so.1的RTP应用程序的信息（如NEEDED记录所示）。RPATH记录表明动态链接器应该在运行时查找/romfs/lib中的库。
+C:\somePlace>readelfpentium -d MyRTP.vxe
+Dynamic section at offset 0x8554 contains 19 entries:
+Tag Type Name/Value
+0x00000001 (NEEDED) Shared library: [MySharedLibrary.so.1]
+0x00000001 (NEEDED) Shared library: [libc.so.1]
+0x0000000f (RPATH) Library rpath: [/romfs/lib]
+0x00000004 (HASH) 0xc0
+0x00000006 (SYMTAB) 0x424
+0x0000000b (SYMENT) 16 (bytes)
+0x00000005 (STRTAB) 0x9a4
+0x0000000a (STRSZ) 1268 (bytes)
+0x00000017 (JMPREL) 0x15f0
+0x00000002 (PLTRELSZ) 160 (bytes)
+0x00000014 (PLTREL) REL
+0x00000016 (TEXTREL) 0x0
+0x00000003 (PLTGOT) 0x18680
+0x00000011 (REL) 0xe98
+0x00000012 (RELSZ) 1880 (bytes)
+0x00000013 (RELENT) 8 (bytes)
+0x00000015 (DEBUG) 0x0
+0x00000018 (BIND_NOW)
+0x00000000 (NULL) 0x0
+
+readelf查看共享库的例子
+C:\WindRiver\gnu\4.1.2-vxworks-6.6\x86-win32\bin>readelfpentium -d \
+C:\workspace3\MySharedLibrary\SIMPENTIUMdiab_RTP\MySharedLibrary\Debug\mySharedLibrary.so.1
+Dynamic section at offset 0x6c8 contains 17 entries:
+Tag Type Name/Value
+0x0000000e (SONAME) Library soname: [MySharedLibrary.so.1]
+0x00000004 (HASH) 0xa0
+0x00000006 (SYMTAB) 0x218
+0x0000000b (SYMENT) 16 (bytes)
+0x00000005 (STRTAB) 0x3e8
+0x0000000a (STRSZ) 396 (bytes)
+0x00000017 (JMPREL) 0x5bc
+0x00000002 (PLTRELSZ) 8 (bytes)
+0x00000014 (PLTREL) REL
+0x00000016 (TEXTREL) 0x0
+0x0000000c (INIT) 0x6b8
+0x0000000d (FINI) 0x6c0
+0x00000003 (PLTGOT) 0x1774
+0x00000011 (REL) 0x574
+0x00000012 (RELSZ) 72 (bytes)
+0x00000013 (RELENT) 8 (bytes)
+0x00000000 (NULL) 0x0
+注意，应用程序的需要记录（共享库名称）中的每一个信息都是在应用程序在构建时与库链接时从相应的共享库SOName记录中派生出来的。
+有关共享对象名称、共享库版本和运行时共享库的信息，请参阅为共享库创建共享对象名称、P.51、4.6共享库位置和运行时加载、P.52和使用不同版本的共享库P.52。
+
+
 
 
