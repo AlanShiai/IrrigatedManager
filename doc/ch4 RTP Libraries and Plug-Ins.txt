@@ -327,6 +327,143 @@ Tag Type Name/Value
 注意，应用程序的需要记录（共享库名称）中的每一个信息都是在应用程序在构建时与库链接时从相应的共享库SOName记录中派生出来的。
 有关共享对象名称、共享库版本和运行时共享库的信息，请参阅为共享库创建共享对象名称、P.51、4.6共享库位置和运行时加载、P.52和使用不同版本的共享库P.52。
 
+4.10 在Windows主机上使用共享库
+使用FTP（默认方法）从Windows主机系统加载共享库可能非常慢。作为替代方案，可以在VxWorks系统映像中包括具有ROMFS文件系统的共享库，或者可以使用NFS向目标系统提供对主机上的共享库的访问。
+虽然ROMFS对于已部署的系统很有用，但是使用它进行开发意味着很长的编辑-编译-调试周期，因为无论何时您想要使用修改的代码，都必须重新构建系统映像并重新启动目标。因此，在开发期间，最好在主机文件系统上维护共享库，并让目标从网络加载它们。NFS文件系统提供比ftp或HostFs文件系统快得多的加载。
+使用NFS
+要使用NFS，您可以在Windows上安装NFS服务器，或者使用对运行NFS服务器的UNIX机器的远程访问。如果具有远程访问，则可以使用UNIX机器引导目标并导出其文件系统。
+在Windows上安装NFS
+如果选择安装NFS服务器，则可以使用Microsoft免费提供的服务器作为其Windows Services for UNIX(SFU)包的一部分。它可以从http://www.microsoft.com下载。完整的SFU 3.5包是一个223MB的自提取可执行文件，可以下载，但是如果您只安装NFS服务器，那么在硬盘上需要大约20MB。
+要安装Microsoft NFS服务器，请运行SFU setup.exe并仅选择NFS Server。安装程序提示您安装NFS用户同步，您应该这样做。相应的Windows服务已安装并自动启动。
+将Windows NFS服务器配置为与VxWorks目标一起使用：
+1. 在Windows资源管理器中，选择您的工作区，并使用上下文菜单选择Share...
+2. 选择NFS共享选项卡。
+3. 输入共享此文件夹，共享名称=工作区
+4. 启用允许匿名访问。这为VxWorks目标提供了对共享的只读访问，而无需设置用户映射或访问权限。
+用NFS配置VxWorks
+在使用NFS加载共享库之前，还必须使用NFS工具重新配置VxWorks。
+添加INCLUDE_NFS_MOUNT_ALL组件提供了所有必要的特性。在重建内核映像之前，请确保断开了目标连接的目标。
+测试NFS连接
+当您重新启动目标时，它会自动挂载主机导出的所有NFS共享。要验证VxWorks是否可以访问NFS挂载，请使用内核shell中的devs和ls “/Workspace”命令。
 
+4.11 与共享库一起使用的RTP应用程序开发
+使用共享库的RTP应用程序有时被称为动态应用程序。要创建能够利用共享库的应用程序，必须将应用程序编译为动态可执行文件并将其链接到所需的共享库。
+如果应用程序具有将被共享库引用的符号，那么必须在构建时以动态链接器将所有符号注册到共享库的动态符号表的方式链接应用程序。然后，当随后加载这些符号时，共享库可以访问这些符号。如果它不以这种方式链接，那么共享库将不能访问它所需要的所有符号，并且会生成运行时错误。
+C和C++代码之间的调用需要特别考虑，关于这方面的信息，请参见 5.5 Calls Between C and C++ Code, p.71.。
+有关在运行时定位共享库的各种选项（包括使用编译器选项）的信息，请参阅 4.6 Shared Library Location and Loading at Run-time，p.52）。
+动态可执行程序的编译器选项
+使用以下编译器选项将应用程序构建为动态可执行文件：
+■ -Xdynamic for the Wind River Diab Compiler.
+■ -non-static for the Wind River GNU compiler.
+使用-l链接器选项将应用程序链接到它需要的每个共享库。
+以这种方式构建应用程序将动态链接器嵌入到应用程序中，并为链接到的每个共享库创建ELF NEEDED记录（基于共享库的SONAME记录；有关更多信息，请参阅4.6 Shared Library Location and Loading at Run-time，p.52）。
 
+4.11 插件开发
+插件是一种类似于共享库的动态共享对象。插件可用于添加功能或通过加载替换插件而不是替换整个应用程序来修改程序的操作。
+插件和共享库的主要区别在于它们如何与RTP应用程序一起使用。插件由应用程序按需（以编程方式）加载，而不是在应用程序加载时由动态链接器自动加载。因此，应用程序使用插件的开发要求与应用程序使用共享库的开发要求不同。但是，如果需要共享库的应用程序在构建时没有链接到它，那么可以将它用作插件。
+注意：如果需要共享库的应用程序在构建时没有链接到它，那么可以将共享库用作插件。
+注意：使用插件的应用程序必须作为动态可执行文件构建，以便在它们的映像中包括动态链接器。动态链接器在运行时执行插件和应用程序的绑定。有关更多信息，请参阅4.13 RTP Application Development for use With Plug-Ins, p.61.。
+注意：为VxWorks构建的代码只有在基于相同的VSB配置（具有相同的层和版本集）时才是二进制兼容的。此外，内核C++代码必须用与VxWorks映像相同的编译器来构建。
 
+4.13用于插件的RTP应用程序开发
+开发使用插件的RTP应用程序和使用共享库的RTP应用程序之间的关键区别在于对应用程序进行编码以加载插件，以及应用程序和插件是如何链接的。
+差异如下：
+■使用插件的应用程序必须进行API调用以加载插件，而动态链接器则自动为需要该插件的应用程序加载共享库。
+■在构建时，使用插件的应用程序不能链接到该插件，而使用共享库的应用程序必须链接到该库。不将应用程序链接到插件意味着没有为应用程序中的共享对象创建ELF NEEDED记录，并且动态链接器在运行时加载相关应用程序时不会尝试加载共享对象。有关ELF NEEDED记录在使用共享库的应用程序中的角色的信息，请参阅4.6 Shared Library Location and Loading at Run-time, p.52.。
+使用插件的RTP应用程序的代码要求
+开发使用插件的RTP应用程序的代码要求如下：
+■包含dlfcn.h头文件。
+■使用dlopen( )加载插件并访问其功能和数据。
+■使用dlsym( )将符号（在共享对象中定义）解析为其地址。
+■当插件不再需要时，使用dlclose( )。为这些调用提供API的rtld库自动链接到动态可执行文件中。
+有关说明这些需求的实现的示例，请参阅Example of
+Dynamic Linker API Use, p.63 and Example RTP Application That Uses a Plug-In, p.63。
+注意，C和C++代码之间的调用需要特别考虑，关于这方面的信息，请参见5.5 Calls Between C and C++ Code, p.71.。
+在运行时定位插件
+RTP应用程序可以通过用于加载插件的dlopen()调用显式地标识用于动态链接器的插件的位置。它通过提供到插件的完整路径（如使用Example RTP Application That Uses a Plug-In, p.63).）来实现这一点。
+如果在dlopen()调用中只使用插件名称，而不使用完整路径，则动态链接器依赖于与查找共享库相同的机制。有关这方面的信息，请参阅4.6 Shared Library Location and Loading at Run-time, p.52.。
+使用插件的惰性绑定
+dlopen()的第二个参数定义是否对未定义的符号使用惰性绑定。如果使用RTLD_NOW，则在调用返回之前解析所有未定义的符号（或者如果未解析，则调用失败）。如果使用RTLD_LAZY，则符号在从动态应用程序引用时解析，并执行共享对象代码。RTLD_GLOBAL可以可选地与RTLD_NOW或RTLD_LAZY一起为逻辑或，在这种情况下，在共享对象中定义的外部符号对于随后加载的任何动态共享对象都是可用的。
+有关惰性绑定和共享库的讨论，请参阅4.7 Lazy Binding and Shared Libraries, p.55.。
+
+动态链接器API使用示例
+下面的代码片段说明了使用插件所需的API的基本用途：
+void *handle;
+void * addr;
+void (*funcptr)();
+handle = dlopen("/romfs/lib/myLib.so", RTLD_NOW);
+addr = dlsym(handle, "bar");
+funcptr = (void (*)())addr;
+funcptr();
+dlclose(handle);
+
+使用插件的示例RTP应用程序
+例如，假设您有一个网络应用程序，并且希望能够添加对新数据报协议的支持。您可以将数据报协议的代码放入插件中，并使用单独的配置协议按需加载它们。应用程序可能看起来如下：
+#include <dlfcn.h>
+[...]
+const char plugin_path[] = "/romfs/plug-ins";
+void *attach(const char *name)
+{
+void *handle;
+char *path;
+size_t n;
+n = sizeof plugin_path + 1 + strlen(name) + 3;
+if ((path = malloc(n)) == -1) {
+fprintf(stderr, "can't allocate memory: %s",
+strerror(errno));
+return NULL;
+}
+sprintf(path, "%s/%s.so", plugin_path, name);
+if ((handle = dlopen(path, RTLD_NOW)) == NULL)
+fprintf(stderr, "%s: %s", path, dlerror());
+free(path);
+return handle;
+}
+void detach(PROTO handle)
+{
+dlclose(handle);
+}
+[...]
+int
+send_packet(PROTO handle, struct in_addr addr, const char *data, size_t len)
+{
+int (*proto_send_packet)(struct in_addr, const char *, size_t);
+/* find the packet sending function within the plugin and use it to send the
+packet as requested */
+if ((proto_send_packet = dlsym(handle, "send_packet")) == NULL) {
+fprintf(stderr, "send_packet: %s", dlerror());
+return -1;
+}
+return (*proto_send_packet)(addr, data, len);
+}
+
+假设您实现了一个名为“reliable”的新协议。你会编译代码为PIC，然后使用-Xdynamic -Xshared标志（带有Wind River Diab编译器）将它链接到一个名为reliable.so（类似的GNU标志将是-non-static和-shared）的共享对象中。你安装了reliable.so的。所以，作为/romfs/plug-ins/reliable.so在目标上。
+当配置请求包到达套接字时，应用程序将采用协议的名称（reliable）并调用attach()。attach(()函数使用dlopen()加载名为/romfs/plug-ins/reliable.so的共享对象。随后，当必须使用新协议将数据包发送到特定地址时，应用程序将调用send_packet()，其中带有attach()的返回值、数据包地址和数据参数。send_packet（）函数在插件中查找特定于协议的send_packet（）函数，并用地址和数据参数调用它。要卸载协议模块，应用程序调用detach（）。
+插件管理功能
+表4-1中描述了应用程序管理插件的功能。
+插件管理功能
+功能描述
+dlopen( ) 加载插件。
+dlsym( )  查找插件中的函数或数据元素。
+dlclose( ) 卸载一个插件（如果没有其他引用）。
+dlerror( ) dlopen( ), dlclose( ) or dlsym( )中返回错误后返回错误字符串。
+有关这些API的更多信息，请参见VxWorksApple API引用中的rtld库条目。
+
+建立使用插件的RTP应用程序的要求
+编译使用插件作为动态可执行文件的任何应用程序，即，使用Wind River Diab编译器-Xdynamic选项或GNU-non-static选项。这将将应用程序链接到动态链接器。静态可执行文件不能加载插件，因为它们没有嵌入加载程序（它提供dlopen()等等）。
+如果应用程序具有由插件引用的符号，则使用以下链接器选项来强制动态链接器在加载时注册应用程序的符号：
+-Wl,-E or -Wl,-Xexport-dynamic动态与风河DIABR工具链。注意，-E或-Xexport-dynamic可以直接与链接器一起使用，但是它们要求编译器将-Wl传递给链接器。
+-E or -export-dynamic 使用GNU工具链的-E-E或导出动态。
+在构建应用程序时，不要将应用程序链接到插件。如果它是针对插件链接的，则动态链接器将尝试在应用程序启动时加载它（如使用共享库），如果为此操作（即对于共享库）适当地定义了共享对象名和运行时路径，则动态链接器将尝试加载它。
+
+4.14 VxWorks运行时C共享库libc.so
+VxWorks发行版提供了一个类似于UNIX C运行时共享库的C运行时共享库。VxWorks共享库libc.so提供了应用程序可能需要的所有基本设施。
+它包括由其静态库等价物(libc.a)提供的所有用户端库，但以下除外：
+■ aioPxLib
+■ memEdrLib
+■ networking libraries
+所有动态可执行文件都需要运行时的libc.so.1。当生成动态可执行文件时，GNU和Wind River Diab工具链自动使用相应的构建时共享对象libc.so。
+要构建libc.so和libc.so.1文件，请在VSB项目中选择LANG_LIB_LIBC_LIBC_USER选项。
+对于开发环境，可以使用各种机制向动态链接器提供关于libc.so.1文件的位置的信息。
+对于已部署的系统，libc.so.1文件可以手动复制到任何适当的位置。使动态链接器知道libc.so.1的位置的最方便的方法是将文件存储在与动态应用程序相同的位置，或者在构建应用程序时使用-Wl,-rpath编译器标志。有关更多信息，请参阅4.6 Shared Library Location and Loading at Run-time, p.52.
+注意：注意，默认的C共享库旨在促进开发，但是由于其大小，可能不适合生产系统。
