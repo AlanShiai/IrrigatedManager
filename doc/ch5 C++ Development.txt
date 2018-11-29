@@ -40,3 +40,93 @@ GNU的C++编译器选项控制多实例化的模板是：
 The Wind River Diab编译器RTTI的语言特征，可以用-Xrtti-off的旗帜。
 GNU编译器RTTI的语言特征，可以用“没有禁止RTTI的旗帜。
 
+5.3 VxWorks的C++配置
+默认情况下，VxWorks只包含最小的C++支持。您可以通过添加其他组件来添加C++功能。
+其他一些关于C++的组件
+INCLUDE_CTORS_DTORS 包含内核（默认包含在内核中）
+确保编译器生成的初始化函数，包括C++静态对象的初始化器，在内核启动时调用。
+INCLUDE_CPLUS
+包括C++应用程序的基本支持。典型地，这与INCLUDE_CPLUS_LANG一起使用。
+INCLUDE_CPLUS_LANG
+包括对C++语言特性的支持，如新的、删除的和异常的处理。
+INCLUDE_CPLUS_IOSTREAMS
+包括所有库功能。
+INCLUDE_CPLUS_DEMANGLER
+Dimangle，如果您使用内核shell加载程序，这是有用的，因为它提供了将离散化的符号名称返回到内核外壳符号表查询的功能。如果VxWorks中包括INCLUDE_CPLUS和INCLUDE_SYM_TBL组件，则默认情况下添加此组件。
+也见5.6 Using C++11 With RTPs and Shared Libraries, p.71。
+
+5.4使用C++任务所需的任务生成选项
+任何使用VC++的VxWorks任务都必须用VX_FP_TASK任务选项生成。默认情况下，从Workbench生成的任务自动启用VX_FP_TASK任务。
+注意：当使用C++的任务生成时，无法使用VX_FP_TASK任务选项会导致在运行时难以调试、不可预测的浮点寄存器损坏。C++异常处理程序使用浮点寄存器。VX_FP_TASK选项确保在上下文切换期间正确地保存和恢复浮点寄存器。
+
+5.5 C与C++代码之间的调用
+如果从C代码中引用一个（非重载、全局）C++符号，则必须使用Extn“C”来对C链接进行原型化。
+例如：
+#ifdef __cplusplus
+extern "C" void myEntryPoint ();
+#else
+void myEntryPoint ();
+#endif使用此语法使C符号也可用于C++代码。VxWorks C符号可以自动提供给C++，因为VxWorks的头文件使用这种机制进行声明。
+使用#ifdef构造允许一个单独的头文件同时用于C和C++。
+内核代码
+对于内核代码，当extern "C"不适合用于C++和C代码之间的外部链接时，生成系统会产生错误。
+RTP应用程序代码
+对于RTP应用程序代码，如果未适当地使用extern "C"链接说明符，则导致错误的类型取决于发生的上下文（构建时静态链接、运行时加载以及插件与RTP应用程序的链接等）。
+
+5.6使用C++ 11与RTPS和共享库
+默认情况下，C++ 03库用于RTP应用程序和共享库。还提供了C++ 11库，供GNU编译器使用。在创建RTP应用程序或共享库时，选择对应于所需C++库类型的生成规范。
+有关C++ 11的详细信息，请参阅Dinkum C++11 Libraries Reference.。
+若要使用RTP应用程序和共享库使用C++ 11，必须创建项目并配置VxWorks如下：
+步骤1：创建VSB项目。
+步骤2：配置VSB项目如下：
+1，对于主工具选项，选择GNU，使用PRI_TOOL_processor_arch_version_gnu。
+2，对于应用程序工具选项，使用APP_PRI_archName选择与主工具相同的工具。
+3，对于RTP C++库选项，选择LANG_LIB_CPLUS_CPLUS_USER_2011。然后自动选择标准库（STANDARD_STL）。
+注意：当辅助编译器被设置为GNU时，C++ 11的支持也是可用的，不管你的主要编译器选择。但是，VxWorks 6.9兼容模式中不支持C++ 11的支持。
+步骤3：构建源代码。
+步骤4：创建你的VIP项目，基于你的VSB项目。
+步骤5：添加支持你的应用程序所需的INCLUDE_CPLUS和任何其他C++组件。
+有关更多信息，请参见5.3个VxWorks配置，用于C++、P.70。
+步骤6：构建VxWorks。
+步骤7：基于VSB项目创建RTP或共享库项目。这样做时，确保项目的活动生成规范被设置为C++ 11（vsbName_archNamegnu_C++2011）。
+第8步：使用GNU构建RTP应用程序。
+
+5.7个C++命名空间
+风河和GNU C++编译器都支持命名空间。根据C++标准，可以为自己的代码使用命名空间。
+C++标准还定义了名为STD的命名空间中的系统头文件名。标准要求您指定您将使用的标准头文件中的名称。
+代码示例
+根据最新标准，下面的代码在技术上是无效的，并且不适用于此版本。它是用以前版本的GNU编译器编译的，但不会在风河或GNU C++编译器的当前版本下编译：
+#include <iostream.h>
+int main()
+{
+cout << "Hello, world!" << endl;
+}
+下面的示例提供了三个正确的备选方案，说明C++标准现在将如何表示这段代码。示例用风河或GNU C++编译器编译：
+// Example 1
+#include <iostream>
+int main()
+{
+std::cout << "Hello, world!" << std::endl;
+}
+// Example 2
+#include <iostream>
+using std::cout;
+using std::endl;
+int main()
+{
+cout << "Hello, world!" << endl;
+}
+// Example 3
+#include <iostream>
+using namespace std;
+int main()
+{
+cout << "Hello, world!" << endl;
+}
+
+5.8 使用C++异常处理
+C＋＋异常处理由INCLUDE_CPLUS_LANG组件提供，但它可以被禁用为用户代码。
+若要禁用用户代码的异常处理，请执行以下操作：
+步骤1：在创建VxWorks图像项目（VIP）之前定义环境变量CXX_STL_VARIANT=abrided。
+这确保了正确的（异常禁用）库链接。
+第2步：为编译器选择GNU或-mc++-abr，将-Xc++-abr添加到编译器选项中。
