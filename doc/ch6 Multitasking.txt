@@ -5,3 +5,116 @@ VxWorksÈÎÎñÊÇ²Ù×÷ÏµÍ³±¾ÉíÒÔ¼°×÷Îª½ø³ÌÖ´ÐÐµÄÓ¦ÓÃ³ÌÐòÖÐ´úÂëÖ´ÐÐµÄ»ù±¾µ¥Ôª¡£ÔÚÆäËû²
 Ã¿¸öÈÎÎñ¶¼ÓÐ×Ô¼ºµÄÉÏÏÂÎÄ£¬ÕâÊÇÈÎÎñÃ¿´Î±»ÄÚºËµ÷¶ÈÔËÐÐÊ±¿´µ½µÄCPU»·¾³ºÍÏµÍ³×ÊÔ´¡£ÔÚÉÏÏÂÎÄÇÐ»»ÖÐ£¬ÈÎÎñµÄÉÏÏÂÎÄ±£´æÔÚÈÎÎñ¿ØÖÆ¿é£¨TCB£©ÖÐ¡£ÈÎÎñµÄÉÏÏÂÎÄ°üÀ¨ÖîÈçÓÃ»§ºÍ×éID¡¢Ö´ÐÐÏß³Ì£¨ÈÎÎñµÄ³ÌÐò¼ÆÊýÆ÷£©¡¢CPU¼Ä´æÆ÷¡¢¶¯Ì¬±äÁ¿¶ÑÕ»ºÍº¯Êýµ÷ÓÃµÈÊôÐÔ¡£
 ³ýÁËÉÙÊýÀýÍâ£¬VxWorksµÄ¶Ô³Æ¶à´¦ÀíÆ÷£¨SMP£©ºÍµ¥´¦ÀíÆ÷£¨UP£©ÅäÖÃ¹²ÏíÏàÍ¬µÄAPI¡ª¡ª²î±ð½öÏàµ±ÓÚ¼¸¸öº¯Êý¡£»¹Òª×¢Òâ£¬Ò»Ð©±à³ÌÊµ¼ù¡ª¡ªÀýÈçÒÀÀµÓÚÈÎÎñÓÅÏÈ¼¶¶ø²»ÊÇÏÔÊ½Ëø¶¨µÄÒþÊ½Í¬²½¼¼Êõ¡ª¡ª²»ÊÊºÏSMPÏµÍ³¡£
 ÓÐ¹ØSMP±à³ÌµÄÐÅÏ¢£¬Çë²Î¼û18£¬VxWorks SMP¡£
+
+6.2 VxWorksÏµÍ³ÈÎÎñ
+¸ù¾ÝÆäÅäÖÃ£¬VxWorksÔÚÒýµ¼Ê±Æô¶¯¸÷ÖÖÏµÍ³ÈÎÎñ£¬ÆäÖÐÒ»Ð©ÈÎÎñÊ¼ÖÕÔÚÔËÐÐ¡£
+»ù±¾VxWorksÈÎÎñ
+ÏÂÃæ½«ÃèÊöÓëVxWorksµÄ»ù±¾ÅäÖÃÏà¹ØÁªµÄÒ»×éÈÎÎñ£¬ÒÔ¼°Óë³£ÓÃ¿ÉÑ¡×é¼þÏà¹ØÁªµÄÒ»Ð©ÈÎÎñ¡£
+×¢Òâ£º²»ÒªÔÝÍ£¡¢É¾³ý»ò¸ü¸ÄÕâÐ©ÈÎÎñµÄÓÅÏÈ¼¶¡£ÕâÑù×ö»áµ¼ÖÂ²»¿ÉÔ¤²âµÄÏµÍ³ÐÐÎª¡£
+
+Root Task
+ÈÎÎñÃû³Æ      tRootTask
+ÓÅÏÈÈ¨        0
+´¥·¢ÊÂ¼þ      ÏµÍ³Æô¶¯¡£
+×é¼þ          N/A
+ÃèÊö ¸ùÈÎÎñÊÇÄÚºËÖ´ÐÐµÄµÚÒ»¸öÈÎÎñ¡£¸ùÈÎÎñµÄÈë¿ÚµãÊÇusrRoot(),Ëü³õÊ¼»¯´ó¶àÊýVxWorks¹¤¾ß¡£ËüÉú³ÉÖîÈçÈÕÖ¾ÈÎÎñ¡¢Òì³£ÈÎÎñ¡¢ÍøÂçÈÎÎñºÍtRlogindÊØ»¤½ø³ÌÖ®ÀàµÄÈÎÎñ¡£Í¨³££¬¸ùÈÎÎñÔÚËùÓÐ³õÊ¼»¯Íê³ÉºóÖÕÖ¹¡£
+²Î¿¼          VxWorks 7 BSP and Driver Guide.
+
+Logging Task
+ÈÎÎñÃû³Æ      tLogTask
+ÓÅÏÈÈ¨        0
+´¥·¢ÊÂ¼þ      A LogMsg()´ÓISRÉÏÏÂÎÄ»òÈÎÎñÉÏÏÂÎÄµ÷ÓÃ¡£
+×é¼þ          INCLUDE_LOGGING
+ÃèÊö          VxWorksÄ£¿éÊ¹ÓÃÈÕÖ¾ÈÎÎñÀ´¼ÇÂ¼À´×ÔISRµÄÏµÍ³ÏûÏ¢ºÍÏûÏ¢£¬¶øÎÞÐèÔÚµ±Ç°ÈÎÎñÉÏÏÂÎÄÖÐÖ´ÐÐI/O¡£
+²Î¿¼          11.8 Asynchronous Input/Output, p.313 and the logLib API reference.
+
+Exception Task
+ÈÎÎñÃû³Æ      tExcTask
+ÓÅÏÈÈ¨        0
+´¥·¢ÊÂ¼þ      ´ÓISRÉÏÏÂÎÄµ÷ÓÃexcJobAdd()¡£
+×é¼þ          INCLUDE_EXC_TASK
+ÃèÊö         Òì³£ÈÎÎñ´ú±íISRÖ´ÐÐ×÷Òµ£¨¼´º¯Êýµ÷ÓÃ£©£¬ÒòÎªËüÃÇ²»ÄÜÔÚÖÐ¶Ï¼¶±ðÖ´ÐÐ¡£Ëü±ØÐëÔÚÏµÍ³ÖÐ¾ßÓÐ×î¸ßÓÅÏÈ¼¶¡£
+²Î¿¼          The excLib API reference entry.
+
+Job Task
+ÈÎÎñÃû³Æ      tJobTask
+ÓÅÏÈÈ¨        0
+´¥·¢ÊÂ¼þ      N/A¡£ËùÓÐ×÷Òµ¶¼ÓÉVxWorksÏµÍ³ÉèÊ©ÅÅ¶Ó¡£
+×é¼þ          INCLUDE_JOB_TASK
+ÃèÊö         ÈÎÎñÈÎÎñÖ´ÐÐÈÎÎñ£¬º¯Êý´ú±íÈÎÎñµ÷ÓÃ¡£ËüÔÚµÈ´ýÇëÇóÊ±ÒÔÓÅÏÈ¼¶0ÔËÐÐ£¬²¢¶¯Ì¬µ÷ÕûÆäÓÅÏÈ¼¶ÒÔÆ¥ÅäÇëÇó×÷ÒµÖ´ÐÐµÄÈÎÎñµÄÓÅÏÈ¼¶¡£ÆäÖ÷ÒªÄ¿µÄÖ®Ò»ÊÇ´¦Àí×ÔÉ±ÈÎÎñÉ¾³ý£¨¼´£¬×ÔÎÒÉ¾³ýµÄÈÎÎñ£©¡£
+²Î¿¼          6.13 Task Deletion and Deletion Safety, p.100.
+
+SMP ISR Task
+ÈÎÎñÃû³Æ      tIsrN
+ÓÅÏÈÈ¨        0
+´¥·¢ÊÂ¼þ      µ÷ÓÃisrDeferJobAdd()µÄÉè±¸ÖÐ¶Ï¡£
+×é¼þ          INCLUDE_ISR_DEFER
+ÃèÊö         µ±Éè±¸Çý¶¯³ÌÐòÖ´ÐÐisrDeferJobAdd()Ê±£¬tIsrNÈÎÎñ£¨»òÈÎÎñ£©´ú±íÉè±¸Çý¶¯³ÌÐòÖ´ÐÐº¯Êýµ÷ÓÃ¡£ÈÎÎñÃû³ÆÖÐµÄNÊÇÑÓ³ÙÈÎÎñÕýÔÚÔËÐÐµÄCPUµÄË÷Òý¡£¸ù¾ÝÐèÒª´´½¨µ¥¶ÀµÄtIsrNÈÎÎñ£¬Ã¿¸öÈÎÎñÓëCPU N¾ßÓÐCPUÇ×ºÍÐÔ¡£SMP¸ÐÖªÉè±¸Çý¶¯³ÌÐò½«ÖÐ¶Ï¼¶´¦ÀíÍÆ³Ùµ½ÔÚ±¾µØCPUÉÏÖ´ÐÐµÄtIsrNÈÎÎñ£¬ÒÔ±ÜÃâ¿ç´¦ÀíÆ÷Í¨ÐÅµÄ¿ªÏúÀ´µ÷¶ÈÑÓ³ÙÈÎÎñ¡£
+²Î¿¼          The isrDeferLib API reference entry
+
+Network Task
+ÈÎÎñÃû³Æ      tIsrN
+ÓÅÏÈÈ¨        50£¨Ä¬ÈÏÖµ£©¡£
+´¥·¢ÊÂ¼þ      µ½´ï¡¢´«ÊäÍê³É¡¢ÍøÂçÐ­Òé¶¨Ê±Æ÷¹ýÆÚ¡¢Ì×½Ó×ÖÓ¦ÓÃ³ÌÐòÇëÇóµÈ¡£
+×é¼þ          INCLUDE_NET_DAEMON
+ÃèÊö          ÍøÂçÊØ»¤½ø³ÌtNet0ÎªVxWorksÍøÂç¶ÑÕ»Ö´ÐÐÍøÂçÇý¶¯³ÌÐòºÍÍøÂçÐ­Òé´¦Àí¡£
+²Î¿¼          Wind River Network Stack Programmer¡¯s Guide.
+
+¿ÉÑ¡×é¼þµÄÈÎÎñ
+ÒÔÏÂÈÎÎñÊÇÔÚVxWorksµÄ³£¼ûÅäÖÃÖÐÕÒµ½µÄÒ»Ð©¸½¼ÓÈÎÎñµÄÊ¾Àý¡£
+
+Kernel Shell Task
+ÈÎÎñÃû³Æ      tShellN
+ÓÅÏÈÈ¨        1£¨¿ÉÅäÖÃ£©
+´¥·¢ÊÂ¼þ      ÏµÍ³Æô¶¯£¨Ä¬ÈÏ£©¡£
+×é¼þ          INCLUDE_SHELL
+ÃèÊö          ÄÚºËÍâ¿ÇÊÇ×÷ÎªÈÎÎñÉú³ÉµÄ¡£´ÓÄÚºËshellµ÷ÓÃ£¨¶ø²»ÊÇÅÉÉú£©µÄÈÎºÎº¯Êý»òÈÎÎñ¶¼ÔÚtShellnumÉÏÏÂÎÄÖÐÔËÐÐ¡£¿ØÖÆÌ¨ÉÏµÄshellµÄÈÎÎñÃûÊÇtShell0¡£ÄÚºËshellÊÇÖØÈëµÄ£¬Ò»´Î¿ÉÒÔÔËÐÐ¶à¸öshellÈÎÎñ£¨Òò´ËÊÇºó×ººÅ£©¡£´ËÍâ£¬Èç¹ûÓÃ»§Ô¶³Ì£¨Ê¹ÓÃrlogin»òtelnet£©µÇÂ¼µ½VxWorksÄ¿±ê£¬ÔòÃû³ÆÒ²·´Ó³ÁËÕâÒ»ÊÂÊµ¡£ÀýÈç£¬tShellRem1¡£
+²Î¿¼          VxWorks 7 Kernel Shell User¡¯s Guide.
+
+Kernel Shell Login Task
+ÈÎÎñÃû³Æ      tRlogind
+ÓÅÏÈÈ¨        55
+´¥·¢ÊÂ¼þ      ÐÂµÄµÇÂ¼Á¬½Ó¡£
+×é¼þ          INCLUDE_RLOGIN
+ÃèÊö          ÄÚºËshellµÇÂ¼ÊØ»¤½ø³ÌÔÊÐíÔ¶³ÌÓÃ»§µÇÂ¼µ½VxWorks¡£Ëü½ÓÊÜÀ´×ÔÁíÒ»¸öVxWorks»òÖ÷»úÏµÍ³µÄÔ¶³ÌµÇÂ¼ÇëÇó£¬²¢Éú³ÉtRlogInTask_hexNumºÍtRlogOutTask_hexNum£¨ÆäÖÐhexNumÊÇ±êÊ¶Á¬½ÓµÄÊ®Áù½øÖÆÊý£©¡£Ö»ÒªÔ¶³ÌÓÃ»§µÇÂ¼£¬ÕâÐ©ÈÎÎñ¾Í´æÔÚ¡£´ËÍâ£¬³ý·ÇÔÚVxWorks 5.5¼æÈÝÄ£Ê½ÏÂÅäÖÃshell£¬·ñÔò·þÎñÆ÷Éú³ÉÔ¶³ÌshellÈÎÎñtShellRemdecNum£¨ÆäÖÐdecNumÊÇÌØ¶¨ÓÚÌØ¶¨Ô¶³Ìshell»á»°µÄÊ®½øÖÆÊý£©¡£
+²Î¿¼          VxWorks 7 Kernel Shell User¡¯s Guide.
+
+Kernel Shell Telnet Task
+ÈÎÎñÃû³Æ      ipcom_telnetd
+ÓÅÏÈÈ¨        55
+´¥·¢ÊÂ¼þ      ÐÂµÄtelnetÁ¬½Ó¡£
+×é¼þ          INCLUDE_IPTELNETS
+ÃèÊö          ÃèÊö´ËÊØ»¤½ø³ÌÔÊÐíÔ¶³ÌÓÃ»§Ê¹ÓÃtelnetµÇÂ¼µ½VxWorksÄÚºËÍâ¿Ç¡£Ëü½ÓÊÜÀ´×ÔÁíÒ»¸öÍøÂçÖ÷»úµÄÔ¶³ÌµÇÂ¼ÇëÇó¡£ipcom_telnetdÉú³ÉÆäËûÈÎÎñÀ´´¦ÀíÃ¿¸ö´«ÈëÁ¬½Ó£¬°üÀ¨ipcom_telnetspawn¡¢tStdioProxyhexNumºÍtLoginhexNum£¨ÆäÖÐhexNumÊÇ±êÊ¶ÌØ¶¨Á¬½ÓµÄÊ®Áù½øÖÆÊý£©¡£³ý·ÇÔÚVxWorks 5.5¼æÈÝÄ£Ê½ÏÂÅäÖÃshell£¬·ñÔò»¹»áÉú³ÉÔ¶³ÌshellÈÎÎñtShellRemdecNum£¨ÆäÖÐdecNumÊÇÌØ¶¨ÓÚÌØ¶¨Ô¶³Ìshell»á»°µÄÊ®½øÖÆÊý£©¡£
+²Î¿¼          Wind River Network Stack Programmer's Guide.
+
+RPC Task
+ÈÎÎñÃû³Æ      tPortmapd
+ÓÅÏÈÈ¨        54
+´¥·¢ÊÂ¼þ      ²éÑ¯ÓÉ¿Í»§¶Ë²éÕÒRPC·þÎñ¡£
+×é¼þ          INCLUDE_RPC
+ÃèÊö          Õâ¸öÊØ»¤½ø³ÌÊÇRPC·þÎñÆ÷£¬³äµ±ÔËÐÐÔÚÍ¬Ò»Ì¨»úÆ÷ÉÏµÄRPC·þÎñµÄÖÐÑë×¢²áÖÐÐÄ¡£RPC¿Í»§¶Ë²éÑ¯ÊØ»¤½ø³Ì£¬ÒÔ²éÕÒÈçºÎÓë¸÷ÖÖ·þÎñÆ÷ÁªÏµ¡£
+²Î¿¼          The rpcLib API reference entry.
+
+TCF Task
+ÈÎÎñÃû³Æ      tTcf
+ÓÅÏÈÈ¨        49
+´¥·¢ÊÂ¼þ      tTcfEventÈÎÎñÇëÇóµÄ×èÈû×÷Òµ
+×é¼þ          INCLUDE_DEBUG_AGENT
+ÃèÊö          tTcfÈÎÎñÊÇÓÃÓÚÖ´ÐÐ×èÈû²Ù×÷µÄ¹¤×÷ÕßÈÎÎñ¡£ÓÉÓÚÎÞ·¨×èÖ¹tTcfEventÈÎÎñ£¬ËùÓÐ×èÈû²Ù×÷¶¼ÍÆ³Ùµ½ÕâÐ©ÈÎÎñ¡£¹¤×÷Íê³Éºó£¬½á¹û±»·¢ËÍµ½tTcfEventÈÎÎñÀ´´¦ÀíÊý¾Ý¡£
+
+TCF Events Task
+ÈÎÎñÃû³Æ      tTcfEvents
+ÓÅÏÈÈ¨        49
+´¥·¢ÊÂ¼þ      TCF¿Í»§¶ËÇëÇó»òÄ¿±êÊÂ¼þ¡£
+×é¼þ          INCLUDE_DEBUG_AGENT
+ÃèÊö          tTcfEventsÈÎÎñ´¦ÀíËùÓÐÄ¿±êÊÂ¼þ£¨ÈçÉÏÏÂÎÄ´´½¨ºÍÏú»ÙÒÔ¼°¶Ïµã£©¡£Ëü»¹´¦ÀíÀ´×ÔTCF¿Í»§¶Ë£¨µ÷ÊÔÆ÷¡¢µ÷ÊÔshellµÈ£©µÄËùÓÐÇëÇó¡£ÊÂ¼þÇëÇóµÄ×èÈû²Ù×÷£¨ÀýÈç¶ÁÈ¡ÎÄ¼þÃèÊö·û£©±»ÑÓ³Ùµ½ÒÔÊÂ¼þµÄÐÎÊ½½«½á¹û·¢ËÍ»ØtTcfEventsÈÎÎñµÄ¹¤×÷ÈÎÎñ³Ø¡£
+
+Debug Task
+ÈÎÎñÃû³Æ      tVxdbgTask
+ÓÅÏÈÈ¨        25
+´¥·¢ÊÂ¼þ      ¸øµ÷ÊÔ¹¤¾ßµÄVxWorksÉÏÏÂÎÄÊÂ¼þ¡£
+×é¼þ          INCLUDE_VXDBG
+ÃèÊö          ´ËÈÎÎñÌá¹©µ½VxWorksµ÷ÊÔ¿â£¨VxDBGÊÂ¼þ¿â£©Ìá¹©µÄÊÂ¼þÖ§³ÖµÄ½Ó¿Ú¡£´ËÖ§³ÖÓÉÈÎÎñ¼¶ÊÂ¼þÑÓ³ÙÉèÊ©×é³É¡£¸ù¾Ý¶¨Òå£¬ÊÂ¼þÊÇVxWorksÉÏÏÂÎÄÊÂ¼þ£¨ÀýÈçÈÎÎñ»òRTP´´½¨ÊÂ¼þ¡¢ÈÎÎñ»òRTPÈÎÎñÍ£Ö¹ÊÂ¼þ»òÈÎÎñÒì³£ÊÂ¼þ£©µÄ»Øµ÷º¯Êý£¬±ØÐë±¨¸æ¸øµ÷ÊÔ¹¤¾ß£¨ÄÚºËshell¡¢Workbenchµ÷ÊÔÆ÷µÈµÈ£©¡£ÑÓ³Ù»Øµ÷Ö´ÐÐÊÇÒì²½µÄ¡£
+
+6.3 ÈÎÎñµÄËùÓÐÕßºÍ¼Ì³Ð¹ØÏµ
+
