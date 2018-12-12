@@ -479,12 +479,243 @@ Receive timeouts : 0
 作为I/O设备，管道还提供了一个重要的特性，即消息队列本身不能使用select()。此函数允许任务在任何一组I/O设备上等待数据可用。select()函数也适用于其他异步I/O设备，包括网络套接字和串行设备。
 因此，通过使用select()，一个任务可以在多个管道、套接字和串行设备的组合上等待数据；在多个文件描述符上使用Stopter（）、P.304等待。
 可以在RTPs中创建命名管道。但是，除非它们被应用程序专门删除，否则它们将超出其创建的RTP的生命周期。应用程序应该允许在启动应用程序时从先前调用中已经存在命名管道的可能性。
-有关管道的更多信息，请参见VxWorks应用程序API引用中的IOLIB条目，以及VxWorks内核API引用中的PIPEDRV条目。
-
+有关管道的更多信息，请参见VxWorks应用程序API引用中的ioLib条目，以及VxWorks内核API引用中的pipeDrv条目。
 
 7.15管道的创建和使用137
+函数pipeDevCreate()创建管道设备和与该管道相关联的底层消息队列。该调用指定所创建管道的名称、可以排队给它的消息的最大数量以及每个消息的最大长度。
+语法如下：
+status = pipeDevCreate ("/pipe/name", max_msgs, max_length);
+创建的管道是通常命名的I/O设备。任务可以使用标准I/O函数打开、读取和写入管道，并调用ioctl函数。如同其他I/O设备一样，任务在从空管道读取数据时阻塞，直到数据可用，在写入完整管道时阻塞，直到有可用空间。
+
+从内核中的ISR写到管道
+在内核中，VxWorks管道被设计成允许ISR以与任务级代码相同的方式写入管道。许多VxWorks工具不能从ISR使用，包括输出到管道以外的设备。但是，ISR可以使用管道与任务进行通信，任务然后可以调用这些设施。ISR使用write()调用向管道写入。任务和ISR可以写入相同的管道。但是，如果管道已满，则丢弃消息，因为ISR不能挂起。除了write()之外，ISR不能在管道上调用任何I/O函数。有关ISR的更多信息，请参阅8.7“关于中断服务例程：ISR”，第163页。
+
+管道I/O控制功能
+管道设备响应表7-5中总结的ioctl()函数。列出的函数在头文件ioLib.h中定义。有关更多信息，请参阅ioLib中pipeDrv和ioctl()的参考条目。
+FIOFLUSH 丢弃管道中的所有消息。
+FIOGETNAME 获取文件描述符的管道名称。
+FIONMSGS 获取管道中剩余的消息数量。
+FIONREAD 获取管道中第一条消息的大小（以字节为单位）。
+
 7.16个VxWorks事件138
+VxWorks事件提供了任务和其他任务、中断服务例程（ISR）和任务、信号量和任务、消息队列和任务之间的通信和同步方法。事件可以由任务和ISR显式地发送，并且可以在消息队列或信号量空闲时发送。只有任务可以接收事件。
+事件可以用作任务到任务和ISR-到任务同步的二进制信号量的轻量级替代（因为不必创建对象）。
+它们还可以用于通知任务信号量已经可用，或者消息已经到达消息队列。
+事件工具提供了一种机制，用于使用最多32个事件来协调任务的活动，这些事件可以由其他任务和ISR明确地发送给任务，或者当信号量和消息队列空闲时。任务可以等待来自多个源的多个事件。因此，事件提供了一种协调复杂活动矩阵的方法，而不需要分配额外的系统资源。
+注意：VxWorks事件（在本节中也简单地称为事件）不应该与System Viewer事件混淆。
+事件的VxWorks配置
+为了提供事件设施，必须使用INCLUDE_VXEVENTS组件配置VxWorks。
+VXEVENTS_OPTIONS配置参数控制RTP任务关于事件和信号的行为。它有以下选项：
+EVENTS_NONINTERRUPTIBLE
+信号不会取消在事件上挂起的RTP任务（默认选项）。
+EVENTS_INTERRUPTIBLE
+对事件上挂起的未结束RTP任务发出信号。
+
+关于事件标志和任务事件寄存器
+每个任务都有32个事件标志，按位编码为32位字（位25到32保留给风河使用），称为事件寄存器。事件寄存器用于存储任务从任务、ISR、信号量和消息队列接收的事件。
+
+注意，事件标志本身没有内在含义。32个事件标志中的每一个的重要性完全取决于如何对任何给定任务进行编码以响应正在设置的特定位。没有记录任务接收到给定事件的次数的机制。一旦设置了标志，由相同或不同的发送方再次设置标志本质上是不可见的操作。
+任务不能直接访问其事件注册表的内容；eventReceive()函数将事件注册表的内容复制到由*pEventsReceived参数指定的变量。
+VxWorks事件标志宏和可供Wind River客户使用的值列于表7-6VxWorks事件标志，第139页。
+注意：事件标志VXEV25（0x01000000）到VXEV32（0x80000000）只保留给Wind River使用，不应该由客户使用。
+Table 7-6 VxWorks Event Flags
+Macro Value
+VXEV01 0x00000001
+VXEV02 0x00000002
+VXEV03 0x00000004
+VXEV04 0x00000008
+VXEV05 0x00000010
+VXEV06 0x00000020
+VXEV07 0x00000040
+VXEV08 0x00000080
+VXEV09 0x00000100
+VXEV10 0x00000200
+VXEV11 0x00000400
+VXEV12 0x00000800
+VXEV13 0x00001000
+VXEV14 0x00002000
+VXEV15 0x00004000
+VXEV16 0x00008000
+VXEV17 0x00010000
+VXEV18 0x00020000
+VXEV19 0x00040000
+VXEV20 0x00080000
+VXEV21 0x00100000
+VXEV22 0x00200000
+VXEV23 0x00400000
+VXEV24 0x00800000
+
+影响事件寄存器内容的功能如表7-7所示。
+表7-7修改任务事件寄存器的函数
+eventReceive() 根据选择的选项，清除或保留任务事件寄存器的内容。
+eventClear()   清除任务事件寄存器的内容。
+eventSend()    将事件写入任务的事件寄存器。
+semGive()      如果任务用信号量注册，则将事件写入任务的事件寄存器。
+msgQSend()     如果任务在消息队列中注册，则将事件写入任务的事件寄存器。
+
+接收事件
+通过调用eventReceive()，任务可以挂起在一个或多个事件上，或者简单地检查哪些事件已经被接收。事件是通过使用函数的事件参数的相关事件标志的值来指定的（参见关于事件标志和任务事件寄存器，p.138）。该函数提供了等待一个或多个这些事件的选项，以及如何管理未经请求的事件，以及在接收完整集之前检查已经接收到哪些事件的选项。
+当接收到用eventReceive()调用指定的事件并且任务未结束时，事件寄存器的内容被复制到一个变量（由函数的*pEventsReceived参数指定），该变量对任务是可访问的。
+当eventReceive()与EVENTS_WAIT_ANY选项一起使用时——这意味着任务在它接收的任何指定事件中的第一个事件中未结束——可以检查事件变量的内容以确定哪个事件导致任务未结束。
+
+从信号量和消息队列接收事件的其他步骤
+为了使任务在信号量或消息队列空闲（与简单地另一个任务相反）时接收事件，它必须首先向特定对象注册，使用信号量的semEvStart()或消息队列的msgQEvStart()。一次只能向任何给定的信号量或消息队列注册一个任务。
+semEvStart()函数标识信号量以及在信号量空闲时应该发送到任务的事件。它还提供了一组选项，用于指定事件是仅在信号量第一次空闲时发送，还是每次都发送；如果信号量在注册时空闲，是否发送事件；以及是否允许来自另一个任务的后续semEvStart()调用生效（以及取消注册先前注册的任务）。一旦任务用信号量注册，每次信号量用sem.()释放时，只要没有其他任务挂起，事件就被发送到注册的任务。
+为了请求停止事件发送，注册的任务调用semEvStop()。
+
+发送事件
+不管接收任务是否准备使用它们，任务和ISR都可以使用eventSend()显式地向任务发送特定事件。事件是通过使用函数的事件参数的相关事件标志的值来指定的（参见关于事件标志和任务事件寄存器，p.138）。
+当信号量和消息队列是空闲的（分别使用semEvStart()或msgQEvStart()）时，事件自动发送到已注册用于通知的任务。物体自由的条件如下：
+
+互斥信号量
+当互斥信号量不再具有所有者并且没有任务挂起时，互斥信号量被认为是空闲的。例如，在调用sem.()之后，如果同一信号量的另一个任务在sem.()上挂起，则不发送事件。
+
+二进制信号量
+当没有任务拥有二进制信号量并且没有任务在等待它时，二进制信号量被认为是空闲的。
+
+计数信号量
+当计数信号量非零且没有任务挂起时，计数信号量被认为是空闲的。因此，事件不能用作计算信号量释放或给定的次数的机制。
+
+消息队列
+当消息出现在队列中并且没有任务等待消息到达队列时，认为消息队列是空闲的。因此，事件不能用作计算发送到消息队列的消息数量的机制。
+
+注意，仅仅因为一个对象已经被释放并不意味着它是免费的。例如，如果给定一个信号量，则释放它；但是如果另一个任务在释放时正在等待它，则它不是免费的。当两个或多个任务不断交换对象的所有权时，对象可能永远不会变为空闲，并且永远不会发送事件。
+还要注意，当事件被发送到任务以指示信号量或消息队列空闲时，并不意味着该对象以任何方式为该任务保留。当资源变为空闲时，等待来自对象的事件的任务会结束，但是对象可以在通知和终止之间的间隔内执行。如果接收事件的任务在eventReceive()中挂起，则该对象可以由更高优先级的任务获取。或者低优先级任务可能窃取对象：如果接收事件的任务在除了eventReceive()之外的某个函数中被挂起，则低优先级任务可以在事件被发送之后执行，并且（例如）执行sem.()，但是在接收任务从阻塞调用中退出之前。因此，无法保证当任务随后试图取得其所有权时，资源仍然可用。
+警告：因为事件不能以任何方式为应用程序保留，所以应注意确保事件被唯一且明确地使用。注意，事件25到32（VXEV25到VXEV32）是为Wind River使用而保留的，不应该由客户使用。第三方应该确保记录他们对事件的使用，以便他们的客户不在他们的应用程序中使用相同的事件。
+
+事件和对象删除
+如果在任务等待事件时删除了信号量或消息队列，则semDelete()或msgQDelete()实现将自动取消该任务的结束。这防止任务在等待已删除的对象的事件时无限期挂起。挂起的任务然后返回到就绪状态（就像它在信号量本身上挂起一样），并从eventReceive()调用接收一个ERROR返回值，该值导致它最初挂起。
+但是，如果该对象在任务的注册调用和它的eventReceive()调用之间被删除，则该任务仍然挂起。例如，如果当任务在semEvStart()和eventReceive()调用之间时删除了一个信号量，则该任务挂起在eventReceive()中，但是事件从未发送。因此，当预期对象删除时，使用WAIT_FOREVER之外的超时非常重要。有关超时的信息，请参阅7.19关于VxWorks API超时参数，第149页。
+
+事件和任务删除
+如果在信号量或消息队列向任务发送事件之前删除了任务，则仍然可以发送事件，但显然没有接收到事件。默认情况下，VxWorks会静默地处理此事件传递失败。
+然而，对于创建对象的应用程序来说，当事件没有被为其注册的（现在不存在）任务接收到时，通知它们可能是有用的。在这种情况下，可以用一个选项创建信号量和消息队列，该选项在事件传递失败时返回错误（分别为SEM_EVENTSEND_ERROR_NOTIFY和MSG_Q_EVENTSEND_ERROR_NOTIFY选项）。然后，当对象变为空闲时，sem.()或msgQSend()调用返回ERROR。
+错误并不意味着没有给出信号量或消息没有正确传递。它仅仅意味着事件不能被发送到已注册的任务。注意，发送消息或给出信号量的失败优先于事件失败。
+进程间与事件的通信
+对于要在进程间通信中使用的事件，通信中所涉及的对象（任务、信号量和消息队列）必须是公共的。有关更多信息，请参阅7.18与公共对象的进程间通信，第147页。
+事件函数
+表7-8列出了用于处理事件的函数。
+eventSend() 将指定的事件发送到任务。
+eventReceive() 挂起任务，直到接收到指定的事件为止。还可以用于检查在过渡期间接收了哪些事件。
+eventClear() 清除调用任务的事件寄存器。
+semEvStart() 注册要通知的信号量可用性的任务。
+semEvStop() 取消注册先前已注册用于通知信号量可用性的任务。
+msgQEvStart() 注册一个任务，以便在没有收件人挂起时通知消息队列上的消息到达。
+msgQEvStop() 取消注册先前已注册用于消息队列上的消息到达通知的任务。
+有关这些函数和代码示例的更多信息，请参阅API eventLib、semEvLib和msgQEvLib的引用。
+
+显示函数和事件
+为了调试使用事件的系统，taskShow、semShow和msgQShow库显示事件信息。
+taskShow库显示以下信息：
+■事件寄存器的内容
+■期望的事件
+■调用eventReceive()时指定的选项
+semShow和msgQShow库显示以下信息：
+■注册为接收事件的任务
+■资源要发送到该任务的事件
+■传递给semEvStart()或msgQEvStart()的选项
+
 7.17 VxWorks条件变量144
+VxWorks条件变量提供了任务同步机制，该机制将对资源的线程安全访问与事件信令能力相结合。
+通过标准VxWorks互斥信号量确保对资源的线程安全访问，该信号量在关联条件变量的操作期间自动释放并重新获取。条件变量的典型用例是应用程序的生产者/消费者类型，它允许：
+■应用程序数据的线程安全更新（在互斥锁下）。
+■为等待应用数据的特定条件的任务发送信号。
+■线程安全检查条件（在相互斥锁下）并等待（挂起）直到条件发出信号。
+VxWorks条件变量在功能上等价于POSIX条件变量（pthread_condvar_wait()、pthread_condvar_.()等等）。
+虽然POSIX条件变量只在POSIX线程的上下文中工作，但是VxWorks条件变量在任何VxWorks任务的上下文中工作，并且它们与本机VxWorks互斥信号量一起工作。有关VxWorks中的POSIX条件变量的信息，请参阅9.17POSIX Pthread互斥和条件变量，p.204。
+条件变量函数不能从中断服务例程（ISR）调用。
+
+条件变量的VxWorks配置
+注意，条件变量不需要VSB配置。
+INCLUDE_CONDVAR组件提供了对条件变量的支持。如果使用INCLUDE_RTP组件支持RTP，将自动添加INCLUDE_CONDVAR。
+condVarShow()函数由INCLUDE_CONDVAR_SHOW组件提供。
+
+条件变量API
+表7-9条件变量函数
+功能       用户模式  描述
+condVarCreate()     yes 创建条件变量。
+condVarInitialize() no  初始化静态分配的条件变量。只有内核。
+condVarDelete()     yes 删除条件变量；如果没有任务等待，则成功。
+condVarDestroy()    no  删除条件变量；如果有的话，刷新等待任务。
+condVarTerminate()  no Terminate静态初始化的条件变量。
+condVarWait()       yes 在条件变量上是Pend，直到发出信号为止。
+condVar.()          yes 发送一个条件变量，释放一个挂起的任务。
+condVarBroadcast() yes 释放条件变量上挂起的所有任务。
+condVarShow() no Show关于条件变量的信息。
+condVarOpen() yes打开一个命名的条件变量。
+condVarClose() yes关闭命名条件变量。
+condVarUnlink() yes Unlink命名的条件变量。
+有关更多信息，请参阅condVarlib、condVarOpen和condVarShow API参考条目。
+
+System Viewer事件
+条件变量子系统包括四个System Viewer事件。
+表7-10条件变量的System Viewer事件
+System Viewer事件       发生的时间
+EVENT_CONDVAR_CREATE    条件变量的创建
+EVENT_CONDVAR_WAIT      在条件变量上等待
+EVENT_CONDVAR_SIGNAL    向条件变量发送信号
+EVENT_CONDVAR_BROADCAST 条件变量的广播
+示例代码
+这个例子说明了条件变量的使用。两个函数varRead()和varWrite()可以由两个不同的任务调用，允许它们在数据准备读取（通过条件变量之一canRead发信号）时以及新数据可以写入（通过另一个条件变量canWrite发信号）时同步。
+#include <vxWorks.h>
+#include <semLib.h>
+#include <condVarLib.h>
+typedef enum state {READABLE, WRITABLE} STATE;
+STATE varState = WRITEABLE; /* variable state */
+int var; /* data to read or write */
+CONDVAR_ID canRead; /* signal READABLE state */
+CONDVAR_ID canWrite; /* signal WRITABLE satte */
+SEM_ID varMutex; /* for mutual exclusion */
+void appInitialize (void)
+{
+/* Create a mutual-exclusion semaphore. */
+varMutex = semMCreate (SEM_Q_PRIORITY);
+/* Create a condition variables */
+canRead = condVarCreate (CONDVAR_Q_PRIORITY);
+canWrite = condVarCreate (CONDVAR_Q_PRIORITY);
+}
+STATUS varRead
+(
+int * pData
+)
+{
+semTake (varMutex, WAIT_FOREVER);
+/* If the condition is not true, wait on the condVar. */
+while (varState != READABLE)
+{
+condVarWait (canRead, varMutex, WAIT_FOREVER);
+}
+/* Now the variable is readable; the caller owns the mutex. */
+*pData = var;
+/* Reset the condition. */
+varState = WRITEABLE;
+semGive (varMutex);
+/* Signal the writer that new data can be written */
+condVarSignal (canWrite);
+return OK;
+}
+STATUS varWrite
+(
+int data
+)
+{
+semTake (varMutex, WAIT_FOREVER);
+/* If the condition is not true, wait on the condVar. */
+while (varState != WRITEABLE)
+{
+condVarWait (canWrite, varMutex, WAIT_FOREVER);
+}
+/* now the variable is writable; the caller owns the mutex. */
+var = data;
+/* new data written, reset the variable state to readable */
+varState = READABLE;
+semGive (varMutex);
+/* Signal the reader that data as been written */
+condVarSignal (canRead);
+return OK;
+}
+
+
 7.18与公共对象的进程间通信 147
 7.19关于VxWorks API超时参数149
 7.20关于对象所有权和资源回收149
