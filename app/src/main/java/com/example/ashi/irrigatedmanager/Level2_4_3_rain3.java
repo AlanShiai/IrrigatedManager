@@ -62,6 +62,8 @@ public class Level2_4_3_rain3 extends AppCompatActivity {
     private void getDataFromServerAndUpdateView() {
         // "http://www.boze-tech.com/zfh_manager/a/app/login/getRainList?userId=1&name=柳林总雨量";
         String url = Api.API_06_getRainList + "userId=" + Global.user.id + "&projectId=" + Global.rain_name;
+//        url = "http://221.193.192.143:8099/zfh_manager/a/app/login/getRainList?userId=8bc3a54c71dd4c648e3ce28612d0ba11&projectId=02310303";
+        Log.d("aijun url", url+"");
         HttpUtil.sendOkHttpRequest(url, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
@@ -104,8 +106,14 @@ public class Level2_4_3_rain3 extends AppCompatActivity {
                     if(map.containsKey(day1)) {
                         rain1 = map.get(day1);
                     }
+                    if(map.containsKey("0" + day1)) {
+                        rain1 = map.get("0" + day1);
+                    }
                     if(map.containsKey(day2)) {
                         rain2 = map.get(day2);
+                    }
+                    if(map.containsKey("0" + day2)) {
+                        rain2 = map.get("0" + day2);
                     }
                     dataList.add(new RainDetail(day1, rain1, day2, rain2));
                 }
