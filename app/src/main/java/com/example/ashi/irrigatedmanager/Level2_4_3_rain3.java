@@ -61,7 +61,7 @@ public class Level2_4_3_rain3 extends AppCompatActivity {
 
     private void getDataFromServerAndUpdateView() {
         // "http://www.boze-tech.com/zfh_manager/a/app/login/getRainList?userId=1&name=柳林总雨量";
-        String url = Api.API_06_getRainList + "userId=" + Global.user.id + "&projectId=" + Global.rain_name;
+        String url = Api.API_06_getRainList + "userId=" + Global.user.id + "&projectId=" + Global.projectId;
 //        url = "http://221.193.192.143:8099/zfh_manager/a/app/login/getRainList?userId=8bc3a54c71dd4c648e3ce28612d0ba11&projectId=02310303";
         Log.d("aijun url", url+"");
         HttpUtil.sendOkHttpRequest(url, new Callback() {

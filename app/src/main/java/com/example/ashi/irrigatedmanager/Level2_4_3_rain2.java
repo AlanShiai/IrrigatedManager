@@ -47,6 +47,7 @@ public class Level2_4_3_rain2 extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Rain rain = dataList.get(position);
                 Global.rain_name = rain.project_name;
+                Global.projectId = rain.project_id;
                 Intent intent = new Intent(Level2_4_3_rain2.this, Level2_4_3_rain3.class);
                 startActivity(intent);
                 finish();
