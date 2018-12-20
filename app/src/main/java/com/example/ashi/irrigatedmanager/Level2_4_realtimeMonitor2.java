@@ -116,33 +116,33 @@ public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
                 ((TextView) view2.findViewById(R.id.sluice_8)).setText(sluiceInfo.level8);
                 ((TextView) view2.findViewById(R.id.sluice_9)).setText(sluiceInfo.level9);
                 ((TextView) view2.findViewById(R.id.sluice_10)).setText(sluiceInfo.level10);
-                ((TextView) view2.findViewById(R.id.sluice_before_water)).setText("0");
-                ((TextView) view2.findViewById(R.id.sluice_after_water)).setText("0");
+                ((TextView) view2.findViewById(R.id.sluice_before_water)).setText("-----");
+                ((TextView) view2.findViewById(R.id.sluice_after_water)).setText("-----");
 
                 setSluiceVisiable(view2, sluiceInfo.hole);
 
-                if (sluiceInfo.waterData != null) {
-                    // "闸前水位:4.39毫米 闸后水位:0.16毫米 "
-                    if(sluiceInfo.waterData.contains("闸前水位:")) {
-                        int len = "闸前水位:".length();
-                        int start = sluiceInfo.waterData.indexOf("闸前水位:");
-                        int end = sluiceInfo.waterData.indexOf("毫米");
+                if (sluiceInfo.waterData != null && sluiceInfo.waterData != null) {
+                    // "2.33 , 2.33"
+                    if(sluiceInfo.waterDataType.contains("1")) {
+                        String data = sluiceInfo.waterData;
+                        if (sluiceInfo.waterData.contains(",")) {
+                            data = sluiceInfo.waterData.substring(0, sluiceInfo.waterData.indexOf(","));
+                        }
                         try {
-                            String str = sluiceInfo.waterData.substring(start + len, end);
                             TextView sluice_before_water = (TextView) view2.findViewById(R.id.sluice_before_water);
-                            sluice_before_water.setText(str);
+                            sluice_before_water.setText(data.trim());
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
-                    if(sluiceInfo.waterData.contains("闸后水位:")) {
-                        int len = "闸后水位:".length();
-                        int start = sluiceInfo.waterData.indexOf("闸后水位:");
-                        int end = sluiceInfo.waterData.lastIndexOf("毫米");
+                    if(sluiceInfo.waterDataType.contains("2")) {
+                        String data = sluiceInfo.waterData;
+                        if (sluiceInfo.waterData.contains(",")) {
+                            data = sluiceInfo.waterData.substring(sluiceInfo.waterData.indexOf(",")+1);
+                        }
                         try {
-                            String str = sluiceInfo.waterData.substring(start+len, end);
                             TextView sluice_after_water = (TextView) view2.findViewById(R.id.sluice_after_water);
-                            sluice_after_water.setText(str);
+                            sluice_after_water.setText(data);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -201,11 +201,24 @@ public class Level2_4_realtimeMonitor2 extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 final String responseText = response.body().string();
-                String hardcodeString = "[{\"project_name\":\"张庄桥分洪闸位\",\"level9\":\"0.00\"," +
-                        "\"level8\":\"0.00\",\"level7\":\"0.00\",\"project_type\":\"sluice\",\"level6\":\"0.00\"," +
-                        "\"level10\":\"0.00\",\"level5\":\"0.00\",\"level4\":\"0.02\",\"id\":\"ad407c9bd9634d0bac800651287a8c1f\"," +
-                        "\"level2\":\"0.01\",\"level3\":\"0.00\",\"time\":\"2018-08-30 15:38:51\",\"level1\":\"0.01\"," +
-                        "\"project_id\":null,\"waterData\":\"闸前水位:4.39毫米 闸后水位:0.16毫米 \",\"hole\":\"10\"}]";
+//                String hardcodeString = "[{\"project_name\":\"张庄桥分洪闸位\",\"level9\":\"0.00\"," +
+//                        "\"level8\":\"0.00\",\"level7\":\"0.00\",\"project_type\":\"sluice\",\"level6\":\"0.00\"," +
+//                        "\"level10\":\"0.00\",\"level5\":\"0.00\",\"level4\":\"0.02\",\"id\":\"ad407c9bd9634d0bac800651287a8c1f\"," +
+//                        "\"level2\":\"0.01\",\"level3\":\"0.00\",\"time\":\"2018-08-30 15:38:51\",\"level1\":\"0.01\"," +
+//                        "\"project_id\":null,\"waterData\":\"闸前水位:4.39毫米 闸后水位:0.16毫米 \",\"hole\":\"10\"}]";
+                String hardcodeString = "[{\"level5\":\"0.00\",\"project_type\":\"sluice\",\"level4\":\"0.00\",\"level7\":\"0.00\"," +
+                        "\"level6\":\"0.00\",\"level9\":\"0.00\",\"level8\":\"0.00\",\"level10\":\"0.00\",\"project_name\":\"疃上民有新四支\"," +
+                        "\"hole\":\"1\",\"waterDataType\":\"1\",\"project_id\":\"03500406\",\"waterData\":\"0.00\"," +
+                        "\"id\":\"408fdb91921d4155b47708b4d90847d9\",\"time\":\"2018-12-20 09:45:04\",\"level1\":\"0.03\"," +
+                        "\"level3\":\"0.00\",\"level2\":\"0.00\"},{\"level5\":\"0.00\",\"project_type\":\"sluice\"," +
+                        "\"level4\":\"0.00\",\"level7\":\"0.00\",\"level6\":\"0.00\",\"level9\":\"0.00\"," +
+                        "\"level8\":\"0.00\",\"level10\":\"0.00\",\"project_name\":\"疃上民有支\",\"hole\":\"1\"," +
+                        "\"waterDataType\":\"2\",\"project_id\":\"03500406\",\"waterData\":\"0.00\",\"id\":\"408fdb91921d4155b47708b4d90847d9\"," +
+                        "\"time\":\"2018-12-20 09:45:04\",\"level1\":\"0.03\",\"level3\":\"0.00\",\"level2\":\"0.00\"},{\"level5\":\"0.00\"," +
+                        "\"project_type\":\"sluice\",\"level4\":\"0.00\",\"level7\":\"0.00\",\"level6\":\"0.00\",\"level9\":\"0.00\"," +
+                        "\"level8\":\"0.00\",\"level10\":\"0.00\",\"project_name\":\"疃上节制闸\",\"hole\":\"1\",\"waterDataType\":\"1,2\"," +
+                        "\"project_id\":\"03500408\",\"waterData\":\"0.62,0.00\",\"id\":\"0c7097653471436688aa4201c9a4096a\"," +
+                        "\"time\":\"2018-12-20 09:45:04\",\"level1\":\"0.67\",\"level3\":\"0.00\",\"level2\":\"0.00\"}]";
 //                final List<SluiceInfo> list = Utility.handleApi03SluiceMonitorListResponse(hardcodeString);
                 final List<SluiceInfo> list = Utility.handleApi03SluiceMonitorListResponse(responseText);
                 Log.d("aijun SluiceMonit", responseText+"");

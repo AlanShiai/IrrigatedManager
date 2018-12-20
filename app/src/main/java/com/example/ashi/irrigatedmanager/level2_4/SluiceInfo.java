@@ -31,6 +31,7 @@ public class SluiceInfo {
     public String time = "2018-06-11 10:44:46 ";
     public String level1 = "";
     public String project_id;
+    public String waterDataType;
     public String waterData;
     public String hole;
 
