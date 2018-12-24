@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Pick Random Guy from Dolphin Team</title>
+        <style type="text/css">
+            *{
+                margin: 0;
+                padding: 0;
+            }
+            ul li{
+                list-style: none;
+            }
+            #lis{
+                height: 710px;
+                width: 568px;
+                border: 10px solid #2386ff;
+                margin: 30px auto;
+            }
+            #lis li{
+                height: 140px;
+                width: 140px;
+                border: 1px solid #eee;
+                float: left;
+                opacity: 0.5;
+            }
+            .bnt{
+                height: 30px;
+                width: 200px;
+                color: #00FF00;
+                margin: 20px auto;
+            }
+            .bnt input:hover{
+                cursor: pointer;
+            }
+            .bnt input:active{
+                background:#00FF00;
+            }
+            .bnt input{
+                height: 30px;
+                width: 200px;
+                border-radius: 20px;
+		background:#00FF00;
+                border: none;
+                outline:none;
+
+            }
+            #lis .active{
+                opacity: 1;
+                border: 1px solid #FF0000;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div class="bnt" id="bnt">
+            <input type="button" name="" id="val" value="Start" />
+        </div>
+
+        <ul id="lis">
+            <li style="background: url(img/01_zhixiong.png);" title="01_zhixiong"></li>
+            <li style="background: url(img/02_yujing.png);" title="02_yujing"></li>
+            <li style="background: url(img/03_chenhui.png);" title="03_chenhui"></li>
+            <li style="background: url(img/04_tianfeng.png);" title="04_tianfeng"></li>
+            <li style="background: url(img/05_meihong.png);" title="05_meihong"></li>
+            <li style="background: url(img/06_boshuai.png);" title="06_boshuai"></li>
+            <li style="background: url(img/07_qian.png);" title="07_qian"></li>
+            <li style="background: url(img/08_ryan.png);" title="08_ryan"></li>
+            <li style="background: url(img/09_alan.png);" title="09_alan"></li>
+            <li style="background: url(img/10_gang.png);" title="10_gang"></li>
+            <li style="background: url(img/11_sunpeng.png);" title="11_sunpeng"></li>
+            <li style="background: url(img/12_jason.png);" title="12_jason"></li>
+            <li style="background: url(img/13_siru.png);" title="13_siru"></li>
+            <li style="background: url(img/14_liulei.png);" title="14_liulei"></li>
+            <li style="background: url(img/15_binghui.png);" title="15_binghui"></li>
+            <li style="background: url(img/16_tuhong.png);" title="16_tuhong"></li>
+            <li style="background: url(img/17_huiying.png);" title="17_huiying"></li>
+            <li style="background: url(img/18_tingting.png);" title="18_tingting"></li>
+            <li style="background: url(img/19_gelei.png);" title="19_gelei"></li>
+            <li style="background: url(img/20_bianyuan.png);" title="20_bianyuan"></li>
+        </ul>
+        
+        <script type="text/javascript">
+            var object_ul = document.getElementById('lis')
+            var object_list = object_ul.getElementsByTagName('li');
+            var start_button = document.getElementById('bnt');
+            var random_num = 0;
+            var timer = null;
+            var try_time = 0;
+            
+            //设置定时器 setInterval(干什么事情,时间)每隔100时间做这个事情    
+            start_button.onclick = function() {
+               clearInterval(timer);
+               start();
+            }
+
+            function start() {
+                timer = setInterval(function() {
+                    for(var i=0; i < object_list.length; i++) {
+                        object_list[i].className='';
+                    }
+                    random_num = Math.floor(Math.random() * 20);
+                    object_list[random_num].className='active';
+                    try_time += 1;
+
+                    if(try_time >= 50) {
+                        clearInterval(timer);
+                    }
+
+                }, 100)
+                try_time = 0;
+            }
+        </script>        
+    </body>
+</html>

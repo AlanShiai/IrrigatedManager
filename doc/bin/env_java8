@@ -1,0 +1,4 @@
+
+export JAVA_HOME=/folk/wb-fast/ashi/soft/jdk1.8.0_65
+
+export PATH=$JAVA_HOME/bin:$PATH
