@@ -31,7 +31,20 @@ VxWorks提供了一个软件信号工具，包括POSIX函数和本机VxWorks函数。符合POSIX的信号接
 除了信号之外，VxWorks还使用VxWorks事件工具提供另一种类型的事件通知。虽然信号事件是完全异步的，但是VxWorks事件是异步发送的，但是是同步接收的，并且不需要信号处理器。有关更多信息，请参阅7.16VxWorks事件，第138页。
 
 8.2用于信号的VxWorks配置154
+默认情况下，VxWorks包括基本信号设施组件INCLUDE_SIGNALS。其他组件提供额外的设施。
+信号事件的配置
+要包括信号事件工具，请使用INCLUDE_SIGEVENT组件配置VxWorks。有关信号事件的信息，请参阅8.5.Events，第160页。
+内核POSIX排队信号的配置
+为了在系统中包括内核POSIX排队信号，使用INCLUDE_POSIX_SIGNALS组件配置VxWorks。此组件使用sigqueueInit()自动初始化POSIX排队信号。sigqueueInit()函数分配缓冲区供sigqueue()使用，sigqueue()为每个当前排队的信号需要一个缓冲区。如果没有可用的缓冲区，则对sigqueue()的调用失败。
+使用配置参数NUM_SIGNAL_QUEUES设置内核中排队信号的最大数量。默认值为16。
+RTP的配置
+注意，SIGEV_THREAD选项只支持实时进程（而不支持内核）。SIGEV_THREAD选项要求除了INCLUDE_SIGEVENT组件之外，VxWorks还配置有INCLUDE_POSIX_PTHREAD_SCHEDULER、INCLUDE_POSIX_TIMERS和INCLUDE_POSIX_CLOCKS组件。为了完全符合PSE52配置文件（实时控制器系统配置文件），应该使用BUNDLE_RTP_POSIX_PSE52组件包。
+使用配置参数RTP_SIGNAL_QUEUE_SIZE设置进程中排队信号的最大数量。默认值32是按照POSIX 1003.1标准（_POSIX_SIGQUEUE_MAX）设置的。将值更改为更低的数目可能会给依赖POSIX指南的应用程序带来问题。
+基于进程（RTP）的应用程序在编译时自动链接到sigLib库。当进程启动时，库的初始化是自动的。
+
 8.3基本信号功能155
+
+
 8.4排队信号功能156
 8.5信号事件160
 8.6信号处理器161
