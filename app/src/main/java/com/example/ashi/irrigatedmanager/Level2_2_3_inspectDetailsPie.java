@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ashi.irrigatedmanager.gson.Abnormal;
@@ -68,6 +69,9 @@ public class Level2_2_3_inspectDetailsPie extends AppCompatActivity {
                 showSingleChoiceDialog();
             }
         });
+
+        TextView inspect_year = (TextView) findViewById(R.id.inspect_year);
+        inspect_year.setText(Utility.getThisYear() + "年");
 
         getDataFromServerAndUpdateListView();
         getDataFromServerAndUpdateListView2();
