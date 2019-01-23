@@ -398,6 +398,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 @Override
                 public void onFailure(Call call, IOException e) {
+                    mPasswordView.setError(getString(R.string.error_incorrect_password));
+                    mPasswordView.requestFocus();
                     e.printStackTrace();
                     isLoginSuccess = false;
                 }
@@ -426,8 +428,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //                startActivity(intent);
 //                finish();
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
+//                mPasswordView.setError(getString(R.string.error_incorrect_password));
+//                mPasswordView.requestFocus();
             }
         }
 
