@@ -87,8 +87,6 @@ public class Level2_2_2_inspectNoteDetails extends AppCompatActivity {
                 finish();
             }
         });
-
-        getDataFromServerAndUpdateUI();
     }
 
     @Override
@@ -116,215 +114,25 @@ public class Level2_2_2_inspectNoteDetails extends AppCompatActivity {
         }
     }
 
-    private void getDataFromServerAndUpdateUI() {
-        // http://www.boze-tech.com/zfh_manager/a/app/patrol/patrolDetail?id=3e2971fc02764ee89bc54af0f30b55e8
-        String url = Api.API_24_patrolDetail + "id=" + Global.inspectNoteId + "&flag=1";
-        Log.d("aijun patrolDetail", url);
-        HttpUtil.sendOkHttpRequest(url, new Callback() {
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                final String responseText = response.body().string();
-                final InspectNoteDetails inspectNoteDetails = Utility.handleApi24patrolDetailResponse(responseText);
-                Log.d("aijun patrolDetail", responseText+"");
-                Log.d("aijun patrolDetail", inspectNoteDetails+"");
-                if ( null != inspectNoteDetails ) {
 
-                    if ( null != inspectNoteDetails.detail && null != inspectNoteDetails.detail.images ) {
-                        String images = inspectNoteDetails.detail.images.trim();
-                        Log.d("aijun images", images+"");
-                        if ( ! images.equals("")) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    imageview_title.setVisibility(View.VISIBLE);
-                                }
-                            });
-                            String[] imageArray = images.split(",");
-                            if ( imageArray.length > 0 ) {
-                                for (int i = 0 ; i < imageArray.length; i++ ) {
-                                    if ( i == imageviews.size() ) {
-                                        break;
-                                    }
-                                    final ImageView imageView = imageviews.get(i);
-                                    Log.d("aijun imageArray", imageArray[i]+"");
-//                                    final String picUrl = Api.API_34_userfiles + Utility.toURLEncoded(imageArray[i]);
-                                    final String picUrl = Api.API_34_userfiles + imageArray[i];
-                                    imageView.setTag(R.id.tag_first, picUrl);
-                                    Log.d("aijun picUrl", picUrl);
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Glide.with(Level2_2_2_inspectNoteDetails.this).load(picUrl).into(imageView);
-                                            imageView.setVisibility(View.VISIBLE);
-                                        }
-                                    });
-                                }
-                            }
-                        }
-                    }
-
-                    if ( null != inspectNoteDetails.detail.type && null != inspectNoteDetails.detail.resultItem ) {
-                        // "http://www.boze-tech.com/zfh_manager/a/app/patrol/patrolItem?type=channel";
-                        String url = Api.API_21_patrolItem + "type=" + inspectNoteDetails.detail.type;
-                        Log.d("aijun patrolItem", url+"");
-                        HttpUtil.sendOkHttpRequest(url, new Callback() {
-                            @Override
-                            public void onResponse(Call call, Response response) throws IOException {
-                                final String responseText = response.body().string();
-                                final List<PatrolItem> list = Utility.handleApi21patrolItemResponse(responseText);
-                                Log.d("aijun patrolItem", responseText + "");
-                                Log.d("aijun patrolItem", list.size() + "");
-
-                                if ( null != list ) {
-                                    final List<ManualInspectItem2> dataList = Utility.patrolItemsToManualInspectItems(list);
-                                    Log.d("aijun patrolItem 2", dataList + "");
-                                    Log.d("aijun patrolItem 2", dataList.size() + "");
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            if (null != itemResultLayout) {
-                                                itemResultLayout.removeAllViews();
-
-                                                int index = 1;
-                                                for (ManualInspectItem2 item : dataList) {
-                                                    if (!item.items.isEmpty()) {
-                                                        View view = LayoutInflater.from(Level2_2_2_inspectNoteDetails.this).inflate(R.layout.fragment_base_info,
-                                                                itemResultLayout, false);
-                                                        TextView text = (TextView) view.findViewById(R.id.fragment_base_info);
-                                                        text.setText(index + ". " + item.name);
-                                                        itemResultLayout.addView(view);
-
-                                                        for (PatrolItem patrolItem : item.items) {
-                                                            View view2 = LayoutInflater.from(Level2_2_2_inspectNoteDetails.this).inflate(R.layout.fragment_base_info2,
-                                                                    itemResultLayout, false);
-                                                            CheckBox checkBox = (CheckBox) view2.findViewById(R.id.checkBox);
-                                                            checkBox.setText(patrolItem.contents);
-                                                            checkBox.setEnabled(false);
-                                                            if (inspectNoteDetails.detail.resultItem.contains(patrolItem.id)) {
-                                                                checkBox.setChecked(true);
-                                                            }
-                                                            itemResultLayout.addView(view2);
-                                                        }
-                                                    }
-                                                    index++;
-                                                }
-                                            }
-                                        }
-                                    });
-                                }
-                             }
-
-                            @Override
-                            public void onFailure(Call call, IOException e) {
-                                e.printStackTrace();
-                            }
-                        });
-                    }
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if ( null != inspectNoteDetails.detail) {
-                                if ( null !=  result && null != inspectNoteDetails.detail.result) {
-                                    if (inspectNoteDetails.detail.result.trim().equals("1")) {
-                                        result.setText("异常");
-                                    } else {
-                                        result.setText("正常");
-                                    }
-                                }
-                                if ( null !=  userName && null != inspectNoteDetails.detail.userName) {
-                                    userName.setText(inspectNoteDetails.detail.userName);
-                                }
-                                if ( null !=  createDate && null != inspectNoteDetails.detail.createDate) {
-                                    createDate.setText(inspectNoteDetails.detail.createDate);
-                                }
-                                if ( null !=  longitude && null != inspectNoteDetails.detail.longitude) {
-                                    longitude.setText(inspectNoteDetails.detail.longitude);
-                                }
-                                if ( null !=  latitude && null != inspectNoteDetails.detail.latitude) {
-                                    latitude.setText(inspectNoteDetails.detail.latitude);
-                                }
-                                if (null != inspectNoteDetails.detail.latitude && null != inspectNoteDetails.detail.longitude) {
-                                    navigateTo(Double.valueOf(inspectNoteDetails.detail.latitude), Double.valueOf(inspectNoteDetails.detail.longitude));
-                                }
-                                if ( null !=  remarks && null != inspectNoteDetails.detail.remarks) {
-                                    remarks.setText(inspectNoteDetails.detail.remarks);
-                                }
-                            }
-                            if ( null != inspectNoteDetails.basic) {
-                                Global.patrolDetails = new LinkedHashMap<String, String>();
-                                String key = "", value = "";
-                                List<String> list = Arrays.asList(inspectNoteDetails.basic.var_00, inspectNoteDetails.basic.var_01, inspectNoteDetails.basic.var_02,
-                                        inspectNoteDetails.basic.var_03, inspectNoteDetails.basic.var_04, inspectNoteDetails.basic.var_05, inspectNoteDetails.basic.var_06, inspectNoteDetails.basic.var_07,
-                                        inspectNoteDetails.basic.var_08, inspectNoteDetails.basic.var_09, inspectNoteDetails.basic.var_10, inspectNoteDetails.basic.var_11, inspectNoteDetails.basic.var_12,
-                                        inspectNoteDetails.basic.var_13, inspectNoteDetails.basic.var_14, inspectNoteDetails.basic.var_15, inspectNoteDetails.basic.var_16, inspectNoteDetails.basic.var_17,
-                                        inspectNoteDetails.basic.var_18, inspectNoteDetails.basic.var_19, inspectNoteDetails.basic.var_20);
-                                for (String str : list) {
-                                    if (null != str && str.contains("@@")) {
-                                        key = str.substring(0, str.indexOf("@@"));
-                                        value = "";
-                                        if (str.length() > str.indexOf("@@") + 2) {
-                                            value = str.substring(str.indexOf("@@") + 2);
-                                        }
-                                        Global.patrolDetails.put(key, value);
-                                    }
-                                }
-
-                                if (Global.patrolDetails.keySet().contains("图片")) {
-                                    String picture = Global.patrolDetails.get("图片");
-                                    Global.patrolDetails.remove("图片");
-                                    if (picture != null && !picture.trim().equals("")) {
-                                        Global.patrolDetails.put("图片", picture);
-                                    }
-                                }
-
-                                if (null != basicInfoListView) {
-                                    ManualInspectBasicInfoAdapter adapter = new ManualInspectBasicInfoAdapter(
-                                            Level2_2_2_inspectNoteDetails.this, R.layout.fragment_listview_item, new ArrayList<String>(Global.patrolDetails.keySet()));
-                                    basicInfoListView.setAdapter(adapter);
-                                }
-                            }
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
-    static TextView result;
-    static TextView userName;
-    static TextView createDate;
-    static TextView longitude;
-    static TextView latitude;
-    static TextView remarks;
-    static LinearLayout itemResultLayout;
-    static TextView imageview_title;
-    static ImageView imageview1, imageview2, imageview3, imageview4, imageview5, imageview6;
-    static List<ImageView> imageviews = new ArrayList<>();
 
     private static MapView mapView;
 
     private static BaiduMap baiduMap;
 
-    private void navigateTo(double latitude, double longitude) {
-        LatLng ll = new LatLng(latitude, longitude);
-        MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(ll);
-        baiduMap.animateMapStatus(update);
-        update = MapStatusUpdateFactory.zoomTo(16f);
-        baiduMap.animateMapStatus(update);
-
-        MyLocationData.Builder locationBuilder = new MyLocationData.Builder();
-        locationBuilder.latitude(latitude);
-        locationBuilder.longitude(longitude);
-        MyLocationData locationData = locationBuilder.build();
-        baiduMap.setMyLocationData(locationData);
-    }
 
     public static class PlaceholderForTab1 extends Fragment {
+
+        private TextView result;
+        private TextView userName;
+        private TextView createDate;
+        private TextView longitude;
+        private TextView latitude;
+        private TextView remarks;
+        private LinearLayout itemResultLayout;
+        private TextView imageview_title;
+        private ImageView imageview1, imageview2, imageview3, imageview4, imageview5, imageview6;
+        private List<ImageView> imageviews;
 
         public LinearLayout layout;
 
@@ -395,6 +203,205 @@ public class Level2_2_2_inspectNoteDetails extends AppCompatActivity {
 //            imageview1.setVisibility(View.VISIBLE);
 
             return rootView;
+        }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+            getDataFromServerAndUpdateUI();
+        }
+
+        private void getDataFromServerAndUpdateUI() {
+            // http://www.boze-tech.com/zfh_manager/a/app/patrol/patrolDetail?id=3e2971fc02764ee89bc54af0f30b55e8
+            String url = Api.API_24_patrolDetail + "id=" + Global.inspectNoteId + "&flag=1";
+            Log.d("aijun patrolDetail", url);
+            HttpUtil.sendOkHttpRequest(url, new Callback() {
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    final String responseText = response.body().string();
+                    final InspectNoteDetails inspectNoteDetails = Utility.handleApi24patrolDetailResponse(responseText);
+                    Log.d("aijun patrolDetail", responseText+"");
+                    Log.d("aijun patrolDetail", inspectNoteDetails+"");
+                    if ( null != inspectNoteDetails ) {
+
+                        if ( null != inspectNoteDetails.detail && null != inspectNoteDetails.detail.images ) {
+                            String images = inspectNoteDetails.detail.images.trim();
+                            Log.d("aijun images", images+"");
+                            if ( ! images.equals("")) {
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        imageview_title.setVisibility(View.VISIBLE);
+                                    }
+                                });
+                                String[] imageArray = images.split(",");
+                                if ( imageArray.length > 0 ) {
+                                    for (int i = 0 ; i < imageArray.length; i++ ) {
+                                        if ( i == imageviews.size() ) {
+                                            break;
+                                        }
+                                        final ImageView imageView = imageviews.get(i);
+                                        Log.d("aijun imageArray", imageArray[i]+"");
+//                                    final String picUrl = Api.API_34_userfiles + Utility.toURLEncoded(imageArray[i]);
+                                        final String picUrl = Api.API_34_userfiles + imageArray[i];
+                                        imageView.setTag(R.id.tag_first, picUrl);
+                                        Log.d("aijun picUrl", picUrl);
+                                        getActivity().runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Glide.with(getActivity()).load(picUrl).into(imageView);
+                                                imageView.setVisibility(View.VISIBLE);
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                        }
+
+                        if ( null != inspectNoteDetails.detail.type && null != inspectNoteDetails.detail.resultItem ) {
+                            // "http://www.boze-tech.com/zfh_manager/a/app/patrol/patrolItem?type=channel";
+                            String url = Api.API_21_patrolItem + "type=" + inspectNoteDetails.detail.type;
+                            Log.d("aijun patrolItem", url+"");
+                            HttpUtil.sendOkHttpRequest(url, new Callback() {
+                                @Override
+                                public void onResponse(Call call, Response response) throws IOException {
+                                    final String responseText = response.body().string();
+                                    final List<PatrolItem> list = Utility.handleApi21patrolItemResponse(responseText);
+                                    Log.d("aijun patrolItem", responseText + "");
+                                    Log.d("aijun patrolItem", list.size() + "");
+
+                                    if ( null != list ) {
+                                        final List<ManualInspectItem2> dataList = Utility.patrolItemsToManualInspectItems(list);
+                                        Log.d("aijun patrolItem 2", dataList + "");
+                                        Log.d("aijun patrolItem 2", dataList.size() + "");
+                                        getActivity().runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                if (null != itemResultLayout) {
+                                                    itemResultLayout.removeAllViews();
+
+                                                    int index = 1;
+                                                    for (ManualInspectItem2 item : dataList) {
+                                                        if (!item.items.isEmpty()) {
+                                                            View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_base_info,
+                                                                    itemResultLayout, false);
+                                                            TextView text = (TextView) view.findViewById(R.id.fragment_base_info);
+                                                            text.setText(index + ". " + item.name);
+                                                            itemResultLayout.addView(view);
+
+                                                            for (PatrolItem patrolItem : item.items) {
+                                                                View view2 = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_base_info2,
+                                                                        itemResultLayout, false);
+                                                                CheckBox checkBox = (CheckBox) view2.findViewById(R.id.checkBox);
+                                                                checkBox.setText(patrolItem.contents);
+                                                                checkBox.setEnabled(false);
+                                                                if (inspectNoteDetails.detail.resultItem.contains(patrolItem.id)) {
+                                                                    checkBox.setChecked(true);
+                                                                }
+                                                                itemResultLayout.addView(view2);
+                                                            }
+                                                        }
+                                                        index++;
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call call, IOException e) {
+                                    e.printStackTrace();
+                                }
+                            });
+                        }
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if ( null != inspectNoteDetails.detail) {
+                                    if ( null !=  result && null != inspectNoteDetails.detail.result) {
+                                        if (inspectNoteDetails.detail.result.trim().equals("1")) {
+                                            result.setText("异常");
+                                        } else {
+                                            result.setText("正常");
+                                        }
+                                    }
+                                    if ( null !=  userName && null != inspectNoteDetails.detail.userName) {
+                                        userName.setText(inspectNoteDetails.detail.userName);
+                                    }
+                                    if ( null !=  createDate && null != inspectNoteDetails.detail.createDate) {
+                                        createDate.setText(inspectNoteDetails.detail.createDate);
+                                    }
+                                    if ( null !=  longitude && null != inspectNoteDetails.detail.longitude) {
+                                        longitude.setText(inspectNoteDetails.detail.longitude);
+                                    }
+                                    if ( null !=  latitude && null != inspectNoteDetails.detail.latitude) {
+                                        latitude.setText(inspectNoteDetails.detail.latitude);
+                                    }
+                                    if (null != inspectNoteDetails.detail.latitude && null != inspectNoteDetails.detail.longitude) {
+                                        navigateTo(Double.valueOf(inspectNoteDetails.detail.latitude), Double.valueOf(inspectNoteDetails.detail.longitude));
+                                    }
+                                    if ( null !=  remarks && null != inspectNoteDetails.detail.remarks) {
+                                        remarks.setText(inspectNoteDetails.detail.remarks);
+                                    }
+                                }
+                                if ( null != inspectNoteDetails.basic) {
+                                    Global.patrolDetails = new LinkedHashMap<String, String>();
+                                    String key = "", value = "";
+                                    List<String> list = Arrays.asList(inspectNoteDetails.basic.var_00, inspectNoteDetails.basic.var_01, inspectNoteDetails.basic.var_02,
+                                            inspectNoteDetails.basic.var_03, inspectNoteDetails.basic.var_04, inspectNoteDetails.basic.var_05, inspectNoteDetails.basic.var_06, inspectNoteDetails.basic.var_07,
+                                            inspectNoteDetails.basic.var_08, inspectNoteDetails.basic.var_09, inspectNoteDetails.basic.var_10, inspectNoteDetails.basic.var_11, inspectNoteDetails.basic.var_12,
+                                            inspectNoteDetails.basic.var_13, inspectNoteDetails.basic.var_14, inspectNoteDetails.basic.var_15, inspectNoteDetails.basic.var_16, inspectNoteDetails.basic.var_17,
+                                            inspectNoteDetails.basic.var_18, inspectNoteDetails.basic.var_19, inspectNoteDetails.basic.var_20);
+                                    for (String str : list) {
+                                        if (null != str && str.contains("@@")) {
+                                            key = str.substring(0, str.indexOf("@@"));
+                                            value = "";
+                                            if (str.length() > str.indexOf("@@") + 2) {
+                                                value = str.substring(str.indexOf("@@") + 2);
+                                            }
+                                            Global.patrolDetails.put(key, value);
+                                        }
+                                    }
+
+                                    if (Global.patrolDetails.keySet().contains("图片")) {
+                                        String picture = Global.patrolDetails.get("图片");
+                                        Global.patrolDetails.remove("图片");
+                                        if (picture != null && !picture.trim().equals("")) {
+                                            Global.patrolDetails.put("图片", picture);
+                                        }
+                                    }
+
+                                    if (null != basicInfoListView) {
+                                        ManualInspectBasicInfoAdapter adapter = new ManualInspectBasicInfoAdapter(
+                                                getContext(), R.layout.fragment_listview_item, new ArrayList<String>(Global.patrolDetails.keySet()));
+                                        basicInfoListView.setAdapter(adapter);
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+
+        private void navigateTo(double latitude, double longitude) {
+            LatLng ll = new LatLng(latitude, longitude);
+            MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(ll);
+            baiduMap.animateMapStatus(update);
+            update = MapStatusUpdateFactory.zoomTo(16f);
+            baiduMap.animateMapStatus(update);
+
+            MyLocationData.Builder locationBuilder = new MyLocationData.Builder();
+            locationBuilder.latitude(latitude);
+            locationBuilder.longitude(longitude);
+            MyLocationData locationData = locationBuilder.build();
+            baiduMap.setMyLocationData(locationData);
         }
 
     }
