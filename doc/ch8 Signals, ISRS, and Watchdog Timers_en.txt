@@ -1,0 +1,1184 @@
+
+
+8.4 Queued Signal Functions 
+The sigqueue( ) family of functions provides an alternative to the kill( ) family of 
+functions for sending signals. 
+
+The important differences between the two are the following: 
+
+¡ö 
+
+
+The sigqueue( ) function includes an application-specified value that is sent as 
+part of the signal. This value supplies whatever context is appropriate for the 
+signal handler. This value is of type sigval (defined in signal.h); the signal 
+handler finds it in the si_value field of one of its arguments, a structure 
+siginfo_t. 
+
+¡ö 
+
+
+The sigqueue( ) function enables the queueing of multiple signals for any task. 
+The kill( ) function, by contrast, delivers only a single signal, even if multiple 
+signals arrive before the handler runs. 
+
+VxWorks includes signals reserved for application use, numbered consecutively 
+from SIGRTMIN to SIGRTMAX. The number of signals reserved is governed by the 
+RTSIG_MAX macro (with a value of 16), which is defined in the POSIX 1003.1 
+standard. The signal values themselves are not specified by POSIX. For portability, 
+specify these signals as offsets from SIGRTMIN (for example, use SIGRTMIN+2 to 
+refer to the third reserved signal number). All signals delivered with sigqueue( ) 
+
+
+8 Signals, ISRs, and Watchdog Timers 
+
+are queued by numeric order, with lower-numbered signals queuing ahead of 
+higher-numbered signals. 
+
+POSIX 1003.1 also introduced an alternative means of receiving signals. The 
+function sigwaitinfo( ) differs from sigsuspend( ) or pause( ) in that it allows your 
+application to respond to a signal without going through the mechanism of a 
+registered signal handler: when a signal is available, sigwaitinfo( ) returns the 
+value of that signal as a result, and does not invoke a signal handler even if one is 
+registered. The function sigtimedwait( ) is similar, except that it can time out. 
+
+The basic queued signal functions are described in Table 8-3. For detailed 
+information on signals, see the API reference for sigLib. 
+
+Table 8-3 POSIX 1003.1b Queued Signal Functions 
+
+Function Description 
+sigwaitinfo( ) Waits for a signal. 
+sigtimedwait( ) Waits for a signal with a timeout. 
+
+Additional non-POSIX VxWorks queued signal functions are described in 
+Table 8-4. These functions are provided for assisting in porting VxWorks 5.x kernel 
+applications to processes. The POSIX functions described in Table 8-3 should be 
+used for developing new applications that execute as real-time processes. 
+
+Note that a parallel set of non-POSIX APIs are provided for the kill( ) family of 
+POSIX functions¡ªtaskKill( ), rtpKill( ), and rtpTaskKill( ). 
+
+Table 8-4 Non-POSIX Queued Signal Functions 
+
+Function Description 
+
+taskSigqueue( ) Sends a queued signal from a task in a process to another 
+task in the same process, to a public task in another process, 
+or from a kernel task to a process task. 
+
+rtpSigqueue( ) Sends a queued signal from a kernel task to a process or 
+from a process to another process. 
+
+rtpTaskSigqueue( ) Sends a queued signal from a kernel task to a specified task 
+in a process (kernel-space only). 
+
+Example 8-1 Queued Signals 
+
+#include <stdio.h> 
+#include <signal.h> 
+#include <taskLib.h> 
+#include <rtpLib.h> 
+#ifdef _WRS_KERNEL 
+#include <private/rtpLibP.h> 
+#include <private/taskLibP.h> 
+#include <errnoLib.h> 
+#endif 
+
+typedef void (*FPTR) (int); 
+
+void sigMasterHandler 
+( 
+int sig, /* caught signal */ 
+
+#ifdef _WRS_KERNEL 
+
+
+VxWorks 7 
+Programmer's Guide 
+
+int code, 
+#else 
+siginfo_t * pInfo, /* signal info */ 
+
+#endif 
+struct sigcontext *pContext /* unused */ 
+); 
+
+/**************************************************************************** 
+* 
+
+* main -entry point for the queued signal demo 
+* 
+* This function acts the task entry point in the case of the demo spawned as a 
+* kernel task. It also can act as a RTP entry point in the case of RTP based 
+* demo. 
+*/ 
+STATUS main (void) 
+{ 
+sigset_t sig = sigmask (SIGUSR1); 
+union sigval sval; 
+struct sigaction in; 
+
+sigprocmask (SIG_UNBLOCK, &sig, NULL);
+
+ in.sa_handler = (FPTR) sigMasterHandler; 
+in.sa_flags = 0; 
+(void) sigemptyset (&in.sa_mask);
+
+ if (sigaction (SIGUSR1, &in, NULL) != OK) 
+{ 
+printf ("Unable to set up handler for task (0x%x)\n", taskIdCurrent); 
+return (ERROR); 
+
+} 
+
+printf ("Task 0x%x installed signal handler for signal # %d.\ 
+Ready for signal.\n", taskIdCurrent, SIGUSR1); 
+
+for (;;); 
+
+} 
+
+/**************************************************************************** 
+* 
+
+* sigMasterHandler - signal handler 
+* 
+* This function is the signal handler for the SIGUSR1 signal 
+*/ 
+void sigMasterHandler 
+( 
+int sig, /* caught signal */ 
+
+#ifdef _WRS_KERNEL 
+int code, 
+#else 
+siginfo_t * pInfo , /* signal info */ 
+
+#endif 
+struct sigcontext *pContext /* unused */ 
+) 
+{ 
+printf ("Task 0x%x got signal # %d signal value %d \n", 
+
+taskIdCurrent, sig, 
+#ifdef _WRS_KERNEL 
+code 
+#else 
+pInfo->si_value.sival_int 
+#endif 
+); 
+} 
+
+/**************************************************************************** 
+* 
+
+* sig - helper function to send a queued signal 
+
+8 Signals, ISRs, and Watchdog Timers 
+
+* 
+
+* This function can send a queued signal to a kernel task or RTP task or RTP. 
+* <id> is the ID of the receiver entity. <value> is the value to be sent 
+* along with the signal. The signal number being sent is SIGUSR1. 
+*/ 
+#ifdef _WRS_KERNEL 
+
+STATUS sig 
+( 
+int id, 
+int val 
+) 
+{ 
+union sigval valueCode; 
+
+valueCode.sival_int = val;
+
+ if (TASK_ID_VERIFY (id) == OK) 
+{ 
+if (IS_KERNEL_TASK (id)) 
+
+{ 
+if (sigqueue (id, SIGUSR1, valueCode) == ERROR) 
+{ 
+printf ("Unable to send SIGUSR1 signal to 0xx%x, errno = 0x%x\n", 
+
+id, errnoGet()); 
+return ERROR; 
+} 
+
+}
+
+ else 
+{ 
+rtpTaskSigqueue ((WIND_TCB *)id, SIGUSR1, valueCode); 
+}
+
+ } 
+
+else if (OBJ_VERIFY ((RTP_ID)id, rtpClassId) != ERROR) 
+{ 
+rtpSigqueue ((RTP_ID)id, SIGUSR1, valueCode); 
+}
+
+ else 
+{ 
+return (ERROR); 
+} 
+
+return (OK); 
+} 
+#endif 
+
+The code provided in this example can be used to do any of the following: 
+
+¡ö 
+
+
+Send a queued signal to a kernel task. 
+
+¡ö 
+
+
+Send a queued signal to a task in a process (RTP). 
+
+¡ö 
+
+
+Send a queued signal to a process. 
+
+The sig( ) function provided in this code is a helper function used to send a queued 
+signal. 
+
+Kernel Application Use 
+
+To use the code as a kernel application, VxWorks must be configured with 
+BUNDLE_NET_SHELL and BUNDLE_POSIX. 
+
+To send a queued signal to a kernel task: 
+
+1. Build the code with the VxWorks image or as a downloadable kernel module. 
+Boot the system. If the code is not linked to the system image, load the module 
+from the kernel shell. 
+2. Spawn a task with main( ) as the entry point. 
+
+VxWorks 7 
+Programmer's Guide 
+
+3. Send a queued signal to the spawned kernel task, using sig( ); the first 
+parameter is the task ID and the second is the signal value. 
+From the kernel shell, for example: 
+
+-> ld < signal_ex.o 
+value = 8382064 = 0x7fe670 
+-> sp main 
+Task spawned: id = 0x7fd620, name = t1 
+value = 8377888 = 0x7fd620 
+-> Task 0x7fd620 installed signal handler for signal # 30. Ready for signal. 
+-> sig 0x7fd620, 20 
+value = 0 = 0x0 
+-> Task 0x7fd620 got signal # 30 signal value 20 
+sig 0x7fd620, 20 
+value = 0 = 0x0 
+-> Task 0x7fd620 got signal # 30 signal value 20 
+
+RTP Application Use 
+
+To use the code as an RTP application, VxWorks must be configured with 
+BUNDLE_NET_SHELL and BUNDLE_RTP_POSIX_PSE52. 
+
+To send a queued signal to a process: 
+
+1. Build the application as an RTP application. 
+2. Spawn the application. 
+3. Determine the RTP ID using rtpShow( ). 
+4. From a kernel task (note that the kernel shell runs as a kernel task), use the 
+sig( ) function to send a queued signal to an RTP, where the first parameter is 
+the RTP ID and the second is the signal value. 
+From the kernel shell, for example: 
+
+-> rtpSp "signal_ex.vxe" 
+value = 10531472 = 0xa0b290 
+-> Task 0x10000 installed signal handler for signal # 30. Ready for signal. 
+-> rtpShow 
+
+NAME ID STATE ENTRY ADDR OPTIONS TASK CNT 
+
+signal_ex.vxe 0xa0b290 STATE_NORMAL 0x10000298 0x1 1 
+
+value = 1 = 0x1 
+-> sig 0xa0b290, 50 
+value = 0 = 0x0 
+-> Task 0x10000 got signal # 30 signal value 50 
+
+8.5 Signal Events 
+The signal event facility allows a pthread or task to receive notification that a 
+particular event has occurred (such as the arrival of a message at a message queue, 
+or the firing of a timer) by way of a signal. 
+
+
+8 Signals, ISRs, and Watchdog Timers 
+
+The following functions can be used to register for signal notification of their 
+respective event activities: mq_notify( ), timer_create( ), timer_open( ), 
+aio_read( ), aio_write( ) and lio_listio( ). 
+
+The POSIX 1003.1-2001 standard defines three signal event notification types: 
+
+SIGEV_NONE 
+
+Indicates that no notification is required when the event occurs. This is useful 
+for applications that use asynchronous I/O with polling for completion. 
+
+SIGEV_SIGNAL 
+
+Indicates that a signal is generated when the event occurs. 
+
+SIGEV_THREAD 
+
+Provides for callback functions for asynchronous notifications done by a 
+function call within the context of a new thread. This provides a 
+multi-threaded process with a more natural means of notification than signals. 
+VxWorks supports this option in user space (processes), but not in the kernel. 
+
+The notification type is specified using the sigevent structure, which is defined in 
+sigeventCommon.h. A pointer the structure is used in the call to register for signal 
+notification; for example, with mq_notify( ). 
+
+To use the signal event facility, configure VxWorks with the INCLUDE_SIGEVENT 
+component. 
+
+As noted above, the SIGEV_THREAD option is only supported in user space 
+(RTPs), and it requires that VxWorks be configured with the 
+INCLUDE_SIGEVENTS_THREAD component and full POSIX thread support (the 
+BUNDLE_RTP_POSIX_PSE52 bundle includes everything required for this option). 
+
+8.6 Signal Handlers 
+Signals are more appropriate for error and exception handling than as a 
+general-purpose intertask communication mechanism. And normally, signal 
+handlers should be treated like ISRs: no function should be called from a signal 
+handler that might cause the handler to block. 
+
+Because signals are asynchronous, it is difficult to predict which resources might 
+be unavailable when a particular signal is raised. 
+
+To be perfectly safe, call only those functions listed in Table 8-5. Deviate from this 
+practice only if you are certain that your signal handler cannot create a deadlock 
+situation. 
+
+In addition, you should be particularly careful when using C++ for a signal 
+handler or when invoking a C++ method from a signal handler written in C or 
+assembly. Some of the issues involved in using C++ include the following: 
+
+¡ö 
+
+
+The VxWorks intConnect( ) and signal( ) functions require the address of the 
+function to execute when the interrupt or signal occurs, but the address of a 
+non-static member function cannot be used, so static member functions must 
+be implemented. 
+
+¡ö 
+
+
+Objects cannot be instantiated or deleted in signal handling code. 
+
+
+VxWorks 7 
+Programmer's Guide 
+
+¡ö 
+
+
+C++ code used to execute in a signal handler should restrict itself to Embedded 
+C++. No exceptions nor run-time type identification (RTTI) should be used. 
+
+Table 8-5 Functions Callable by Signal Handlers 
+
+Library Functions 
+
+bLib All functions 
+errnoLib errnoGet( ), errnoSet( ) 
+eventLib eventSend( ) 
+logLib logMsg( ) 
+lstLib All functions except lstFree( ) 
+msgQLib msgQSend( ) 
+rngLib All functions except rngCreate( ) and rngDelete( ) 
+semLib semGive( ) except mutual-exclusion semaphores, semFlush( ) 
+sigLib kill( ) 
+taskLib taskSuspend( ), taskResume( ), taskPrioritySet( ), 
+taskPriorityGet( ), taskIdVerify( ), taskIdDefault( ), 
+taskIsReady( ), taskIsSuspended( ), taskIsPended( ), 
+taskIsDelayed( ), taskTcb( ) 
+tickLib tickAnnounce( ), tickSet( ), tickGet( ) 
+vxAtomicLib All functions. 
+vxCpuLib vxCpuIndexGet( ), vxCpuIdGet( ), vxCpuPhysIndexGet( ), 
+vxCpuIdToPhysIndex( ), vxCpuPhysIndexToId( ), 
+vxCpuReservedGet( ), CPU_LOGICAL_TO_PHYS(), and 
+CPU_PHYS_TO_LOGICAL() 
+ansiString All functions. 
+
+Most signals are delivered asynchronously to the execution of a program. 
+Therefore programs must be written to account for the unexpected occurrence of 
+signals, and handle them gracefully. Unlike ISR's, signal handlers execute in the 
+context of the interrupted task. 
+
+VxWorks does not distinguish between normal task execution and a signal context, 
+as it distinguishes between a task context and an ISR. Therefore the system has no 
+way of distinguishing between a task execution context and a task executing a 
+signal handler. To the system, they are the same. 
+
+When you write signal handlers make sure that they: 
+
+¡ö 
+
+
+Release resources prior to exiting: 
+
+¨C Free any allocated memory. 
+¨C Close any open files. 
+¨C Release any mutual exclusion resources such as semaphores. 
+¡ö 
+
+
+Leave any modified data structures in a sane state. 
+
+
+8 Signals, ISRs, and Watchdog Timers 
+
+¡ö 
+
+
+For RTP applications, modify the parent process with an appropriate error 
+return value. 
+
+¡ö 
+
+
+For kernel applications, notify the kernel with an appropriate error return 
+value. 
+
+Mutual exclusion between signal handlers and tasks must be managed with care. 
+In general, users should avoid the following activity in signal handlers: 
+
+¡ö 
+
+
+Taking mutual exclusion (such as semaphores) resources that can also be taken 
+by any other element of the application code. This can lead to deadlock. 
+
+¡ö 
+
+
+Modifying any shared data memory that may have been in the process of 
+modification by any other element of the application code when the signal was 
+delivered. This compromises mutual exclusion and leads to data corruption. 
+
+¡ö 
+
+
+Using longjmp( ) to change the flow of task execution. If longjmp( ) is used in 
+a signal handler to re-initialize a running task, you must ensure that the signal 
+is not sent to the task while the task is holding a critical resource (such as a 
+kernel mutex). For example, if a signal is sent to a task that is executing 
+malloc( ), the signal handler that calls longjmp( ) could leave the kernel in an 
+inconsistent state. 
+
+These scenarios are very difficult to debug, and should be avoided. One safe way 
+to synchronize other elements of the application code and a signal handler is to set 
+up dedicated flags and data structures that are set from signal handlers and read 
+from the other elements. This ensures a consistency in usage of the data structure. 
+In addition, the other elements of the application code must check for the 
+occurrence of signals at any time by periodically checking to see if the 
+synchronizing data structure or flag has been modified in the background by a 
+signal handler, and then acting accordingly. The use of the volatile keyword is 
+useful for memory locations that are accessed from both a signal handler and other 
+elements of the application. 
+
+Taking a mutex semaphore in a signal handler is an especially bad idea. Mutex 
+semaphores can be taken recursively. A signal handler can therefore easily 
+re-acquire a mutex that was taken by any other element of the application. Since 
+the signal handler is an asynchronously executing entity, it has thereby broken the 
+mutual exclusion that the mutex was supposed to provide. 
+
+Taking a binary semaphore in a signal handler is an equally bad idea. If any other 
+element has already taken it, the signal handler will cause the task to block on 
+itself. This is a deadlock from which no recovery is possible. Counting semaphores, 
+if available, suffer from the same issue as mutexes, and if unavailable, are 
+equivalent to the binary semaphore situation that causes an unrecoverable 
+deadlock. 
+
+On a general note, the signal facility should be used only for notifying/handling 
+exceptional or error conditions. Usage of signals as a general purpose IPC 
+mechanism or in the data flow path of an application can cause some of the pitfalls 
+described above. 
+
+8.7 About Interrupt Service Routines: ISRs 
+
+VxWorks 7 
+Programmer's Guide 
+
+Hardware interrupt handling is of key significance in real-time systems, because it 
+is usually through interrupts that the system is informed of external events. 
+Interrupt service routines (ISRs)¡ªwhich are also known as interrupt handlers¡ª 
+can be implemented in the kernel to provide the appropriate response to 
+interrupts. 
+
+You can attach ISRs to any system hardware interrupts that are not used by 
+VxWorks. VxWorks provides a function that allows for creating custom ISRs by 
+connecting C functions to interrupts. When an interrupt occurs, the connected C 
+function is called at interrupt level. When the interrupt handling is finished, the 
+connected function returns. 
+
+In order to achieve the fastest possible response to interrupts, VxWorks interrupt 
+service routines (ISRs) in run in a special context of their own, outside any task¡¯s 
+context. VxWorks runs ISRs when the associated interrupt occurs; there is no 
+deferral of ISR execution unless the system has been specifically configured to do 
+so. 
+
+8.8 VxWorks Configuration for ISRs 
+Support for ISRs is provided by default. However, the interrupt stack can be 
+configured with regard to size and additional features. In addition, ISR deferral 
+support and show function support can be added to the system. 
+
+Configuring the Interrupt Stack 
+
+All ISRs use the same interrupt stack. This stack is allocated and initialized by the 
+system at startup according to specified configuration parameters. It must be large 
+enough to handle the worst possible combination of nested interrupts. 
+
+The size of the interrupt stack is defined with the ISR_STACK_SIZE parameter. For 
+information about determining the size of the stack, see Interrupt Stack Size and 
+Overruns, p.169. 
+
+CAUTION: Some architectures do not permit using a separate interrupt stack, and 
+ISRs use the stack of the interrupted task. With such architectures, make sure to 
+create tasks with enough stack space to handle the worst possible combination of 
+nested interrupts and the worst possible combination of ordinary nested calls. See 
+the VxWorks reference for your BSP to determine whether your architecture 
+supports a separate interrupt stack. If it does not, also see Task Stack Protection, p.96. 
+
+Interrupt Stack Filling 
+
+By default, interrupt (and task) stacks are filled with 0xEE. Filling stacks is useful 
+during development for debugging with the checkStack( ) function. 
+
+For deployed systems, it is often preferable not to fill the interrupt stack because 
+not filling provides better performance. Use use the 
+VX_GLOBAL_NO_STACK_FILL configuration parameter to disable stack filling for 
+all interrupts (and tasks) in the system. 
+
+! 
+
+8 Signals, ISRs, and Watchdog Timers 
+
+Interrupt Stack Protection 
+
+Systems can be configured with the INCLUDE_PROTECT_INTERRUPT_STACK 
+component to provide guard zone protection at the start and end of the interrupt 
+stack, as long as the MMU is enabled. 
+
+An overrun guard zone indicates when a task goes beyond the end of its 
+predefined stack size, which can be used to ensure that the integrity of the system 
+is not compromised by corruption of other stacks or data. For architectures that 
+grow down, an under-run guard zone typically prevents buffer overflows from 
+corrupting memory above the stack. The CPU generates an exception when a task 
+attempts to access any of the guard zones. The size of a stack is always rounded up 
+to a multiple the MMU page size when a guard zone is inserted. 
+
+The sizes of the guard zones are defined by the following configuration 
+parameters: 
+
+¡ö 
+
+
+INTERRUPT_STACK_OVERFLOW_SIZE for interrupt stack overflow size. 
+
+¡ö 
+
+
+INTERRUPT_STACK_UNDERFLOW_SIZE for interrupt stack underflow size. 
+
+The size of a stack is always rounded up to a multiple of the MMU page size when 
+a guard zone is added. If the size of the system becomes an issue, the component 
+can be removed for final testing and the deployed system. Setting a parameter to 
+zero prevents insertion of the corresponding guard zone. 
+
+Adding Show Function Support 
+
+To add support for the isrShow( ) function, add the INCLUDE_ISR_SHOW 
+component. See 8.13 ISR Information at Runtime, p.172. 
+
+8.9 Facilities Available for ISRs 
+All VxWorks utility libraries, such as the linked-list and ring-buffer libraries, can 
+be used by ISRs. There are however, restrictions on the functions that can be called 
+from ISRs. 
+
+The global variable errno is saved and restored as a part of the interrupt enter and 
+exit code generated by the intConnect( ) facility. Thus, errno can be referenced and 
+modified by ISRs as in any other code. 
+
+Table 8-6 lists functions that can be called from ISRs. 
+
+Table 8-6 Functions Callable by ISRs 
+
+Library Function 
+bLib All functions 
+errnoLib errnoGet( ), errnoSet( ) 
+eventLib eventSend( ) 
+fppArchLib fppSave( ), fppRestore( ) 
+
+
+VxWorks 7 
+Programmer's Guide 
+
+Table 8-6 Functions Callable by ISRs (cont¡¯d) 
+
+Library Function 
+intLib intContext( ), intCount( ), intVecSet( ), intVecGet( ) 
+intArchLib intLock( ), intUnlock( ) 
+logLib logMsg( ) 
+lstLib All functions except lstFree( ) 
+mathALib All functions, if fppSave( )/fppRestore( ) are used 
+msgQLib msgQSend( ) 
+rngLib All functions except rngCreate( ) and rngDelete( ) 
+pipeDrv write( ) 
+selectLib selWakeup( ), selWakeupAll( ) 
+semLib semGive( ) except mutual-exclusion semaphores, semFlush( ) 
+semPxLib sem_post( ) 
+sigLib kill( ) 
+taskLib taskSuspend( ), taskResume( ), taskPrioritySet( ), 
+taskPriorityGet( ), taskIdVerify( ), taskIdDefault( ), 
+taskIsReady( ), taskIsSuspended( ), taskIsPended( ), 
+taskIsDelayed( ), taskTcb( ) 
+tickLib tickAnnounce( ), tickSet( ), tickGet( ) 
+tyLib tyIRd( ), tyITx( ) 
+vxLib vxTas( ), vxMemProbe( ) 
+wdLib wdStart( ), wdCancel( ) 
+
+8.10 ISR Coding and Debugging 
+The most basic guideline for ISRs is that they should be as short possible. 
+Time-consuming activities should not be undertaken with ISRs. There are also 
+numerous restrictions: ISRs must not call functions that might cause the caller to 
+block, or call functions that use a floating-point coprocessor; they have limitations 
+with regard to C++ use; and so on. 
+
+No Blocking Functions 
+
+Many VxWorks facilities are available to ISRs, but there are some important 
+limitations. These limitations stem from the fact that an ISR does not run in a 
+regular task context and has no task control block, so all ISRs share a single stack. 
+
+
+8 Signals, ISRs, and Watchdog Timers 
+
+For this reason, the basic restriction on ISRs is that they must not invoke functions 
+that might cause the caller to block. For example, they must not try to take a 
+semaphore, because if the semaphore is unavailable, the kernel tries to switch the 
+caller to the pended state. However, ISRs can give semaphores, releasing any tasks 
+waiting on them. 
+
+Because the memory facilities malloc( ) and free( ) take a semaphore, they cannot 
+be called by ISRs, and neither can functions that make calls to malloc( ) and free( ). 
+For example, ISRs cannot call any creation or deletion functions. 
+
+ISRs also must not perform I/O through VxWorks drivers. Although there are no 
+inherent restrictions in the I/O system, most device drivers require a task context 
+because they might block the caller to wait for the device. An important exception 
+is the VxWorks pipe driver, which is designed to permit writes by ISRs. VxWorks 
+also provides several functions that can be called from an ISR to print messages to 
+the system console: logMsg( ), kprintf( ), and kputs( ). For more information 
+about using these functions in ISRs, see 8.10 ISR Coding and Debugging, p.166. 
+
+No Floating-Point Coprocessor Functions 
+
+An ISR must not call functions that use a floating-point coprocessor. In VxWorks, 
+the interrupt driver code created by intConnect( ) does not save and restore 
+floating-point registers; therefore ISRs must not include floating-point 
+instructions. If an ISR requires floating-point instructions, it must explicitly save 
+and restore the registers of the floating-point coprocessor using functions in 
+fppArchLib. 
+
+C++ Code Limitations 
+
+Be particularly careful when using C++ for an ISR or when invoking a C++ method 
+from an ISR written in C or assembly. Some of the issues involved in using C++ 
+include the following: 
+
+¡ö 
+
+
+The VxWorks intConnect( ) function require the address of the function to 
+execute when the interrupt occurs, but the address of a non-static member 
+function cannot be used, so static member functions must be implemented. 
+
+¡ö 
+
+
+Objects cannot be instantiated or deleted in ISR code. 
+
+¡ö 
+
+
+C++ code used to execute in an ISR should restrict itself to Embedded C++. No 
+exceptions nor run-time type identification (RTTI) should be used. 
+
+No Direct Shared Data Region Access 
+
+An ISR should not be designed to access a shared data region directly. An ISR 
+inherits the memory context of the task that it has preempted, and if that task 
+happens to be in a memory context (kernel or process) that does not include the 
+shared data region in question, it cannot access that memory, and an exception will 
+result. 
+
+In order to access a shared data region reliably, an ISR must make use of a task that 
+has already been created (ISRs cannot create tasks themselves) in a memory 
+context that includes the shared data region (for example, from a process that is 
+attached to the region). The task can then perform the required operation on the 
+region after the ISR has terminated. 
+
+
+VxWorks 7 
+Programmer's Guide 
+
+Interrupt-to-Task Communication 
+
+While it is important that VxWorks support direct connection of ISRs that run at 
+interrupt level, interrupt events usually propagate to task-level code. Many 
+VxWorks facilities are not available to interrupt-level code, including I/O to any 
+device other than pipes. The following techniques, however, can be used to 
+communicate from ISRs to task-level code: 
+
+Shared Memory and Ring Buffers 
+ISRs can share variables, buffers, and ring buffers with task-level code. 
+
+Semaphores 
+ISRs can give semaphores (except for mutual-exclusion semaphores and 
+VxMP shared semaphores) that tasks can take and wait for. 
+
+Message Queues 
+ISRs can send messages to message queues for tasks to receive (except for 
+shared message queues using VxMP). If the queue is full, the message is 
+discarded. 
+
+Pipes 
+ISRs can write messages to pipes that tasks can read. Tasks and ISRs can write 
+to the same pipes. However, if the pipe is full, the message written is discarded 
+because the ISR cannot block. ISRs must not invoke any I/O function on pipes 
+other than write( ). 
+
+Signals 
+ISRs can signal tasks, causing asynchronous scheduling of their signal 
+handlers. 
+
+VxWorks Events 
+ISRs can send VxWorks events to tasks. 
+
+Reserving High Interrupt Levels 
+
+The VxWorks interrupt support is acceptable for most applications. However, on 
+occasion, low-level control is required for events such as critical motion control or 
+system failure response. In such cases it is desirable to reserve the highest interrupt 
+levels to ensure zero-latency response to these events. To achieve zero-latency 
+response, VxWorks provides the function intLockLevelSet( ), which sets the 
+system-wide interrupt-lockout level to the specified level. If you do not specify a 
+level, the default is the highest level supported by the processor architecture. For 
+information about architecture-specific implementations of intLockLevelSet( ), 
+see the VxWorks Architecture Supplement. 
+
+! 
+CAUTION: Some hardware prevents masking certain interrupt levels; check the 
+hardware manufacturer¡¯s documentation. 
+
+Restrictions for ISRs at High Interrupt Levels 
+
+ISRs connected to interrupt levels that are not locked out (either an interrupt level 
+higher than that set by intLockLevelSet( ), or an interrupt level defined in 
+hardware as non-maskable) have special restrictions: 
+
+¡ö 
+
+
+The ISR can be connected only with intVecSet( ). 
+
+¡ö 
+
+
+The ISR cannot use any VxWorks operating system facilities that depend on 
+interrupt locks for correct operation. The effective result is that the ISR cannot 
+safely make any call to any VxWorks function, except reboot. 
+
+
+8 Signals, ISRs, and Watchdog Timers 
+
+For more information, see the VxWorks Architecture Supplement for the architecture 
+in question. 
+
+! 
+WARNING: The use of NMI with any VxWorks functionality, other than reboot, is 
+
+not recommended. Functions marked as interrupt safe do not imply they are NMI 
+safe and, in fact, are usually the very ones that NMI functions must not call 
+(because they typically use intLock( ) to achieve the interrupt safe condition). 
+
+Restrictions on I/O Use 
+
+In general, ISRs must not perform I/O through VxWorks drivers because they 
+might cause the caller to block (for more information, see The most basic guideline for 
+ISRs is that they should be as short possible. Time-consuming activities should not be 
+undertaken with ISRs. There are also numerous restrictions: ISRs must not call functions 
+that might cause the caller to block, or call functions that use a floating-point coprocessor; 
+they have limitations with regard to C++ use; and so on., p.166). This means that 
+standard I/O functions such as printf( ) and puts( ) cannot be used to debug ISRs. 
+The basic programmatic methods available for debugging ISRs are as follows: 
+
+¡ö 
+
+
+Coding an ISR to use global variables that are updated with relevant data. The 
+shell (kernel or host) can then be used to display the values of the variables at 
+runtime. 
+
+¡ö 
+
+
+Using one of the functions that can be called from an ISR to write a message 
+(including variable states) to the console. The logMsg( ), kprintf( ), and 
+kputs( ) functions can all be called from an ISR. 
+
+The advantages of using global variables (and the shell to display their values) are 
+simplicity and minimal performance impact on the execution of the ISR. The 
+disadvantage is that if the target hangs due a bug in the ISR, the shell cannot be 
+used to display variable values. 
+
+The advantages of using logMsg( ) are that it can be used to print messages to the 
+console automatically, and it has less of an effect on the performance of the ISR 
+than either kprintf( ) or kputs( ). The disadvantage is that if the target hangs 
+shortly after the function is called, the message string may not be displayed on the 
+console. This is because of the asynchronous operation in which logMsg( ) first 
+writes to a message queue and then the logging task packages the message and 
+sends it to the console. 
+
+The advantage of the kprintf( ) and kputs( ) functions is that they output messages 
+synchronously (using polled mode), and can therefore indicate precisely how far 
+an ISR has progressed in its execution when a bug manifests itself. (They can also 
+be used during the kernel boot sequence and from task switch hooks.) The 
+disadvantage of using these functions is that they have a notable effect on the 
+performance of the ISR because they output message strings over the serial port. 
+
+Also note that you can use global variables to affect the flow control of ISRs (quite 
+apart from the method used to output debug information). 
+
+Interrupt Stack Size and Overruns 
+
+Use the checkStack( ) facility during development to see how close your tasks and 
+ISRs have come to exhausting the available stack space. 
+
+In addition to experimenting with stack size, you can also configure and test 
+systems with guard zone protection for interrupt stacks (for more information, see 
+Interrupt Stack Protection, p.165). 
+
+
+VxWorks 7 
+Programmer's Guide 
+
+Exceptions at Interrupt Level 
+
+When a task causes a hardware exception such as an illegal instruction or bus error, 
+the task is suspended and the rest of the system continues uninterrupted. 
+However, when an ISR causes such an exception, there is no safe recourse for the 
+system to handle the exception. The ISR has no context that can be suspended. 
+Instead, VxWorks stores the description of the exception in a special location in low 
+memory and executes a system restart. 
+
+The VxWorks boot loader tests for the presence of the exception description in low 
+memory and if it is detected, display it on the system console. The boot loader¡¯s e 
+command re-displays the exception description. 
+
+One example of such an exception is the following message: 
+
+workQPanic: Kernel work queued from ISR overflowed. 
+
+For more information, see ISRs and Kernel Work Queue Panic, p.170. 
+
+ISRs and Kernel Work Queue Panic 
+
+The error message associated with a kernel work queue panic (also known as a 
+work queue overflow) is as follows: 
+
+workQPanic: Kernel work queue overflow 
+
+In order to help reduce the occurrences of work queue overflows, system architects 
+can use the WIND_JOBS_MAX kernel configuration parameter to increase the size 
+of the kernel work queue. However in most cases this is simply hiding the root 
+cause of the overflow. For more information see 8.14 ISRs and Work Queue Panic, 
+p.172. 
+
+8.11 System Clock ISR Modification 
+You can add application-specific processing to usrClock( ). 
+
+During system initialization at boot time, the system clock ISR¡ªusrClock( )¡ªis 
+attached to the system clock timer interrupt. For every system clock interrupt, 
+usrClock( ) is called to update the system tick counter and to run the scheduler. 
+
+If you add application-specific processing to usrClock( ). However, you should 
+keep in mind that this is executed in interrupt context, so only limited functions 
+can be safely called. See The most basic guideline for ISRs is that they should be as short 
+possible. Time-consuming activities should not be undertaken with ISRs. There are also 
+numerous restrictions: ISRs must not call functions that might cause the caller to block, or 
+call functions that use a floating-point coprocessor; they have limitations with regard to 
+C++ use; and so on., p.166 for a list of functions that can be safely used in interrupt 
+context. 
+
+Long power management, if used, allows the processor to sleep for multiple. The 
+usrClock( ) function, and therefore tickAnnounce( ), is not called while the 
+processor is sleeping. Instead, usrClock( ) is called only once, after the processor 
+wakes, if at least one tick has expired. Application code in usrClock( ) must verify 
+the tick counter each time it is called, to avoid losing time due to setting the 
+processor into sleep mode. 
+
+
+8 Signals, ISRs, and Watchdog Timers 
+
+8.12 ISR Connection to Interrupts 
+VxWorks provides the function intConnect( ), which allows C functions to be 
+connected to any interrupt.You can use system hardware interrupts other than 
+those used by VxWorks. 
+
+The arguments to intConnect( ) are the byte offset of the interrupt vector to 
+connect to, the address of the C function to be connected, and an argument to pass 
+to the function. When an interrupt occurs with a vector established in this way, the 
+connected C function is called at interrupt level with the specified argument. When 
+the interrupt handling is finished, the connected function returns. A function 
+connected to an interrupt in this way is called an interrupt service routine (ISR). 
+
+Interrupts cannot actually vector directly to C functions. Instead, intConnect( ) 
+builds a small amount of code that saves the necessary registers, sets up a stack 
+entry (either on a special interrupt stack, or on the current task¡¯s stack) with the 
+argument to be passed, and calls the connected function. On return from the 
+function it restores the registers and stack, and exits the interrupt; see Figure 8-1. 
+
+Figure 8-1 Function Built by intConnect( ) 
+
+
+For target boards with VME backplanes, the BSP provides two standard functions 
+for controlling VME bus interrupts, sysIntEnable( ) and sysIntDisable( ). 
+
+Table 8-7 lists the interrupt functions provided in intLib and intArchLib. 
+
+Table 8-7 Interrupt Functions 
+
+Function Description 
+
+intConnect( ) Connects a C function to an interrupt vector. 
+intContext( ) Returns TRUE if called from interrupt level. 
+intCount( ) Gets the current interrupt nesting depth. 
+intLevelSet( ) Sets the processor interrupt mask level. 
+intLock( ) Disables interrupts. 
+intUnlock( ) Re-enables interrupts. 
+intVecBaseSet( ) Sets the vector base address. 
+intVecBaseGet( ) Gets the vector base address. 
+
+
+VxWorks 7 
+Programmer's Guide 
+
+Table 8-7 Interrupt Functions (cont¡¯d) 
+
+Function Description 
+intVecSet( ) Sets an exception vector. 
+intVecGet( ) Gets an exception vector. 
+
+For information about interrupt locks and latency, see 7.3 Interrupt Locks, p.113. 
+
+
+NOTE: The intLock( ) and intUnlock( ) functions are provided for the UP 
+configuration of VxWorks, but not the SMP configuration. Several alternative are 
+available for SMP systems, including the ISR-callable spinlock, which default to 
+intLock( ) and intUnlock( ) behavior in a UP system. For more information, see 
+ISR-Callable Spinlocks, p.423 and 18.18 Code Migration for VxWorks SMP, p.449. 
+
+8.13 ISR Information at Runtime 
+A kernel object is created for each ISR that is linked with VxWorks. ISR objects 
+provide a means for managing information about all the ISRs in a system. 
+
+See the isrLib and isrShow API references for information about the functions 
+used for getting information about ISRs. 
+
+The INCLUDE_ISR_SHOW component provides isrShow, and the 
+INCLUDE_ISR_OBJECT provides isrLib. 
+
+8.14 ISRs and Work Queue Panic 
+If ISRs queue up kernel work at a very high rate before the kernel can process them, 
+the queue can fill up, and failed attempt to add a new work item to the queue is a 
+fatal error called work queue panic. 
+
+To achieve fast interrupt response time, the VxWorks kernel does not lock 
+interrupts while processing critical sections, such as task state changes, context 
+switches, rescheduling, and so on. With interrupts enabled, ISRs can execute as 
+soon as possible. If an interrupt occurs while the kernel is executing a critical 
+section (in the case of VxWorks SMP this could be on same CPU or another CPU), 
+and the ISR executes a kernel function that also has to execute a critical section 
+(such as the semGive( ), msgQSend( ), or eventSend( ) function), then the kernel 
+delays critical section execution to a later time when it is safe to execute. This is 
+accomplished using the kernel work queue. The queue effectively serializes 
+kernel-critical sections without blocking the execution of non-critical sections of 
+the ISR handler. 
+
+
+8 Signals, ISRs, and Watchdog Timers 
+
+For performance reasons, the work queue is a circular buffer of fixed size. You can 
+configure the size with the WIND_JOBS_MAX configuration parameter; the value 
+must be a power of two. 
+
+Work Queue Panic 
+
+If ISRs queue up kernel work at a very high rate (in bursts) before the kernel can 
+process them, the queue can fill up. After the queue is full, a failed attempt to add 
+a new work item to the queue is considered a fatal error, called work queue panic. 
+VxWorks reboots and logs an error message through the system exception message 
+area and the error detection and reporting facility (13. Error Detection and 
+Reporting). 
+
+Generally, a work queue panic is the result of improperly written device drivers, 
+such as: 
+
+¡ö 
+
+
+Failing to acknowledge an interrupt. If an interrupt handler fails to acknowledge 
+an interrupt, the result is continuous interrupt generation. 
+
+¡ö 
+
+
+Doing too much in interrupt context. For the best real-time behavior, you should 
+defer complex operations to a properly prioritized task that you associate to 
+the interrupt source. The ISR should wake up the task using a single kernel call 
+(for example, the semGive( ) function). 
+
+¡ö 
+
+
+Handling device event bursts as individual interrupts. You should handle bursts in 
+a loop in task context after disabling the device-specific interrupt. When you 
+no longer detect un-handled events and the task is about to transition to 
+pended, you can enable the device interrupt source again. 
+
+8.15 About Watchdog Timers 
+VxWorks provides a watchdog-timer mechanism in the kernel that allows any C 
+function to be connected to a timer with a specified time delay. 
+
+Watchdog timers are maintained as part of the system clock ISR. Functions 
+invoked by watchdog timers execute as interrupt service code at the interrupt level 
+of the system clock. Restrictions on ISRs also apply to functions connected to 
+watchdog timers. 
+
+(For information about POSIX timers, see 9.11 POSIX Clocks and Timers, p.190.) 
+
+The functions in Table 8-8 are provided by the wdLib library. 
+
+Table 8-8 Watchdog Timer Calls 
+
+Function Description 
+
+wdCreate( ) Allocates and initializes a watchdog timer. 
+wdDelete( ) Terminates and deallocates a watchdog timer. 
+wdStart( ) Starts a watchdog timer. 
+wdCancel( ) Cancels a currently counting watchdog timer. 
+
+
+VxWorks 7 
+Programmer's Guide 
+
+A watchdog timer is first created by calling wdCreate( ). Then the timer can be 
+started by calling wdStart( ), which takes as arguments the number of ticks to 
+delay, the C function to call, and an argument to be passed to that function. After 
+the specified number of ticks have elapsed, the function is called with the specified 
+argument. The watchdog timer can be canceled any time before the delay has 
+elapsed by calling wdCancel( ). 
+
+Example 8-2 Watchdog Timers 
+
+/* Creates a watchdog timer and sets it to go off in 3 seconds.*/ 
+
+/* includes */ 
+#include <vxWorks.h> 
+#include <logLib.h> 
+#include <wdLib.h> 
+
+/* defines */ 
+#define SECONDS (3) 
+
+WDOG_ID myWatchDogId; 
+
+task (void) 
+{ 
+/* Create watchdog */ 
+if ((myWatchDogId = wdCreate( )) == NULL) 
+
+return (ERROR); 
+
+/* Set timer to go off in SECONDS - printing a message to stdout */ 
+if (wdStart (myWatchDogId, sysClkRateGet( ) * SECONDS, logMsg, 
+"Watchdog timer just expired\n") == ERROR) 
+
+return (ERROR); 
+/* ... */ 
+} 
+
+For information about POSIX timers, see 9.11 POSIX Clocks and Timers, p.190. 
+
+Static Instantiation of Watchdog Timers 
+
+The wdCreate( ) function performs a dynamic, two-step operation, in which 
+memory is allocated for the watchdog timer object at runtime, and then the object 
+is initialized. Watchdog timers (and other VxWorks objects) can also be statically 
+instantiated¡ªwhich means that their memory is allocated for the object at compile 
+time¡ªand the object is then initialized at runtime. 
+
+The macro VX_WDOG declares a watchdog timer at compile time. It takes one 
+parameter, the name of the watchdog. The function wdInitialize( ) is used at 
+runtime to initialize the watchdog and make it ready for use. The same 
+watchdog-timer name must be used with the macro and function. For example: 
+
+#include <vxWorks.h> 
+#include <wdLib.h> 
+
+VX_WDOG(myWdog); /* declare the watchdog */ 
+WDOG_ID myWdogId; /* watchdog ID for further operations */ 
+
+STATUS initializeFunction (void) 
+{ 
+if ((myWdogId = wdInitialize (myWdog)) == NULL) 
+
+return (ERROR); /* initialization failed */ 
+else 
+return (OK); 
+} 
+
+For more information, see the API reference for wdLib. 
+
+For general information about static instantiation, see 1.5 Static Instantiation of 
+Kernel Objects, p.7. 
+
+
+8 Signals, ISRs, and Watchdog Timers 
+
+Inter-Process Communication With Public Watchdog Timers 
+
+VxWorks watchdog timers can be created as private objects, which are accessible 
+only within the memory space in which they were created (kernel or process); or 
+as public objects, which are accessible throughout the system. 
+
+For detailed information, see 7.18 Inter-Process Communication With Public Objects, 
+
+p.147 and the timerOpen( ) entry in the VxWorks Kernel API Reference. 
+
+VxWorks 7 
+Programmer's Guide 
+
+176 

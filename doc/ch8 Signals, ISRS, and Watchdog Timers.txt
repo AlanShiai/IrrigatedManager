@@ -79,8 +79,11 @@ sigprocmask( ) Sets the mask of blocked signals.
 sigprocmask( ) Adds to a set of blocked signals.
 sigaltstack( ) Set or get a signal’s alternate stack context.
 
+For more information about signal functions, see the API reference for sigLib.
 
 8.4排队信号功能156
+
+
 8.5信号事件160
 8.6信号处理器161
 8.7关于中断服务例程：ISR 163
